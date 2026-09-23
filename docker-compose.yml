@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: fantasy-sentiment-postgres
+    environment:
+      POSTGRES_DB: ${FANTASY_POSTGRES_DB:-fantasy_sentiment}
+      POSTGRES_USER: ${FANTASY_POSTGRES_USER:-fantasy}
+      POSTGRES_PASSWORD: ${FANTASY_POSTGRES_PASSWORD:?Set FANTASY_POSTGRES_PASSWORD in .env}
+    ports:
+      - "${FANTASY_POSTGRES_PORT:-55432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${FANTASY_POSTGRES_USER:-fantasy} -d ${FANTASY_POSTGRES_DB:-fantasy_sentiment}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres-data:
+    name: fantasy-sentiment-postgres-data

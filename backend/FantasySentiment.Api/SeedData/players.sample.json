@@ -1,0 +1,121 @@
+[
+  {
+    "name": "Christian McCaffrey",
+    "team": "SF",
+    "position": "RB",
+    "externalId": "nfl-cmc",
+    "aliases": [ "CMC", "McCaffrey", "Christian McCaffrey", "C. McCaffrey" ]
+  },
+  {
+    "name": "Puka Nacua",
+    "team": "LAR",
+    "position": "WR",
+    "externalId": "nfl-puka",
+    "aliases": [ "Puka", "Nacua", "Puka Nacua" ]
+  },
+  {
+    "name": "Mark Andrews",
+    "team": "BAL",
+    "position": "TE",
+    "externalId": "nfl-andrews",
+    "aliases": [ "Mandrews", "Andrews", "Mark Andrews" ]
+  },
+  {
+    "name": "Trey McBride",
+    "team": "ARI",
+    "position": "TE",
+    "externalId": "nfl-mcbride",
+    "aliases": [ "McBride", "Trey McBride" ]
+  },
+  {
+    "name": "Tank Bigsby",
+    "team": "JAX",
+    "position": "RB",
+    "externalId": "nfl-bigsby",
+    "aliases": [ "Tank", "Bigsby", "Tank Bigsby" ]
+  },
+  {
+    "name": "Malik Nabers",
+    "team": "NYG",
+    "position": "WR",
+    "externalId": "nfl-nabers",
+    "aliases": [ "Nabers", "Malik Nabers" ]
+  },
+  {
+    "name": "Kyle Pitts",
+    "team": "ATL",
+    "position": "TE",
+    "externalId": "nfl-pitts",
+    "aliases": [ "Pitts", "Kyle Pitts" ]
+  },
+  {
+    "name": "De'Von Achane",
+    "team": "MIA",
+    "position": "RB",
+    "externalId": "nfl-achane",
+    "aliases": [ "Achane", "DeVon Achane", "De'Von Achane" ]
+  },
+  {
+    "name": "Bijan Robinson",
+    "team": "ATL",
+    "position": "RB",
+    "externalId": "nfl-bijan",
+    "aliases": [ "Bijan", "Bijan Robinson" ]
+  },
+  {
+    "name": "Breece Hall",
+    "team": "NYJ",
+    "position": "RB",
+    "externalId": "nfl-breece",
+    "aliases": [ "Breece", "Breece Hall" ]
+  },
+  {
+    "name": "Garrett Wilson",
+    "team": "NYJ",
+    "position": "WR",
+    "externalId": "nfl-garrett-wilson",
+    "aliases": [ "Garrett Wilson", "G. Wilson" ]
+  },
+  {
+    "name": "Zay Flowers",
+    "team": "BAL",
+    "position": "WR",
+    "externalId": "nfl-zay",
+    "aliases": [ "Zay", "Flowers", "Zay Flowers" ]
+  },
+  {
+    "name": "Jaylen Waddle",
+    "team": "MIA",
+    "position": "WR",
+    "externalId": "nfl-waddle",
+    "aliases": [ "Waddle", "Jaylen Waddle" ]
+  },
+  {
+    "name": "Rome Odunze",
+    "team": "CHI",
+    "position": "WR",
+    "externalId": "nfl-odunze",
+    "aliases": [ "Rome", "Odunze", "Rome Odunze" ]
+  },
+  {
+    "name": "Drake London",
+    "team": "ATL",
+    "position": "WR",
+    "externalId": "nfl-london",
+    "aliases": [ "London", "Drake London" ]
+  },
+  {
+    "name": "Jayden Reed",
+    "team": "GB",
+    "position": "WR",
+    "externalId": "nfl-reed",
+    "aliases": [ "Reed", "Jayden Reed" ]
+  },
+  {
+    "name": "James Cook",
+    "team": "BUF",
+    "position": "RB",
+    "externalId": "nfl-james-cook",
+    "aliases": [ "James Cook", "J. Cook" ]
+  }
+]

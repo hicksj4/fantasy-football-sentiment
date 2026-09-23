@@ -1,0 +1,121 @@
+{
+  "SentimentLexicon": {
+    "PositiveTerms": [
+      "stud",
+      "monster",
+      "elite",
+      "league winner",
+      "smash start",
+      "must start",
+      "breakout",
+      "steal",
+      "buy low",
+      "buy high",
+      "rb1",
+      "wr1",
+      "te1",
+      "balling",
+      "cooking",
+      "beast",
+      "automatic",
+      "locked in",
+      "underrated",
+      "sneaky add"
+    ],
+    "NegativeTerms": [
+      "washed",
+      "bust",
+      "drop",
+      "bench",
+      "unstartable",
+      "decoy",
+      "goose egg",
+      "sell",
+      "dead",
+      "useless",
+      "panic",
+      "tilted",
+      "nervous",
+      "limited",
+      "hurt"
+    ],
+    "Intensifiers": [
+      "very",
+      "absolutely",
+      "total",
+      "really",
+      "super",
+      "insanely"
+    ],
+    "Negators": [
+      "not",
+      "never",
+      "no",
+      "dont",
+      "don't"
+    ]
+  },
+  "IntentLexicon": {
+    "Add": [
+      "add",
+      "must add",
+      "pick up",
+      "pickup",
+      "scoop",
+      "waiver",
+      "waivers",
+      "stash"
+    ],
+    "Drop": [
+      "drop",
+      "cut",
+      "dump"
+    ],
+    "Start": [
+      "start",
+      "smash start",
+      "must start",
+      "locked in"
+    ],
+    "Sit": [
+      "sit",
+      "bench",
+      "unstartable"
+    ],
+    "Buy": [
+      "buy",
+      "buy low",
+      "buy high"
+    ],
+    "Sell": [
+      "sell",
+      "selling",
+      "sell high"
+    ],
+    "Hold": [
+      "hold",
+      "holding"
+    ],
+    "Injury": [
+      "hurt",
+      "injury",
+      "injured",
+      "limited",
+      "questionable"
+    ],
+    "Hype": [
+      "hype",
+      "league winner",
+      "breakout",
+      "monster",
+      "balling",
+      "cooking"
+    ],
+    "Panic": [
+      "panic",
+      "nervous",
+      "tilted",
+      "dead"
+    ]
+  }
+}

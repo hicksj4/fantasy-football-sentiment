@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="FantasySentiment.Api/FantasySentiment.Api.csproj" />
+  <Project Path="FantasySentiment.Tests/FantasySentiment.Tests.csproj" />
+</Solution>
