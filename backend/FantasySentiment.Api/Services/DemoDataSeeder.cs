@@ -9,8 +9,10 @@ public sealed class DemoDataSeeder(
     FantasySentimentDbContext db,
     IWebHostEnvironment environment,
     PlayerMentionDetector mentionDetector,
-    FantasySentimentAnalyzer sentimentAnalyzer,
+    ISentimentAnalyzer sentimentAnalyzer,
+    MentionContextExtractor contextExtractor,
     FantasyIntentClassifier intentClassifier,
+    VoteWeightCalculator voteWeightCalculator,
     SnapshotAggregationService snapshotAggregationService,
     ILogger<DemoDataSeeder> logger)
 {
@@ -105,17 +107,34 @@ public sealed class DemoDataSeeder(
                 db.RedditComments.Add(comment);
                 await db.SaveChangesAsync(cancellationToken);
 
-                var sentiment = sentimentAnalyzer.Analyze(body);
+                var voteWeight = voteWeightCalculator.Calculate(comment.Score);
                 foreach (var match in mentionDetector.DetectMentions(body, players))
                 {
+                    var context = contextExtractor.ExtractContext(body, match);
+                    var sentiment = await sentimentAnalyzer.AnalyzeAsync(
+                        new TargetedSentimentRequest(body, context, match),
+                        cancellationToken);
+
                     db.PlayerMentions.Add(new PlayerMention
                     {
                         PlayerId = match.PlayerId,
                         CommentId = comment.Id,
                         CreatedAt = comment.CreatedAt,
-                        SentimentScore = sentiment.Score,
-                        SentimentCategory = sentiment.Category,
-                        Intent = intentClassifier.Classify(body, match)
+                        RawSentimentScore = sentiment.RawSentimentScore,
+                        FinalSentimentScore = sentiment.FinalSentimentScore,
+                        SentimentScore = sentiment.FinalSentimentScore,
+                        ModelSentimentScore = sentiment.ModelScore,
+                        RuleBasedSentimentScore = sentiment.RuleBasedScore,
+                        FantasyAdjustment = sentiment.FantasyAdjustment,
+                        SentimentCategory = sentiment.SentimentCategory,
+                        SentimentAnalyzer = sentiment.AnalyzerName,
+                        SentimentContext = Truncate(sentiment.Context, 1200) ?? string.Empty,
+                        SentimentDiagnostics = Truncate(sentiment.Diagnostics, 1000),
+                        MatchedAlias = Truncate(match.MatchedAlias, 160) ?? string.Empty,
+                        Intent = intentClassifier.Classify(body, match),
+                        RedditScore = comment.Score,
+                        VoteWeight = voteWeight,
+                        WeightedSentimentContribution = Math.Round(sentiment.FinalSentimentScore * voteWeight, 3)
                     });
                 }
 
@@ -189,6 +208,13 @@ public sealed class DemoDataSeeder(
         {
             comments.Add(body);
         }
+    }
+
+    private static string? Truncate(string? value, int maxLength)
+    {
+        return string.IsNullOrEmpty(value) || value.Length <= maxLength
+            ? value
+            : value[..maxLength];
     }
 
     private sealed record PlayerSeedDto(

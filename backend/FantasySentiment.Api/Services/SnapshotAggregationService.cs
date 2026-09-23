@@ -58,9 +58,23 @@ public sealed class SnapshotAggregationService(
             snapshot.PositiveCount = recentMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Positive);
             snapshot.NegativeCount = recentMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Negative);
             snapshot.NeutralCount = recentMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Neutral);
+            snapshot.RawSentimentScore = recentMentions.Count == 0
+                ? 0
+                : Math.Round(recentMentions.Average(mention => mention.RawSentimentScore), 3);
             snapshot.SentimentScore = recentMentions.Count == 0
                 ? 0
-                : Math.Round(recentMentions.Average(mention => mention.SentimentScore), 3);
+                : Math.Round(recentMentions.Average(mention => mention.FinalSentimentScore), 3);
+            snapshot.TotalRedditScore = recentMentions.Sum(mention => mention.RedditScore);
+            snapshot.TotalVoteWeight = Math.Round(recentMentions.Sum(mention => mention.VoteWeight), 3);
+            snapshot.AverageVoteWeight = recentMentions.Count == 0
+                ? 0
+                : Math.Round(recentMentions.Average(mention => mention.VoteWeight), 3);
+            snapshot.CommunitySentimentScore = snapshot.TotalVoteWeight == 0
+                ? 0
+                : Math.Round(recentMentions.Sum(mention => mention.WeightedSentimentContribution) / snapshot.TotalVoteWeight, 3);
+            var sampleConfidence = SampleConfidenceCalculator.Calculate(recentMentions.Count, snapshot.TotalVoteWeight);
+            snapshot.SampleStrengthScore = sampleConfidence.SampleStrengthScore;
+            snapshot.Confidence = sampleConfidence.Confidence;
             snapshot.AddCount = CountIntent(recentMentions, FantasyIntents.Add);
             snapshot.DropCount = CountIntent(recentMentions, FantasyIntents.Drop);
             snapshot.StartCount = CountIntent(recentMentions, FantasyIntents.Start);

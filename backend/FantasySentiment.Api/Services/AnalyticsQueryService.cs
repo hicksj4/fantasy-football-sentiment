@@ -72,6 +72,10 @@ public sealed class AnalyticsQueryService(FantasySentimentDbContext db)
                 snapshot.Timestamp,
                 snapshot.MentionCount,
                 snapshot.SentimentScore,
+                snapshot.RawSentimentScore,
+                snapshot.CommunitySentimentScore,
+                snapshot.SampleStrengthScore,
+                snapshot.Confidence,
                 snapshot.BuzzScore))
             .ToListAsync(cancellationToken);
     }
@@ -94,7 +98,14 @@ public sealed class AnalyticsQueryService(FantasySentimentDbContext db)
             {
                 PlayerId = group.Key,
                 Mentions = group.Count(),
-                Sentiment = group.Average(mention => mention.SentimentScore),
+                Sentiment = group.Average(mention => mention.FinalSentimentScore),
+                RawSentiment = group.Average(mention => mention.RawSentimentScore),
+                CommunitySentiment = group.Sum(mention => mention.VoteWeight) == 0
+                    ? 0
+                    : group.Sum(mention => mention.WeightedSentimentContribution) / group.Sum(mention => mention.VoteWeight),
+                TotalRedditScore = group.Sum(mention => mention.RedditScore),
+                TotalVoteWeight = group.Sum(mention => mention.VoteWeight),
+                AverageVoteWeight = group.Average(mention => mention.VoteWeight),
                 AddCount = group.Count(mention => mention.Intent == FantasyIntents.Add),
                 DropCount = group.Count(mention => mention.Intent == FantasyIntents.Drop),
                 StartCount = group.Count(mention => mention.Intent == FantasyIntents.Start),
@@ -129,6 +140,9 @@ public sealed class AnalyticsQueryService(FantasySentimentDbContext db)
             var latestSnapshot = groupedSnapshots?.Last;
             var firstSnapshot = groupedSnapshots?.First;
             var mentionCount = mentions?.Mentions ?? latestSnapshot?.MentionCount ?? 0;
+            var sampleConfidence = mentions is null
+                ? null
+                : SampleConfidenceCalculator.Calculate(mentions.Mentions, mentions.TotalVoteWeight);
 
             rows.Add(new DashboardPlayerDto(
                 player.Id,
@@ -138,7 +152,13 @@ public sealed class AnalyticsQueryService(FantasySentimentDbContext db)
                 mentionCount,
                 latestSnapshot?.BuzzScore ?? 1,
                 Math.Round(mentions?.Sentiment ?? latestSnapshot?.SentimentScore ?? 0, 3),
+                Math.Round(mentions?.RawSentiment ?? latestSnapshot?.RawSentimentScore ?? 0, 3),
+                Math.Round(mentions?.CommunitySentiment ?? latestSnapshot?.CommunitySentimentScore ?? 0, 3),
                 Math.Round((latestSnapshot?.SentimentScore ?? 0) - (firstSnapshot?.SentimentScore ?? 0), 3),
+                mentions?.TotalRedditScore ?? latestSnapshot?.TotalRedditScore ?? 0,
+                Math.Round(mentions?.AverageVoteWeight ?? latestSnapshot?.AverageVoteWeight ?? 0, 3),
+                sampleConfidence?.SampleStrengthScore ?? latestSnapshot?.SampleStrengthScore ?? 0,
+                sampleConfidence?.Confidence ?? latestSnapshot?.Confidence ?? "Low",
                 mentions?.AddCount ?? latestSnapshot?.AddCount ?? 0,
                 mentions?.DropCount ?? latestSnapshot?.DropCount ?? 0,
                 mentions?.StartCount ?? latestSnapshot?.StartCount ?? 0,
@@ -231,6 +251,12 @@ public sealed class AnalyticsQueryService(FantasySentimentDbContext db)
             mentions,
             snapshot?.BuzzScore ?? 1,
             snapshot?.SentimentScore ?? 0,
+            snapshot?.RawSentimentScore ?? 0,
+            snapshot?.CommunitySentimentScore ?? 0,
+            snapshot?.TotalRedditScore ?? 0,
+            snapshot?.AverageVoteWeight ?? 0,
+            snapshot?.SampleStrengthScore ?? 0,
+            snapshot?.Confidence ?? "Low",
             Math.Round(positive * 100.0 / denominator, 1),
             Math.Round(neutral * 100.0 / denominator, 1),
             Math.Round(negative * 100.0 / denominator, 1),

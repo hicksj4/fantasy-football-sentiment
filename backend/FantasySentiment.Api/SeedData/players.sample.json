@@ -7,6 +7,27 @@
     "aliases": [ "CMC", "McCaffrey", "Christian McCaffrey", "C. McCaffrey" ]
   },
   {
+    "name": "Brock Purdy",
+    "team": "SF",
+    "position": "QB",
+    "externalId": "nfl-purdy",
+    "aliases": [ "Purdy", "Brock Purdy" ]
+  },
+  {
+    "name": "Justin Jefferson",
+    "team": "MIN",
+    "position": "WR",
+    "externalId": "nfl-jefferson",
+    "aliases": [ "Jefferson", "Justin Jefferson", "JJettas" ]
+  },
+  {
+    "name": "Davante Adams",
+    "team": "LAR",
+    "position": "WR",
+    "externalId": "nfl-adams",
+    "aliases": [ "Adams", "Davante Adams" ]
+  },
+  {
     "name": "Puka Nacua",
     "team": "LAR",
     "position": "WR",
@@ -19,6 +40,13 @@
     "position": "TE",
     "externalId": "nfl-andrews",
     "aliases": [ "Mandrews", "Andrews", "Mark Andrews" ]
+  },
+  {
+    "name": "Isaiah Likely",
+    "team": "BAL",
+    "position": "TE",
+    "externalId": "nfl-likely",
+    "aliases": [ "Likely", "Isaiah Likely" ]
   },
   {
     "name": "Trey McBride",

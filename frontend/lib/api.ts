@@ -6,7 +6,13 @@ export type DashboardPlayer = {
   mentions: number;
   buzz: number;
   sentiment: number;
+  rawSentiment: number;
+  communitySentiment: number;
   sentimentChange: number;
+  totalRedditScore: number;
+  averageVoteWeight: number;
+  sampleStrengthScore: number;
+  confidence: string;
   addCount: number;
   dropCount: number;
   startCount: number;
@@ -34,6 +40,12 @@ export type PlayerMetrics = {
   mentions: number;
   buzz: number;
   sentiment: number;
+  rawSentiment: number;
+  communitySentiment: number;
+  totalRedditScore: number;
+  averageVoteWeight: number;
+  sampleStrengthScore: number;
+  confidence: string;
   positivePercent: number;
   neutralPercent: number;
   negativePercent: number;
@@ -53,6 +65,10 @@ export type HistoryPoint = {
   timestamp: string;
   mentions: number;
   sentiment: number;
+  rawSentiment: number;
+  communitySentiment: number;
+  sampleStrengthScore: number;
+  confidence: string;
   buzz: number;
 };
 

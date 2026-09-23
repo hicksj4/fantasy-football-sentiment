@@ -8,7 +8,14 @@ public sealed class PlayerSnapshot
     public int PositiveCount { get; set; }
     public int NegativeCount { get; set; }
     public int NeutralCount { get; set; }
+    public double RawSentimentScore { get; set; }
     public double SentimentScore { get; set; }
+    public double CommunitySentimentScore { get; set; }
+    public int TotalRedditScore { get; set; }
+    public double TotalVoteWeight { get; set; }
+    public double AverageVoteWeight { get; set; }
+    public double SampleStrengthScore { get; set; }
+    public string Confidence { get; set; } = "Low";
     public int AddCount { get; set; }
     public int DropCount { get; set; }
     public int StartCount { get; set; }

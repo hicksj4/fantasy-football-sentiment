@@ -11,8 +11,10 @@ public sealed class RedditIngestionService(
     FantasySentimentDbContext db,
     IRedditDataProvider redditDataProvider,
     PlayerMentionDetector mentionDetector,
-    FantasySentimentAnalyzer sentimentAnalyzer,
+    ISentimentAnalyzer sentimentAnalyzer,
+    MentionContextExtractor contextExtractor,
     FantasyIntentClassifier intentClassifier,
+    VoteWeightCalculator voteWeightCalculator,
     IOptions<RedditOptions> options,
     ILogger<RedditIngestionService> logger)
 {
@@ -51,6 +53,7 @@ public sealed class RedditIngestionService(
 
                     if (existingComment is not null)
                     {
+                        await RefreshExistingCommentScoreAsync(existingComment, commentData.Score, cancellationToken);
                         continue;
                     }
 
@@ -115,7 +118,7 @@ public sealed class RedditIngestionService(
         CancellationToken cancellationToken)
     {
         var matches = mentionDetector.DetectMentions(comment.Body, players);
-        var sentiment = sentimentAnalyzer.Analyze(comment.Body);
+        var voteWeight = voteWeightCalculator.Calculate(comment.Score);
         var added = 0;
 
         foreach (var match in matches)
@@ -129,19 +132,69 @@ public sealed class RedditIngestionService(
                 continue;
             }
 
+            var context = contextExtractor.ExtractContext(comment.Body, match);
+            var sentiment = await sentimentAnalyzer.AnalyzeAsync(
+                new TargetedSentimentRequest(comment.Body, context, match),
+                cancellationToken);
+
             db.PlayerMentions.Add(new PlayerMention
             {
                 PlayerId = match.PlayerId,
                 CommentId = comment.Id,
                 CreatedAt = comment.CreatedAt,
-                SentimentScore = sentiment.Score,
-                SentimentCategory = sentiment.Category,
-                Intent = intentClassifier.Classify(comment.Body, match)
+                RawSentimentScore = sentiment.RawSentimentScore,
+                FinalSentimentScore = sentiment.FinalSentimentScore,
+                SentimentScore = sentiment.FinalSentimentScore,
+                ModelSentimentScore = sentiment.ModelScore,
+                RuleBasedSentimentScore = sentiment.RuleBasedScore,
+                FantasyAdjustment = sentiment.FantasyAdjustment,
+                SentimentCategory = sentiment.SentimentCategory,
+                SentimentAnalyzer = sentiment.AnalyzerName,
+                SentimentContext = Truncate(sentiment.Context, 1200) ?? string.Empty,
+                SentimentDiagnostics = Truncate(sentiment.Diagnostics, 1000),
+                MatchedAlias = Truncate(match.MatchedAlias, 160) ?? string.Empty,
+                Intent = intentClassifier.Classify(comment.Body, match),
+                RedditScore = comment.Score,
+                VoteWeight = voteWeight,
+                WeightedSentimentContribution = Math.Round(sentiment.FinalSentimentScore * voteWeight, 3)
             });
             added++;
         }
 
         await db.SaveChangesAsync(cancellationToken);
         return added;
+    }
+
+    private async Task RefreshExistingCommentScoreAsync(
+        RedditComment existingComment,
+        int latestScore,
+        CancellationToken cancellationToken)
+    {
+        if (existingComment.Score == latestScore)
+        {
+            return;
+        }
+
+        existingComment.Score = latestScore;
+        var voteWeight = voteWeightCalculator.Calculate(latestScore);
+        var mentions = await db.PlayerMentions
+            .Where(mention => mention.CommentId == existingComment.Id)
+            .ToListAsync(cancellationToken);
+
+        foreach (var mention in mentions)
+        {
+            mention.RedditScore = latestScore;
+            mention.VoteWeight = voteWeight;
+            mention.WeightedSentimentContribution = Math.Round(mention.FinalSentimentScore * voteWeight, 3);
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+    }
+
+    private static string? Truncate(string? value, int maxLength)
+    {
+        return string.IsNullOrEmpty(value) || value.Length <= maxLength
+            ? value
+            : value[..maxLength];
     }
 }
