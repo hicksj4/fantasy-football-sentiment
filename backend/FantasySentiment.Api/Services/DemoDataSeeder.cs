@@ -92,6 +92,15 @@ public sealed class DemoDataSeeder(
 
             var bodies = BuildDemoComments(timestamp, now, random);
             post.CommentCount = bodies.Count;
+            post.Score = random.Next(5, 250);
+            post.PreviousCommentCount = post.CommentCount;
+            post.LastObservedAt = timestamp;
+            post.LastObservedCommentCountAt = timestamp;
+            post.LastAnalyzedAt = timestamp;
+            post.LastAnalyzedCommentCount = post.CommentCount;
+            post.AnalysisStatus = RedditAnalysisStatuses.Analyzed;
+            post.PostType = RedditPostTypes.Normal;
+            post.AnalysisStatusReason = "seeded historical demo discussion";
 
             foreach (var body in bodies)
             {

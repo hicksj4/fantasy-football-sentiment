@@ -1,6 +1,7 @@
 using FantasySentiment.Api.Data;
 using FantasySentiment.Api.Domain;
 using FantasySentiment.Api.Options;
+using FantasySentiment.Api.Providers;
 using FantasySentiment.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -57,6 +58,53 @@ public sealed class AnalyticsLogicTests
     }
 
     [Fact]
+    public async Task VaderSentiment_HandlesPositiveNegativeNegationAndIntensifiers()
+    {
+        var analyzer = VaderAnalyzer();
+        var mention = TestMention();
+
+        var positive = await analyzer.AnalyzeAsync(
+            new TargetedSentimentRequest("CMC is very good.", "CMC is very good.", mention),
+            CancellationToken.None);
+        var negative = await analyzer.AnalyzeAsync(
+            new TargetedSentimentRequest("CMC is very bad.", "CMC is very bad.", mention),
+            CancellationToken.None);
+        var negated = await analyzer.AnalyzeAsync(
+            new TargetedSentimentRequest("CMC is not bad at all.", "CMC is not bad at all.", mention),
+            CancellationToken.None);
+        var basePositive = await analyzer.AnalyzeAsync(
+            new TargetedSentimentRequest("CMC is good.", "CMC is good.", mention),
+            CancellationToken.None);
+
+        Assert.Equal(SentimentCategories.Positive, positive.SentimentCategory);
+        Assert.Equal(SentimentCategories.Negative, negative.SentimentCategory);
+        Assert.Equal(SentimentCategories.Positive, negated.SentimentCategory);
+        Assert.True(positive.RawSentimentScore > basePositive.RawSentimentScore);
+    }
+
+    [Theory]
+    [InlineData("CMC is absolutely disgusting.", "Christian McCaffrey", SentimentCategories.Positive)]
+    [InlineData("Jefferson is washed.", "Justin Jefferson", SentimentCategories.Negative)]
+    [InlineData("CMC is a league winner.", "Christian McCaffrey", SentimentCategories.Positive)]
+    public async Task VaderSentiment_AppliesFantasyLanguageAdjustments(
+        string text,
+        string playerName,
+        string expectedCategory)
+    {
+        var players = TestPlayers();
+        var detector = new PlayerMentionDetector();
+        var contextExtractor = new MentionContextExtractor();
+        var analyzer = VaderAnalyzer();
+        var match = detector.DetectMentions(text, players).Single(match => match.PlayerName == playerName);
+
+        var result = await AnalyzeAsync(text, match, contextExtractor, analyzer);
+
+        Assert.Equal(expectedCategory, result.SentimentCategory);
+        Assert.NotNull(result.ModelScore);
+        Assert.Contains("vader=", result.Diagnostics);
+    }
+
+    [Fact]
     public void IntentClassifier_ClassifiesDropForBothSides()
     {
         var classifier = new FantasyIntentClassifier(new TestOptionsMonitor<IntentLexiconOptions>(Intents()));
@@ -85,6 +133,61 @@ public sealed class AnalyticsLogicTests
 
         Assert.Equal(SentimentCategories.Positive, cmc.SentimentCategory);
         Assert.Equal(SentimentCategories.Negative, purdy.SentimentCategory);
+    }
+
+    [Fact]
+    public async Task VaderTargetedSentiment_UsesMentionContextForMultiplePlayers()
+    {
+        var players = TestPlayers();
+        var detector = new PlayerMentionDetector();
+        var contextExtractor = new MentionContextExtractor();
+        var analyzer = VaderAnalyzer();
+        var text = "CMC looked great but Purdy was awful.";
+        var matches = detector.DetectMentions(text, players);
+
+        var cmc = await AnalyzeAsync(text, matches.Single(match => match.PlayerName == "Christian McCaffrey"), contextExtractor, analyzer);
+        var purdy = await AnalyzeAsync(text, matches.Single(match => match.PlayerName == "Brock Purdy"), contextExtractor, analyzer);
+
+        Assert.Equal(SentimentCategories.Positive, cmc.SentimentCategory);
+        Assert.Equal(SentimentCategories.Negative, purdy.SentimentCategory);
+    }
+
+    [Fact]
+    public void ThreadContextBuilder_IncludesThreadParentCommentAndTarget()
+    {
+        var builder = new ThreadContextBuilder();
+        var context = builder.Build(
+            "Baker Mayfield unlocks the rookie WR room",
+            "Baker looked shaky early, so I'm not buying every pass catcher.",
+            "Egbuka is a league winner if Baker keeps pushing volume.",
+            "Egbuka is a league winner",
+            "Emeka Egbuka");
+
+        Assert.Contains("Thread title: Baker Mayfield", context);
+        Assert.Contains("Parent: Baker looked shaky", context);
+        Assert.Contains("Comment: Egbuka is a league winner", context);
+        Assert.Contains("Target context: Egbuka is a league winner", context);
+        Assert.Contains("Target: Emeka Egbuka", context);
+    }
+
+    [Fact]
+    public async Task ThreadContextBuilder_AllowsTargetSpecificFantasyCorrection()
+    {
+        var builder = new ThreadContextBuilder();
+        var analyzer = VaderAnalyzer();
+        var mention = new PlayerMentionMatch(6, "Emeka Egbuka", "TB", "WR", "Egbuka", 0, 6);
+        var context = builder.Build(
+            "Baker Mayfield unlocks the rookie WR room",
+            "Baker looked shaky early, so I'm not buying every pass catcher.",
+            "Egbuka is a league winner if Baker keeps pushing volume.",
+            "Egbuka is a league winner",
+            "Emeka Egbuka");
+
+        var result = await analyzer.AnalyzeAsync(
+            new TargetedSentimentRequest("Egbuka is a league winner if Baker keeps pushing volume.", context, mention),
+            CancellationToken.None);
+
+        Assert.Equal(SentimentCategories.Positive, result.SentimentCategory);
     }
 
     [Theory]
@@ -164,6 +267,111 @@ public sealed class AnalyticsLogicTests
         var buzz = calculator.Calculate(15, TimeSpan.FromHours(1), 24, TimeSpan.FromHours(24));
 
         Assert.True(buzz > 10);
+    }
+
+    [Fact]
+    public void RedditPostAnalysisDecider_UsesThresholdsAndPostTypes()
+    {
+        var now = DateTimeOffset.UtcNow;
+        var decider = new RedditPostAnalysisDecider(Options.Create(new RedditAnalysisOptions()));
+
+        var quiet = decider.Decide(Post("p1", "First look at sleeper rankings", now.AddMinutes(-20), 39, 20), now);
+        var scored = decider.Decide(Post("p2", "Sleeper rankings", now.AddMinutes(-20), 40, 50), now);
+        var normal = decider.Decide(Post("p3", "Waiver reactions", now.AddMinutes(-20), 100, 5), now);
+        var news = decider.Decide(Post("p4", "Injury update: starter questionable", now.AddMinutes(-20), 30, 3), now);
+
+        Assert.Equal(RedditAnalysisStatuses.Collecting, quiet.Status);
+        Assert.Equal(RedditPostTypes.Normal, quiet.PostType);
+        Assert.Equal(RedditAnalysisStatuses.ReadyForAnalysis, scored.Status);
+        Assert.Equal(RedditAnalysisStatuses.ReadyForAnalysis, normal.Status);
+        Assert.Equal(RedditPostTypes.ImportantNews, news.PostType);
+        Assert.Equal(RedditAnalysisStatuses.ReadyForAnalysis, news.Status);
+    }
+
+    [Fact]
+    public void RedditPostAnalysisDecider_WaitsForGameThreadCooldown()
+    {
+        var now = DateTimeOffset.UtcNow;
+        var decider = new RedditPostAnalysisDecider(Options.Create(new RedditAnalysisOptions()));
+        var active = Post("p1", "GAME THREAD: Sunday chaos", now.AddHours(-4), 6067, 230);
+        active.PreviousCommentCount = 6040;
+        active.LastObservedAt = now;
+        active.LastObservedCommentCountAt = now.AddMinutes(-20);
+
+        var decision = decider.Decide(active, now);
+
+        Assert.Equal(RedditPostTypes.GameThread, decision.PostType);
+        Assert.Equal(RedditAnalysisStatuses.Collecting, decision.Status);
+        Assert.Contains("game still active", decision.Reason);
+
+        active.PreviousCommentCount = 6061;
+        decision = decider.Decide(active, now);
+
+        Assert.Equal(RedditAnalysisStatuses.ReadyForAnalysis, decision.Status);
+        Assert.Contains("game activity cooled", decision.Reason);
+    }
+
+    [Fact]
+    public void RedditPostAnalysisDecider_UsesIncrementalThresholdAfterAnalysis()
+    {
+        var now = DateTimeOffset.UtcNow;
+        var decider = new RedditPostAnalysisDecider(Options.Create(new RedditAnalysisOptions
+        {
+            IncrementalMinimumNewComments = 2
+        }));
+        var post = Post("p1", "Waiver reactions", now.AddHours(-1), 101, 20);
+        post.LastAnalyzedAt = now.AddMinutes(-10);
+        post.LastAnalyzedCommentCount = 100;
+
+        var oneNewComment = decider.Decide(post, now);
+        post.CommentCount = 102;
+        var twoNewComments = decider.Decide(post, now);
+
+        Assert.Equal(RedditAnalysisStatuses.Analyzed, oneNewComment.Status);
+        Assert.Equal(RedditAnalysisStatuses.ReadyForAnalysis, twoNewComments.Status);
+    }
+
+    [Fact]
+    public async Task RedditIngestion_AnalyzesOnlyNewOrChangedCommentsOnIncrementalRun()
+    {
+        var options = new DbContextOptionsBuilder<FantasySentimentDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
+            .Options;
+
+        await using var db = new FantasySentimentDbContext(options);
+        db.Players.Add(new Player
+        {
+            Name = "Garrett Wilson",
+            Team = "NYJ",
+            Position = "WR",
+            Aliases = [new PlayerAlias { Alias = "Garrett Wilson" }]
+        });
+        await db.SaveChangesAsync();
+
+        var provider = new IncrementalRedditDataProvider();
+        var service = CreateIngestionService(db, provider);
+
+        await service.DiscoverPostsAsync(CancellationToken.None);
+        var firstResult = await service.AnalyzeReadyPostsAsync(CancellationToken.None);
+
+        provider.Phase = 2;
+        await service.DiscoverPostsAsync(CancellationToken.None);
+        var secondResult = await service.AnalyzeReadyPostsAsync(CancellationToken.None);
+
+        var mentions = await db.PlayerMentions
+            .Include(mention => mention.Comment)
+            .OrderBy(mention => mention.Comment.RedditId)
+            .ToListAsync();
+        var post = await db.RedditPosts.SingleAsync();
+
+        Assert.Equal(1, firstResult.PlayerMentions);
+        Assert.Equal(1, secondResult.PlayerMentions);
+        Assert.Equal(2, mentions.Count);
+        Assert.Equal(20, mentions[0].RedditScore);
+        Assert.Equal("incremental-post-c1", mentions[0].Comment.RedditId);
+        Assert.Equal("incremental-post-c2", mentions[1].Comment.RedditId);
+        Assert.Equal(RedditAnalysisStatuses.Analyzed, post.AnalysisStatus);
+        Assert.Equal(2, post.LastAnalyzedCommentCount);
     }
 
     [Fact]
@@ -365,8 +573,97 @@ public sealed class AnalyticsLogicTests
                 Team = "NYJ",
                 Position = "RB",
                 Aliases = [new PlayerAlias { Alias = "Breece" }]
+            },
+            new Player
+            {
+                Id = 6,
+                Name = "Emeka Egbuka",
+                Team = "TB",
+                Position = "WR",
+                Aliases = [new PlayerAlias { Alias = "Egbuka" }]
+            },
+            new Player
+            {
+                Id = 7,
+                Name = "Baker Mayfield",
+                Team = "TB",
+                Position = "QB",
+                Aliases = [new PlayerAlias { Alias = "Baker" }]
             }
         ];
+    }
+
+    private static VaderSentimentAnalyzer VaderAnalyzer()
+    {
+        return new VaderSentimentAnalyzer(new FantasySentimentAnalyzer(new TestOptionsMonitor<SentimentLexiconOptions>(Lexicon())));
+    }
+
+    private static PlayerMentionMatch TestMention()
+    {
+        return new PlayerMentionMatch(1, "Christian McCaffrey", "SF", "RB", "CMC", 0, 3);
+    }
+
+    private static RedditPost Post(
+        string redditId,
+        string title,
+        DateTimeOffset createdAt,
+        int commentCount,
+        int score)
+    {
+        return new RedditPost
+        {
+            RedditId = redditId,
+            Subreddit = "fantasyfootball",
+            Title = title,
+            CreatedAt = createdAt,
+            Url = $"https://reddit.example/{redditId}",
+            CommentCount = commentCount,
+            Score = score,
+            LastObservedAt = DateTimeOffset.UtcNow,
+            AnalysisStatus = RedditAnalysisStatuses.Discovered,
+            PostType = RedditPostTypes.Normal
+        };
+    }
+
+    private static RedditIngestionService CreateIngestionService(
+        FantasySentimentDbContext db,
+        IRedditDataProvider provider)
+    {
+        var analysisOptions = new RedditAnalysisOptions
+        {
+            MaxPostsPerAnalysisBatch = 5,
+            IncrementalMinimumNewComments = 1,
+            NormalPosts = new NormalPostAnalysisOptions
+            {
+                MinimumComments = 1,
+                MinimumCommentsWithScore = 1,
+                MinimumPostScore = 0
+            }
+        };
+
+        return new RedditIngestionService(
+            db,
+            provider,
+            new RedditPostAnalysisDecider(Options.Create(analysisOptions)),
+            new PlayerMentionDetector(),
+            VaderAnalyzer(),
+            new MentionContextExtractor(),
+            new ThreadContextBuilder(),
+            new FantasyIntentClassifier(new TestOptionsMonitor<IntentLexiconOptions>(Intents())),
+            new VoteWeightCalculator(),
+            new SnapshotAggregationService(
+                db,
+                new BuzzScoreCalculator(),
+                Options.Create(new SnapshotOptions { IntervalMinutes = 5, RecentWindowMinutes = 60, BaselineWindowHours = 24 }),
+                NullLogger<SnapshotAggregationService>.Instance),
+            Options.Create(new RedditOptions
+            {
+                UseMockReddit = true,
+                Subreddits = ["fantasyfootball"],
+                FetchLookbackMinutes = 240
+            }),
+            Options.Create(analysisOptions),
+            NullLogger<RedditIngestionService>.Instance);
     }
 
     private static ValueTask<TargetedSentimentResult> AnalyzeAsync(
@@ -404,6 +701,62 @@ public sealed class AnalyticsLogicTests
             VoteWeight = voteWeight,
             WeightedSentimentContribution = Math.Round(sentiment * voteWeight, 3)
         });
+    }
+
+    private sealed class IncrementalRedditDataProvider : IRedditDataProvider
+    {
+        private readonly DateTimeOffset _createdAt = DateTimeOffset.UtcNow.AddMinutes(-30);
+
+        public int Phase { get; set; } = 1;
+
+        public Task<IReadOnlyList<RedditPostData>> DiscoverRecentPostsAsync(
+            string subreddit,
+            DateTimeOffset since,
+            CancellationToken cancellationToken)
+        {
+            IReadOnlyList<RedditPostData> posts =
+            [
+                new RedditPostData(
+                    "incremental-post",
+                    subreddit,
+                    "Garrett Wilson start sit reactions",
+                    _createdAt,
+                    "https://reddit.example/incremental-post",
+                    100,
+                    Phase >= 2 ? 2 : 1)
+            ];
+
+            return Task.FromResult(posts);
+        }
+
+        public Task<IReadOnlyList<RedditCommentData>> FetchCommentsAsync(
+            string subreddit,
+            string postRedditId,
+            DateTimeOffset postCreatedAt,
+            CancellationToken cancellationToken)
+        {
+            var comments = new List<RedditCommentData>
+            {
+                new(
+                    "incremental-post-c1",
+                    null,
+                    "Garrett Wilson usage is still elite.",
+                    postCreatedAt.AddMinutes(5),
+                    Phase >= 2 ? 20 : 5)
+            };
+
+            if (Phase >= 2)
+            {
+                comments.Add(new RedditCommentData(
+                    "incremental-post-c2",
+                    "incremental-post-c1",
+                    "Garrett Wilson looks washed if this offense keeps stalling.",
+                    postCreatedAt.AddMinutes(10),
+                    3));
+            }
+
+            return Task.FromResult<IReadOnlyList<RedditCommentData>>(comments);
+        }
     }
 }
 

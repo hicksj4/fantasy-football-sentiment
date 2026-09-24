@@ -16,7 +16,7 @@ public sealed class RedditApiDataProvider(
     private string? _accessToken;
     private DateTimeOffset _accessTokenExpiresAt;
 
-    public async Task<IReadOnlyList<RedditPostData>> FetchRecentPostsAsync(
+    public async Task<IReadOnlyList<RedditPostData>> DiscoverRecentPostsAsync(
         string subreddit,
         DateTimeOffset since,
         CancellationToken cancellationToken)
@@ -55,16 +55,14 @@ public sealed class RedditApiDataProvider(
             }
 
             var redditId = data.GetProperty("id").GetString() ?? string.Empty;
-            var comments = await FetchCommentsAsync(subreddit, redditId, createdAt, cancellationToken);
-
             posts.Add(new RedditPostData(
                 redditId,
                 subreddit,
                 data.GetProperty("title").GetString() ?? "(untitled)",
                 createdAt,
                 data.TryGetProperty("url", out var url) ? url.GetString() : null,
-                data.TryGetProperty("num_comments", out var count) ? count.GetInt32() : comments.Count,
-                comments));
+                data.TryGetProperty("score", out var score) ? score.GetInt32() : 0,
+                data.TryGetProperty("num_comments", out var count) ? count.GetInt32() : 0));
         }
 
         logger.LogInformation(
@@ -75,7 +73,7 @@ public sealed class RedditApiDataProvider(
         return posts;
     }
 
-    private async Task<IReadOnlyList<RedditCommentData>> FetchCommentsAsync(
+    public async Task<IReadOnlyList<RedditCommentData>> FetchCommentsAsync(
         string subreddit,
         string postId,
         DateTimeOffset postCreatedAt,

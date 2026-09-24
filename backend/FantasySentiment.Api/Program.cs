@@ -25,6 +25,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.Configure<RedditOptions>(builder.Configuration.GetSection("Reddit"));
+builder.Services.Configure<RedditAnalysisOptions>(builder.Configuration.GetSection("RedditAnalysis"));
 builder.Services.Configure<SnapshotOptions>(builder.Configuration.GetSection("Snapshots"));
 builder.Services.Configure<SentimentOptions>(builder.Configuration.GetSection("Sentiment"));
 builder.Services.Configure<SentimentLexiconOptions>(builder.Configuration.GetSection("SentimentLexicon"));
@@ -40,6 +41,7 @@ builder.Services.AddSingleton<PlayerMentionDetector>();
 builder.Services.AddSingleton<MentionContextExtractor>();
 builder.Services.AddSingleton<VoteWeightCalculator>();
 builder.Services.AddSingleton<FantasySentimentAnalyzer>();
+builder.Services.AddSingleton<VaderSentimentAnalyzer>();
 builder.Services.AddSingleton<RuleBasedFantasySentimentAnalyzer>();
 builder.Services.AddSingleton<RobertaSentimentAnalyzer>();
 builder.Services.AddSingleton<HybridSentimentAnalyzer>();
@@ -49,6 +51,7 @@ builder.Services.AddSingleton<ISentimentAnalyzer>(provider =>
     var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<SentimentOptions>>().Value;
     return options.Mode.Trim().ToLowerInvariant() switch
     {
+        "vader" => provider.GetRequiredService<VaderSentimentAnalyzer>(),
         "rulebased" or "rule-based" => provider.GetRequiredService<RuleBasedFantasySentimentAnalyzer>(),
         "roberta" => provider.GetRequiredService<RobertaSentimentAnalyzer>(),
         "hybrid" => provider.GetRequiredService<HybridSentimentAnalyzer>(),
@@ -58,6 +61,8 @@ builder.Services.AddSingleton<ISentimentAnalyzer>(provider =>
 });
 builder.Services.AddSingleton<FantasyIntentClassifier>();
 builder.Services.AddSingleton<BuzzScoreCalculator>();
+builder.Services.AddSingleton<RedditPostAnalysisDecider>();
+builder.Services.AddSingleton<ThreadContextBuilder>();
 builder.Services.AddScoped<SnapshotAggregationService>();
 builder.Services.AddScoped<RedditIngestionService>();
 builder.Services.AddScoped<AnalyticsQueryService>();
@@ -74,8 +79,8 @@ builder.Services.AddScoped<IRedditDataProvider>(provider =>
 });
 
 builder.Services.AddHostedService<StartupHostedService>();
-builder.Services.AddHostedService<RedditIngestionWorker>();
-builder.Services.AddHostedService<SnapshotAggregationWorker>();
+builder.Services.AddHostedService<RedditDiscoveryWorker>();
+builder.Services.AddHostedService<RedditAnalysisWorker>();
 
 var app = builder.Build();
 
@@ -92,8 +97,50 @@ api.MapGet("/health", () => Results.Ok(new
 {
     status = "ok",
     timestamp = DateTimeOffset.UtcNow,
-    mockReddit = app.Configuration.GetValue("Reddit:UseMockReddit", true)
+    mockReddit = app.Configuration.GetValue("Reddit:UseMockReddit", true),
+    sentimentMode = app.Configuration.GetValue("Sentiment:Mode", SentimentModes.Vader)
 }));
+
+if (app.Environment.IsDevelopment())
+{
+    api.MapGet("/debug/reddit-posts", async (
+        FantasySentimentDbContext db,
+        CancellationToken cancellationToken) =>
+    {
+        var posts = await db.RedditPosts
+            .AsNoTracking()
+            .OrderByDescending(post => post.LastObservedAt)
+            .Take(50)
+            .Select(post => new
+            {
+                post.RedditId,
+                post.Title,
+                post.PostType,
+                post.CommentCount,
+                post.Score,
+                post.AnalysisStatus,
+                post.AnalysisStatusReason,
+                post.LastObservedAt,
+                post.LastAnalyzedAt,
+                post.LastAnalyzedCommentCount
+            })
+            .ToListAsync(cancellationToken);
+
+        return Results.Ok(posts.Select(post => new
+        {
+            post.RedditId,
+            post.Title,
+            post.PostType,
+            post.CommentCount,
+            post.Score,
+            post.AnalysisStatus,
+            post.AnalysisStatusReason,
+            post.LastObservedAt,
+            post.LastAnalyzedAt,
+            NewCommentsSinceLastAnalysis = Math.Max(0, post.CommentCount - post.LastAnalyzedCommentCount)
+        }));
+    });
+}
 
 api.MapGet("/players", async (
     string? search,
@@ -294,10 +341,21 @@ static void ApplyEnvironmentOverrides(ConfigurationManager configuration)
     Override("REDDIT_CLIENT_ID", "Reddit:ClientId");
     Override("REDDIT_CLIENT_SECRET", "Reddit:ClientSecret");
     Override("REDDIT_USER_AGENT", "Reddit:UserAgent");
+    Override("REDDIT_FETCH_LOOKBACK_MINUTES", "Reddit:FetchLookbackMinutes");
     Override("SENTIMENT_MODE", "Sentiment:Mode");
     Override("SENTIMENT_ROBERTA_ENABLED", "Sentiment:Roberta:Enabled");
     Override("SENTIMENT_ROBERTA_ONNX_MODEL_PATH", "Sentiment:Roberta:OnnxModelPath");
     Override("SENTIMENT_ROBERTA_TOKENIZER_PATH", "Sentiment:Roberta:TokenizerPath");
+    Override("REDDIT_ANALYSIS_DISCOVERY_INTERVAL_MINUTES", "RedditAnalysis:DiscoveryIntervalMinutes");
+    Override("REDDIT_ANALYSIS_ANALYSIS_INTERVAL_MINUTES", "RedditAnalysis:AnalysisIntervalMinutes");
+    Override("REDDIT_ANALYSIS_NORMAL_MINIMUM_COMMENTS", "RedditAnalysis:NormalPosts:MinimumComments");
+    Override("REDDIT_ANALYSIS_NORMAL_MINIMUM_COMMENTS_WITH_SCORE", "RedditAnalysis:NormalPosts:MinimumCommentsWithScore");
+    Override("REDDIT_ANALYSIS_NORMAL_MINIMUM_POST_SCORE", "RedditAnalysis:NormalPosts:MinimumPostScore");
+    Override("REDDIT_ANALYSIS_IMPORTANT_NEWS_MINIMUM_COMMENTS", "RedditAnalysis:ImportantNews:MinimumComments");
+    Override("REDDIT_ANALYSIS_GAME_MINIMUM_COMMENTS", "RedditAnalysis:GameThreads:MinimumComments");
+    Override("REDDIT_ANALYSIS_GAME_MINIMUM_AGE_MINUTES", "RedditAnalysis:GameThreads:MinimumAgeMinutes");
+    Override("REDDIT_ANALYSIS_GAME_COOLDOWN_WINDOW_MINUTES", "RedditAnalysis:GameThreads:CooldownWindowMinutes");
+    Override("REDDIT_ANALYSIS_GAME_MAX_NEW_COMMENTS_DURING_COOLDOWN", "RedditAnalysis:GameThreads:MaximumNewCommentsDuringCooldown");
 
     void Override(string envName, string configKey)
     {

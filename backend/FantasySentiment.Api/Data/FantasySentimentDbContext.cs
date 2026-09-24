@@ -36,8 +36,12 @@ public sealed class FantasySentimentDbContext(DbContextOptions<FantasySentimentD
             entity.Property(post => post.Subreddit).HasMaxLength(80);
             entity.Property(post => post.Title).HasMaxLength(400);
             entity.Property(post => post.Url).HasMaxLength(600);
+            entity.Property(post => post.AnalysisStatus).HasMaxLength(32);
+            entity.Property(post => post.PostType).HasMaxLength(32);
+            entity.Property(post => post.AnalysisStatusReason).HasMaxLength(500);
             entity.HasIndex(post => post.RedditId).IsUnique();
             entity.HasIndex(post => post.CreatedAt);
+            entity.HasIndex(post => post.AnalysisStatus);
         });
 
         modelBuilder.Entity<RedditComment>(entity =>

@@ -4,16 +4,16 @@ using Microsoft.Extensions.Options;
 
 namespace FantasySentiment.Api.Workers;
 
-public sealed class RedditIngestionWorker(
+public sealed class RedditDiscoveryWorker(
     IServiceScopeFactory scopeFactory,
-    IOptions<RedditOptions> options,
-    ILogger<RedditIngestionWorker> logger) : BackgroundService
+    IOptions<RedditAnalysisOptions> options,
+    ILogger<RedditDiscoveryWorker> logger) : BackgroundService
 {
-    private readonly RedditOptions _options = options.Value;
+    private readonly RedditAnalysisOptions _options = options.Value;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var interval = TimeSpan.FromSeconds(Math.Max(15, _options.IngestionIntervalSeconds));
+        var interval = TimeSpan.FromMinutes(Math.Max(1, _options.DiscoveryIntervalMinutes));
 
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -21,7 +21,7 @@ public sealed class RedditIngestionWorker(
             {
                 using var scope = scopeFactory.CreateScope();
                 var ingestion = scope.ServiceProvider.GetRequiredService<RedditIngestionService>();
-                await ingestion.RunOnceAsync(stoppingToken);
+                await ingestion.DiscoverPostsAsync(stoppingToken);
             }
             catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
             {
@@ -29,7 +29,7 @@ public sealed class RedditIngestionWorker(
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Reddit ingestion worker failed.");
+                logger.LogError(ex, "Reddit discovery worker failed.");
             }
 
             await Task.Delay(interval, stoppingToken);
