@@ -27,6 +27,7 @@ builder.Services.AddCors(options =>
 builder.Services.Configure<RedditOptions>(builder.Configuration.GetSection("Reddit"));
 builder.Services.Configure<RedditAnalysisOptions>(builder.Configuration.GetSection("RedditAnalysis"));
 builder.Services.Configure<SnapshotOptions>(builder.Configuration.GetSection("Snapshots"));
+builder.Services.Configure<DashboardHighlightOptions>(builder.Configuration.GetSection("DashboardHighlights"));
 builder.Services.Configure<SentimentOptions>(builder.Configuration.GetSection("Sentiment"));
 builder.Services.Configure<SentimentLexiconOptions>(builder.Configuration.GetSection("SentimentLexicon"));
 builder.Services.Configure<IntentLexiconOptions>(builder.Configuration.GetSection("IntentLexicon"));
@@ -222,6 +223,15 @@ api.MapGet("/buzz", async (
         .Take(limit ?? 20));
 });
 
+api.MapGet("/highlights", async (
+    string? window,
+    AnalyticsQueryService analytics,
+    CancellationToken cancellationToken) =>
+{
+    var highlights = await analytics.GetHighlightsAsync(ParseWindow(window), cancellationToken);
+    return Results.Ok(highlights);
+});
+
 api.MapGet("/sentiment/risers", async (
     string? window,
     int? limit,
@@ -356,6 +366,11 @@ static void ApplyEnvironmentOverrides(ConfigurationManager configuration)
     Override("REDDIT_ANALYSIS_GAME_MINIMUM_AGE_MINUTES", "RedditAnalysis:GameThreads:MinimumAgeMinutes");
     Override("REDDIT_ANALYSIS_GAME_COOLDOWN_WINDOW_MINUTES", "RedditAnalysis:GameThreads:CooldownWindowMinutes");
     Override("REDDIT_ANALYSIS_GAME_MAX_NEW_COMMENTS_DURING_COOLDOWN", "RedditAnalysis:GameThreads:MaximumNewCommentsDuringCooldown");
+    Override("DASHBOARD_HIGHLIGHT_MINIMUM_MENTIONS", "DashboardHighlights:MinimumMentions");
+    Override("DASHBOARD_HIGHLIGHT_MINIMUM_SAMPLE_STRENGTH", "DashboardHighlights:MinimumSampleStrength");
+    Override("DASHBOARD_HIGHLIGHT_EXCLUDE_LOW_CONFIDENCE", "DashboardHighlights:ExcludeLowConfidence");
+    Override("DASHBOARD_HIGHLIGHT_MINIMUM_ABSOLUTE_SENTIMENT_CHANGE", "DashboardHighlights:MinimumAbsoluteSentimentChange");
+    Override("DASHBOARD_HIGHLIGHT_COMMENT_EXCERPT_LENGTH", "DashboardHighlights:CommentExcerptLength");
 
     void Override(string envName, string configKey)
     {

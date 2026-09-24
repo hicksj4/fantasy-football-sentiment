@@ -60,6 +60,42 @@ public sealed record DashboardPlayerDto(
     int HypeCount,
     int PanicCount);
 
+public sealed record DashboardHighlightsDto(
+    DashboardHighlightPlayerDto? Riser,
+    DashboardHighlightPlayerDto? Faller,
+    DashboardHighlightEligibilityDto Eligibility);
+
+public sealed record DashboardHighlightEligibilityDto(
+    int MinimumMentions,
+    double MinimumSampleStrength,
+    bool ExcludeLowConfidence,
+    double MinimumAbsoluteSentimentChange);
+
+public sealed record DashboardHighlightPlayerDto(
+    int PlayerId,
+    string Name,
+    string Team,
+    string Position,
+    string? HeadshotUrl,
+    int Mentions,
+    double Sentiment,
+    double CommunitySentiment,
+    double SentimentChange,
+    double TotalVoteWeight,
+    double AverageVoteWeight,
+    double SampleStrengthScore,
+    string Confidence,
+    DashboardHighlightInfluenceDto? TopInfluence);
+
+public sealed record DashboardHighlightInfluenceDto(
+    string CommentExcerpt,
+    int RedditScore,
+    double Sentiment,
+    double VoteWeight,
+    double SentimentContribution,
+    string PostTitle,
+    DateTimeOffset CreatedAt);
+
 public sealed record PlayerHistoryPointDto(
     DateTimeOffset Timestamp,
     int Mentions,

@@ -126,8 +126,8 @@ public sealed class MockRedditDataProvider(
     {
         return
         [
-            Comment(postId, "c1", null, "CMC is disgusting. Absolute league winner.", createdAt, 34 + cycle),
-            Comment(postId, "c2", null, "Jefferson is washed until that offense wakes up.", createdAt, 11),
+            Comment(postId, "c1", null, "CMC is a beast, love him. Absolute league winner.", createdAt, 5000 + cycle),
+            Comment(postId, "c2", null, "Jefferson is actually cooked and unstartable until that offense wakes up.", createdAt, 5000),
             Comment(postId, "c3", null, "CMC looked great but Purdy was awful.", createdAt, 22),
             Comment(postId, "c4", null, "I love Breece but I'm selling high.", createdAt, 16)
         ];
