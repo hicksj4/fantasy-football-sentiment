@@ -27,8 +27,19 @@ public sealed class SnapshotProcessingService(
 
         if (skipIfProcessed && existing?.Status == AnalysisSnapshotStatuses.Processed)
         {
-            logger.LogInformation("Snapshot {SnapshotKey} is already processed. Startup processing skipped.", key);
-            return existing;
+            var completeness = await CheckSnapshotCompletenessAsync(existing, cancellationToken);
+            if (completeness.IsComplete)
+            {
+                logger.LogInformation(
+                    "Snapshot {SnapshotKey} is already processed and data is complete. Processing skipped.",
+                    key);
+                return existing;
+            }
+
+            logger.LogWarning(
+                "Snapshot {SnapshotKey} is marked processed, but stored data is incomplete ({Reason}). Reprocessing snapshot.",
+                key,
+                completeness.Reason);
         }
 
         var stopwatch = Stopwatch.StartNew();
@@ -96,6 +107,54 @@ public sealed class SnapshotProcessingService(
             snapshot.CommentsPerSecond);
 
         return snapshot;
+    }
+
+    private async Task<SnapshotCompleteness> CheckSnapshotCompletenessAsync(
+        AnalysisSnapshot snapshot,
+        CancellationToken cancellationToken)
+    {
+        if (snapshot.TotalPosts <= 0 || snapshot.TotalComments <= 0 || snapshot.TotalPlayerMentions <= 0)
+        {
+            return SnapshotCompleteness.Incomplete("snapshot totals are empty");
+        }
+
+        var postCount = await db.RedditPosts
+            .AsNoTracking()
+            .CountAsync(post => post.SnapshotId == snapshot.Id, cancellationToken);
+        if (postCount != snapshot.TotalPosts)
+        {
+            return SnapshotCompleteness.Incomplete(
+                $"expected {snapshot.TotalPosts} posts, found {postCount}");
+        }
+
+        var commentCount = await db.RedditComments
+            .AsNoTracking()
+            .CountAsync(comment => comment.Post.SnapshotId == snapshot.Id, cancellationToken);
+        if (commentCount != snapshot.TotalComments)
+        {
+            return SnapshotCompleteness.Incomplete(
+                $"expected {snapshot.TotalComments} comments, found {commentCount}");
+        }
+
+        var mentionCount = await db.PlayerMentions
+            .AsNoTracking()
+            .CountAsync(mention => mention.SnapshotId == snapshot.Id, cancellationToken);
+        if (mentionCount != snapshot.TotalPlayerMentions)
+        {
+            return SnapshotCompleteness.Incomplete(
+                $"expected {snapshot.TotalPlayerMentions} player mentions, found {mentionCount}");
+        }
+
+        var aggregateCount = await db.SnapshotPlayerAggregates
+            .AsNoTracking()
+            .CountAsync(aggregate => aggregate.SnapshotId == snapshot.Id, cancellationToken);
+        if (aggregateCount != snapshot.UniquePlayersMentioned)
+        {
+            return SnapshotCompleteness.Incomplete(
+                $"expected {snapshot.UniquePlayersMentioned} player aggregates, found {aggregateCount}");
+        }
+
+        return SnapshotCompleteness.Complete;
     }
 
     private async Task<AnalysisSnapshot> UpsertSnapshotShellAsync(
@@ -340,5 +399,15 @@ public sealed class SnapshotProcessingService(
         return string.IsNullOrEmpty(value) || value.Length <= maxLength
             ? value
             : value[..maxLength];
+    }
+
+    private sealed record SnapshotCompleteness(bool IsComplete, string Reason)
+    {
+        public static SnapshotCompleteness Complete { get; } = new(true, "complete");
+
+        public static SnapshotCompleteness Incomplete(string reason)
+        {
+            return new SnapshotCompleteness(false, reason);
+        }
     }
 }

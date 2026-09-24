@@ -134,6 +134,37 @@ public sealed class SnapshotProcessingTests
     }
 
     [Fact]
+    public async Task SnapshotProcessing_ReprocessesWhenProcessedSnapshotDataIsMissing()
+    {
+        await using var db = CreateDb();
+        SeedPlayers(db);
+        var processor = CreateProcessor(db, StandardSource());
+
+        await processor.ProcessAsync("2026-week-4", skipIfProcessed: false, CancellationToken.None);
+
+        db.SnapshotPlayerAggregates.RemoveRange(db.SnapshotPlayerAggregates);
+        db.PlayerMentions.RemoveRange(db.PlayerMentions);
+        db.RedditComments.RemoveRange(db.RedditComments);
+        db.RedditPosts.RemoveRange(db.RedditPosts);
+        await db.SaveChangesAsync();
+
+        var staleSnapshot = await db.AnalysisSnapshots.SingleAsync();
+        Assert.Equal(AnalysisSnapshotStatuses.Processed, staleSnapshot.Status);
+        Assert.Equal(9, staleSnapshot.TotalComments);
+        Assert.Empty(db.RedditComments);
+        Assert.Empty(db.PlayerMentions);
+        Assert.Empty(db.SnapshotPlayerAggregates);
+
+        await processor.ProcessAsync("2026-week-4", skipIfProcessed: true, CancellationToken.None);
+
+        Assert.Equal(1, await db.AnalysisSnapshots.CountAsync());
+        Assert.Equal(3, await db.RedditPosts.CountAsync(post => post.SnapshotId == staleSnapshot.Id));
+        Assert.Equal(9, await db.RedditComments.CountAsync(comment => comment.Post.SnapshotId == staleSnapshot.Id));
+        Assert.Equal(9, await db.PlayerMentions.CountAsync(mention => mention.SnapshotId == staleSnapshot.Id));
+        Assert.Equal(4, await db.SnapshotPlayerAggregates.CountAsync(aggregate => aggregate.SnapshotId == staleSnapshot.Id));
+    }
+
+    [Fact]
     public async Task SnapshotProcessing_AggregatesThreeSourcePostsIntoOneSnapshot()
     {
         await using var db = CreateDb();
