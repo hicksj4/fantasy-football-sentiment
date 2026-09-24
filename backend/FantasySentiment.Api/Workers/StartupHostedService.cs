@@ -39,26 +39,11 @@ public sealed class StartupHostedService(
 
         if (_snapshotOptions.ProcessMockSnapshotOnStartup)
         {
-            var existing = await db.AnalysisSnapshots
-                .AsNoTracking()
-                .FirstOrDefaultAsync(
-                    snapshot => snapshot.Key == _snapshotOptions.DefaultSnapshotKey,
-                    cancellationToken);
-
-            if (existing?.Status == AnalysisSnapshotStatuses.Processed)
-            {
-                logger.LogInformation(
-                    "Default snapshot {SnapshotKey} is already processed. Startup processing skipped.",
-                    _snapshotOptions.DefaultSnapshotKey);
-            }
-            else
-            {
-                var processor = scope.ServiceProvider.GetRequiredService<SnapshotProcessingService>();
-                await processor.ProcessAsync(
-                    _snapshotOptions.DefaultSnapshotKey,
-                    skipIfProcessed: true,
-                    cancellationToken);
-            }
+            var processor = scope.ServiceProvider.GetRequiredService<SnapshotProcessingService>();
+            await processor.ProcessAsync(
+                _snapshotOptions.DefaultSnapshotKey,
+                skipIfProcessed: true,
+                cancellationToken);
         }
     }
 
