@@ -23,6 +23,46 @@ export type DashboardPlayer = {
   panicCount: number;
 };
 
+export type DashboardHighlightInfluence = {
+  commentExcerpt: string;
+  redditScore: number;
+  sentiment: number;
+  voteWeight: number;
+  sentimentContribution: number;
+  postTitle: string;
+  createdAt: string;
+};
+
+export type DashboardHighlightPlayer = {
+  playerId: number;
+  name: string;
+  team: string;
+  position: string;
+  headshotUrl: string | null;
+  mentions: number;
+  sentiment: number;
+  communitySentiment: number;
+  sentimentChange: number;
+  totalVoteWeight: number;
+  averageVoteWeight: number;
+  sampleStrengthScore: number;
+  confidence: string;
+  topInfluence: DashboardHighlightInfluence | null;
+};
+
+export type DashboardHighlightEligibility = {
+  minimumMentions: number;
+  minimumSampleStrength: number;
+  excludeLowConfidence: boolean;
+  minimumAbsoluteSentimentChange: number;
+};
+
+export type DashboardHighlights = {
+  riser: DashboardHighlightPlayer | null;
+  faller: DashboardHighlightPlayer | null;
+  eligibility: DashboardHighlightEligibility;
+};
+
 export type PlayerListItem = {
   id: number;
   name: string;

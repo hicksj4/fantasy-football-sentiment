@@ -1,12 +1,18 @@
 using FantasySentiment.Api.Data;
 using FantasySentiment.Api.Domain;
 using FantasySentiment.Api.Dtos;
+using FantasySentiment.Api.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace FantasySentiment.Api.Services;
 
-public sealed class AnalyticsQueryService(FantasySentimentDbContext db)
+public sealed class AnalyticsQueryService(
+    FantasySentimentDbContext db,
+    IOptions<DashboardHighlightOptions> highlightOptions)
 {
+    private readonly DashboardHighlightOptions _highlightOptions = highlightOptions.Value;
+
     public async Task<IReadOnlyList<PlayerListItemDto>> SearchPlayersAsync(
         string? search,
         int limit,
@@ -172,6 +178,56 @@ public sealed class AnalyticsQueryService(FantasySentimentDbContext db)
         return rows;
     }
 
+    public async Task<DashboardHighlightsDto> GetHighlightsAsync(
+        TimeSpan window,
+        CancellationToken cancellationToken)
+    {
+        var rows = await GetDashboardRowsAsync(window, cancellationToken);
+        var start = DateTimeOffset.UtcNow - window;
+        var mentionStats = await db.PlayerMentions
+            .AsNoTracking()
+            .Where(mention => mention.CreatedAt >= start)
+            .GroupBy(mention => mention.PlayerId)
+            .Select(group => new
+            {
+                PlayerId = group.Key,
+                Mentions = group.Count(),
+                TotalVoteWeight = group.Sum(mention => mention.VoteWeight)
+            })
+            .ToDictionaryAsync(
+                item => item.PlayerId,
+                item => new HighlightMentionStats(item.Mentions, item.TotalVoteWeight),
+                cancellationToken);
+
+        var candidates = rows
+            .Where(row => mentionStats.TryGetValue(row.PlayerId, out var stats)
+                          && IsHighlightEligible(row, stats))
+            .ToList();
+
+        var riserCandidates = candidates
+            .Where(row => row.SentimentChange >= _highlightOptions.MinimumAbsoluteSentimentChange)
+            .Where(row => row.CommunitySentiment > 0)
+            .OrderByDescending(row => row.SentimentChange)
+            .ThenByDescending(row => row.SampleStrengthScore)
+            .ThenByDescending(row => row.Mentions);
+
+        var fallerCandidates = candidates
+            .Where(row => row.SentimentChange <= -_highlightOptions.MinimumAbsoluteSentimentChange)
+            .Where(row => row.CommunitySentiment < 0)
+            .OrderBy(row => row.SentimentChange)
+            .ThenByDescending(row => row.SampleStrengthScore)
+            .ThenByDescending(row => row.Mentions);
+
+        return new DashboardHighlightsDto(
+            await SelectHighlightAsync(riserCandidates, mentionStats, start, 1, cancellationToken),
+            await SelectHighlightAsync(fallerCandidates, mentionStats, start, -1, cancellationToken),
+            new DashboardHighlightEligibilityDto(
+                _highlightOptions.MinimumMentions,
+                _highlightOptions.MinimumSampleStrength,
+                _highlightOptions.ExcludeLowConfidence,
+                _highlightOptions.MinimumAbsoluteSentimentChange));
+    }
+
     public async Task<IReadOnlyList<TeamSummaryDto>> GetTeamSummariesAsync(
         TimeSpan window,
         CancellationToken cancellationToken)
@@ -271,4 +327,160 @@ public sealed class AnalyticsQueryService(FantasySentimentDbContext db)
             snapshot?.HypeCount ?? 0,
             snapshot?.PanicCount ?? 0);
     }
+
+    private async Task<DashboardHighlightPlayerDto?> SelectHighlightAsync(
+        IEnumerable<DashboardPlayerDto> candidates,
+        IReadOnlyDictionary<int, HighlightMentionStats> mentionStats,
+        DateTimeOffset start,
+        int direction,
+        CancellationToken cancellationToken)
+    {
+        foreach (var candidate in candidates)
+        {
+            var highlight = await ToHighlightAsync(candidate, mentionStats, start, direction, cancellationToken);
+            if (highlight.TopInfluence is not null)
+            {
+                return highlight;
+            }
+        }
+
+        return null;
+    }
+
+    private bool IsHighlightEligible(DashboardPlayerDto row, HighlightMentionStats stats)
+    {
+        if (stats.Mentions < _highlightOptions.MinimumMentions)
+        {
+            return false;
+        }
+
+        if (row.SampleStrengthScore < _highlightOptions.MinimumSampleStrength)
+        {
+            return false;
+        }
+
+        return !_highlightOptions.ExcludeLowConfidence
+               || !row.Confidence.Equals("Low", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private async Task<DashboardHighlightPlayerDto> ToHighlightAsync(
+        DashboardPlayerDto row,
+        IReadOnlyDictionary<int, HighlightMentionStats> mentionStats,
+        DateTimeOffset start,
+        int direction,
+        CancellationToken cancellationToken)
+    {
+        mentionStats.TryGetValue(row.PlayerId, out var stats);
+        var topInfluence = await GetTopInfluenceAsync(row.PlayerId, start, direction, cancellationToken);
+
+        return new DashboardHighlightPlayerDto(
+            row.PlayerId,
+            row.Name,
+            row.Team,
+            row.Position,
+            null,
+            row.Mentions,
+            row.Sentiment,
+            row.CommunitySentiment,
+            row.SentimentChange,
+            Math.Round(stats?.TotalVoteWeight ?? 0, 3),
+            row.AverageVoteWeight,
+            row.SampleStrengthScore,
+            row.Confidence,
+            topInfluence);
+    }
+
+    private async Task<DashboardHighlightInfluenceDto?> GetTopInfluenceAsync(
+        int playerId,
+        DateTimeOffset start,
+        int direction,
+        CancellationToken cancellationToken)
+    {
+        var mentions = await db.PlayerMentions
+            .AsNoTracking()
+            .Where(mention => mention.PlayerId == playerId && mention.CreatedAt >= start)
+            .Select(mention => new
+            {
+                mention.FinalSentimentScore,
+                mention.VoteWeight,
+                mention.RedditScore,
+                mention.CreatedAt,
+                CommentBody = mention.Comment.Body,
+                PostTitle = mention.Comment.Post.Title
+            })
+            .ToListAsync(cancellationToken);
+
+        var totalVoteWeight = mentions.Sum(mention => mention.VoteWeight);
+        if (totalVoteWeight <= 0)
+        {
+            return null;
+        }
+
+        var influences = mentions
+            .Select(mention =>
+            {
+                var contribution = mention.FinalSentimentScore * mention.VoteWeight / totalVoteWeight;
+                return new CommentInfluence(
+                    mention.CommentBody,
+                    mention.RedditScore,
+                    mention.FinalSentimentScore,
+                    mention.VoteWeight,
+                    contribution,
+                    mention.PostTitle,
+                    mention.CreatedAt);
+            })
+            .ToList();
+
+        var directional = direction >= 0
+            ? influences.Where(influence => influence.SentimentContribution > 0)
+                .OrderByDescending(influence => influence.SentimentContribution)
+            : influences.Where(influence => influence.SentimentContribution < 0)
+                .OrderBy(influence => influence.SentimentContribution);
+
+        var selected = directional.FirstOrDefault();
+
+        if (selected is null)
+        {
+            return null;
+        }
+
+        return new DashboardHighlightInfluenceDto(
+            CreateExcerpt(selected.CommentBody, _highlightOptions.CommentExcerptLength),
+            selected.RedditScore,
+            Math.Round(selected.Sentiment, 3),
+            Math.Round(selected.VoteWeight, 3),
+            Math.Round(selected.SentimentContribution, 3),
+            selected.PostTitle,
+            selected.CreatedAt);
+    }
+
+    private static string CreateExcerpt(string value, int maxLength)
+    {
+        maxLength = Math.Clamp(maxLength, 80, 240);
+        var normalized = string.Join(' ', value.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
+        if (normalized.Length <= maxLength)
+        {
+            return normalized;
+        }
+
+        var trimmed = normalized[..maxLength];
+        var lastSpace = trimmed.LastIndexOf(' ');
+        if (lastSpace >= maxLength * 0.65)
+        {
+            trimmed = trimmed[..lastSpace];
+        }
+
+        return $"{trimmed.TrimEnd()}...";
+    }
+
+    private sealed record CommentInfluence(
+        string CommentBody,
+        int RedditScore,
+        double Sentiment,
+        double VoteWeight,
+        double SentimentContribution,
+        string PostTitle,
+        DateTimeOffset CreatedAt);
+
+    private sealed record HighlightMentionStats(int Mentions, double TotalVoteWeight);
 }

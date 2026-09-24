@@ -1,8 +1,9 @@
 import { DashboardTable } from "@/components/DashboardTable";
+import { HighlightCards } from "@/components/HighlightCards";
 import { MetricCard } from "@/components/MetricCard";
 import { PlayerSearch } from "@/components/PlayerSearch";
 import { ScorePill } from "@/components/ScorePill";
-import { getJson, withWindow, type DashboardPlayer, type TeamSummary } from "@/lib/api";
+import { getJson, withWindow, type DashboardHighlights, type DashboardPlayer, type TeamSummary } from "@/lib/api";
 import Link from "next/link";
 
 type PageProps = {
@@ -15,7 +16,8 @@ export default async function Home({ searchParams }: PageProps) {
   const params = await searchParams;
   const windowValue = windows.includes(params.window ?? "") ? params.window! : "24h";
 
-  const [trending, risers, fallers, waivers, panic, mostDiscussed, teams] = await Promise.all([
+  const [highlights, trending, risers, fallers, waivers, panic, mostDiscussed, teams] = await Promise.all([
+    getJson<DashboardHighlights>(withWindow("/api/highlights", windowValue)),
     getJson<DashboardPlayer[]>(withWindow("/api/trending?limit=10", windowValue)),
     getJson<DashboardPlayer[]>(withWindow("/api/sentiment/risers?limit=8", windowValue)),
     getJson<DashboardPlayer[]>(withWindow("/api/sentiment/fallers?limit=8", windowValue)),
@@ -34,19 +36,23 @@ export default async function Home({ searchParams }: PageProps) {
     <main>
       <header className="terminal-header">
         <div>
-          <p className="eyebrow">Fantasy Football Sentiment Terminal</p>
-          <h1>Reddit player buzz, velocity, and intent</h1>
+          <p className="eyebrow">FANTASY FOOTBALL SENTIMENT TERMINAL</p>
+          <h1 className="terminal-title">Reddit player buzz, velocity, and intent</h1>
         </div>
-        <PlayerSearch />
       </header>
 
-      <nav className="time-filters" aria-label="Time filter">
-        {windows.map((item) => (
-          <Link className={item === windowValue ? "active" : ""} href={`/?window=${item}`} key={item}>
-            {item}
-          </Link>
-        ))}
-      </nav>
+      <div className="dashboard-controls">
+        <nav className="time-filters" aria-label="Time filter">
+          {windows.map((item) => (
+            <Link className={item === windowValue ? "active" : ""} href={`/?window=${item}`} key={item}>
+              {item}
+            </Link>
+          ))}
+        </nav>
+        <PlayerSearch />
+      </div>
+
+      <HighlightCards highlights={highlights} />
 
       <section className="metrics-grid">
         <MetricCard label="Tracked mentions" value={totalMentions} detail={`${windowValue} window`} />

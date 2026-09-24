@@ -85,6 +85,18 @@ CommunitySentiment = SUM(FinalSentimentScore * VoteWeight) / SUM(VoteWeight)
 
 Snapshots also expose total Reddit score, total/average vote weight, sample-strength score, and Low/Medium/High confidence.
 
+## Dashboard Highlights
+
+The top dashboard summary is served by `GET /api/highlights?window=24h`. It selects the biggest riser and faller by sentiment change for the selected window, not by absolute sentiment. Players must meet the configured sample threshold before they can appear as highlights, so one extremely positive or negative comment does not automatically take over the page.
+
+Each highlight includes the most influential comment in the direction of the move. The displayed `Impact` value is the comment's weighted contribution to the player's community sentiment:
+
+```text
+WeightedContribution = (FinalSentimentScore * VoteWeight) / TotalVoteWeightForPlayerAndWindow
+```
+
+For a riser, the API chooses the largest positive contribution. For a faller, it chooses the largest negative contribution. The math uses the same diminishing-return vote weight described above, while the UI still displays the original Reddit score.
+
 ## Required Software
 
 - .NET SDK 10
@@ -167,6 +179,11 @@ REDDIT_ANALYSIS_GAME_MINIMUM_COMMENTS=300
 REDDIT_ANALYSIS_GAME_MINIMUM_AGE_MINUTES=120
 REDDIT_ANALYSIS_GAME_COOLDOWN_WINDOW_MINUTES=15
 REDDIT_ANALYSIS_GAME_MAX_NEW_COMMENTS_DURING_COOLDOWN=20
+DASHBOARD_HIGHLIGHT_MINIMUM_MENTIONS=5
+DASHBOARD_HIGHLIGHT_MINIMUM_SAMPLE_STRENGTH=0.25
+DASHBOARD_HIGHLIGHT_EXCLUDE_LOW_CONFIDENCE=true
+DASHBOARD_HIGHLIGHT_MINIMUM_ABSOLUTE_SENTIMENT_CHANGE=0.05
+DASHBOARD_HIGHLIGHT_COMMENT_EXCERPT_LENGTH=190
 NEXT_PUBLIC_API_BASE_URL=http://localhost:5044
 ```
 
@@ -247,6 +264,7 @@ The API also applies migrations automatically on startup.
 - `GET /api/players/{id}/sentiment`
 - `GET /api/players/{id}/history?window=24h`
 - `GET /api/trending?window=6h`
+- `GET /api/highlights?window=24h`
 - `GET /api/sentiment/risers`
 - `GET /api/sentiment/fallers`
 - `GET /api/buzz`
@@ -282,4 +300,4 @@ pnpm build
 - `dotnet test .\FantasySentiment.slnx`
 - `pnpm typecheck`
 - `pnpm build`
-- Mock-mode API startup, EF migration application, seeding, ingestion, `GET /api/health`, and `GET /api/trending?limit=1`
+- Mock-mode API startup, EF migration application, seeding, ingestion, `GET /api/health`, `GET /api/trending?limit=1`, and `GET /api/highlights?window=24h`
