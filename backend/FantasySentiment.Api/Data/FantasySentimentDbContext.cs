@@ -52,6 +52,10 @@ public sealed class FantasySentimentDbContext(DbContextOptions<FantasySentimentD
         modelBuilder.Entity<PlayerMention>(entity =>
         {
             entity.Property(mention => mention.SentimentCategory).HasMaxLength(16);
+            entity.Property(mention => mention.SentimentAnalyzer).HasMaxLength(64);
+            entity.Property(mention => mention.SentimentContext).HasMaxLength(1200);
+            entity.Property(mention => mention.SentimentDiagnostics).HasMaxLength(1000);
+            entity.Property(mention => mention.MatchedAlias).HasMaxLength(160);
             entity.Property(mention => mention.Intent).HasMaxLength(16);
             entity.HasIndex(mention => new { mention.PlayerId, mention.CommentId }).IsUnique();
             entity.HasIndex(mention => mention.CreatedAt);
@@ -60,6 +64,7 @@ public sealed class FantasySentimentDbContext(DbContextOptions<FantasySentimentD
         modelBuilder.Entity<PlayerSnapshot>(entity =>
         {
             entity.HasKey(snapshot => new { snapshot.PlayerId, snapshot.Timestamp });
+            entity.Property(snapshot => snapshot.Confidence).HasMaxLength(16);
             entity.HasIndex(snapshot => snapshot.Timestamp);
         });
     }

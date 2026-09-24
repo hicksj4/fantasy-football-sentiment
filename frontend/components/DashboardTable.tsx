@@ -25,6 +25,7 @@ export function DashboardTable({ title, rows, mode = "default" }: DashboardTable
               <th>Mentions</th>
               <th>Buzz</th>
               <th>Sentiment</th>
+              <th>Community</th>
               <th>Change</th>
               {mode === "waiver" ? <th>Add/Hype</th> : null}
               {mode === "panic" ? <th>Drop/Panic</th> : null}
@@ -46,6 +47,9 @@ export function DashboardTable({ title, rows, mode = "default" }: DashboardTable
                 </td>
                 <td>
                   <ScorePill value={row.sentiment} />
+                </td>
+                <td>
+                  <ScorePill value={row.communitySentiment} />
                 </td>
                 <td>
                   <ScorePill value={row.sentimentChange} kind="change" />

@@ -99,20 +99,63 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<double>("FantasyAdjustment")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("FinalSentimentScore")
+                        .HasColumnType("double precision");
+
                     b.Property<string>("Intent")
                         .IsRequired()
                         .HasMaxLength(16)
                         .HasColumnType("character varying(16)");
 
+                    b.Property<string>("MatchedAlias")
+                        .IsRequired()
+                        .HasMaxLength(160)
+                        .HasColumnType("character varying(160)");
+
+                    b.Property<double?>("ModelSentimentScore")
+                        .HasColumnType("double precision");
+
                     b.Property<int>("PlayerId")
                         .HasColumnType("integer");
+
+                    b.Property<double>("RawSentimentScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("RedditScore")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("RuleBasedSentimentScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("SentimentAnalyzer")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
 
                     b.Property<string>("SentimentCategory")
                         .IsRequired()
                         .HasMaxLength(16)
                         .HasColumnType("character varying(16)");
 
+                    b.Property<string>("SentimentContext")
+                        .IsRequired()
+                        .HasMaxLength(1200)
+                        .HasColumnType("character varying(1200)");
+
+                    b.Property<string>("SentimentDiagnostics")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
                     b.Property<double>("SentimentScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("VoteWeight")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("WeightedSentimentContribution")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");
@@ -138,11 +181,22 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.Property<int>("AddCount")
                         .HasColumnType("integer");
 
+                    b.Property<double>("AverageVoteWeight")
+                        .HasColumnType("double precision");
+
                     b.Property<int>("BuyCount")
                         .HasColumnType("integer");
 
                     b.Property<double>("BuzzScore")
                         .HasColumnType("double precision");
+
+                    b.Property<double>("CommunitySentimentScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Confidence")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
 
                     b.Property<int>("DropCount")
                         .HasColumnType("integer");
@@ -171,6 +225,12 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.Property<int>("PositiveCount")
                         .HasColumnType("integer");
 
+                    b.Property<double>("RawSentimentScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("SampleStrengthScore")
+                        .HasColumnType("double precision");
+
                     b.Property<int>("SellCount")
                         .HasColumnType("integer");
 
@@ -182,6 +242,12 @@ namespace FantasySentiment.Api.Data.Migrations
 
                     b.Property<int>("StartCount")
                         .HasColumnType("integer");
+
+                    b.Property<int>("TotalRedditScore")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("TotalVoteWeight")
+                        .HasColumnType("double precision");
 
                     b.HasKey("PlayerId", "Timestamp");
 

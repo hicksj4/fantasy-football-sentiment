@@ -3,7 +3,7 @@ import type { HistoryPoint } from "@/lib/api";
 type LineChartProps = {
   title: string;
   points: HistoryPoint[];
-  field: "mentions" | "sentiment" | "buzz";
+  field: "mentions" | "sentiment" | "communitySentiment" | "buzz";
 };
 
 export function LineChart({ title, points, field }: LineChartProps) {

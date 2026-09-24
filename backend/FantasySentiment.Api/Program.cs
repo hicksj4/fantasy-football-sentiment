@@ -26,6 +26,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.Configure<RedditOptions>(builder.Configuration.GetSection("Reddit"));
 builder.Services.Configure<SnapshotOptions>(builder.Configuration.GetSection("Snapshots"));
+builder.Services.Configure<SentimentOptions>(builder.Configuration.GetSection("Sentiment"));
 builder.Services.Configure<SentimentLexiconOptions>(builder.Configuration.GetSection("SentimentLexicon"));
 builder.Services.Configure<IntentLexiconOptions>(builder.Configuration.GetSection("IntentLexicon"));
 
@@ -36,7 +37,25 @@ builder.Services.AddDbContext<FantasySentimentDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 builder.Services.AddSingleton<PlayerMentionDetector>();
+builder.Services.AddSingleton<MentionContextExtractor>();
+builder.Services.AddSingleton<VoteWeightCalculator>();
 builder.Services.AddSingleton<FantasySentimentAnalyzer>();
+builder.Services.AddSingleton<RuleBasedFantasySentimentAnalyzer>();
+builder.Services.AddSingleton<RobertaSentimentAnalyzer>();
+builder.Services.AddSingleton<HybridSentimentAnalyzer>();
+builder.Services.AddSingleton<ComparisonSentimentAnalyzer>();
+builder.Services.AddSingleton<ISentimentAnalyzer>(provider =>
+{
+    var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<SentimentOptions>>().Value;
+    return options.Mode.Trim().ToLowerInvariant() switch
+    {
+        "rulebased" or "rule-based" => provider.GetRequiredService<RuleBasedFantasySentimentAnalyzer>(),
+        "roberta" => provider.GetRequiredService<RobertaSentimentAnalyzer>(),
+        "hybrid" => provider.GetRequiredService<HybridSentimentAnalyzer>(),
+        "comparison" => provider.GetRequiredService<ComparisonSentimentAnalyzer>(),
+        _ => provider.GetRequiredService<ComparisonSentimentAnalyzer>()
+    };
+});
 builder.Services.AddSingleton<FantasyIntentClassifier>();
 builder.Services.AddSingleton<BuzzScoreCalculator>();
 builder.Services.AddScoped<SnapshotAggregationService>();
@@ -275,6 +294,10 @@ static void ApplyEnvironmentOverrides(ConfigurationManager configuration)
     Override("REDDIT_CLIENT_ID", "Reddit:ClientId");
     Override("REDDIT_CLIENT_SECRET", "Reddit:ClientSecret");
     Override("REDDIT_USER_AGENT", "Reddit:UserAgent");
+    Override("SENTIMENT_MODE", "Sentiment:Mode");
+    Override("SENTIMENT_ROBERTA_ENABLED", "Sentiment:Roberta:Enabled");
+    Override("SENTIMENT_ROBERTA_ONNX_MODEL_PATH", "Sentiment:Roberta:OnnxModelPath");
+    Override("SENTIMENT_ROBERTA_TOKENIZER_PATH", "Sentiment:Roberta:TokenizerPath");
 
     void Override(string envName, string configKey)
     {

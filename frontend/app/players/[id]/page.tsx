@@ -37,8 +37,8 @@ export default async function PlayerPage({ params, searchParams }: PageProps) {
       <section className="metrics-grid">
         <MetricCard label="Mentions" value={player.mentions} detail="Recent aggregation" />
         <MetricCard label="Buzz" value={`${player.buzz.toFixed(1)}x`} detail="Versus baseline" />
-        <MetricCard label="Positive" value={`${player.positivePercent}%`} detail={`${player.negativePercent}% negative`} />
-        <MetricCard label="Waiver pressure" value={player.addCount + player.hypeCount} detail={`${player.dropCount + player.panicCount} panic/drop`} />
+        <MetricCard label="Community sentiment" value={player.communitySentiment.toFixed(2)} detail={`Raw ${player.rawSentiment.toFixed(2)}`} />
+        <MetricCard label="Confidence" value={player.confidence} detail={`${player.totalRedditScore} Reddit score`} />
       </section>
 
       <section className="signal-grid">
@@ -63,6 +63,7 @@ export default async function PlayerPage({ params, searchParams }: PageProps) {
 
       <section className="chart-grid">
         <LineChart title="Sentiment over time" points={history} field="sentiment" />
+        <LineChart title="Community sentiment over time" points={history} field="communitySentiment" />
         <LineChart title="Mentions over time" points={history} field="mentions" />
         <LineChart title="Buzz over time" points={history} field="buzz" />
       </section>

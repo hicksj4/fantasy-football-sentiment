@@ -17,6 +17,49 @@ The backend intentionally avoids microservices. Reddit access is behind `IReddit
 - `MockRedditDataProvider`
 - `RedditApiDataProvider`
 
+## Sentiment Pipeline
+
+Sentiment is target-aware. `PlayerMentionDetector` finds player aliases, then `MentionContextExtractor` sends the relevant sentence or clause around each player mention into the configured sentiment analyzer. A comment such as `CMC looked great but Purdy was awful` is scored once for CMC and once for Purdy.
+
+The original `FantasySentimentAnalyzer` is still present and still reads `SeedData/sentiment-terms.json`. It now acts as the rule-based fantasy-football language layer used by these analyzer modes:
+
+- `RuleBased`: target-aware rule scoring only.
+- `Roberta`: reserved for local RoBERTa inference once exported ONNX/tokenizer assets are wired.
+- `Hybrid`: RoBERTa base score plus a bounded fantasy adjustment when RoBERTa is available; otherwise falls back to the rule score.
+- `Comparison`: default development mode. Stores rule score, model score when available, adjustment, diagnostics, and final score on each `PlayerMention`.
+
+The CardiffNLP target-sentiment model investigated for this branch is `cardiffnlp/twitter-roberta-base-topic-sentiment-latest`. It is MIT licensed and uses target-aware input shaped like `text </s> target`, but the hosted model repository ships PyTorch/tokenizer assets rather than a ready .NET ONNX package. This branch does not add ONNX Runtime or tokenizer dependencies yet. `RobertaSentimentAnalyzer` is an adapter placeholder that reports diagnostics until local ONNX inference is wired with model assets.
+
+Sentiment and intent remain separate. `FantasyIntentClassifier` still classifies Add, Drop, Start, Sit, Buy, Sell, Hold, Injury, Hype, Panic, and General independently of sentiment.
+
+## Reddit Vote Weighting
+
+Each `PlayerMention` stores:
+
+- `RawSentimentScore`: base text sentiment before community weighting.
+- `FinalSentimentScore`: sentiment after the configured analyzer/fantasy adjustment.
+- `RedditScore`: latest comment score from Reddit/mock Reddit.
+- `VoteWeight`: bounded visibility/agreement weight.
+- `WeightedSentimentContribution`: `FinalSentimentScore * VoteWeight`.
+
+Vote weighting is logarithmic and capped:
+
+```text
+score = 0: weight = 1
+score > 0: weight = clamp(1 + ln(1 + score) / 2.5, 1, 4)
+score < 0: weight = clamp(1 / (1 + ln(1 + abs(score)) / 2.5), 0.25, 1)
+```
+
+Negative Reddit scores reduce a comment's influence; they do not reverse sentiment.
+
+Player snapshots now keep both unweighted sentiment and community-weighted sentiment:
+
+```text
+CommunitySentiment = SUM(FinalSentimentScore * VoteWeight) / SUM(VoteWeight)
+```
+
+Snapshots also expose total Reddit score, total/average vote weight, sample-strength score, and Low/Medium/High confidence.
+
 ## Required Software
 
 - .NET SDK 10
@@ -84,6 +127,10 @@ FANTASY_POSTGRES_DB=fantasy_sentiment
 FANTASY_POSTGRES_USER=fantasy
 FANTASY_POSTGRES_PASSWORD=replace-with-local-password
 DATABASE_URL=Host=localhost;Port=55432;Database=fantasy_sentiment;Username=fantasy;Password=replace-with-local-password
+SENTIMENT_MODE=Comparison
+SENTIMENT_ROBERTA_ENABLED=false
+SENTIMENT_ROBERTA_ONNX_MODEL_PATH=
+SENTIMENT_ROBERTA_TOKENIZER_PATH=
 NEXT_PUBLIC_API_BASE_URL=http://localhost:5044
 ```
 
@@ -123,6 +170,10 @@ USE_MOCK_REDDIT=false
 REDDIT_CLIENT_ID=your-client-id
 REDDIT_CLIENT_SECRET=replace-with-reddit-client-secret
 REDDIT_USER_AGENT=FantasySentimentTerminal/0.1 by your-reddit-name
+SENTIMENT_MODE=Comparison
+SENTIMENT_ROBERTA_ENABLED=false
+SENTIMENT_ROBERTA_ONNX_MODEL_PATH=
+SENTIMENT_ROBERTA_TOKENIZER_PATH=
 ```
 
 The app does not scrape Reddit HTML. It uses API-style JSON requests through `RedditApiDataProvider`.
@@ -134,6 +185,8 @@ The initial migration is included under:
 ```text
 backend/FantasySentiment.Api/Data/Migrations
 ```
+
+The `SentimentPipelineImprovements` migration adds the raw/final/model sentiment fields, vote-weight fields, community sentiment snapshot fields, and confidence/sample-strength fields. It backfills old mentions from existing `SentimentScore` and existing `RedditComment.Score` values so existing data is preserved.
 
 Useful commands:
 
@@ -189,3 +242,4 @@ pnpm build
 - `dotnet test .\FantasySentiment.slnx`
 - `pnpm typecheck`
 - `pnpm build`
+- Mock-mode API startup, EF migration application, seeding, ingestion, `GET /api/health`, and `GET /api/trending?limit=1`
