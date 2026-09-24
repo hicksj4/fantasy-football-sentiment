@@ -307,16 +307,48 @@ namespace FantasySentiment.Api.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AnalysisStatus")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<string>("AnalysisStatusReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
                     b.Property<int>("CommentCount")
                         .HasColumnType("integer");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<DateTimeOffset?>("LastAnalyzedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("LastAnalyzedCommentCount")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("LastObservedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset?>("LastObservedCommentCountAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PostType")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<int>("PreviousCommentCount")
+                        .HasColumnType("integer");
+
                     b.Property<string>("RedditId")
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Subreddit")
                         .IsRequired()
@@ -333,6 +365,8 @@ namespace FantasySentiment.Api.Data.Migrations
                         .HasColumnType("character varying(600)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnalysisStatus");
 
                     b.HasIndex("CreatedAt");
 

@@ -7,7 +7,7 @@ The app runs fully in mock mode by default, so Reddit credentials are not requir
 ## Architecture
 
 - `backend/`: ASP.NET Core Web API on .NET 10.
-- `backend/FantasySentiment.Api`: EF Core data model, PostgreSQL integration, REST endpoints, Reddit provider abstraction, rule-based sentiment/intent logic, hosted ingestion and snapshot workers.
+- `backend/FantasySentiment.Api`: EF Core data model, PostgreSQL integration, REST endpoints, Reddit provider abstraction, VADER/fantasy-rule sentiment logic, hosted Reddit discovery/analysis workers, and snapshot aggregation.
 - `backend/FantasySentiment.Tests`: focused tests for alias matching, sentiment, intent, buzz, and aggregation.
 - `frontend/`: Next.js, React, TypeScript dashboard.
 - `docker-compose.yml`: local PostgreSQL.
@@ -19,18 +19,43 @@ The backend intentionally avoids microservices. Reddit access is behind `IReddit
 
 ## Sentiment Pipeline
 
-Sentiment is target-aware. `PlayerMentionDetector` finds player aliases, then `MentionContextExtractor` sends the relevant sentence or clause around each player mention into the configured sentiment analyzer. A comment such as `CMC looked great but Purdy was awful` is scored once for CMC and once for Purdy.
+Sentiment is target-aware. `PlayerMentionDetector` finds player aliases, then `MentionContextExtractor` isolates the relevant sentence or clause around each player mention. A comment such as `CMC looked great but Purdy was awful` is scored once for CMC and once for Purdy.
 
-The original `FantasySentimentAnalyzer` is still present and still reads `SeedData/sentiment-terms.json`. It now acts as the rule-based fantasy-football language layer used by these analyzer modes:
+The default `SENTIMENT_MODE` is `Vader`. `VaderSentimentAnalyzer` uses VADER as the lightweight general sentiment score and blends it with `FantasySentimentAnalyzer`, which reads fantasy-specific terms from `SeedData/sentiment-terms.json`. This is what lets the app treat fantasy phrases like `disgusting`, `washed`, and `league winner` correctly even when the general-purpose sentiment score disagrees or is neutral.
 
-- `RuleBased`: target-aware rule scoring only.
-- `Roberta`: reserved for local RoBERTa inference once exported ONNX/tokenizer assets are wired.
-- `Hybrid`: RoBERTa base score plus a bounded fantasy adjustment when RoBERTa is available; otherwise falls back to the rule score.
-- `Comparison`: default development mode. Stores rule score, model score when available, adjustment, diagnostics, and final score on each `PlayerMention`.
+Each analyzed `PlayerMention` stores the pieces separately:
 
-The CardiffNLP target-sentiment model investigated for this branch is `cardiffnlp/twitter-roberta-base-topic-sentiment-latest`. It is MIT licensed and uses target-aware input shaped like `text </s> target`, but the hosted model repository ships PyTorch/tokenizer assets rather than a ready .NET ONNX package. This branch does not add ONNX Runtime or tokenizer dependencies yet. `RobertaSentimentAnalyzer` is an adapter placeholder that reports diagnostics until local ONNX inference is wired with model assets.
+- `RawSentimentScore`: VADER compound score.
+- `ModelSentimentScore`: VADER compound score, preserved for model/debug comparison.
+- `RuleBasedSentimentScore`: fantasy-football lexicon score.
+- `FantasyAdjustment`: final score minus VADER score.
+- `FinalSentimentScore`: blended score used by dashboards and snapshots.
+- `SentimentDiagnostics`: compact VADER/rule details for inspection.
 
-Sentiment and intent remain separate. `FantasyIntentClassifier` still classifies Add, Drop, Start, Sit, Buy, Sell, Hold, Injury, Hype, Panic, and General independently of sentiment.
+Other analyzer modes still exist for experimentation:
+
+- `RuleBased`: target-aware fantasy-rule scoring only.
+- `Roberta`: adapter placeholder for local RoBERTa inference assets.
+- `Hybrid`: RoBERTa score plus fantasy adjustment when RoBERTa is available; otherwise falls back to rules.
+- `Comparison`: legacy development mode for comparing rule/model outputs.
+
+Sentiment and intent remain separate. `FantasyIntentClassifier` classifies Add, Drop, Start, Sit, Buy, Sell, Hold, Injury, Hype, Panic, and General independently of whether the comment is positive, neutral, or negative.
+
+## Reddit Ingestion
+
+Reddit ingestion is split into two hosted workers:
+
+- `RedditDiscoveryWorker` periodically discovers candidate posts and stores cheap post metadata: title, score, comment count, post type, and analysis status.
+- `RedditAnalysisWorker` fetches comments only for posts marked `ReadyForAnalysis`, then analyzes new or changed comments in small batches.
+
+`RedditPostAnalysisDecider` controls when a post becomes ready:
+
+- Normal discussion posts wait for enough comments, or a lower comment count plus enough post score.
+- Important news posts use lower comment thresholds when titles include injury/trade/depth-chart style keywords.
+- Game threads wait for minimum age, minimum comments, and a cooldown window so the app does not analyze huge active threads while comments are still flying in.
+- Already-analyzed posts become ready again only when the incremental new-comment threshold is reached.
+
+For each analyzed comment, the stored context is bounded and includes thread title, parent comment when available, full current comment, target-specific context, and target player. Unchanged comments are not rescored on later runs; score-only updates refresh Reddit score, vote weight, and weighted contribution.
 
 ## Reddit Vote Weighting
 
@@ -127,10 +152,21 @@ FANTASY_POSTGRES_DB=fantasy_sentiment
 FANTASY_POSTGRES_USER=fantasy
 FANTASY_POSTGRES_PASSWORD=replace-with-local-password
 DATABASE_URL=Host=localhost;Port=55432;Database=fantasy_sentiment;Username=fantasy;Password=replace-with-local-password
-SENTIMENT_MODE=Comparison
+REDDIT_FETCH_LOOKBACK_MINUTES=240
+SENTIMENT_MODE=Vader
 SENTIMENT_ROBERTA_ENABLED=false
 SENTIMENT_ROBERTA_ONNX_MODEL_PATH=
 SENTIMENT_ROBERTA_TOKENIZER_PATH=
+REDDIT_ANALYSIS_DISCOVERY_INTERVAL_MINUTES=10
+REDDIT_ANALYSIS_ANALYSIS_INTERVAL_MINUTES=2
+REDDIT_ANALYSIS_NORMAL_MINIMUM_COMMENTS=100
+REDDIT_ANALYSIS_NORMAL_MINIMUM_COMMENTS_WITH_SCORE=40
+REDDIT_ANALYSIS_NORMAL_MINIMUM_POST_SCORE=50
+REDDIT_ANALYSIS_IMPORTANT_NEWS_MINIMUM_COMMENTS=30
+REDDIT_ANALYSIS_GAME_MINIMUM_COMMENTS=300
+REDDIT_ANALYSIS_GAME_MINIMUM_AGE_MINUTES=120
+REDDIT_ANALYSIS_GAME_COOLDOWN_WINDOW_MINUTES=15
+REDDIT_ANALYSIS_GAME_MAX_NEW_COMMENTS_DURING_COOLDOWN=20
 NEXT_PUBLIC_API_BASE_URL=http://localhost:5044
 ```
 
@@ -156,10 +192,10 @@ On first backend startup, the app:
 - Seeds sample NFL players and aliases.
 - Seeds realistic historical Reddit-style comments.
 - Detects player mentions.
-- Scores sentiment and fantasy intent.
+- Scores VADER/fantasy sentiment and fantasy intent.
 - Generates historical snapshots so charts, risers, fallers, trends, and buzz work immediately.
 
-The mock ingestion worker continues adding new comments every configured interval.
+The mock discovery worker then cycles through deterministic post scenarios. The analysis worker fetches comments only after those posts cross their configured thresholds, including important-news fast paths, normal discussion thresholds, incremental re-analysis, and game-thread cooldown behavior.
 
 ## Reddit Credentials
 
@@ -170,7 +206,8 @@ USE_MOCK_REDDIT=false
 REDDIT_CLIENT_ID=your-client-id
 REDDIT_CLIENT_SECRET=replace-with-reddit-client-secret
 REDDIT_USER_AGENT=FantasySentimentTerminal/0.1 by your-reddit-name
-SENTIMENT_MODE=Comparison
+REDDIT_FETCH_LOOKBACK_MINUTES=240
+SENTIMENT_MODE=Vader
 SENTIMENT_ROBERTA_ENABLED=false
 SENTIMENT_ROBERTA_ONNX_MODEL_PATH=
 SENTIMENT_ROBERTA_TOKENIZER_PATH=
@@ -188,6 +225,8 @@ backend/FantasySentiment.Api/Data/Migrations
 
 The `SentimentPipelineImprovements` migration adds the raw/final/model sentiment fields, vote-weight fields, community sentiment snapshot fields, and confidence/sample-strength fields. It backfills old mentions from existing `SentimentScore` and existing `RedditComment.Score` values so existing data is preserved.
 
+The `RedditPostAnalysisState` migration adds post score, discovery/analysis timestamps, post type, analysis status, and analysis-status reason fields used by the split discovery/analysis workers.
+
 Useful commands:
 
 ```powershell
@@ -201,6 +240,7 @@ The API also applies migrations automatically on startup.
 ## API Endpoints
 
 - `GET /api/health`
+- `GET /api/debug/reddit-posts` development only
 - `GET /api/players`
 - `GET /api/players?search=CMC`
 - `GET /api/players/{id}`

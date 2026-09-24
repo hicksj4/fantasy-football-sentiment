@@ -9,6 +9,7 @@ public sealed class SentimentOptions
 
 public static class SentimentModes
 {
+    public const string Vader = "Vader";
     public const string RuleBased = "RuleBased";
     public const string Roberta = "Roberta";
     public const string Hybrid = "Hybrid";
