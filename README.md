@@ -21,14 +21,32 @@ The backend intentionally avoids microservices. Reddit access is behind `IReddit
 
 Sentiment is target-aware. `PlayerMentionDetector` finds player aliases, then `MentionContextExtractor` sends the relevant sentence or clause around each player mention into the configured sentiment analyzer. A comment such as `CMC looked great but Purdy was awful` is scored once for CMC and once for Purdy.
 
-The original `FantasySentimentAnalyzer` is still present and still reads `SeedData/sentiment-terms.json`. It now acts as the rule-based fantasy-football language layer used by these analyzer modes:
+The original `FantasySentimentAnalyzer` is still present and still reads `SeedData/sentiment-terms.json`. It acts as the rule-based fantasy-football language layer used by these analyzer modes:
 
 - `RuleBased`: target-aware rule scoring only.
-- `Roberta`: reserved for local RoBERTa inference once exported ONNX/tokenizer assets are wired.
+- `Roberta`: local ONNX Runtime inference with CardiffNLP target sentiment.
 - `Hybrid`: RoBERTa base score plus a bounded fantasy adjustment when RoBERTa is available; otherwise falls back to the rule score.
 - `Comparison`: default development mode. Stores rule score, model score when available, adjustment, diagnostics, and final score on each `PlayerMention`.
 
-The CardiffNLP target-sentiment model investigated for this branch is `cardiffnlp/twitter-roberta-base-topic-sentiment-latest`. It is MIT licensed and uses target-aware input shaped like `text </s> target`, but the hosted model repository ships PyTorch/tokenizer assets rather than a ready .NET ONNX package. This branch does not add ONNX Runtime or tokenizer dependencies yet. `RobertaSentimentAnalyzer` is an adapter placeholder that reports diagnostics until local ONNX inference is wired with model assets.
+The RoBERTa implementation uses `cardiffnlp/twitter-roberta-base-topic-sentiment-latest`. It is target-aware and receives input shaped like:
+
+```text
+<context> </s> <target>
+```
+
+The backend tokenizes that string with `Tokenizers.HuggingFace`, runs `model.onnx` with `Microsoft.ML.OnnxRuntime`, applies a stable softmax over the five logits, and maps probabilities to a normalized score with these label weights:
+
+```text
+strongly negative = -1.0
+negative = -0.5
+negative or neutral = 0.0
+positive = 0.5
+strongly positive = 1.0
+```
+
+The final model score is the probability-weighted expected value clamped to `[-1, 1]`. Diagnostics include the winning label, winning probability, all five label probabilities, sequence length, and model input string.
+
+The API health endpoint reports the active sentiment mode, whether RoBERTa is enabled/loaded, which assets were found, max sequence length, and ONNX input/output names. `RuleBased` mode works without model assets. `Roberta` mode fails startup clearly when enabled assets are missing.
 
 Sentiment and intent remain separate. `FantasyIntentClassifier` still classifies Add, Drop, Start, Sit, Buy, Sell, Hold, Injury, Hype, Panic, and General independently of sentiment.
 
@@ -66,6 +84,7 @@ Snapshots also expose total Reddit score, total/average vote weight, sample-stre
 - Docker Desktop
 - Node.js
 - pnpm
+- Python 3.12+ if you need to export or validate RoBERTa assets
 
 This machine had `pnpm` available but not `npm`, so the documented frontend commands use `pnpm`.
 
@@ -129,8 +148,12 @@ FANTASY_POSTGRES_PASSWORD=replace-with-local-password
 DATABASE_URL=Host=localhost;Port=55432;Database=fantasy_sentiment;Username=fantasy;Password=replace-with-local-password
 SENTIMENT_MODE=Comparison
 SENTIMENT_ROBERTA_ENABLED=false
+SENTIMENT_ROBERTA_MODEL_PATH=Models/Sentiment/model.onnx
 SENTIMENT_ROBERTA_ONNX_MODEL_PATH=
-SENTIMENT_ROBERTA_TOKENIZER_PATH=
+SENTIMENT_ROBERTA_TOKENIZER_PATH=Models/Sentiment/tokenizer.json
+SENTIMENT_ROBERTA_CONFIG_PATH=Models/Sentiment/config.json
+SENTIMENT_ROBERTA_TOKENIZER_CONFIG_PATH=Models/Sentiment/tokenizer_config.json
+SENTIMENT_ROBERTA_MAX_SEQUENCE_LENGTH=512
 NEXT_PUBLIC_API_BASE_URL=http://localhost:5044
 ```
 
@@ -145,6 +168,40 @@ docker compose up -d postgres
 ```
 
 This repo now uses a dedicated Docker volume named `fantasy-sentiment-postgres-data`; the old Compose-managed `postgres-data` volume is left alone.
+
+## RoBERTa Assets
+
+The repository does not commit generated model assets. They are written to:
+
+```text
+backend/FantasySentiment.Api/Models/Sentiment/
+```
+
+Expected generated files include:
+
+- `model.onnx`
+- `tokenizer.json`
+- `config.json`
+- `tokenizer_config.json`
+- tokenizer sidecar files such as `vocab.json` and `merges.txt`
+
+Export the model from the repository root:
+
+```powershell
+.\tools\sentiment-model\export-model.ps1 -Python "C:\Path\To\python.exe"
+```
+
+The exporter installs its Python dependencies into `tools/sentiment-model/.venv`, uses Hugging Face Optimum to export ONNX, and stores Hugging Face cache files under `tools/sentiment-model/.cache`. Both folders are ignored by Git.
+
+Reference and parity tools:
+
+```powershell
+.\tools\sentiment-model\.venv\Scripts\python.exe .\tools\sentiment-model\reference_inference.py --output .\tools\sentiment-model\python-reference.json
+dotnet run --project .\tools\sentiment-model\dotnet-parity\FantasySentiment.RobertaParity.csproj -- --repeat 100
+.\tools\sentiment-model\.venv\Scripts\python.exe .\tools\sentiment-model\compare_runtime_parity.py
+```
+
+The comparison checks exact `input_ids` and `attention_mask` parity, then compares Python Transformers probabilities to .NET ONNX probabilities with a default `0.01` absolute tolerance.
 
 ## Mock Mode
 
@@ -172,8 +229,11 @@ REDDIT_CLIENT_SECRET=replace-with-reddit-client-secret
 REDDIT_USER_AGENT=FantasySentimentTerminal/0.1 by your-reddit-name
 SENTIMENT_MODE=Comparison
 SENTIMENT_ROBERTA_ENABLED=false
-SENTIMENT_ROBERTA_ONNX_MODEL_PATH=
-SENTIMENT_ROBERTA_TOKENIZER_PATH=
+SENTIMENT_ROBERTA_MODEL_PATH=Models/Sentiment/model.onnx
+SENTIMENT_ROBERTA_TOKENIZER_PATH=Models/Sentiment/tokenizer.json
+SENTIMENT_ROBERTA_CONFIG_PATH=Models/Sentiment/config.json
+SENTIMENT_ROBERTA_TOKENIZER_CONFIG_PATH=Models/Sentiment/tokenizer_config.json
+SENTIMENT_ROBERTA_MAX_SEQUENCE_LENGTH=512
 ```
 
 The app does not scrape Reddit HTML. It uses API-style JSON requests through `RedditApiDataProvider`.
@@ -238,8 +298,12 @@ pnpm build
 
 ## Verification Done
 
-- `dotnet build .\FantasySentiment.slnx`
-- `dotnet test .\FantasySentiment.slnx`
+- Backend restore/build/test passed with local NuGet source and redirected build output.
+- `dotnet test .\backend\FantasySentiment.Tests\FantasySentiment.Tests.csproj`: 15 passed.
 - `pnpm typecheck`
 - `pnpm build`
-- Mock-mode API startup, EF migration application, seeding, ingestion, `GET /api/health`, and `GET /api/trending?limit=1`
+- RoBERTa export completed, generated `model.onnx` was about 475.8 MB.
+- Python reference inference completed.
+- .NET ONNX parity completed with exact tokenizer match and probabilities within `0.01`.
+- Mock-mode API startup verified in `Roberta`, `Comparison`, and `RuleBased`.
+- RoBERTa startup fails clearly when enabled assets are missing.

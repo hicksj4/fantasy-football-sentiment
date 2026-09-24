@@ -158,6 +158,35 @@ public sealed class AnalyticsLogicTests
     }
 
     [Fact]
+    public void RobertaScoreMapper_UsesExpectedValueAcrossFiveProbabilities()
+    {
+        var mapped = RobertaSentimentScoreMapper.Map([0, 0, 0, 0, 4]);
+
+        Assert.Equal("strongly positive", mapped.WinningLabel);
+        Assert.True(mapped.Score > 0.8);
+        Assert.Equal(5, mapped.Probabilities.Count);
+    }
+
+    [Fact]
+    public void RobertaRuntimeStatus_ReportsMissingRequiredAssets()
+    {
+        var assets = new RobertaAssetPaths(
+            Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"), "model.onnx"),
+            Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"), "tokenizer.json"),
+            "config.json",
+            "tokenizer_config.json");
+
+        var status = RobertaRuntimeStatus.MissingAssets(assets, assets.MissingRequiredAssets().ToArray());
+
+        Assert.True(status.Enabled);
+        Assert.False(status.Loaded);
+        Assert.False(status.ModelExists);
+        Assert.False(status.TokenizerExists);
+        Assert.Contains("model.onnx", status.ErrorMessage);
+        Assert.Contains("tokenizer.json", status.ErrorMessage);
+    }
+
+    [Fact]
     public void BuzzScore_UsesRecentRateAgainstBaseline()
     {
         var calculator = new BuzzScoreCalculator();

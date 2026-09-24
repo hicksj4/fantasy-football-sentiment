@@ -45,6 +45,14 @@ postgres-data/
 pgdata/
 docker-data/
 
+# Local ML model assets
+backend/FantasySentiment.Api/Models/Sentiment/*
+!backend/FantasySentiment.Api/Models/Sentiment/README.md
+tools/sentiment-model/.venv/
+tools/sentiment-model/.cache/
+tools/sentiment-model/*reference*.json
+tools/sentiment-model/*parity*.json
+
 # VS Code / editor metadata
 .vscode/
 .idea/

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "A",
+    "context": "CMC is absolutely disgusting.",
+    "target": "Christian McCaffrey"
+  },
+  {
+    "id": "B",
+    "context": "Jefferson is washed.",
+    "target": "Justin Jefferson"
+  },
+  {
+    "id": "C",
+    "context": "Thanks for the 2 points Adams.",
+    "target": "Davante Adams"
+  },
+  {
+    "id": "D",
+    "context": "Adams I hope both sides of your pillow are cool as fuck tonight.",
+    "target": "Davante Adams"
+  },
+  {
+    "id": "E",
+    "context": "CMC looked great",
+    "target": "Christian McCaffrey"
+  },
+  {
+    "id": "F",
+    "context": "Purdy was awful.",
+    "target": "Brock Purdy"
+  },
+  {
+    "id": "G",
+    "context": "I love Breece",
+    "target": "Breece Hall"
+  }
+]

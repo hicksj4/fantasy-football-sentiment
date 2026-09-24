@@ -78,6 +78,8 @@ builder.Services.AddHostedService<RedditIngestionWorker>();
 builder.Services.AddHostedService<SnapshotAggregationWorker>();
 
 var app = builder.Build();
+app.Services.GetRequiredService<RobertaSentimentAnalyzer>()
+    .EnsureUsableForMode(app.Configuration.GetValue("Sentiment:Mode", SentimentModes.RuleBased));
 
 if (app.Environment.IsDevelopment())
 {
@@ -88,11 +90,13 @@ app.UseCors("frontend");
 
 var api = app.MapGroup("/api");
 
-api.MapGet("/health", () => Results.Ok(new
+api.MapGet("/health", (RobertaSentimentAnalyzer roberta) => Results.Ok(new
 {
     status = "ok",
     timestamp = DateTimeOffset.UtcNow,
-    mockReddit = app.Configuration.GetValue("Reddit:UseMockReddit", true)
+    mockReddit = app.Configuration.GetValue("Reddit:UseMockReddit", true),
+    sentimentMode = app.Configuration.GetValue("Sentiment:Mode", SentimentModes.RuleBased),
+    roberta = ToHealthStatus(roberta.Status, app.Environment.ContentRootPath)
 }));
 
 api.MapGet("/players", async (
@@ -296,8 +300,12 @@ static void ApplyEnvironmentOverrides(ConfigurationManager configuration)
     Override("REDDIT_USER_AGENT", "Reddit:UserAgent");
     Override("SENTIMENT_MODE", "Sentiment:Mode");
     Override("SENTIMENT_ROBERTA_ENABLED", "Sentiment:Roberta:Enabled");
+    Override("SENTIMENT_ROBERTA_MODEL_PATH", "Sentiment:Roberta:ModelPath");
     Override("SENTIMENT_ROBERTA_ONNX_MODEL_PATH", "Sentiment:Roberta:OnnxModelPath");
     Override("SENTIMENT_ROBERTA_TOKENIZER_PATH", "Sentiment:Roberta:TokenizerPath");
+    Override("SENTIMENT_ROBERTA_CONFIG_PATH", "Sentiment:Roberta:ConfigPath");
+    Override("SENTIMENT_ROBERTA_TOKENIZER_CONFIG_PATH", "Sentiment:Roberta:TokenizerConfigPath");
+    Override("SENTIMENT_ROBERTA_MAX_SEQUENCE_LENGTH", "Sentiment:Roberta:MaxSequenceLength");
 
     void Override(string envName, string configKey)
     {
@@ -320,6 +328,51 @@ static void ApplyEnvironmentOverrides(ConfigurationManager configuration)
         }.Any(name => !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(name)));
     }
 
+}
+
+static object ToHealthStatus(RobertaRuntimeStatus status, string contentRootPath)
+{
+    return new
+    {
+        status.Enabled,
+        status.Loaded,
+        Model = new
+        {
+            Path = SafeRelativePath(contentRootPath, status.ModelPath),
+            Exists = status.ModelExists
+        },
+        Tokenizer = new
+        {
+            Path = SafeRelativePath(contentRootPath, status.TokenizerPath),
+            Exists = status.TokenizerExists
+        },
+        Config = new
+        {
+            Path = SafeRelativePath(contentRootPath, status.ConfigPath),
+            Exists = status.ConfigExists
+        },
+        TokenizerConfig = new
+        {
+            Path = SafeRelativePath(contentRootPath, status.TokenizerConfigPath),
+            Exists = status.TokenizerConfigExists
+        },
+        status.MaxSequenceLength,
+        status.InputNames,
+        status.OutputNames,
+        status.ErrorMessage
+    };
+}
+
+static string SafeRelativePath(string root, string path)
+{
+    try
+    {
+        return Path.GetRelativePath(root, path);
+    }
+    catch
+    {
+        return Path.GetFileName(path);
+    }
 }
 
 static string BuildPostgresConnectionStringFromEnvironment()

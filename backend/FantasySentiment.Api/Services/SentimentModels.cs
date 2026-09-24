@@ -40,4 +40,7 @@ public sealed record ModelSentimentResult(
     bool IsAvailable,
     double Score,
     string AnalyzerName,
-    string? Diagnostics = null);
+    string? Diagnostics = null,
+    IReadOnlyDictionary<string, double>? Probabilities = null,
+    int? SequenceLength = null,
+    string? ModelInput = null);

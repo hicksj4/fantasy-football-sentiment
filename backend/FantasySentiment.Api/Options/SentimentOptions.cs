@@ -18,6 +18,10 @@ public static class SentimentModes
 public sealed class RobertaSentimentOptions
 {
     public bool Enabled { get; set; }
+    public string? ModelPath { get; set; }
     public string? OnnxModelPath { get; set; }
     public string? TokenizerPath { get; set; }
+    public string? ConfigPath { get; set; }
+    public string? TokenizerConfigPath { get; set; }
+    public int? MaxSequenceLength { get; set; }
 }
