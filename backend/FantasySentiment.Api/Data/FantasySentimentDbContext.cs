@@ -11,6 +11,8 @@ public sealed class FantasySentimentDbContext(DbContextOptions<FantasySentimentD
     public DbSet<RedditComment> RedditComments => Set<RedditComment>();
     public DbSet<PlayerMention> PlayerMentions => Set<PlayerMention>();
     public DbSet<PlayerSnapshot> PlayerSnapshots => Set<PlayerSnapshot>();
+    public DbSet<AnalysisSnapshot> AnalysisSnapshots => Set<AnalysisSnapshot>();
+    public DbSet<SnapshotPlayerAggregate> SnapshotPlayerAggregates => Set<SnapshotPlayerAggregate>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,6 +32,16 @@ public sealed class FantasySentimentDbContext(DbContextOptions<FantasySentimentD
             entity.HasIndex(alias => new { alias.PlayerId, alias.Alias }).IsUnique();
         });
 
+        modelBuilder.Entity<AnalysisSnapshot>(entity =>
+        {
+            entity.Property(snapshot => snapshot.Key).HasMaxLength(80);
+            entity.Property(snapshot => snapshot.Name).HasMaxLength(160);
+            entity.Property(snapshot => snapshot.Status).HasMaxLength(32);
+            entity.HasIndex(snapshot => snapshot.Key).IsUnique();
+            entity.HasIndex(snapshot => new { snapshot.Season, snapshot.Week }).IsUnique();
+            entity.HasIndex(snapshot => snapshot.ProcessedAt);
+        });
+
         modelBuilder.Entity<RedditPost>(entity =>
         {
             entity.Property(post => post.RedditId).HasMaxLength(32);
@@ -42,6 +54,11 @@ public sealed class FantasySentimentDbContext(DbContextOptions<FantasySentimentD
             entity.HasIndex(post => post.RedditId).IsUnique();
             entity.HasIndex(post => post.CreatedAt);
             entity.HasIndex(post => post.AnalysisStatus);
+            entity.HasIndex(post => post.SnapshotId);
+            entity.HasOne(post => post.Snapshot)
+                .WithMany(snapshot => snapshot.Posts)
+                .HasForeignKey(post => post.SnapshotId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<RedditComment>(entity =>
@@ -63,6 +80,11 @@ public sealed class FantasySentimentDbContext(DbContextOptions<FantasySentimentD
             entity.Property(mention => mention.Intent).HasMaxLength(16);
             entity.HasIndex(mention => new { mention.PlayerId, mention.CommentId }).IsUnique();
             entity.HasIndex(mention => mention.CreatedAt);
+            entity.HasIndex(mention => mention.SnapshotId);
+            entity.HasOne(mention => mention.Snapshot)
+                .WithMany()
+                .HasForeignKey(mention => mention.SnapshotId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<PlayerSnapshot>(entity =>
@@ -70,6 +92,23 @@ public sealed class FantasySentimentDbContext(DbContextOptions<FantasySentimentD
             entity.HasKey(snapshot => new { snapshot.PlayerId, snapshot.Timestamp });
             entity.Property(snapshot => snapshot.Confidence).HasMaxLength(16);
             entity.HasIndex(snapshot => snapshot.Timestamp);
+        });
+
+        modelBuilder.Entity<SnapshotPlayerAggregate>(entity =>
+        {
+            entity.HasKey(aggregate => new { aggregate.SnapshotId, aggregate.PlayerId });
+            entity.Property(aggregate => aggregate.Confidence).HasMaxLength(16);
+            entity.HasIndex(aggregate => aggregate.PlayerId);
+            entity.HasIndex(aggregate => aggregate.PositiveImpact);
+            entity.HasIndex(aggregate => aggregate.NegativeImpact);
+            entity.HasOne(aggregate => aggregate.Snapshot)
+                .WithMany(snapshot => snapshot.PlayerAggregates)
+                .HasForeignKey(aggregate => aggregate.SnapshotId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(aggregate => aggregate.Player)
+                .WithMany()
+                .HasForeignKey(aggregate => aggregate.PlayerId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

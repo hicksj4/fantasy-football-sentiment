@@ -3,6 +3,7 @@ namespace FantasySentiment.Api.Domain;
 public sealed class RedditPost
 {
     public int Id { get; set; }
+    public int? SnapshotId { get; set; }
     public required string RedditId { get; set; }
     public required string Subreddit { get; set; }
     public required string Title { get; set; }
@@ -19,5 +20,6 @@ public sealed class RedditPost
     public string PostType { get; set; } = RedditPostTypes.Normal;
     public string? AnalysisStatusReason { get; set; }
 
+    public AnalysisSnapshot? Snapshot { get; set; }
     public List<RedditComment> Comments { get; set; } = [];
 }

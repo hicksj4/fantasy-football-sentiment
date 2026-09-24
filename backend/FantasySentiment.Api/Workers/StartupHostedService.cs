@@ -1,15 +1,21 @@
 using FantasySentiment.Api.Data;
+using FantasySentiment.Api.Domain;
+using FantasySentiment.Api.Options;
 using FantasySentiment.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.Options;
 
 namespace FantasySentiment.Api.Workers;
 
 public sealed class StartupHostedService(
     IServiceScopeFactory scopeFactory,
+    IOptions<SnapshotProcessingOptions> snapshotOptions,
     ILogger<StartupHostedService> logger) : IHostedService
 {
+    private readonly SnapshotProcessingOptions _snapshotOptions = snapshotOptions.Value;
+
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         using var scope = scopeFactory.CreateScope();
@@ -31,8 +37,29 @@ public sealed class StartupHostedService(
         var seeder = scope.ServiceProvider.GetRequiredService<DemoDataSeeder>();
         await seeder.SeedAsync(cancellationToken);
 
-        var snapshots = scope.ServiceProvider.GetRequiredService<SnapshotAggregationService>();
-        await snapshots.GenerateSnapshotsAsync(DateTimeOffset.UtcNow, cancellationToken);
+        if (_snapshotOptions.ProcessMockSnapshotOnStartup)
+        {
+            var existing = await db.AnalysisSnapshots
+                .AsNoTracking()
+                .FirstOrDefaultAsync(
+                    snapshot => snapshot.Key == _snapshotOptions.DefaultSnapshotKey,
+                    cancellationToken);
+
+            if (existing?.Status == AnalysisSnapshotStatuses.Processed)
+            {
+                logger.LogInformation(
+                    "Default snapshot {SnapshotKey} is already processed. Startup processing skipped.",
+                    _snapshotOptions.DefaultSnapshotKey);
+            }
+            else
+            {
+                var processor = scope.ServiceProvider.GetRequiredService<SnapshotProcessingService>();
+                await processor.ProcessAsync(
+                    _snapshotOptions.DefaultSnapshotKey,
+                    skipIfProcessed: true,
+                    cancellationToken);
+            }
+        }
     }
 
     private static async Task EnsureMigrationsHistoryTableExistsAsync(

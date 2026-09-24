@@ -15,8 +15,8 @@ type HighlightCardProps = {
 export function HighlightCards({ highlights }: HighlightCardsProps) {
   return (
     <section className="highlight-grid" aria-label="Sentiment highlights">
-      <HighlightCard title="Biggest Sentiment Riser" player={highlights.riser} tone="positive" />
-      <HighlightCard title="Biggest Sentiment Faller" player={highlights.faller} tone="negative" />
+      <HighlightCard title="Top Positive Impact" player={highlights.positive} tone="positive" />
+      <HighlightCard title="Top Negative Impact" player={highlights.negative} tone="negative" />
     </section>
   );
 }
@@ -58,8 +58,8 @@ function HighlightCard({ title, player, tone }: HighlightCardProps) {
           <ScorePill value={player.communitySentiment} />
         </div>
         <div>
-          <span>Change</span>
-          <ScorePill value={player.sentimentChange} kind="change" />
+          <span>Impact</span>
+          <ScorePill value={player.impact} kind="change" />
         </div>
         <div>
           <span>Mentions</span>
@@ -118,7 +118,7 @@ function initials(name: string) {
 }
 
 function summaryFor(player: DashboardHighlightPlayer, tone: "positive" | "negative") {
-  const magnitude = Math.max(Math.abs(player.sentimentChange), Math.abs(player.communitySentiment));
+  const magnitude = Math.max(Math.abs(player.impact) / Math.max(player.mentions, 1), Math.abs(player.communitySentiment));
   if (tone === "positive") {
     if (magnitude >= 0.75) {
       return "He's the GOAT 🐐";

@@ -23,10 +23,10 @@ export function DashboardTable({ title, rows, mode = "default" }: DashboardTable
               <th>Team</th>
               <th>Pos</th>
               <th>Mentions</th>
-              <th>Buzz</th>
+              <th>Share</th>
               <th>Sentiment</th>
               <th>Community</th>
-              <th>Change</th>
+              <th>Impact</th>
               {mode === "waiver" ? <th>Add/Hype</th> : null}
               {mode === "panic" ? <th>Drop/Panic</th> : null}
             </tr>
@@ -42,9 +42,7 @@ export function DashboardTable({ title, rows, mode = "default" }: DashboardTable
                 </td>
                 <td>{row.position}</td>
                 <td>{row.mentions}</td>
-                <td>
-                  <ScorePill value={row.buzz} kind="buzz" />
-                </td>
+                <td>{(row.discussionShare * 100).toFixed(1)}%</td>
                 <td>
                   <ScorePill value={row.sentiment} />
                 </td>
@@ -52,7 +50,7 @@ export function DashboardTable({ title, rows, mode = "default" }: DashboardTable
                   <ScorePill value={row.communitySentiment} />
                 </td>
                 <td>
-                  <ScorePill value={row.sentimentChange} kind="change" />
+                  <ScorePill value={row.netImpact} kind="change" />
                 </td>
                 {mode === "waiver" ? <td>{row.addCount + row.hypeCount}</td> : null}
                 {mode === "panic" ? <td>{row.dropCount + row.sitCount + row.sellCount + row.panicCount}</td> : null}

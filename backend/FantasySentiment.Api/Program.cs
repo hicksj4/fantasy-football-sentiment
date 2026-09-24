@@ -27,6 +27,7 @@ builder.Services.AddCors(options =>
 builder.Services.Configure<RedditOptions>(builder.Configuration.GetSection("Reddit"));
 builder.Services.Configure<RedditAnalysisOptions>(builder.Configuration.GetSection("RedditAnalysis"));
 builder.Services.Configure<SnapshotOptions>(builder.Configuration.GetSection("Snapshots"));
+builder.Services.Configure<SnapshotProcessingOptions>(builder.Configuration.GetSection("SnapshotProcessing"));
 builder.Services.Configure<DashboardHighlightOptions>(builder.Configuration.GetSection("DashboardHighlights"));
 builder.Services.Configure<SentimentOptions>(builder.Configuration.GetSection("Sentiment"));
 builder.Services.Configure<SentimentLexiconOptions>(builder.Configuration.GetSection("SentimentLexicon"));
@@ -67,7 +68,10 @@ builder.Services.AddSingleton<ThreadContextBuilder>();
 builder.Services.AddScoped<SnapshotAggregationService>();
 builder.Services.AddScoped<RedditIngestionService>();
 builder.Services.AddScoped<AnalyticsQueryService>();
+builder.Services.AddScoped<SnapshotProcessingService>();
+builder.Services.AddScoped<SnapshotQueryService>();
 builder.Services.AddScoped<DemoDataSeeder>();
+builder.Services.AddSingleton<ISnapshotSource, JsonSnapshotSource>();
 
 builder.Services.AddSingleton<MockRedditDataProvider>();
 builder.Services.AddHttpClient<RedditApiDataProvider>();
@@ -80,8 +84,6 @@ builder.Services.AddScoped<IRedditDataProvider>(provider =>
 });
 
 builder.Services.AddHostedService<StartupHostedService>();
-builder.Services.AddHostedService<RedditDiscoveryWorker>();
-builder.Services.AddHostedService<RedditAnalysisWorker>();
 
 var app = builder.Build();
 
@@ -99,6 +101,8 @@ api.MapGet("/health", () => Results.Ok(new
     status = "ok",
     timestamp = DateTimeOffset.UtcNow,
     mockReddit = app.Configuration.GetValue("Reddit:UseMockReddit", true),
+    snapshotMode = true,
+    defaultSnapshotKey = app.Configuration.GetValue("SnapshotProcessing:DefaultSnapshotKey", "2026-week-4"),
     sentimentMode = app.Configuration.GetValue("Sentiment:Mode", SentimentModes.Vader)
 }));
 
@@ -151,6 +155,107 @@ api.MapGet("/players", async (
 {
     var players = await analytics.SearchPlayersAsync(search, limit ?? 30, cancellationToken);
     return Results.Ok(players);
+});
+
+api.MapGet("/snapshots", async (
+    SnapshotQueryService snapshots,
+    CancellationToken cancellationToken) =>
+{
+    return Results.Ok(await snapshots.GetSnapshotsAsync(cancellationToken));
+});
+
+api.MapGet("/snapshots/{key}", async (
+    string key,
+    SnapshotQueryService snapshots,
+    CancellationToken cancellationToken) =>
+{
+    var snapshot = await snapshots.GetSnapshotAsync(key, cancellationToken);
+    return snapshot is null ? Results.NotFound() : Results.Ok(snapshot);
+});
+
+api.MapPost("/snapshots/{key}/process", async (
+    string key,
+    bool? skipIfProcessed,
+    SnapshotProcessingService processor,
+    SnapshotQueryService snapshots,
+    CancellationToken cancellationToken) =>
+{
+    var processed = await processor.ProcessAsync(
+        key,
+        skipIfProcessed: skipIfProcessed ?? false,
+        cancellationToken);
+    var snapshot = await snapshots.GetSnapshotAsync(processed.Key, cancellationToken);
+    return Results.Ok(snapshot);
+});
+
+api.MapGet("/snapshots/{key}/players", async (
+    string key,
+    string? sort,
+    int? limit,
+    SnapshotQueryService snapshots,
+    CancellationToken cancellationToken) =>
+{
+    var rows = await snapshots.GetPlayersAsync(key, cancellationToken);
+    var ordered = (sort?.Trim().ToLowerInvariant()) switch
+    {
+        "waivers" or "waiver" => rows
+            .OrderByDescending(row => row.AddCount + row.HypeCount)
+            .ThenByDescending(row => row.ImpactScore),
+        "panic" => rows
+            .OrderByDescending(row => row.DropCount + row.SitCount + row.SellCount + row.PanicCount)
+            .ThenByDescending(row => row.ImpactScore),
+        "most-discussed" or "mentions" => rows
+            .OrderByDescending(row => row.Mentions)
+            .ThenByDescending(row => row.ImpactScore),
+        "positive" => rows
+            .OrderByDescending(row => row.PositiveImpact)
+            .ThenByDescending(row => row.Mentions),
+        "negative" => rows
+            .OrderBy(row => row.NegativeImpact)
+            .ThenByDescending(row => row.Mentions),
+        _ => rows
+            .OrderByDescending(row => row.ImpactScore)
+            .ThenByDescending(row => row.Mentions)
+    };
+
+    return Results.Ok(ordered.Take(limit ?? 20));
+});
+
+api.MapGet("/snapshots/{key}/players/{id:int}", async (
+    string key,
+    int id,
+    SnapshotQueryService snapshots,
+    CancellationToken cancellationToken) =>
+{
+    var player = await snapshots.GetPlayerAsync(key, id, cancellationToken);
+    return player is null ? Results.NotFound() : Results.Ok(player);
+});
+
+api.MapGet("/snapshots/{key}/highlights", async (
+    string key,
+    SnapshotQueryService snapshots,
+    CancellationToken cancellationToken) =>
+{
+    var highlights = await snapshots.GetHighlightsAsync(key, cancellationToken);
+    return highlights is null ? Results.NotFound() : Results.Ok(highlights);
+});
+
+api.MapGet("/snapshots/{key}/teams", async (
+    string key,
+    SnapshotQueryService snapshots,
+    CancellationToken cancellationToken) =>
+{
+    return Results.Ok(await snapshots.GetTeamSummariesAsync(key, cancellationToken));
+});
+
+api.MapGet("/snapshots/{key}/teams/{team}", async (
+    string key,
+    string team,
+    SnapshotQueryService snapshots,
+    CancellationToken cancellationToken) =>
+{
+    var detail = await snapshots.GetTeamDetailAsync(key, team, cancellationToken);
+    return detail is null ? Results.NotFound() : Results.Ok(detail);
 });
 
 api.MapGet("/search", async (
@@ -366,6 +471,9 @@ static void ApplyEnvironmentOverrides(ConfigurationManager configuration)
     Override("REDDIT_ANALYSIS_GAME_MINIMUM_AGE_MINUTES", "RedditAnalysis:GameThreads:MinimumAgeMinutes");
     Override("REDDIT_ANALYSIS_GAME_COOLDOWN_WINDOW_MINUTES", "RedditAnalysis:GameThreads:CooldownWindowMinutes");
     Override("REDDIT_ANALYSIS_GAME_MAX_NEW_COMMENTS_DURING_COOLDOWN", "RedditAnalysis:GameThreads:MaximumNewCommentsDuringCooldown");
+    Override("SNAPSHOT_DEFAULT_KEY", "SnapshotProcessing:DefaultSnapshotKey");
+    Override("SNAPSHOT_PROCESS_ON_STARTUP", "SnapshotProcessing:ProcessMockSnapshotOnStartup");
+    Override("SNAPSHOT_FIXTURE_DIRECTORY", "SnapshotProcessing:FixtureDirectory");
     Override("DASHBOARD_HIGHLIGHT_MINIMUM_MENTIONS", "DashboardHighlights:MinimumMentions");
     Override("DASHBOARD_HIGHLIGHT_MINIMUM_SAMPLE_STRENGTH", "DashboardHighlights:MinimumSampleStrength");
     Override("DASHBOARD_HIGHLIGHT_EXCLUDE_LOW_CONFIDENCE", "DashboardHighlights:ExcludeLowConfidence");
