@@ -3,6 +3,7 @@ namespace FantasySentiment.Api.Domain;
 public sealed class PlayerMention
 {
     public long Id { get; set; }
+    public int? SnapshotId { get; set; }
     public int PlayerId { get; set; }
     public int CommentId { get; set; }
     public double RawSentimentScore { get; set; }
@@ -22,6 +23,7 @@ public sealed class PlayerMention
     public double WeightedSentimentContribution { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
 
+    public AnalysisSnapshot? Snapshot { get; set; }
     public Player Player { get; set; } = null!;
     public RedditComment Comment { get; set; } = null!;
 }

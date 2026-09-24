@@ -383,6 +383,7 @@ public sealed class AnalyticsQueryService(
             row.Sentiment,
             row.CommunitySentiment,
             row.SentimentChange,
+            row.SentimentChange,
             Math.Round(stats?.TotalVoteWeight ?? 0, 3),
             row.AverageVoteWeight,
             row.SampleStrengthScore,

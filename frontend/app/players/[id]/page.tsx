@@ -1,42 +1,41 @@
 import { DashboardTable } from "@/components/DashboardTable";
-import { LineChart } from "@/components/LineChart";
 import { MetricCard } from "@/components/MetricCard";
 import { ScorePill } from "@/components/ScorePill";
-import { getJson, withWindow, type DashboardPlayer, type HistoryPoint, type PlayerMetrics } from "@/lib/api";
+import { getJson, type AnalysisSnapshot, type DashboardPlayer, type PlayerMetrics } from "@/lib/api";
 import Link from "next/link";
 
 type PageProps = {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ window?: string }>;
+  searchParams: Promise<{ snapshot?: string }>;
 };
 
 export default async function PlayerPage({ params, searchParams }: PageProps) {
   const [{ id }, query] = await Promise.all([params, searchParams]);
-  const windowValue = query.window ?? "24h";
-  const [player, history, related] = await Promise.all([
-    getJson<PlayerMetrics>(`/api/players/${id}`),
-    getJson<HistoryPoint[]>(withWindow(`/api/players/${id}/history`, windowValue)),
-    getJson<DashboardPlayer[]>(withWindow("/api/most-discussed?limit=8", windowValue))
+  const snapshotKey = query.snapshot ?? "latest";
+  const [snapshot, player, related] = await Promise.all([
+    getJson<AnalysisSnapshot>(`/api/snapshots/${snapshotKey}`),
+    getJson<PlayerMetrics>(`/api/snapshots/${snapshotKey}/players/${id}`),
+    getJson<DashboardPlayer[]>(`/api/snapshots/${snapshotKey}/players?sort=most-discussed&limit=8`)
   ]);
 
   return (
     <main>
       <header className="terminal-header">
         <div>
-          <Link className="back-link" href={`/?window=${windowValue}`}>Back to terminal</Link>
-          <p className="eyebrow">{player.team} {player.position}</p>
+          <Link className="back-link" href={`/?snapshot=${snapshot.key}`}>Back to snapshot</Link>
+          <p className="eyebrow">{snapshot.name} • {player.team} {player.position}</p>
           <h1>{player.name}</h1>
           <div className="alias-list">{player.aliases.map((alias) => <span key={alias}>{alias}</span>)}</div>
         </div>
         <div className="hero-score">
-          <span>Current sentiment</span>
-          <ScorePill value={player.sentiment} />
+          <span>Snapshot sentiment</span>
+          <ScorePill value={player.communitySentiment} />
         </div>
       </header>
 
       <section className="metrics-grid">
-        <MetricCard label="Mentions" value={player.mentions} detail="Recent aggregation" />
-        <MetricCard label="Buzz" value={`${player.buzz.toFixed(1)}x`} detail="Versus baseline" />
+        <MetricCard label="Mentions" value={player.mentions} detail="Within selected snapshot" />
+        <MetricCard label="Discussion share" value={`${(player.buzz * 100).toFixed(1)}%`} detail={`${snapshot.totalPlayerMentions} total mentions`} />
         <MetricCard label="Community sentiment" value={player.communitySentiment.toFixed(2)} detail={`Raw ${player.rawSentiment.toFixed(2)}`} />
         <MetricCard label="Confidence" value={player.confidence} detail={`${player.totalRedditScore} Reddit score`} />
       </section>
@@ -61,14 +60,7 @@ export default async function PlayerPage({ params, searchParams }: PageProps) {
         ))}
       </section>
 
-      <section className="chart-grid">
-        <LineChart title="Sentiment over time" points={history} field="sentiment" />
-        <LineChart title="Community sentiment over time" points={history} field="communitySentiment" />
-        <LineChart title="Mentions over time" points={history} field="mentions" />
-        <LineChart title="Buzz over time" points={history} field="buzz" />
-      </section>
-
-      <DashboardTable title="Most Discussed Nearby" rows={related.filter((row) => row.playerId !== player.playerId).slice(0, 6)} />
+      <DashboardTable title="Most Discussed In Snapshot" rows={related.filter((row) => row.playerId !== player.playerId).slice(0, 6)} />
     </main>
   );
 }

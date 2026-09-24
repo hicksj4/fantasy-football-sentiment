@@ -22,6 +22,72 @@ namespace FantasySentiment.Api.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("FantasySentiment.Api.Domain.AnalysisSnapshot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("CommentsPerSecond")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(160)
+                        .HasColumnType("character varying(160)");
+
+                    b.Property<DateTimeOffset?>("ProcessedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<double>("ProcessingDurationMs")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("Season")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<int>("TotalComments")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalPlayerMentions")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalPosts")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UniquePlayersMentioned")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Week")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Key")
+                        .IsUnique();
+
+                    b.HasIndex("ProcessedAt");
+
+                    b.HasIndex("Season", "Week")
+                        .IsUnique();
+
+                    b.ToTable("AnalysisSnapshots");
+                });
+
             modelBuilder.Entity("FantasySentiment.Api.Domain.Player", b =>
                 {
                     b.Property<int>("Id")
@@ -152,6 +218,9 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.Property<double>("SentimentScore")
                         .HasColumnType("double precision");
 
+                    b.Property<int?>("SnapshotId")
+                        .HasColumnType("integer");
+
                     b.Property<double>("VoteWeight")
                         .HasColumnType("double precision");
 
@@ -166,6 +235,8 @@ namespace FantasySentiment.Api.Data.Migrations
 
                     b.HasIndex("PlayerId", "CommentId")
                         .IsUnique();
+
+                    b.HasIndex("SnapshotId");
 
                     b.ToTable("PlayerMentions");
                 });
@@ -350,6 +421,9 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.Property<int>("Score")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("SnapshotId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Subreddit")
                         .IsRequired()
                         .HasMaxLength(80)
@@ -373,7 +447,111 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.HasIndex("RedditId")
                         .IsUnique();
 
+                    b.HasIndex("SnapshotId");
+
                     b.ToTable("RedditPosts");
+                });
+
+            modelBuilder.Entity("FantasySentiment.Api.Domain.SnapshotPlayerAggregate", b =>
+                {
+                    b.Property<int>("SnapshotId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("AddCount")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("AverageVoteWeight")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("BuyCount")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("CommunitySentimentScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Confidence")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
+
+                    b.Property<double>("DiscussionShare")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("DropCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("HoldCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("HypeCount")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("ImpactScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("InjuryCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MentionCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("NegativeCount")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("NegativeImpact")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("NetImpact")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("NeutralCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PanicCount")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("PositiveImpact")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("PositiveCount")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("RawSentimentScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("SampleStrengthScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("SellCount")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("SentimentScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("SitCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StartCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalRedditScore")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("TotalVoteWeight")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("SnapshotId", "PlayerId");
+
+                    b.HasIndex("NegativeImpact");
+
+                    b.HasIndex("PlayerId");
+
+                    b.HasIndex("PositiveImpact");
+
+                    b.ToTable("SnapshotPlayerAggregates");
                 });
 
             modelBuilder.Entity("FantasySentiment.Api.Domain.PlayerAlias", b =>
@@ -389,6 +567,11 @@ namespace FantasySentiment.Api.Data.Migrations
 
             modelBuilder.Entity("FantasySentiment.Api.Domain.PlayerMention", b =>
                 {
+                    b.HasOne("FantasySentiment.Api.Domain.AnalysisSnapshot", "Snapshot")
+                        .WithMany()
+                        .HasForeignKey("SnapshotId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("FantasySentiment.Api.Domain.RedditComment", "Comment")
                         .WithMany("PlayerMentions")
                         .HasForeignKey("CommentId")
@@ -404,6 +587,8 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.Navigation("Comment");
 
                     b.Navigation("Player");
+
+                    b.Navigation("Snapshot");
                 });
 
             modelBuilder.Entity("FantasySentiment.Api.Domain.PlayerSnapshot", b =>
@@ -440,6 +625,42 @@ namespace FantasySentiment.Api.Data.Migrations
             modelBuilder.Entity("FantasySentiment.Api.Domain.RedditComment", b =>
                 {
                     b.Navigation("PlayerMentions");
+                });
+
+            modelBuilder.Entity("FantasySentiment.Api.Domain.RedditPost", b =>
+                {
+                    b.HasOne("FantasySentiment.Api.Domain.AnalysisSnapshot", "Snapshot")
+                        .WithMany("Posts")
+                        .HasForeignKey("SnapshotId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Snapshot");
+                });
+
+            modelBuilder.Entity("FantasySentiment.Api.Domain.SnapshotPlayerAggregate", b =>
+                {
+                    b.HasOne("FantasySentiment.Api.Domain.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FantasySentiment.Api.Domain.AnalysisSnapshot", "Snapshot")
+                        .WithMany("PlayerAggregates")
+                        .HasForeignKey("SnapshotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Player");
+
+                    b.Navigation("Snapshot");
+                });
+
+            modelBuilder.Entity("FantasySentiment.Api.Domain.AnalysisSnapshot", b =>
+                {
+                    b.Navigation("PlayerAggregates");
+
+                    b.Navigation("Posts");
                 });
 
             modelBuilder.Entity("FantasySentiment.Api.Domain.RedditPost", b =>

@@ -21,6 +21,11 @@ export type DashboardPlayer = {
   sellCount: number;
   hypeCount: number;
   panicCount: number;
+  discussionShare: number;
+  positiveImpact: number;
+  negativeImpact: number;
+  netImpact: number;
+  impactScore: number;
 };
 
 export type DashboardHighlightInfluence = {
@@ -43,6 +48,7 @@ export type DashboardHighlightPlayer = {
   sentiment: number;
   communitySentiment: number;
   sentimentChange: number;
+  impact: number;
   totalVoteWeight: number;
   averageVoteWeight: number;
   sampleStrengthScore: number;
@@ -58,9 +64,26 @@ export type DashboardHighlightEligibility = {
 };
 
 export type DashboardHighlights = {
-  riser: DashboardHighlightPlayer | null;
-  faller: DashboardHighlightPlayer | null;
+  positive: DashboardHighlightPlayer | null;
+  negative: DashboardHighlightPlayer | null;
   eligibility: DashboardHighlightEligibility;
+};
+
+export type AnalysisSnapshot = {
+  id: number;
+  key: string;
+  name: string;
+  season: number;
+  week: number;
+  createdAt: string;
+  processedAt: string | null;
+  status: string;
+  totalPosts: number;
+  totalComments: number;
+  totalPlayerMentions: number;
+  uniquePlayersMentioned: number;
+  processingDurationMs: number;
+  commentsPerSecond: number;
 };
 
 export type PlayerListItem = {

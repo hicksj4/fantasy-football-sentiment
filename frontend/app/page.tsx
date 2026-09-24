@@ -3,69 +3,66 @@ import { HighlightCards } from "@/components/HighlightCards";
 import { MetricCard } from "@/components/MetricCard";
 import { PlayerSearch } from "@/components/PlayerSearch";
 import { ScorePill } from "@/components/ScorePill";
-import { getJson, withWindow, type DashboardHighlights, type DashboardPlayer, type TeamSummary } from "@/lib/api";
+import { getJson, type AnalysisSnapshot, type DashboardHighlights, type DashboardPlayer, type TeamSummary } from "@/lib/api";
 import Link from "next/link";
 
 type PageProps = {
-  searchParams: Promise<{ window?: string }>;
+  searchParams: Promise<{ snapshot?: string }>;
 };
-
-const windows = [ "1h", "6h", "24h", "7d" ];
 
 export default async function Home({ searchParams }: PageProps) {
   const params = await searchParams;
-  const windowValue = windows.includes(params.window ?? "") ? params.window! : "24h";
+  const snapshotKey = params.snapshot ?? "latest";
 
-  const [highlights, trending, risers, fallers, waivers, panic, mostDiscussed, teams] = await Promise.all([
-    getJson<DashboardHighlights>(withWindow("/api/highlights", windowValue)),
-    getJson<DashboardPlayer[]>(withWindow("/api/trending?limit=10", windowValue)),
-    getJson<DashboardPlayer[]>(withWindow("/api/sentiment/risers?limit=8", windowValue)),
-    getJson<DashboardPlayer[]>(withWindow("/api/sentiment/fallers?limit=8", windowValue)),
-    getJson<DashboardPlayer[]>(withWindow("/api/waivers?limit=8", windowValue)),
-    getJson<DashboardPlayer[]>(withWindow("/api/panic?limit=8", windowValue)),
-    getJson<DashboardPlayer[]>(withWindow("/api/most-discussed?limit=8", windowValue)),
-    getJson<TeamSummary[]>(withWindow("/api/teams", windowValue))
+  const [snapshot, highlights, impactPlayers, waivers, panic, mostDiscussed, teams] = await Promise.all([
+    getJson<AnalysisSnapshot>(`/api/snapshots/${snapshotKey}`),
+    getJson<DashboardHighlights>(`/api/snapshots/${snapshotKey}/highlights`),
+    getJson<DashboardPlayer[]>(`/api/snapshots/${snapshotKey}/players?sort=impact&limit=10`),
+    getJson<DashboardPlayer[]>(`/api/snapshots/${snapshotKey}/players?sort=waivers&limit=8`),
+    getJson<DashboardPlayer[]>(`/api/snapshots/${snapshotKey}/players?sort=panic&limit=8`),
+    getJson<DashboardPlayer[]>(`/api/snapshots/${snapshotKey}/players?sort=most-discussed&limit=8`),
+    getJson<TeamSummary[]>(`/api/snapshots/${snapshotKey}/teams`)
   ]);
 
-  const totalMentions = mostDiscussed.reduce((sum, player) => sum + player.mentions, 0);
-  const hottest = trending[0];
-  const bestRiser = risers[0];
-  const panicLeader = panic[0];
+  const topImpact = impactPlayers[0];
+  const processedAt = snapshot.processedAt ? new Date(snapshot.processedAt).toLocaleDateString() : "Pending";
 
   return (
     <main>
-      <header className="terminal-header">
+      <header className="terminal-header snapshot-terminal-header">
         <div>
           <p className="eyebrow">FANTASY FOOTBALL SENTIMENT TERMINAL</p>
-          <h1 className="terminal-title">Reddit player buzz, velocity, and intent</h1>
+          <h1 className="terminal-title">Game week Reddit snapshot</h1>
+          <p className="snapshot-subtitle">One completed week of r/fantasyfootball game-thread discussion.</p>
         </div>
       </header>
 
-      <div className="dashboard-controls">
-        <nav className="time-filters" aria-label="Time filter">
-          {windows.map((item) => (
-            <Link className={item === windowValue ? "active" : ""} href={`/?window=${item}`} key={item}>
-              {item}
-            </Link>
-          ))}
-        </nav>
+      <div className="dashboard-controls snapshot-controls">
+        <section className="snapshot-banner" aria-label="Selected snapshot">
+          <div>
+            <span>{snapshot.season} • WEEK {snapshot.week}</span>
+            <strong>{snapshot.name}</strong>
+          </div>
+          <div>
+            <span>GAME WEEK SNAPSHOT</span>
+            <strong>{snapshot.status}</strong>
+          </div>
+        </section>
         <PlayerSearch />
       </div>
 
       <HighlightCards highlights={highlights} />
 
       <section className="metrics-grid">
-        <MetricCard label="Tracked mentions" value={totalMentions} detail={`${windowValue} window`} />
-        <MetricCard label="Top buzz" value={hottest ? `${hottest.buzz.toFixed(1)}x` : "0x"} detail={hottest?.name ?? "No data"} />
-        <MetricCard label="Best sentiment move" value={bestRiser ? `+${bestRiser.sentimentChange.toFixed(2)}` : "0.00"} detail={bestRiser?.name ?? "No data"} />
-        <MetricCard label="Highest panic signal" value={panicLeader ? panicLeader.dropCount + panicLeader.sitCount + panicLeader.sellCount + panicLeader.panicCount : 0} detail={panicLeader?.name ?? "No data"} />
+        <MetricCard label="Comments analyzed" value={snapshot.totalComments} detail={`${snapshot.totalPosts} game threads`} />
+        <MetricCard label="Player mentions" value={snapshot.totalPlayerMentions} detail={`${snapshot.uniquePlayersMentioned} players`} />
+        <MetricCard label="Top impact" value={topImpact ? topImpact.impactScore.toFixed(1) : "0.0"} detail={topImpact?.name ?? "No data"} />
+        <MetricCard label="Processed" value={processedAt} detail={`${snapshot.commentsPerSecond.toFixed(1)} comments/sec`} />
       </section>
 
       <section className="dashboard-grid">
-        <DashboardTable title="Trending Players" rows={trending} />
-        <DashboardTable title="Waiver Buzz" rows={waivers} mode="waiver" />
-        <DashboardTable title="Sentiment Risers" rows={risers} />
-        <DashboardTable title="Sentiment Fallers" rows={fallers} />
+        <DashboardTable title="Snapshot Impact" rows={impactPlayers} />
+        <DashboardTable title="Waiver / Hype Buzz" rows={waivers} mode="waiver" />
         <DashboardTable title="Panic / Drop Buzz" rows={panic} mode="panic" />
         <DashboardTable title="Most Discussed" rows={mostDiscussed} />
       </section>
@@ -77,11 +74,11 @@ export default async function Home({ searchParams }: PageProps) {
         </div>
         <div className="team-grid">
           {teams.map((team) => (
-            <Link className="team-row" href={`/teams/${team.team}?window=${windowValue}`} key={team.team}>
+            <Link className="team-row" href={`/teams/${team.team}?snapshot=${snapshot.key}`} key={team.team}>
               <strong>{team.team}</strong>
               <span>{team.mentions} mentions</span>
               <ScorePill value={team.sentiment} />
-              <ScorePill value={team.buzz} kind="buzz" />
+              <span>{(team.buzz * 100).toFixed(1)}% share</span>
             </Link>
           ))}
         </div>

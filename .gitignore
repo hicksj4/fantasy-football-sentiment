@@ -44,6 +44,7 @@ pnpm-debug.log*
 postgres-data/
 pgdata/
 docker-data/
+artifacts/
 
 # VS Code / editor metadata
 .vscode/

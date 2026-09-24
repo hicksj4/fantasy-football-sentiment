@@ -36,6 +36,22 @@ public sealed record PlayerMetricsDto(
     int HypeCount,
     int PanicCount);
 
+public sealed record AnalysisSnapshotDto(
+    int Id,
+    string Key,
+    string Name,
+    int Season,
+    int Week,
+    DateTimeOffset CreatedAt,
+    DateTimeOffset? ProcessedAt,
+    string Status,
+    int TotalPosts,
+    int TotalComments,
+    int TotalPlayerMentions,
+    int UniquePlayersMentioned,
+    double ProcessingDurationMs,
+    double CommentsPerSecond);
+
 public sealed record DashboardPlayerDto(
     int PlayerId,
     string Name,
@@ -58,11 +74,16 @@ public sealed record DashboardPlayerDto(
     int BuyCount,
     int SellCount,
     int HypeCount,
-    int PanicCount);
+    int PanicCount,
+    double DiscussionShare = 0,
+    double PositiveImpact = 0,
+    double NegativeImpact = 0,
+    double NetImpact = 0,
+    double ImpactScore = 0);
 
 public sealed record DashboardHighlightsDto(
-    DashboardHighlightPlayerDto? Riser,
-    DashboardHighlightPlayerDto? Faller,
+    DashboardHighlightPlayerDto? Positive,
+    DashboardHighlightPlayerDto? Negative,
     DashboardHighlightEligibilityDto Eligibility);
 
 public sealed record DashboardHighlightEligibilityDto(
@@ -81,6 +102,7 @@ public sealed record DashboardHighlightPlayerDto(
     double Sentiment,
     double CommunitySentiment,
     double SentimentChange,
+    double Impact,
     double TotalVoteWeight,
     double AverageVoteWeight,
     double SampleStrengthScore,
