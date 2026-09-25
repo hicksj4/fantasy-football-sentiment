@@ -13,7 +13,7 @@ public sealed class RedditIngestionService(
     RedditPostAnalysisDecider analysisDecider,
     PlayerMentionDetector mentionDetector,
     ISentimentAnalyzer sentimentAnalyzer,
-    MentionContextExtractor contextExtractor,
+    TargetContextBuilder targetContextBuilder,
     ThreadContextBuilder threadContextBuilder,
     FantasyIntentClassifier intentClassifier,
     VoteWeightCalculator voteWeightCalculator,
@@ -278,12 +278,19 @@ public sealed class RedditIngestionService(
         CancellationToken cancellationToken)
     {
         var matches = mentionDetector.DetectMentions(comment.Body, players);
+        var targets = matches
+            .Select(match => ResolvedCommentTarget.FromMatch(
+                match,
+                TargetAttributionMethods.Explicit,
+                1.0))
+            .ToList();
         var voteWeight = voteWeightCalculator.Calculate(comment.Score);
         var added = 0;
         var parentBody = await FindParentBodyAsync(commentData, commentLookup, cancellationToken);
 
-        foreach (var match in matches)
+        foreach (var target in targets)
         {
+            var match = target.ToMatch();
             var alreadyExists = await db.PlayerMentions.AnyAsync(
                 mention => mention.CommentId == comment.Id && mention.PlayerId == match.PlayerId,
                 cancellationToken);
@@ -293,13 +300,13 @@ public sealed class RedditIngestionService(
                 continue;
             }
 
-            var targetContext = contextExtractor.ExtractContext(comment.Body, match);
-            var analysisContext = threadContextBuilder.Build(
+            var resolvedContext = targetContextBuilder.Build(
                 post.Title,
                 parentBody,
                 comment.Body,
-                targetContext,
-                match.PlayerName);
+                target,
+                targets);
+            var analysisContext = threadContextBuilder.Build(resolvedContext);
             var sentiment = await sentimentAnalyzer.AnalyzeAsync(
                 new TargetedSentimentRequest(comment.Body, analysisContext, match),
                 cancellationToken);
@@ -320,6 +327,9 @@ public sealed class RedditIngestionService(
                 SentimentContext = Truncate(sentiment.Context, 1200) ?? string.Empty,
                 SentimentDiagnostics = Truncate(sentiment.Diagnostics, 1000),
                 MatchedAlias = Truncate(match.MatchedAlias, 160) ?? string.Empty,
+                TargetAttributionMethod = target.AttributionMethod,
+                TargetConfidence = target.Confidence,
+                TargetPerspective = resolvedContext.Perspective,
                 Intent = intentClassifier.Classify(comment.Body, match),
                 RedditScore = comment.Score,
                 VoteWeight = voteWeight,

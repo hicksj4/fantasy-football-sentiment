@@ -9,7 +9,7 @@ public sealed class MentionContextExtractor
         RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
     private static readonly Regex ClauseSeparatorRegex = new(
-        @"\s+(?:but|however|while|whereas)\s+|;",
+        @"\s+(?:but|however|though|while|whereas|yet)\s+|;",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     public string ExtractContext(string fullText, PlayerMentionMatch mention)

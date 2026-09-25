@@ -10,7 +10,7 @@ public sealed class SnapshotProcessingService(
     ISnapshotSource snapshotSource,
     ICommentTargetResolver targetResolver,
     ISentimentAnalyzer sentimentAnalyzer,
-    MentionContextExtractor contextExtractor,
+    TargetContextBuilder targetContextBuilder,
     ThreadContextBuilder threadContextBuilder,
     FantasyIntentClassifier intentClassifier,
     VoteWeightCalculator voteWeightCalculator,
@@ -299,16 +299,14 @@ public sealed class SnapshotProcessingService(
 
             foreach (var target in resolution.Targets)
             {
-                var match = target.ToMatch();
-                var targetContext = target.AttributionMethod == TargetAttributionMethods.Explicit
-                    ? contextExtractor.ExtractContext(comment.Body, match)
-                    : comment.Body.Trim();
-                var analysisContext = threadContextBuilder.Build(
+                var resolvedContext = targetContextBuilder.Build(
                     comment.Post.Title,
                     parentBody,
                     comment.Body,
-                    targetContext,
-                    match.PlayerName);
+                    target,
+                    resolution.Targets);
+                var match = resolvedContext.Target.ToMatch();
+                var analysisContext = threadContextBuilder.Build(resolvedContext);
                 var sentiment = await sentimentAnalyzer.AnalyzeAsync(
                     new TargetedSentimentRequest(comment.Body, analysisContext, match),
                     cancellationToken);
@@ -332,6 +330,7 @@ public sealed class SnapshotProcessingService(
                     MatchedAlias = Truncate(match.MatchedAlias, 160) ?? string.Empty,
                     TargetAttributionMethod = target.AttributionMethod,
                     TargetConfidence = target.Confidence,
+                    TargetPerspective = resolvedContext.Perspective,
                     Intent = intentClassifier.Classify(comment.Body, match),
                     RedditScore = comment.Score,
                     VoteWeight = voteWeight,

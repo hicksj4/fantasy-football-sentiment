@@ -18,6 +18,15 @@ public sealed class PlayerMentionDetector
         "wilson"
     };
 
+    private static readonly HashSet<string> RiskySingleWordAliases = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "love"
+    };
+
+    private static readonly Regex RiskyAliasFollowingContextRegex = new(
+        @"^(?:is|was|looks?|looked|has|had|will|should|can|could|needs?|throws?|throwing|played|playing|started|starting|cooked|bad|good|great|awful|solid|washed)\b",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+
     public IReadOnlyList<PlayerMentionMatch> DetectMentions(string text, IEnumerable<Player> players)
     {
         if (string.IsNullOrWhiteSpace(text))
@@ -47,6 +56,11 @@ public sealed class PlayerMentionDetector
             var pattern = BuildAliasPattern(candidate.Alias);
             var match = Regex.Match(text, pattern, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
             if (!match.Success)
+            {
+                continue;
+            }
+
+            if (IsRiskySingleWordAlias(candidate.Alias) && !HasRiskyAliasEvidence(text, match))
             {
                 continue;
             }
@@ -110,6 +124,23 @@ public sealed class PlayerMentionDetector
     {
         var normalized = NormalizeAlias(alias);
         return !normalized.Contains(' ') && AmbiguousSingleWordAliases.Contains(normalized);
+    }
+
+    private static bool IsRiskySingleWordAlias(string alias)
+    {
+        var normalized = NormalizeAlias(alias);
+        return !normalized.Contains(' ') && RiskySingleWordAliases.Contains(normalized);
+    }
+
+    private static bool HasRiskyAliasEvidence(string text, Match match)
+    {
+        if (match.Value.Length == 0 || !char.IsUpper(match.Value[0]))
+        {
+            return false;
+        }
+
+        var followingText = text[(match.Index + match.Length)..].TrimStart();
+        return RiskyAliasFollowingContextRegex.IsMatch(followingText);
     }
 
     public static string NormalizeAlias(string value)

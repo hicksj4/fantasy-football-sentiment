@@ -91,6 +91,63 @@ public sealed class CommentTargetResolverTests
     }
 
     [Fact]
+    public void ExplicitReplyTarget_ResetsInheritedConversationTopic()
+    {
+        var first = Resolve("Jefferson has been awful.", "Game thread");
+        var second = Resolve(
+            "At least Addison is good.",
+            "Game thread",
+            first.Targets);
+        var third = Resolve(
+            "Yep, he's solid.",
+            "Game thread",
+            second.Targets);
+
+        Assert.Equal("Justin Jefferson", Assert.Single(first.Targets).PlayerName);
+        var secondTarget = Assert.Single(second.Targets);
+        Assert.Equal("Jordan Addison", secondTarget.PlayerName);
+        Assert.Equal(TargetAttributionMethods.Explicit, secondTarget.AttributionMethod);
+
+        var thirdTarget = Assert.Single(third.Targets);
+        Assert.Equal("Jordan Addison", thirdTarget.PlayerName);
+        Assert.Equal(TargetAttributionMethods.ParentInherited, thirdTarget.AttributionMethod);
+    }
+
+    [Fact]
+    public void ExplicitRiskyAlias_OverridesInheritedTopicWhenProperNameContextExists()
+    {
+        var parent = Resolve(
+            "People are going to talk about Golden not catching but most of the passes to him were dogshit.",
+            "Game thread");
+        var child = Resolve(
+            "Yeah, Love is looking bad out there.",
+            "Game thread",
+            parent.Targets);
+
+        Assert.Equal("Matthew Golden", Assert.Single(parent.Targets).PlayerName);
+        var childTarget = Assert.Single(child.Targets);
+        Assert.Equal("Jordan Love", childTarget.PlayerName);
+        Assert.Equal(TargetAttributionMethods.Explicit, childTarget.AttributionMethod);
+    }
+
+    [Fact]
+    public void CommonWordAlias_LowercaseLove_DoesNotCreatePlayerMention()
+    {
+        var resolution = Resolve("I love this offense.", "Game thread");
+
+        Assert.Empty(resolution.Targets);
+    }
+
+    [Fact]
+    public void CommonWordAlias_DoesNotStealSentimentFromExplicitPlayer()
+    {
+        var resolution = Resolve("I absolutely love Bijan.", "Game thread");
+
+        var target = Assert.Single(resolution.Targets);
+        Assert.Equal("Bijan Robinson", target.PlayerName);
+    }
+
+    [Fact]
     public void AmbiguousTitle_DoesNotInferTarget()
     {
         var resolution = Resolve(
@@ -156,7 +213,11 @@ public sealed class CommentTargetResolverTests
             Player(3, "Christian Watson", "GB", "WR", "Watson"),
             Player(4, "Trey McBride", "ARI", "TE", "McBride"),
             Player(5, "Christian McCaffrey", "SF", "RB", "CMC", "McCaffrey"),
-            Player(6, "Brock Purdy", "SF", "QB", "Purdy")
+            Player(6, "Brock Purdy", "SF", "QB", "Purdy"),
+            Player(7, "Jordan Addison", "MIN", "WR", "Addison"),
+            Player(8, "Matthew Golden", "GB", "WR", "Golden"),
+            Player(9, "Jordan Love", "GB", "QB", "Love"),
+            Player(10, "Bijan Robinson", "ATL", "RB", "Bijan")
         ];
     }
 
