@@ -291,6 +291,9 @@ public sealed class SnapshotProcessingService(
                     comment.Body,
                     targetContext,
                     match.PlayerName);
+                // Where the sentiment calculation occurs, calls the interface ISentimentAnalyzer from Program.cs
+                // Chosen sentiment mode is called, in default case appsettings.json default Sentiment mode is Vader
+                // new TargetedSentiment is the comment context, sentimentAnalyzers return a new TargetedSentimentResult record
                 var sentiment = await sentimentAnalyzer.AnalyzeAsync(
                     new TargetedSentimentRequest(comment.Body, analysisContext, match),
                     cancellationToken);
