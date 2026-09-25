@@ -8,7 +8,7 @@ namespace FantasySentiment.Api.Services;
 public sealed class SnapshotProcessingService(
     FantasySentimentDbContext db,
     ISnapshotSource snapshotSource,
-    PlayerMentionDetector mentionDetector,
+    ICommentTargetResolver targetResolver,
     ISentimentAnalyzer sentimentAnalyzer,
     MentionContextExtractor contextExtractor,
     ThreadContextBuilder threadContextBuilder,
@@ -268,32 +268,47 @@ public sealed class SnapshotProcessingService(
             .OrderBy(comment => comment.CreatedAt)
             .ToListAsync(cancellationToken);
 
-        var commentBodyByRedditId = comments.ToDictionary(
+        var commentsByRedditId = comments.ToDictionary(
             comment => comment.RedditId,
-            comment => comment.Body,
+            comment => comment,
             StringComparer.OrdinalIgnoreCase);
+        var resolutionByCommentId = new Dictionary<int, CommentTargetResolution>();
+        var processingCommentIds = new HashSet<int>();
+        var resolutionStats = new TargetResolutionStats(comments.Count);
 
         var detectedMentions = 0;
         foreach (var comment in comments)
         {
+            var resolution = ResolveCommentTargets(
+                comment,
+                players,
+                commentsByRedditId,
+                resolutionByCommentId,
+                processingCommentIds,
+                resolutionStats);
+            if (resolution.Targets.Count == 0)
+            {
+                continue;
+            }
+
             var voteWeight = voteWeightCalculator.Calculate(comment.Score);
             var parentBody = !string.IsNullOrWhiteSpace(comment.ParentRedditId)
-                             && commentBodyByRedditId.TryGetValue(comment.ParentRedditId, out var body)
-                ? body
+                             && commentsByRedditId.TryGetValue(comment.ParentRedditId, out var parent)
+                ? parent.Body
                 : null;
 
-            foreach (var match in mentionDetector.DetectMentions(comment.Body, players))
+            foreach (var target in resolution.Targets)
             {
-                var targetContext = contextExtractor.ExtractContext(comment.Body, match);
+                var match = target.ToMatch();
+                var targetContext = target.AttributionMethod == TargetAttributionMethods.Explicit
+                    ? contextExtractor.ExtractContext(comment.Body, match)
+                    : comment.Body.Trim();
                 var analysisContext = threadContextBuilder.Build(
                     comment.Post.Title,
                     parentBody,
                     comment.Body,
                     targetContext,
                     match.PlayerName);
-                // Where the sentiment calculation occurs, calls the interface ISentimentAnalyzer from Program.cs
-                // Chosen sentiment mode is called, in default case appsettings.json default Sentiment mode is Vader
-                // new TargetedSentiment is the comment context, sentimentAnalyzers return a new TargetedSentimentResult record
                 var sentiment = await sentimentAnalyzer.AnalyzeAsync(
                     new TargetedSentimentRequest(comment.Body, analysisContext, match),
                     cancellationToken);
@@ -315,6 +330,8 @@ public sealed class SnapshotProcessingService(
                     SentimentContext = Truncate(sentiment.Context, 1200) ?? string.Empty,
                     SentimentDiagnostics = Truncate(sentiment.Diagnostics, 1000),
                     MatchedAlias = Truncate(match.MatchedAlias, 160) ?? string.Empty,
+                    TargetAttributionMethod = target.AttributionMethod,
+                    TargetConfidence = target.Confidence,
                     Intent = intentClassifier.Classify(comment.Body, match),
                     RedditScore = comment.Score,
                     VoteWeight = voteWeight,
@@ -324,8 +341,101 @@ public sealed class SnapshotProcessingService(
             }
         }
 
+        logger.LogInformation(
+            "Target resolution summary. Comments: {TotalComments}. Explicit: {Explicit}. Parent inherited: {ParentInherited}. Ancestor inherited: {AncestorInherited}. Title inherited: {ThreadTitleInherited}. Ambiguous comments: {Ambiguous}. Unresolved comments: {Unresolved}.",
+            resolutionStats.TotalComments,
+            resolutionStats.ExplicitTargets,
+            resolutionStats.ParentInheritedTargets,
+            resolutionStats.AncestorInheritedTargets,
+            resolutionStats.ThreadTitleInheritedTargets,
+            resolutionStats.AmbiguousComments,
+            resolutionStats.UnresolvedComments);
+
         await db.SaveChangesAsync(cancellationToken);
         return detectedMentions;
+    }
+
+    private CommentTargetResolution ResolveCommentTargets(
+        RedditComment comment,
+        IReadOnlyList<Player> players,
+        IReadOnlyDictionary<string, RedditComment> commentsByRedditId,
+        Dictionary<int, CommentTargetResolution> resolutionByCommentId,
+        HashSet<int> processingCommentIds,
+        TargetResolutionStats stats)
+    {
+        if (resolutionByCommentId.TryGetValue(comment.Id, out var cached))
+        {
+            return cached;
+        }
+
+        if (!processingCommentIds.Add(comment.Id))
+        {
+            var cycleResolution = CommentTargetResolution.Unresolved("cycle detected");
+            resolutionByCommentId[comment.Id] = cycleResolution;
+            TrackResolution(comment, cycleResolution, stats);
+            return cycleResolution;
+        }
+
+        IReadOnlyList<ResolvedCommentTarget> parentTargets = [];
+        if (!string.IsNullOrWhiteSpace(comment.ParentRedditId)
+            && commentsByRedditId.TryGetValue(comment.ParentRedditId, out var parentComment))
+        {
+            parentTargets = ResolveCommentTargets(
+                parentComment,
+                players,
+                commentsByRedditId,
+                resolutionByCommentId,
+                processingCommentIds,
+                stats).Targets;
+        }
+
+        var resolution = targetResolver.Resolve(new CommentTargetResolutionRequest(
+            comment.RedditId,
+            comment.Body,
+            comment.Post.Title,
+            players,
+            parentTargets));
+
+        resolutionByCommentId[comment.Id] = resolution;
+        processingCommentIds.Remove(comment.Id);
+        TrackResolution(comment, resolution, stats);
+        return resolution;
+    }
+
+    private void TrackResolution(
+        RedditComment comment,
+        CommentTargetResolution resolution,
+        TargetResolutionStats stats)
+    {
+        if (resolution.Targets.Count == 0)
+        {
+            if (resolution.UnresolvedReason?.Contains("ambiguous", StringComparison.OrdinalIgnoreCase) == true)
+            {
+                stats.AmbiguousComments++;
+            }
+            else
+            {
+                stats.UnresolvedComments++;
+            }
+
+            logger.LogDebug(
+                "Skipped comment {CommentId}. Reason: {Reason}. Candidates: {Candidates}.",
+                comment.RedditId,
+                resolution.UnresolvedReason,
+                string.Join(", ", resolution.CandidateNames));
+            return;
+        }
+
+        foreach (var target in resolution.Targets)
+        {
+            stats.CountTarget(target.AttributionMethod);
+            logger.LogDebug(
+                "Resolved comment {CommentId}. Target: {Target}. Method: {Method}. Confidence: {Confidence}.",
+                comment.RedditId,
+                target.PlayerName,
+                target.AttributionMethod,
+                target.Confidence);
+        }
     }
 
     private async Task<int> AggregateSnapshotAsync(int snapshotId, CancellationToken cancellationToken)
@@ -402,6 +512,36 @@ public sealed class SnapshotProcessingService(
         return string.IsNullOrEmpty(value) || value.Length <= maxLength
             ? value
             : value[..maxLength];
+    }
+
+    private sealed class TargetResolutionStats(int totalComments)
+    {
+        public int TotalComments { get; } = totalComments;
+        public int ExplicitTargets { get; private set; }
+        public int ParentInheritedTargets { get; private set; }
+        public int AncestorInheritedTargets { get; private set; }
+        public int ThreadTitleInheritedTargets { get; private set; }
+        public int AmbiguousComments { get; set; }
+        public int UnresolvedComments { get; set; }
+
+        public void CountTarget(string attributionMethod)
+        {
+            switch (attributionMethod)
+            {
+                case TargetAttributionMethods.Explicit:
+                    ExplicitTargets++;
+                    break;
+                case TargetAttributionMethods.ParentInherited:
+                    ParentInheritedTargets++;
+                    break;
+                case TargetAttributionMethods.AncestorInherited:
+                    AncestorInheritedTargets++;
+                    break;
+                case TargetAttributionMethods.ThreadTitleInherited:
+                    ThreadTitleInheritedTargets++;
+                    break;
+            }
+        }
     }
 
     private sealed record SnapshotCompleteness(bool IsComplete, string Reason)

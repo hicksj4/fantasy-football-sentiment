@@ -259,6 +259,51 @@ public sealed class SnapshotProcessingTests
     }
 
     [Fact]
+    public async Task ParentInheritedTarget_BuildsSentimentContextFromParentAndChild()
+    {
+        await using var db = CreateDb();
+        SeedPlayers(db);
+        var analyzer = new CapturingSentimentAnalyzer();
+        var processor = CreateProcessor(db, ParentInheritanceSource(), analyzer);
+
+        await processor.ProcessAsync("context-test", skipIfProcessed: false, CancellationToken.None);
+
+        var request = Assert.Single(analyzer.Requests, item => item.FullText == "Always has been and always will be.");
+        Assert.Contains("Parent: Is Kyle Pitts droppable?", request.Context);
+        Assert.Contains("Comment: Always has been and always will be.", request.Context);
+        Assert.Contains("Target: Kyle Pitts", request.Context);
+
+        var mention = await db.PlayerMentions
+            .Include(item => item.Player)
+            .Include(item => item.Comment)
+            .SingleAsync(item => item.Comment.Body == "Always has been and always will be.");
+        Assert.Equal("Kyle Pitts", mention.Player.Name);
+        Assert.Equal(TargetAttributionMethods.ParentInherited, mention.TargetAttributionMethod);
+        Assert.Equal(0.90, mention.TargetConfidence);
+    }
+
+    [Fact]
+    public async Task SnapshotFixture_ProducesExpectedTargetAttributionBreakdown()
+    {
+        await using var db = CreateDb();
+        var environment = new FakeEnvironment(AppContext.BaseDirectory);
+        var seeder = new DemoDataSeeder(db, environment, NullLogger<DemoDataSeeder>.Instance);
+        await seeder.SeedAsync(CancellationToken.None);
+        var source = await CreateJsonSource(AppContext.BaseDirectory)
+            .LoadAsync("2026-week-4", CancellationToken.None);
+        var processor = CreateProcessor(db, source);
+
+        await processor.ProcessAsync("2026-week-4", skipIfProcessed: false, CancellationToken.None);
+
+        Assert.Equal(203, await db.RedditComments.CountAsync());
+        Assert.Equal(208, await db.PlayerMentions.CountAsync());
+        Assert.Equal(205, await CountMentionsByMethodAsync(db, TargetAttributionMethods.Explicit));
+        Assert.Equal(2, await CountMentionsByMethodAsync(db, TargetAttributionMethods.ParentInherited));
+        Assert.Equal(1, await CountMentionsByMethodAsync(db, TargetAttributionMethods.AncestorInherited));
+        Assert.Equal(0, await CountMentionsByMethodAsync(db, TargetAttributionMethods.ThreadTitleInherited));
+    }
+
+    [Fact]
     public async Task ProcessingSameSnapshotTwice_DoesNotDuplicateAnalytics()
     {
         await using var db = CreateDb();
@@ -289,6 +334,7 @@ public sealed class SnapshotProcessingTests
             Player("Justin Jefferson", "MIN", "WR", "Jefferson", "JJettas"),
             Player("Drake London", "ATL", "WR", "London", "Drake London"),
             Player("Tank Bigsby", "JAX", "RB", "Tank", "Tank Bigsby"),
+            Player("Kyle Pitts", "ATL", "TE", "Pitts"),
             Player("One Comment Wonder", "FA", "WR", "One Comment Wonder"));
         db.SaveChanges();
     }
@@ -307,13 +353,17 @@ public sealed class SnapshotProcessingTests
 
     private static SnapshotProcessingService CreateProcessor(
         FantasySentimentDbContext db,
-        SnapshotSourceData source)
+        SnapshotSourceData source,
+        ISentimentAnalyzer? sentimentAnalyzer = null)
     {
         return new SnapshotProcessingService(
             db,
             new StaticSnapshotSource(source),
-            new PlayerMentionDetector(),
-            new RuleBasedFantasySentimentAnalyzer(new FantasySentimentAnalyzer(new TestOptionsMonitor<SentimentLexiconOptions>(Lexicon()))),
+            new CommentTargetResolver(
+                new PlayerMentionDetector(),
+                NullLogger<CommentTargetResolver>.Instance),
+            sentimentAnalyzer
+                ?? new RuleBasedFantasySentimentAnalyzer(new FantasySentimentAnalyzer(new TestOptionsMonitor<SentimentLexiconOptions>(Lexicon()))),
             new MentionContextExtractor(),
             new ThreadContextBuilder(),
             new FantasyIntentClassifier(new TestOptionsMonitor<IntentLexiconOptions>(Intents())),
@@ -355,6 +405,13 @@ public sealed class SnapshotProcessingTests
         return await db.SnapshotPlayerAggregates
             .Include(aggregate => aggregate.Player)
             .SingleAsync(aggregate => aggregate.Player.Name == playerName);
+    }
+
+    private static Task<int> CountMentionsByMethodAsync(
+        FantasySentimentDbContext db,
+        string method)
+    {
+        return db.PlayerMentions.CountAsync(mention => mention.TargetAttributionMethod == method);
     }
 
     private static SnapshotSourceData StandardSource(bool includeViralOneOff = false)
@@ -399,6 +456,23 @@ public sealed class SnapshotProcessingTests
         };
 
         return new SnapshotSourceData("2026-week-4", "2026 Week 4", 2026, 4, posts);
+    }
+
+    private static SnapshotSourceData ParentInheritanceSource()
+    {
+        return new SnapshotSourceData(
+            "context-test",
+            "Context Test",
+            2026,
+            4,
+            [
+                Post(
+                    "post-context",
+                    "OFFICIAL CONTEXT TEST THREAD",
+                    "2026-09-20T17:00:00Z",
+                    Comment("ctx-parent", null, 12, "Is Kyle Pitts droppable?"),
+                    Comment("ctx-child", "ctx-parent", 8, "Always has been and always will be."))
+            ]);
     }
 
     private static SnapshotSourcePost Post(
@@ -462,6 +536,27 @@ public sealed class SnapshotProcessingTests
         public Task<SnapshotSourceData> LoadAsync(string key, CancellationToken cancellationToken)
         {
             return Task.FromResult(source);
+        }
+    }
+
+    private sealed class CapturingSentimentAnalyzer : ISentimentAnalyzer
+    {
+        public List<TargetedSentimentRequest> Requests { get; } = [];
+
+        public ValueTask<TargetedSentimentResult> AnalyzeAsync(
+            TargetedSentimentRequest request,
+            CancellationToken cancellationToken)
+        {
+            Requests.Add(request);
+            return ValueTask.FromResult(new TargetedSentimentResult(
+                -0.5,
+                -0.5,
+                SentimentCategories.Negative,
+                -0.5,
+                null,
+                0,
+                nameof(CapturingSentimentAnalyzer),
+                request.Context));
         }
     }
 

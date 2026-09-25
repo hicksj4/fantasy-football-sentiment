@@ -1,0 +1,180 @@
+using FantasySentiment.Api.Domain;
+using FantasySentiment.Api.Services;
+using Microsoft.Extensions.Logging.Abstractions;
+
+namespace FantasySentiment.Tests;
+
+public sealed class CommentTargetResolverTests
+{
+    private readonly CommentTargetResolver _resolver = new(
+        new PlayerMentionDetector(),
+        NullLogger<CommentTargetResolver>.Instance);
+
+    [Fact]
+    public void TitleTarget_TopLevelPronoun_InheritsThreadTitleTarget()
+    {
+        var resolution = Resolve(
+            "Yes, he is bad.",
+            "Justin Jefferson: 7 targets, 0 catches");
+
+        var target = Assert.Single(resolution.Targets);
+        Assert.Equal("Justin Jefferson", target.PlayerName);
+        Assert.Equal(TargetAttributionMethods.ThreadTitleInherited, target.AttributionMethod);
+    }
+
+    [Fact]
+    public void ReplyChain_InheritsAlreadyResolvedParentTarget()
+    {
+        var parent = Resolve(
+            "Yes, he is bad.",
+            "Justin Jefferson: 7 targets, 0 catches");
+
+        var child = Resolve(
+            "I also think he is terrible.",
+            "Justin Jefferson: 7 targets, 0 catches",
+            parent.Targets);
+
+        Assert.Equal("Justin Jefferson", Assert.Single(parent.Targets).PlayerName);
+        var childTarget = Assert.Single(child.Targets);
+        Assert.Equal("Justin Jefferson", childTarget.PlayerName);
+        Assert.Equal(TargetAttributionMethods.AncestorInherited, childTarget.AttributionMethod);
+    }
+
+    [Fact]
+    public void EllipticalReply_InheritsSingleParentTarget()
+    {
+        var parent = Resolve("Is Kyle Pitts droppable?", "Game thread");
+        var child = Resolve(
+            "Always has been and always will be.",
+            "Game thread",
+            parent.Targets);
+
+        var target = Assert.Single(child.Targets);
+        Assert.Equal("Kyle Pitts", target.PlayerName);
+        Assert.Equal(TargetAttributionMethods.ParentInherited, target.AttributionMethod);
+    }
+
+    [Fact]
+    public void ParentInheritance_DoesNotRequireQuestionMark()
+    {
+        var parent = Resolve("How sustainable is this Watson run", "Game thread");
+        var child = Resolve(
+            "He is their #1 by far.",
+            "Game thread",
+            parent.Targets);
+
+        Assert.Equal("Christian Watson", Assert.Single(child.Targets).PlayerName);
+    }
+
+    [Fact]
+    public void ExplicitCurrentCommentMention_Wins()
+    {
+        var resolution = Resolve("Kyle Pitts is completely washed.", "Game thread");
+
+        var target = Assert.Single(resolution.Targets);
+        Assert.Equal("Kyle Pitts", target.PlayerName);
+        Assert.Equal(TargetAttributionMethods.Explicit, target.AttributionMethod);
+    }
+
+    [Fact]
+    public void ExplicitChildTarget_OverridesInheritedTopic()
+    {
+        var parent = Resolve("Kyle Pitts looks terrible.", "Game thread");
+        var child = Resolve(
+            "McBride looks way better.",
+            "Game thread",
+            parent.Targets);
+
+        var target = Assert.Single(child.Targets);
+        Assert.Equal("Trey McBride", target.PlayerName);
+        Assert.Equal(TargetAttributionMethods.Explicit, target.AttributionMethod);
+    }
+
+    [Fact]
+    public void AmbiguousTitle_DoesNotInferTarget()
+    {
+        var resolution = Resolve(
+            "He was awful.",
+            "CMC and Purdy struggled tonight.");
+
+        Assert.Empty(resolution.Targets);
+        Assert.Equal("ambiguous thread title targets", resolution.UnresolvedReason);
+    }
+
+    [Fact]
+    public void AmbiguousParent_DoesNotInferTarget()
+    {
+        var parent = Resolve("CMC looked great but Purdy was awful.", "Game thread");
+        var child = Resolve(
+            "Yeah he really was.",
+            "Game thread",
+            parent.Targets);
+
+        Assert.Equal(2, parent.Targets.Count);
+        Assert.Empty(child.Targets);
+        Assert.Equal("ambiguous inherited targets", child.UnresolvedReason);
+    }
+
+    [Fact]
+    public void MultipleExplicitPlayers_CurrentComment_ReturnsEachTarget()
+    {
+        var resolution = Resolve("CMC looked great but Purdy was awful.", "Game thread");
+
+        Assert.Collection(
+            resolution.Targets,
+            first =>
+            {
+                Assert.Equal("Christian McCaffrey", first.PlayerName);
+                Assert.Equal(TargetAttributionMethods.Explicit, first.AttributionMethod);
+            },
+            second =>
+            {
+                Assert.Equal("Brock Purdy", second.PlayerName);
+                Assert.Equal(TargetAttributionMethods.Explicit, second.AttributionMethod);
+            });
+    }
+
+    private CommentTargetResolution Resolve(
+        string comment,
+        string title,
+        IReadOnlyList<ResolvedCommentTarget>? parentTargets = null)
+    {
+        return _resolver.Resolve(new CommentTargetResolutionRequest(
+            "comment-id",
+            comment,
+            title,
+            Players(),
+            parentTargets ?? []));
+    }
+
+    private static IReadOnlyList<Player> Players()
+    {
+        return
+        [
+            Player(1, "Justin Jefferson", "MIN", "WR", "Jefferson", "JJettas"),
+            Player(2, "Kyle Pitts", "ATL", "TE", "Pitts"),
+            Player(3, "Christian Watson", "GB", "WR", "Watson"),
+            Player(4, "Trey McBride", "ARI", "TE", "McBride"),
+            Player(5, "Christian McCaffrey", "SF", "RB", "CMC", "McCaffrey"),
+            Player(6, "Brock Purdy", "SF", "QB", "Purdy")
+        ];
+    }
+
+    private static Player Player(
+        int id,
+        string name,
+        string team,
+        string position,
+        params string[] aliases)
+    {
+        return new Player
+        {
+            Id = id,
+            Name = name,
+            Team = team,
+            Position = position,
+            IsActive = true,
+            Aliases = aliases.Select(alias => new PlayerAlias { Alias = alias }).ToList()
+        };
+    }
+}
