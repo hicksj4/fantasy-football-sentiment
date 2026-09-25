@@ -40,6 +40,7 @@ builder.Services.AddDbContext<FantasySentimentDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 builder.Services.AddSingleton<PlayerMentionDetector>();
+builder.Services.AddSingleton<ICommentTargetResolver, CommentTargetResolver>();
 builder.Services.AddSingleton<MentionContextExtractor>();
 builder.Services.AddSingleton<VoteWeightCalculator>();
 builder.Services.AddSingleton<FantasySentimentAnalyzer>();
