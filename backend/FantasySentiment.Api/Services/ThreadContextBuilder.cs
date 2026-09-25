@@ -4,6 +4,17 @@ namespace FantasySentiment.Api.Services;
 
 public sealed class ThreadContextBuilder
 {
+    public string Build(ResolvedTargetContext context, int maxLength = 1200)
+    {
+        return Build(
+            context.ThreadTitle,
+            context.ParentComment,
+            context.CurrentComment,
+            context.TargetText,
+            context.Target.PlayerName,
+            maxLength);
+    }
+
     public string Build(
         string postTitle,
         string? parentComment,

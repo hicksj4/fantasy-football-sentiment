@@ -1,0 +1,125 @@
+using FantasySentiment.Api.Domain;
+using FantasySentiment.Api.Services;
+
+namespace FantasySentiment.Tests;
+
+public sealed class TargetContextBuilderTests
+{
+    private readonly PlayerMentionDetector _detector = new();
+    private readonly TargetContextBuilder _builder = new(new MentionContextExtractor());
+
+    [Fact]
+    public void SeparateClauses_GetDifferentTargetContextAndPerspective()
+    {
+        const string text =
+            "Listen, as a Drake London owner, I'm beyond happy. But damn, I wish I didn't play against Golden tonight.";
+        var targets = DetectTargets(text);
+
+        var london = Build(text, targets.Single(target => target.PlayerName == "Drake London"), targets);
+        var golden = Build(text, targets.Single(target => target.PlayerName == "Matthew Golden"), targets);
+
+        Assert.NotEqual(london.TargetText, golden.TargetText);
+        Assert.Contains("beyond happy", london.TargetText);
+        Assert.DoesNotContain("play against Golden", london.TargetText);
+        Assert.Contains("play against Golden", golden.TargetText);
+        Assert.DoesNotContain("beyond happy", golden.TargetText);
+        Assert.Equal(TargetPerspectives.OwnRoster, london.Perspective);
+        Assert.Equal(TargetPerspectives.OpponentRoster, golden.Perspective);
+    }
+
+    [Fact]
+    public void StrongContrastSentence_UsesTargetSpecificClause()
+    {
+        const string text = "London was incredible but Golden was awful.";
+        var targets = DetectTargets(text);
+
+        var london = Build(text, targets.Single(target => target.PlayerName == "Drake London"), targets);
+        var golden = Build(text, targets.Single(target => target.PlayerName == "Matthew Golden"), targets);
+
+        Assert.Equal("London was incredible", london.TargetText);
+        Assert.Equal("Golden was awful.", golden.TargetText);
+    }
+
+    [Fact]
+    public void SharedOpponentRosterStatement_AppliesSameContextToAllTargets()
+    {
+        const string text = "My opponent has Bijan, London and Golden. Fantasy week already over 😢";
+        var targets = DetectTargets(text);
+
+        var contexts = targets
+            .Select(target => Build(text, target, targets))
+            .ToList();
+
+        Assert.Equal(3, contexts.Count);
+        Assert.All(contexts, context =>
+        {
+            Assert.Equal(TargetPerspectives.OpponentRoster, context.Perspective);
+            Assert.Contains("My opponent has Bijan, London and Golden.", context.TargetText);
+            Assert.Contains("Fantasy week already over 😢", context.TargetText);
+        });
+        Assert.Single(contexts.Select(context => context.TargetText).Distinct());
+    }
+
+    [Fact]
+    public void EmojiContext_IsPreserved()
+    {
+        const string text = "Bijan 📈";
+        var target = Assert.Single(DetectTargets(text));
+
+        var context = Build(text, target, [target]);
+
+        Assert.Equal("Bijan Robinson", context.Target.PlayerName);
+        Assert.Contains("📈", context.TargetText);
+    }
+
+    private ResolvedTargetContext Build(
+        string text,
+        ResolvedCommentTarget target,
+        IReadOnlyList<ResolvedCommentTarget> targets)
+    {
+        return _builder.Build(
+            "Game thread",
+            null,
+            text,
+            target,
+            targets);
+    }
+
+    private IReadOnlyList<ResolvedCommentTarget> DetectTargets(string text)
+    {
+        return _detector.DetectMentions(text, Players())
+            .Select(match => ResolvedCommentTarget.FromMatch(
+                match,
+                TargetAttributionMethods.Explicit,
+                1.0))
+            .ToList();
+    }
+
+    private static IReadOnlyList<Player> Players()
+    {
+        return
+        [
+            Player(1, "Bijan Robinson", "ATL", "RB", "Bijan"),
+            Player(2, "Drake London", "ATL", "WR", "London", "Drake London"),
+            Player(3, "Matthew Golden", "GB", "WR", "Golden")
+        ];
+    }
+
+    private static Player Player(
+        int id,
+        string name,
+        string team,
+        string position,
+        params string[] aliases)
+    {
+        return new Player
+        {
+            Id = id,
+            Name = name,
+            Team = team,
+            Position = position,
+            IsActive = true,
+            Aliases = aliases.Select(alias => new PlayerAlias { Alias = alias }).ToList()
+        };
+    }
+}

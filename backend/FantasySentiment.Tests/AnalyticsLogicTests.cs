@@ -6,6 +6,7 @@ using FantasySentiment.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
+using VaderSharp2;
 
 namespace FantasySentiment.Tests;
 
@@ -80,6 +81,35 @@ public sealed class AnalyticsLogicTests
         Assert.Equal(SentimentCategories.Negative, negative.SentimentCategory);
         Assert.Equal(SentimentCategories.Positive, negated.SentimentCategory);
         Assert.True(positive.RawSentimentScore > basePositive.RawSentimentScore);
+    }
+
+    [Fact]
+    public void VaderSharp2_EmojiAudit_ReturnsCompoundScores()
+    {
+        var analyzer = new SentimentIntensityAnalyzer();
+        var samples = new[]
+        {
+            "Bijan",
+            "Bijan 📈",
+            "Bijan 📉",
+            "Bijan 🔥",
+            "Bijan 🚀",
+            "Bijan 💀",
+            "Bijan 😢",
+            "Bijan 🐐"
+        };
+
+        var scores = samples
+            .Select(sample => (Text: sample, Score: analyzer.PolarityScores(sample).Compound))
+            .ToList();
+
+        foreach (var score in scores)
+        {
+            Console.WriteLine($"{score.Text}: {score.Score:0.###}");
+            Assert.InRange(score.Score, -1, 1);
+        }
+
+        Assert.Equal(samples.Length, scores.Count);
     }
 
     [Theory]
@@ -647,7 +677,7 @@ public sealed class AnalyticsLogicTests
             new RedditPostAnalysisDecider(Options.Create(analysisOptions)),
             new PlayerMentionDetector(),
             VaderAnalyzer(),
-            new MentionContextExtractor(),
+            new TargetContextBuilder(new MentionContextExtractor()),
             new ThreadContextBuilder(),
             new FantasyIntentClassifier(new TestOptionsMonitor<IntentLexiconOptions>(Intents())),
             new VoteWeightCalculator(),

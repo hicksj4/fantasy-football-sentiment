@@ -229,6 +229,11 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.Property<double>("TargetConfidence")
                         .HasColumnType("double precision");
 
+                    b.Property<string>("TargetPerspective")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
                     b.Property<double>("VoteWeight")
                         .HasColumnType("double precision");
 

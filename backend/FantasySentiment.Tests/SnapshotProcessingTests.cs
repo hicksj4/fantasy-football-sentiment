@@ -268,18 +268,20 @@ public sealed class SnapshotProcessingTests
 
         await processor.ProcessAsync("context-test", skipIfProcessed: false, CancellationToken.None);
 
-        var request = Assert.Single(analyzer.Requests, item => item.FullText == "Always has been and always will be.");
-        Assert.Contains("Parent: Is Kyle Pitts droppable?", request.Context);
-        Assert.Contains("Comment: Always has been and always will be.", request.Context);
+        var request = Assert.Single(analyzer.Requests, item => item.FullText == "Dropping this dude immediately.");
+        Assert.Contains("Parent: Pitts got 2 targets.", request.Context);
+        Assert.Contains("Comment: Dropping this dude immediately.", request.Context);
+        Assert.Contains("Target context: Pitts got 2 targets. Dropping this dude immediately.", request.Context);
         Assert.Contains("Target: Kyle Pitts", request.Context);
 
         var mention = await db.PlayerMentions
             .Include(item => item.Player)
             .Include(item => item.Comment)
-            .SingleAsync(item => item.Comment.Body == "Always has been and always will be.");
+            .SingleAsync(item => item.Comment.Body == "Dropping this dude immediately.");
         Assert.Equal("Kyle Pitts", mention.Player.Name);
         Assert.Equal(TargetAttributionMethods.ParentInherited, mention.TargetAttributionMethod);
         Assert.Equal(0.90, mention.TargetConfidence);
+        Assert.Equal(TargetPerspectives.Unknown, mention.TargetPerspective);
     }
 
     [Fact]
@@ -364,7 +366,7 @@ public sealed class SnapshotProcessingTests
                 NullLogger<CommentTargetResolver>.Instance),
             sentimentAnalyzer
                 ?? new RuleBasedFantasySentimentAnalyzer(new FantasySentimentAnalyzer(new TestOptionsMonitor<SentimentLexiconOptions>(Lexicon()))),
-            new MentionContextExtractor(),
+            new TargetContextBuilder(new MentionContextExtractor()),
             new ThreadContextBuilder(),
             new FantasyIntentClassifier(new TestOptionsMonitor<IntentLexiconOptions>(Intents())),
             new VoteWeightCalculator(),
@@ -470,8 +472,8 @@ public sealed class SnapshotProcessingTests
                     "post-context",
                     "OFFICIAL CONTEXT TEST THREAD",
                     "2026-09-20T17:00:00Z",
-                    Comment("ctx-parent", null, 12, "Is Kyle Pitts droppable?"),
-                    Comment("ctx-child", "ctx-parent", 8, "Always has been and always will be."))
+                    Comment("ctx-parent", null, 12, "Pitts got 2 targets."),
+                    Comment("ctx-child", "ctx-parent", 8, "Dropping this dude immediately."))
             ]);
     }
 
