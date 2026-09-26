@@ -29,7 +29,7 @@ public sealed class SentimentBenchmarkTests(ITestOutputHelper output)
         Assert.True(report.TotalComments > 0);
         Assert.True(report.TotalExpectedTargets > 0);
         Assert.True(report.TargetMetrics.TruePositive + report.TargetMetrics.FalseNegative > 0);
-        Assert.True(report.SentimentMetrics.Total > 0);
+        Assert.True(report.FantasyOutlookMetrics.Total > 0);
         Assert.True(File.Exists(jsonPath));
         Assert.True(File.Exists(markdownPath));
     }

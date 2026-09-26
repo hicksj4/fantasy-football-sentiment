@@ -732,6 +732,7 @@
   "comments": [
     {
       "id": "mpg-001",
+      "parentId": null,
       "redditScore": 3,
       "body": "bloodbath of a day. jesus",
       "expected": {
@@ -742,6 +743,7 @@
     },
     {
       "id": "mpg-002",
+      "parentId": null,
       "redditScore": 2,
       "body": "What happened with David Montgomery? Injured?",
       "expected": {
@@ -749,10 +751,11 @@
         "targets": [
           {
             "player": "David Montgomery",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
-            "intents": [
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Injury"
             ],
             "reasons": [
@@ -773,9 +776,11 @@
         "targets": [
           {
             "player": "David Montgomery",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -794,9 +799,11 @@
         "targets": [
           {
             "player": "David Montgomery",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "UsageOpportunity",
               "FantasyProduction"
@@ -808,6 +815,7 @@
     },
     {
       "id": "mpg-005",
+      "parentId": null,
       "redditScore": 3,
       "body": "people were down on omarion Hampton after one week. I told yall he's a stud.",
       "expected": {
@@ -815,10 +823,11 @@
         "targets": [
           {
             "player": "Omarion Hampton",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
-            "intents": [
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Hype"
             ],
             "reasons": [
@@ -831,6 +840,7 @@
     },
     {
       "id": "mpg-006",
+      "parentId": null,
       "redditScore": 4,
       "body": "is Loveland banging ben johnson's wife or something? all this hype about this guy being an elite TE and as of now I'd rather have waller or Schultz.",
       "expected": {
@@ -838,9 +848,11 @@
         "targets": [
           {
             "player": "Colston Loveland",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "DraftRegret",
               "UsageOpportunity"
@@ -848,18 +860,22 @@
           },
           {
             "player": "Darren Waller",
-            "sentiment": "Positive",
-            "playerEvaluation": "Neutral",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Comparison"
             ]
           },
           {
             "player": "Dalton Schultz",
-            "sentiment": "Positive",
-            "playerEvaluation": "Neutral",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Comparison"
             ]
@@ -881,6 +897,7 @@
     },
     {
       "id": "mpg-008",
+      "parentId": null,
       "redditScore": 3,
       "body": "I dropped Schultz for Loveland btw lol",
       "expected": {
@@ -888,26 +905,26 @@
         "targets": [
           {
             "player": "Dalton Schultz",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
-            "intents": [
+            "fantasyActions": [
               "Drop"
             ],
+            "discussionSignals": [],
             "reasons": [
               "LineupRegret"
             ]
           },
           {
             "player": "Colston Loveland",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
-            "intents": [
+            "fantasyActions": [
               "Add"
             ],
+            "discussionSignals": [],
             "reasons": [
               "LineupRegret",
               "DraftRegret"
@@ -931,6 +948,7 @@
     },
     {
       "id": "mpg-010",
+      "parentId": null,
       "redditScore": 8,
       "body": "all theses analysts hyped me on burden and now I feel absolutely robbed lol.",
       "expected": {
@@ -938,9 +956,11 @@
         "targets": [
           {
             "player": "Luther Burden",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "DraftRegret",
               "UsageOpportunity"
@@ -952,6 +972,7 @@
     },
     {
       "id": "mpg-011",
+      "parentId": null,
       "redditScore": 2,
       "body": "happy rhanodre looked good in the second half. I think both these guys can be top 25ish",
       "expected": {
@@ -1006,6 +1027,7 @@
     },
     {
       "id": "mpg-016",
+      "parentId": null,
       "redditScore": 2,
       "body": "HENDERSON. SUCK IT MONDRE OWNERS",
       "expected": {
@@ -1013,9 +1035,11 @@
         "targets": [
           {
             "player": "Rhamondre Stevenson",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1026,6 +1050,7 @@
     },
     {
       "id": "mpg-017",
+      "parentId": null,
       "redditScore": 5,
       "body": "serious question. is drake maye droppable?",
       "expected": {
@@ -1033,12 +1058,13 @@
         "targets": [
           {
             "player": "Drake Maye",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
-            "intents": [
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [
               "Drop"
             ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1057,12 +1083,13 @@
         "targets": [
           {
             "player": "Drake Maye",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
-            "intents": [
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [
               "Sit"
             ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1073,6 +1100,7 @@
     },
     {
       "id": "mpg-019",
+      "parentId": null,
       "redditScore": 15,
       "body": "drake maye is garbage. bright side is I have shough to replace him.",
       "expected": {
@@ -1080,10 +1108,11 @@
         "targets": [
           {
             "player": "Drake Maye",
-            "sentiment": "StrongNegative",
-            "playerEvaluation": "StrongNegative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "StrongNegative",
             "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance",
               "LineupRegret"
@@ -1091,13 +1120,13 @@
           },
           {
             "player": "Tyler Shough",
-            "sentiment": "Positive",
-            "playerEvaluation": "Neutral",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
-            "intents": [
+            "fantasyActions": [
               "Add"
             ],
+            "discussionSignals": [],
             "reasons": [
               "LineupRegret"
             ]
@@ -1119,6 +1148,7 @@
     },
     {
       "id": "mpg-021",
+      "parentId": null,
       "redditScore": 7,
       "body": "Loveland.... sigh",
       "expected": {
@@ -1126,9 +1156,11 @@
         "targets": [
           {
             "player": "Colston Loveland",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1139,6 +1171,7 @@
     },
     {
       "id": "mpg-022",
+      "parentId": null,
       "redditScore": -3,
       "body": "lamar was a waste of a pick. should've waited for burrow.",
       "expected": {
@@ -1146,20 +1179,26 @@
         "targets": [
           {
             "player": "Joe Burrow",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
-              "Performance"
+              "DraftRegret",
+              "Comparison"
             ]
           },
           {
             "player": "Lamar Jackson",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
-              "Performance"
+              "DraftRegret",
+              "Comparison"
             ]
           }
         ]
@@ -1168,6 +1207,7 @@
     },
     {
       "id": "mpg-023",
+      "parentId": null,
       "redditScore": 14,
       "body": "the best case for Loveland is probably bagent.",
       "expected": {
@@ -1175,9 +1215,11 @@
         "targets": [
           {
             "player": "Colston Loveland",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "QuarterbackPlay"
             ]
@@ -1196,9 +1238,11 @@
         "targets": [
           {
             "player": "Luther Burden",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1209,6 +1253,7 @@
     },
     {
       "id": "mpg-025",
+      "parentId": null,
       "redditScore": 1,
       "body": "start purdy against the dolphins or dart against the rams?",
       "expected": {
@@ -1216,12 +1261,13 @@
         "targets": [
           {
             "player": "Brock Purdy",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
-            "intents": [
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
               "Start"
             ],
+            "discussionSignals": [],
             "reasons": [
               "LineupRegret"
             ]
@@ -1240,9 +1286,11 @@
         "targets": [
           {
             "player": "Brock Purdy",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1261,9 +1309,11 @@
         "targets": [
           {
             "player": "Brock Purdy",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1274,6 +1324,7 @@
     },
     {
       "id": "mpg-028",
+      "parentId": null,
       "redditScore": 4,
       "body": "is Bryce a QB1?",
       "expected": {
@@ -1295,6 +1346,7 @@
     },
     {
       "id": "mpg-030",
+      "parentId": null,
       "redditScore": 5,
       "body": "Schultz with beautiful stat padding",
       "expected": {
@@ -1302,9 +1354,11 @@
         "targets": [
           {
             "player": "Dalton Schultz",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1315,6 +1369,7 @@
     },
     {
       "id": "mpg-031",
+      "parentId": null,
       "redditScore": 5,
       "body": "shough 4th quarter champion",
       "expected": {
@@ -1322,9 +1377,11 @@
         "targets": [
           {
             "player": "Tyler Shough",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1335,6 +1392,7 @@
     },
     {
       "id": "mpg-032",
+      "parentId": null,
       "redditScore": 3,
       "body": "I really drafted maye over parker Washington",
       "expected": {
@@ -1342,9 +1400,11 @@
         "targets": [
           {
             "player": "Parker Washington",
-            "sentiment": "Unclear",
+            "fantasyOutlook": "Positive",
             "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "DraftRegret",
               "Comparison"
@@ -1356,6 +1416,7 @@
     },
     {
       "id": "mpg-033",
+      "parentId": null,
       "redditScore": -4,
       "body": "philly cheating with no calls and paying off refs... sad really no talent, only win cause they pay refs.",
       "expected": {
@@ -1366,6 +1427,7 @@
     },
     {
       "id": "mpg-034",
+      "parentId": null,
       "redditScore": 9,
       "body": "was monty hurt? what happened after last weeks game?",
       "expected": {
@@ -1373,10 +1435,11 @@
         "targets": [
           {
             "player": "David Montgomery",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
-            "intents": [
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Injury"
             ],
             "reasons": [
@@ -1397,9 +1460,11 @@
         "targets": [
           {
             "player": "David Montgomery",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1418,9 +1483,11 @@
         "targets": [
           {
             "player": "David Montgomery",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "QuarterbackPlay"
             ]
@@ -1431,6 +1498,7 @@
     },
     {
       "id": "mpg-037",
+      "parentId": null,
       "redditScore": 58,
       "body": "Loveland is the worst draft pick ive ever made and its not close. completely unstartable even before the caleb injury and now its worse.",
       "expected": {
@@ -1438,12 +1506,13 @@
         "targets": [
           {
             "player": "Colston Loveland",
-            "sentiment": "StrongNegative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "StrongNegative",
+            "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
-            "intents": [
-              "Sit",
+            "fantasyActions": [
+              "Sit"
+            ],
+            "discussionSignals": [
               "Panic"
             ],
             "reasons": [
@@ -1454,10 +1523,11 @@
           },
           {
             "player": "Caleb Williams",
-            "sentiment": "Neutral",
-            "playerEvaluation": "Neutral",
             "fantasyOutlook": "Negative",
-            "intents": [
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Injury"
             ],
             "reasons": [
@@ -1479,12 +1549,13 @@
         "targets": [
           {
             "player": "Colston Loveland",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
-            "intents": [
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [
               "Hold"
             ],
+            "discussionSignals": [],
             "reasons": [
               "DraftRegret"
             ]
@@ -1496,6 +1567,7 @@
     },
     {
       "id": "mpg-039",
+      "parentId": null,
       "redditScore": 14,
       "body": "bagent might be better for burden",
       "expected": {
@@ -1503,9 +1575,11 @@
         "targets": [
           {
             "player": "Luther Burden",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "QuarterbackPlay"
             ]
@@ -1516,6 +1590,7 @@
     },
     {
       "id": "mpg-040",
+      "parentId": null,
       "redditScore": 4,
       "body": "Fucking awful. thank you denzel boston for being the only player on my team to do anything.",
       "expected": {
@@ -1523,10 +1598,11 @@
         "targets": [
           {
             "player": "Denzel Boston",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
-            "fantasyOutlook": "Negative",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
             "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "LineupRegret"
             ]
@@ -1537,6 +1613,7 @@
     },
     {
       "id": "mpg-041",
+      "parentId": null,
       "redditScore": 1,
       "body": "Watson might be good again?",
       "expected": {
@@ -1544,9 +1621,11 @@
         "targets": [
           {
             "player": "Deshaun Watson",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1565,9 +1644,11 @@
         "targets": [
           {
             "player": "Deshaun Watson",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "OffensiveLine",
               "Performance"
@@ -1580,16 +1661,19 @@
     },
     {
       "id": "mpg-043",
+      "parentId": null,
       "redditScore": 5,
       "body": "YOOOOO BAGENT TARGETED BURDEN",
       "expected": {
-        "contextRequirement": "GameEventContext",
+        "contextRequirement": "SelfContained",
         "targets": [
           {
             "player": "Luther Burden",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "UsageOpportunity",
               "QuarterbackPlay"
@@ -1601,18 +1685,21 @@
     },
     {
       "id": "mpg-044",
+      "parentId": null,
       "redditScore": 4,
       "body": "Etienne was a trap",
       "expected": {
-        "contextRequirement": "GameEventContext",
+        "contextRequirement": "SelfContained",
         "targets": [
           {
             "player": "Travis Etienne Jr.",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
-              "Performance"
+              "DraftRegret"
             ]
           }
         ]
@@ -1621,6 +1708,7 @@
     },
     {
       "id": "mpg-045",
+      "parentId": null,
       "redditScore": 24,
       "body": "one of the worst set of games ever",
       "expected": {
@@ -1631,6 +1719,7 @@
     },
     {
       "id": "mpg-046",
+      "parentId": null,
       "redditScore": 20,
       "body": "saints hate Etienne",
       "expected": {
@@ -1638,9 +1727,11 @@
         "targets": [
           {
             "player": "Travis Etienne Jr.",
-            "sentiment": "Negative",
-            "playerEvaluation": "Neutral",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "CoachingPlaycalling",
               "UsageOpportunity"
@@ -1660,9 +1751,11 @@
         "targets": [
           {
             "player": "Travis Etienne Jr.",
-            "sentiment": "Neutral",
-            "playerEvaluation": "Neutral",
             "fantasyOutlook": "Neutral",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "CalledBackPlay",
               "TouchdownVariance"
@@ -1674,6 +1767,7 @@
     },
     {
       "id": "mpg-048",
+      "parentId": null,
       "redditScore": 3,
       "body": "fuck you saints",
       "expected": {
@@ -1684,6 +1778,7 @@
     },
     {
       "id": "mpg-049",
+      "parentId": null,
       "redditScore": 24,
       "body": "I'm so upset about Caleb. fuck.",
       "expected": {
@@ -1691,9 +1786,13 @@
         "targets": [
           {
             "player": "Caleb Williams",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
+            ],
             "reasons": [
               "QuarterbackPlay"
             ]
@@ -1704,6 +1803,7 @@
     },
     {
       "id": "mpg-050",
+      "parentId": null,
       "redditScore": 12,
       "body": "my caleb Loveland stack 💔",
       "expected": {
@@ -1711,18 +1811,26 @@
         "targets": [
           {
             "player": "Colston Loveland",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
-            "fantasyOutlook": "Positive",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
+            ],
             "reasons": [
               "QuarterbackPlay"
             ]
           },
           {
             "player": "Caleb Williams",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
-            "fantasyOutlook": "Positive",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
+            ],
             "reasons": [
               "QuarterbackPlay"
             ]
@@ -1733,6 +1841,7 @@
     },
     {
       "id": "mpg-051",
+      "parentId": null,
       "redditScore": 3,
       "body": "can't believe denzel boston is my best receiver",
       "expected": {
@@ -1740,9 +1849,11 @@
         "targets": [
           {
             "player": "Denzel Boston",
-            "sentiment": "Unclear",
+            "fantasyOutlook": "Positive",
             "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1753,6 +1864,7 @@
     },
     {
       "id": "mpg-052",
+      "parentId": null,
       "redditScore": 5,
       "body": "hopefully Texans realize after this game that marks sucks and put monty back on the field",
       "expected": {
@@ -1760,11 +1872,14 @@
         "targets": [
           {
             "player": "David Montgomery",
-            "sentiment": "StrongNegative",
-            "playerEvaluation": "StrongNegative",
-            "fantasyOutlook": "StrongNegative",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
-              "Performance"
+              "RoleCompetition",
+              "UsageOpportunity"
             ]
           }
         ]
@@ -1773,6 +1888,7 @@
     },
     {
       "id": "mpg-053",
+      "parentId": null,
       "redditScore": 36,
       "body": "caleb owners, what type of bleach we going with tonight?",
       "expected": {
@@ -1780,16 +1896,20 @@
         "targets": [
           {
             "player": "Caleb Williams",
-            "sentiment": "StrongNegative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "StrongNegative",
-            "perspective": "OwnRoster",
-            "intents": [
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Panic"
             ],
             "reasons": [
               "Injury",
               "LineupRegret"
+            ],
+            "isDebatable": true,
+            "alternativeLabels": [
+              "OwnRoster if treating owners as self-identification rather than general group address."
             ]
           }
         ]
