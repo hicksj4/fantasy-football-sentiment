@@ -1,3 +1,5 @@
+using FantasySentiment.Api.Domain;
+
 namespace FantasySentiment.Api.Services;
 
 public sealed record SnapshotSourceData(
@@ -13,7 +15,8 @@ public sealed record SnapshotSourcePost(
     DateTimeOffset CreatedAt,
     int Score,
     IReadOnlyList<SnapshotSourceComment> Comments,
-    string Subreddit = "fantasyfootball");
+    string Subreddit = "fantasyfootball",
+    string PostType = RedditPostTypes.GameThread);
 
 public sealed record SnapshotSourceComment(
     string RedditId,

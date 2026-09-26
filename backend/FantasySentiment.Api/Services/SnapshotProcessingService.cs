@@ -233,7 +233,7 @@ public sealed class SnapshotProcessingService(
                 LastAnalyzedAt = DateTimeOffset.UtcNow,
                 LastAnalyzedCommentCount = sourcePost.Comments.Count,
                 AnalysisStatus = RedditAnalysisStatuses.Analyzed,
-                PostType = RedditPostTypes.GameThread,
+                PostType = sourcePost.PostType,
                 AnalysisStatusReason = "imported from snapshot fixture"
             };
 

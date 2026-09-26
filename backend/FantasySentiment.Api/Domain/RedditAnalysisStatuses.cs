@@ -14,4 +14,5 @@ public static class RedditPostTypes
     public const string Normal = "Normal";
     public const string ImportantNews = "ImportantNews";
     public const string GameThread = "GameThread";
+    public const string PostGameThread = "PostGameThread";
 }

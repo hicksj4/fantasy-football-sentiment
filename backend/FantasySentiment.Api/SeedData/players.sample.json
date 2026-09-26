@@ -1,149 +1,765 @@
 [
   {
-    "name": "Christian McCaffrey",
-    "team": "SF",
-    "position": "RB",
-    "externalId": "nfl-cmc",
-    "aliases": [ "CMC", "McCaffrey", "Christian McCaffrey", "C. McCaffrey" ]
-  },
-  {
-    "name": "Brock Purdy",
-    "team": "SF",
+    "name": "Aaron Rodgers",
+    "team": "PIT",
     "position": "QB",
-    "externalId": "nfl-purdy",
-    "aliases": [ "Purdy", "Brock Purdy" ]
+    "externalId": "nfl-aaron-rodgers",
+    "aliases": [
+      "Rodgers",
+      "Aaron Rodgers"
+    ]
   },
   {
-    "name": "Justin Jefferson",
-    "team": "MIN",
-    "position": "WR",
-    "externalId": "nfl-jefferson",
-    "aliases": [ "Jefferson", "Justin Jefferson", "JJettas" ]
-  },
-  {
-    "name": "Davante Adams",
-    "team": "LAR",
-    "position": "WR",
-    "externalId": "nfl-adams",
-    "aliases": [ "Adams", "Davante Adams" ]
-  },
-  {
-    "name": "Puka Nacua",
-    "team": "LAR",
-    "position": "WR",
-    "externalId": "nfl-puka",
-    "aliases": [ "Puka", "Nacua", "Puka Nacua" ]
-  },
-  {
-    "name": "Mark Andrews",
-    "team": "BAL",
-    "position": "TE",
-    "externalId": "nfl-andrews",
-    "aliases": [ "Mandrews", "Andrews", "Mark Andrews" ]
-  },
-  {
-    "name": "Isaiah Likely",
-    "team": "BAL",
-    "position": "TE",
-    "externalId": "nfl-likely",
-    "aliases": [ "Likely", "Isaiah Likely" ]
-  },
-  {
-    "name": "Trey McBride",
-    "team": "ARI",
-    "position": "TE",
-    "externalId": "nfl-mcbride",
-    "aliases": [ "McBride", "Trey McBride" ]
-  },
-  {
-    "name": "Tank Bigsby",
-    "team": "JAX",
-    "position": "RB",
-    "externalId": "nfl-bigsby",
-    "aliases": [ "Tank", "Bigsby", "Tank Bigsby" ]
-  },
-  {
-    "name": "Malik Nabers",
-    "team": "NYG",
-    "position": "WR",
-    "externalId": "nfl-nabers",
-    "aliases": [ "Nabers", "Malik Nabers" ]
-  },
-  {
-    "name": "Kyle Pitts",
-    "team": "ATL",
-    "position": "TE",
-    "externalId": "nfl-pitts",
-    "aliases": [ "Pitts", "Kyle Pitts" ]
-  },
-  {
-    "name": "De'Von Achane",
-    "team": "MIA",
-    "position": "RB",
-    "externalId": "nfl-achane",
-    "aliases": [ "Achane", "DeVon Achane", "De'Von Achane" ]
+    "name": "Baker Mayfield",
+    "team": "TB",
+    "position": "QB",
+    "externalId": "nfl-baker-mayfield",
+    "aliases": [
+      "Baker",
+      "Baker Mayfield"
+    ]
   },
   {
     "name": "Bijan Robinson",
     "team": "ATL",
     "position": "RB",
-    "externalId": "nfl-bijan",
-    "aliases": [ "Bijan", "Bijan Robinson" ]
+    "externalId": "nfl-bijan-robinson",
+    "aliases": [
+      "Bijan",
+      "Bijan Robinson"
+    ]
   },
   {
     "name": "Breece Hall",
     "team": "NYJ",
     "position": "RB",
-    "externalId": "nfl-breece",
-    "aliases": [ "Breece", "Breece Hall" ]
+    "externalId": "nfl-breece-hall",
+    "aliases": [
+      "Breece",
+      "Breece Hall"
+    ]
+  },
+  {
+    "name": "Brian Thomas Jr.",
+    "team": "JAX",
+    "position": "WR",
+    "externalId": "nfl-brian-thomas-jr",
+    "aliases": [
+      "BTJ",
+      "Brian Thomas Jr"
+    ]
+  },
+  {
+    "name": "Brock Purdy",
+    "team": "SF",
+    "position": "QB",
+    "externalId": "nfl-brock-purdy",
+    "aliases": [
+      "Purdy",
+      "Brock Purdy"
+    ]
+  },
+  {
+    "name": "Bucky Irving",
+    "team": "TB",
+    "position": "RB",
+    "externalId": "nfl-bucky-irving",
+    "aliases": [
+      "Bucky",
+      "Bucky Irving"
+    ]
+  },
+  {
+    "name": "Caleb Williams",
+    "team": "CHI",
+    "position": "QB",
+    "externalId": "nfl-caleb-williams",
+    "aliases": [
+      "Caleb",
+      "Caleb Williams"
+    ]
+  },
+  {
+    "name": "Cam Ward",
+    "team": "TEN",
+    "position": "QB",
+    "externalId": "nfl-cam-ward",
+    "aliases": [
+      "Cam Ward"
+    ]
+  },
+  {
+    "name": "CeeDee Lamb",
+    "team": "DAL",
+    "position": "WR",
+    "externalId": "nfl-ceedee-lamb",
+    "aliases": [
+      "CeeDee",
+      "Ceedee",
+      "Lamb",
+      "CeeDee Lamb"
+    ]
+  },
+  {
+    "name": "Christian McCaffrey",
+    "team": "SF",
+    "position": "RB",
+    "externalId": "nfl-christian-mccaffrey",
+    "aliases": [
+      "CMC",
+      "McCaffrey",
+      "Christian McCaffrey",
+      "C. McCaffrey"
+    ]
+  },
+  {
+    "name": "Chuba Hubbard",
+    "team": "CAR",
+    "position": "RB",
+    "externalId": "nfl-chuba-hubbard",
+    "aliases": [
+      "Chuba",
+      "Chuba Hubbard"
+    ]
+  },
+  {
+    "name": "Colston Loveland",
+    "team": "CHI",
+    "position": "TE",
+    "externalId": "nfl-colston-loveland",
+    "aliases": [
+      "Loveland",
+      "Colston Loveland"
+    ]
+  },
+  {
+    "name": "Cooper Rush",
+    "team": "BAL",
+    "position": "QB",
+    "externalId": "nfl-cooper-rush",
+    "aliases": [
+      "Cooper Rush"
+    ]
+  },
+  {
+    "name": "Dalton Schultz",
+    "team": "HOU",
+    "position": "TE",
+    "externalId": "nfl-dalton-schultz",
+    "aliases": [
+      "Schultz",
+      "Dalton Schultz"
+    ]
+  },
+  {
+    "name": "Darren Waller",
+    "team": "MIA",
+    "position": "TE",
+    "externalId": "nfl-darren-waller",
+    "aliases": [
+      "Waller",
+      "Darren Waller"
+    ]
+  },
+  {
+    "name": "Davante Adams",
+    "team": "LAR",
+    "position": "WR",
+    "externalId": "nfl-davante-adams",
+    "aliases": [
+      "Adams",
+      "Davante Adams"
+    ]
+  },
+  {
+    "name": "David Montgomery",
+    "team": "DET",
+    "position": "RB",
+    "externalId": "nfl-david-montgomery",
+    "aliases": [
+      "Monty",
+      "Montgomery",
+      "David Montgomery"
+    ]
+  },
+  {
+    "name": "De'Von Achane",
+    "team": "MIA",
+    "position": "RB",
+    "externalId": "nfl-de-von-achane",
+    "aliases": [
+      "Achane",
+      "DeVon Achane",
+      "De'Von Achane"
+    ]
+  },
+  {
+    "name": "Denzel Boston",
+    "team": "TEN",
+    "position": "WR",
+    "externalId": "nfl-denzel-boston",
+    "aliases": [
+      "Denzel Boston",
+      "Boston"
+    ]
+  },
+  {
+    "name": "Derrick Henry",
+    "team": "BAL",
+    "position": "RB",
+    "externalId": "nfl-derrick-henry",
+    "aliases": [
+      "Derrick Henry",
+      "King Henry"
+    ]
+  },
+  {
+    "name": "Deshaun Watson",
+    "team": "CLE",
+    "position": "QB",
+    "externalId": "nfl-deshaun-watson",
+    "aliases": [
+      "Watson",
+      "Deshaun",
+      "Deshaun Watson"
+    ]
+  },
+  {
+    "name": "Devaughn Vele",
+    "team": "DEN",
+    "position": "WR",
+    "externalId": "nfl-devaughn-vele",
+    "aliases": [
+      "Vele",
+      "Devaughn Vele"
+    ]
+  },
+  {
+    "name": "DeVonta Smith",
+    "team": "PHI",
+    "position": "WR",
+    "externalId": "nfl-devonta-smith",
+    "aliases": [
+      "Devonta Smith",
+      "DeVonta Smith",
+      "Smitty"
+    ]
+  },
+  {
+    "name": "Drake London",
+    "team": "ATL",
+    "position": "WR",
+    "externalId": "nfl-drake-london",
+    "aliases": [
+      "Drake London",
+      "London"
+    ]
+  },
+  {
+    "name": "Drake Maye",
+    "team": "NE",
+    "position": "QB",
+    "externalId": "nfl-drake-maye",
+    "aliases": [
+      "Drake Maye",
+      "Maye"
+    ]
+  },
+  {
+    "name": "Emeka Egbuka",
+    "team": "TB",
+    "position": "WR",
+    "externalId": "nfl-emeka-egbuka",
+    "aliases": [
+      "Egbuka",
+      "Emeka Egbuka"
+    ]
   },
   {
     "name": "Garrett Wilson",
     "team": "NYJ",
     "position": "WR",
     "externalId": "nfl-garrett-wilson",
-    "aliases": [ "Garrett Wilson", "G. Wilson" ]
+    "aliases": [
+      "Garrett Wilson",
+      "G. Wilson"
+    ]
   },
   {
-    "name": "Zay Flowers",
+    "name": "George Pickens",
+    "team": "DAL",
+    "position": "WR",
+    "externalId": "nfl-george-pickens",
+    "aliases": [
+      "Pickens",
+      "George Pickens"
+    ]
+  },
+  {
+    "name": "Harold Fannin Jr.",
+    "team": "CLE",
+    "position": "TE",
+    "externalId": "nfl-harold-fannin-jr",
+    "aliases": [
+      "Fannin",
+      "Harold Fannin"
+    ]
+  },
+  {
+    "name": "Isaiah Likely",
     "team": "BAL",
-    "position": "WR",
-    "externalId": "nfl-zay",
-    "aliases": [ "Zay", "Flowers", "Zay Flowers" ]
+    "position": "TE",
+    "externalId": "nfl-isaiah-likely",
+    "aliases": [
+      "Likely",
+      "Isaiah Likely"
+    ]
   },
   {
-    "name": "Jaylen Waddle",
-    "team": "MIA",
-    "position": "WR",
-    "externalId": "nfl-waddle",
-    "aliases": [ "Waddle", "Jaylen Waddle" ]
+    "name": "J.K. Dobbins",
+    "team": "DEN",
+    "position": "RB",
+    "externalId": "nfl-j-k-dobbins",
+    "aliases": [
+      "JK Dobbins",
+      "J.K. Dobbins",
+      "Dobbins"
+    ]
   },
   {
-    "name": "Rome Odunze",
-    "team": "CHI",
+    "name": "Ja'Marr Chase",
+    "team": "CIN",
     "position": "WR",
-    "externalId": "nfl-odunze",
-    "aliases": [ "Rome", "Odunze", "Rome Odunze" ]
+    "externalId": "nfl-ja-marr-chase",
+    "aliases": [
+      "JaMarr",
+      "Jamaar",
+      "Chase",
+      "Ja'Marr Chase"
+    ]
   },
   {
-    "name": "Drake London",
-    "team": "ATL",
+    "name": "Jalen Coker",
+    "team": "CAR",
     "position": "WR",
-    "externalId": "nfl-london",
-    "aliases": [ "London", "Drake London" ]
+    "externalId": "nfl-jalen-coker",
+    "aliases": [
+      "Coker",
+      "Jalen Coker"
+    ]
   },
   {
-    "name": "Jayden Reed",
-    "team": "GB",
-    "position": "WR",
-    "externalId": "nfl-reed",
-    "aliases": [ "Reed", "Jayden Reed" ]
+    "name": "Jalen Hurts",
+    "team": "PHI",
+    "position": "QB",
+    "externalId": "nfl-jalen-hurts",
+    "aliases": [
+      "Hurts",
+      "Jalen Hurts"
+    ]
   },
   {
     "name": "James Cook",
     "team": "BUF",
     "position": "RB",
     "externalId": "nfl-james-cook",
-    "aliases": [ "James Cook", "J. Cook" ]
+    "aliases": [
+      "James Cook",
+      "J. Cook"
+    ]
+  },
+  {
+    "name": "Javonte Williams",
+    "team": "DAL",
+    "position": "RB",
+    "externalId": "nfl-javonte-williams",
+    "aliases": [
+      "Javonte",
+      "Javonte Williams"
+    ]
+  },
+  {
+    "name": "Jaxon Smith-Njigba",
+    "team": "SEA",
+    "position": "WR",
+    "externalId": "nfl-jaxon-smith-njigba",
+    "aliases": [
+      "JSN",
+      "Jaxon Smith-Njigba",
+      "Jaxon Smith",
+      "Smith-Njigba"
+    ]
+  },
+  {
+    "name": "Jayden Reed",
+    "team": "GB",
+    "position": "WR",
+    "externalId": "nfl-jayden-reed",
+    "aliases": [
+      "Jayden Reed",
+      "J Reed",
+      "Reed"
+    ]
+  },
+  {
+    "name": "Jaylen Waddle",
+    "team": "MIA",
+    "position": "WR",
+    "externalId": "nfl-jaylen-waddle",
+    "aliases": [
+      "Waddle",
+      "Jaylen Waddle"
+    ]
+  },
+  {
+    "name": "Joe Burrow",
+    "team": "CIN",
+    "position": "QB",
+    "externalId": "nfl-joe-burrow",
+    "aliases": [
+      "Burrow",
+      "Joe Burrow"
+    ]
+  },
+  {
+    "name": "Justin Herbert",
+    "team": "LAC",
+    "position": "QB",
+    "externalId": "nfl-justin-herbert",
+    "aliases": [
+      "Herbert",
+      "Justin Herbert"
+    ]
+  },
+  {
+    "name": "Justin Jefferson",
+    "team": "MIN",
+    "position": "WR",
+    "externalId": "nfl-justin-jefferson",
+    "aliases": [
+      "Jefferson",
+      "Justin Jefferson",
+      "JJettas",
+      "Jettas"
+    ]
+  },
+  {
+    "name": "Juwan Johnson",
+    "team": "NO",
+    "position": "TE",
+    "externalId": "nfl-juwan-johnson",
+    "aliases": [
+      "Juwan",
+      "Juwan Johnson"
+    ]
+  },
+  {
+    "name": "Khalif Raymond",
+    "team": "DET",
+    "position": "WR",
+    "externalId": "nfl-khalif-raymond",
+    "aliases": [
+      "Khalif Raymond"
+    ]
+  },
+  {
+    "name": "Kyle Monangai",
+    "team": "CHI",
+    "position": "RB",
+    "externalId": "nfl-kyle-monangai",
+    "aliases": [
+      "Monangai",
+      "Kyle Monangai"
+    ]
+  },
+  {
+    "name": "Kyle Pitts",
+    "team": "ATL",
+    "position": "TE",
+    "externalId": "nfl-kyle-pitts",
+    "aliases": [
+      "Pitts",
+      "Kyle Pitts"
+    ]
+  },
+  {
+    "name": "Ladd McConkey",
+    "team": "LAC",
+    "position": "WR",
+    "externalId": "nfl-ladd-mcconkey",
+    "aliases": [
+      "Ladd",
+      "Ladd McConkey"
+    ]
+  },
+  {
+    "name": "Lamar Jackson",
+    "team": "BAL",
+    "position": "QB",
+    "externalId": "nfl-lamar-jackson",
+    "aliases": [
+      "Lamar",
+      "Lamar Jackson"
+    ]
+  },
+  {
+    "name": "Luther Burden",
+    "team": "CHI",
+    "position": "WR",
+    "externalId": "nfl-luther-burden",
+    "aliases": [
+      "Burden",
+      "Luther Burden"
+    ]
+  },
+  {
+    "name": "Malik Nabers",
+    "team": "NYG",
+    "position": "WR",
+    "externalId": "nfl-malik-nabers",
+    "aliases": [
+      "Nabers",
+      "Malik Nabers"
+    ]
+  },
+  {
+    "name": "Mark Andrews",
+    "team": "BAL",
+    "position": "TE",
+    "externalId": "nfl-mark-andrews",
+    "aliases": [
+      "Mandrews",
+      "Andrews",
+      "Mark Andrews"
+    ]
+  },
+  {
+    "name": "Mike Evans",
+    "team": "TB",
+    "position": "WR",
+    "externalId": "nfl-mike-evans",
+    "aliases": [
+      "Evans",
+      "Mike Evans"
+    ]
+  },
+  {
+    "name": "Nick Chubb",
+    "team": "HOU",
+    "position": "RB",
+    "externalId": "nfl-nick-chubb",
+    "aliases": [
+      "Chubb",
+      "Nick Chubb"
+    ]
+  },
+  {
+    "name": "Omarion Hampton",
+    "team": "LAC",
+    "position": "RB",
+    "externalId": "nfl-omarion-hampton",
+    "aliases": [
+      "Hampton",
+      "Omarion Hampton",
+      "Omarian",
+      "Omarion"
+    ]
+  },
+  {
+    "name": "Parker Washington",
+    "team": "JAX",
+    "position": "WR",
+    "externalId": "nfl-parker-washington",
+    "aliases": [
+      "Parker Washington",
+      "Parker"
+    ]
+  },
+  {
+    "name": "Puka Nacua",
+    "team": "LAR",
+    "position": "WR",
+    "externalId": "nfl-puka-nacua",
+    "aliases": [
+      "Puka",
+      "Nacua",
+      "Puka Nacua"
+    ]
+  },
+  {
+    "name": "Quentin Johnston",
+    "team": "LAC",
+    "position": "WR",
+    "externalId": "nfl-quentin-johnston",
+    "aliases": [
+      "QJ",
+      "Quentin Johnston"
+    ]
+  },
+  {
+    "name": "Rachaad White",
+    "team": "TB",
+    "position": "RB",
+    "externalId": "nfl-rachaad-white",
+    "aliases": [
+      "Rachaad",
+      "Rachaad White",
+      "White"
+    ]
+  },
+  {
+    "name": "Rhamondre Stevenson",
+    "team": "NE",
+    "position": "RB",
+    "externalId": "nfl-rhamondre-stevenson",
+    "aliases": [
+      "Rhamondre",
+      "Mondre",
+      "Rhamondre Stevenson"
+    ]
+  },
+  {
+    "name": "Rome Odunze",
+    "team": "CHI",
+    "position": "WR",
+    "externalId": "nfl-rome-odunze",
+    "aliases": [
+      "Rome Odunze",
+      "Odunze",
+      "Rome"
+    ]
+  },
+  {
+    "name": "Saquon Barkley",
+    "team": "PHI",
+    "position": "RB",
+    "externalId": "nfl-saquon-barkley",
+    "aliases": [
+      "Saquon",
+      "Barkley",
+      "Saquon Barkley"
+    ]
+  },
+  {
+    "name": "Tank Bigsby",
+    "team": "JAX",
+    "position": "RB",
+    "externalId": "nfl-tank-bigsby",
+    "aliases": [
+      "Tank Bigsby",
+      "Bigsby",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Tetairoa McMillan",
+    "team": "CAR",
+    "position": "WR",
+    "externalId": "nfl-tetairoa-mcmillan",
+    "aliases": [
+      "Tet",
+      "Tetairoa McMillan"
+    ]
+  },
+  {
+    "name": "Tory Horton",
+    "team": "SEA",
+    "position": "WR",
+    "externalId": "nfl-tory-horton",
+    "aliases": [
+      "Horton",
+      "Tory Horton"
+    ]
+  },
+  {
+    "name": "Travis Etienne Jr.",
+    "team": "JAX",
+    "position": "RB",
+    "externalId": "nfl-travis-etienne-jr",
+    "aliases": [
+      "Etienne",
+      "ETN",
+      "Travis Etienne"
+    ]
+  },
+  {
+    "name": "TreVeyon Henderson",
+    "team": "NE",
+    "position": "RB",
+    "externalId": "nfl-treveyon-henderson",
+    "aliases": [
+      "TreVeyon Henderson",
+      "Henderson"
+    ]
+  },
+  {
+    "name": "Trevor Lawrence",
+    "team": "JAX",
+    "position": "QB",
+    "externalId": "nfl-trevor-lawrence",
+    "aliases": [
+      "TLAW",
+      "Trevor Lawrence"
+    ]
+  },
+  {
+    "name": "Trey McBride",
+    "team": "ARI",
+    "position": "TE",
+    "externalId": "nfl-trey-mcbride",
+    "aliases": [
+      "McBride",
+      "Trey McBride"
+    ]
+  },
+  {
+    "name": "Tucker Kraft",
+    "team": "GB",
+    "position": "TE",
+    "externalId": "nfl-tucker-kraft",
+    "aliases": [
+      "Kraft",
+      "Tucker Kraft"
+    ]
+  },
+  {
+    "name": "Tyler Shough",
+    "team": "NO",
+    "position": "QB",
+    "externalId": "nfl-tyler-shough",
+    "aliases": [
+      "Shough",
+      "Tyler Shough"
+    ]
+  },
+  {
+    "name": "Tyler Warren",
+    "team": "IND",
+    "position": "TE",
+    "externalId": "nfl-tyler-warren",
+    "aliases": [
+      "Warren",
+      "Tyler Warren"
+    ]
+  },
+  {
+    "name": "Woody Marks",
+    "team": "HOU",
+    "position": "RB",
+    "externalId": "nfl-woody-marks",
+    "aliases": [
+      "Woody Marks"
+    ]
+  },
+  {
+    "name": "Zay Flowers",
+    "team": "BAL",
+    "position": "WR",
+    "externalId": "nfl-zay-flowers",
+    "aliases": [
+      "Zay",
+      "Flowers",
+      "Zay Flowers"
+    ]
   }
 ]

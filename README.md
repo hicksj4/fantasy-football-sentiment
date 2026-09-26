@@ -23,8 +23,22 @@ The old rolling Reddit discovery/analysis workers are registered in code for ref
 The default fixture is:
 
 ```text
+backend/FantasySentiment.Api/SeedData/Snapshots/2026-week2-reddit-sample.json
+```
+
+That fixture is built from the manually collected Week 2 Reddit samples and contains three source posts:
+
+- `OFFICIAL WEEK 2 SUNDAY MORNING GAME THREAD`
+- `OFFICIAL WEEK 2 SUNDAY MORNING POSTGAME THREAD`
+- `OFFICIAL WEEK 2 SUNDAY AFTERNOON GAME THREAD`
+
+The older synthetic demo fixture is still available at:
+
+```text
 backend/FantasySentiment.Api/SeedData/Snapshots/2026-week-4.json
 ```
+
+To switch back temporarily, set `SNAPSHOT_DEFAULT_KEY=2026-week-4` in `.env` or `appsettings.Development.json`.
 
 On startup the backend:
 
@@ -35,8 +49,8 @@ On startup the backend:
 You can manually process or reprocess a snapshot:
 
 ```http
-POST /api/snapshots/2026-week-4/process
-POST /api/snapshots/2026-week-4/process?skipIfProcessed=false
+POST /api/snapshots/2026-week2-reddit-sample/process
+POST /api/snapshots/2026-week2-reddit-sample/process?skipIfProcessed=false
 ```
 
 Processing is idempotent. Reprocessing a snapshot removes that snapshot's prior imported posts, comments, mentions, and aggregates before rebuilding them from the JSON fixture.
@@ -200,14 +214,14 @@ Open:
 Important snapshot settings:
 
 ```env
-SNAPSHOT_DEFAULT_KEY=2026-week-4
+SNAPSHOT_DEFAULT_KEY=2026-week2-reddit-sample
 SNAPSHOT_PROCESS_ON_STARTUP=true
 SNAPSHOT_FIXTURE_DIRECTORY=SeedData/Snapshots
 SENTIMENT_MODE=Vader
 NEXT_PUBLIC_API_BASE_URL=http://localhost:5044
 ```
 
-Snapshot posts can optionally include a `subreddit` field. If omitted, the importer defaults to `fantasyfootball`; if present, the value is retained on `RedditPost.Subreddit` so future fantasy-community and team-subreddit analysis can be separated.
+Snapshot posts can optionally include `subreddit`, `postType`, and `threadType` fields. If `subreddit` is omitted, the importer defaults to `fantasyfootball`; if present, the value is retained on `RedditPost.Subreddit` so future fantasy-community and team-subreddit analysis can be separated. Fixture timestamps in the Week 2 Reddit sample are deterministic metadata because the original Reddit timestamps were not collected.
 
 The backend reads environment variables and also loads `.env` from the repo root for local development.
 
@@ -227,8 +241,8 @@ Useful commands:
 
 ```powershell
 cd backend
-dotnet build .\FantasySentiment.slnx
-dotnet test .\FantasySentiment.slnx
+dotnet build .\FantasySentiment.Api\FantasySentiment.Api.csproj
+dotnet test .\FantasySentiment.Tests\FantasySentiment.Tests.csproj
 ```
 
 If `dotnet-ef` is installed:
@@ -264,8 +278,8 @@ pnpm build
 Before committing this branch, run:
 
 ```powershell
-dotnet build .\backend\FantasySentiment.slnx
-dotnet test .\backend\FantasySentiment.slnx
+dotnet build .\backend\FantasySentiment.Api\FantasySentiment.Api.csproj
+dotnet test .\backend\FantasySentiment.Tests\FantasySentiment.Tests.csproj
 cd frontend
 pnpm typecheck
 pnpm build
@@ -276,4 +290,4 @@ Then start the backend and confirm:
 - `GET /api/health` returns `snapshotMode: true`.
 - `GET /api/snapshots/latest` returns the processed fixture.
 - `GET /api/snapshots/latest/highlights` returns positive and negative impact cards.
-- Reprocessing with `POST /api/snapshots/2026-week-4/process?skipIfProcessed=false` does not duplicate snapshot data.
+- Reprocessing with `POST /api/snapshots/2026-week2-reddit-sample/process?skipIfProcessed=false` does not duplicate snapshot data.

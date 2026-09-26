@@ -183,6 +183,38 @@ public sealed class SnapshotProcessingTests
     }
 
     [Fact]
+    public async Task SnapshotQuery_LatestPrefersConfiguredDefaultSnapshot()
+    {
+        await using var db = CreateDb();
+        db.AnalysisSnapshots.AddRange(
+            new AnalysisSnapshot
+            {
+                Key = "2026-week-4",
+                Name = "Synthetic Week 4",
+                Season = 2026,
+                Week = 4,
+                Status = AnalysisSnapshotStatuses.Processed,
+                ProcessedAt = DateTimeOffset.UtcNow
+            },
+            new AnalysisSnapshot
+            {
+                Key = "2026-week2-reddit-sample",
+                Name = "2026 Week 2 Reddit Sample",
+                Season = 2026,
+                Week = 2,
+                Status = AnalysisSnapshotStatuses.Processed,
+                ProcessedAt = DateTimeOffset.UtcNow
+            });
+        await db.SaveChangesAsync();
+        var query = CreateQuery(db, defaultSnapshotKey: "2026-week2-reddit-sample");
+
+        var snapshot = await query.GetSnapshotAsync("latest", CancellationToken.None);
+
+        Assert.NotNull(snapshot);
+        Assert.Equal("2026-week2-reddit-sample", snapshot.Key);
+    }
+
+    [Fact]
     public async Task SnapshotProcessing_PlayerMentionsAcrossThreadsAggregateTogether()
     {
         await using var db = CreateDb();
@@ -300,8 +332,8 @@ public sealed class SnapshotProcessingTests
         await processor.ProcessAsync("2026-week-4", skipIfProcessed: false, CancellationToken.None);
 
         Assert.Equal(203, await db.RedditComments.CountAsync());
-        Assert.Equal(208, await db.PlayerMentions.CountAsync());
-        Assert.Equal(205, await CountMentionsByMethodAsync(db, TargetAttributionMethods.Explicit));
+        Assert.Equal(209, await db.PlayerMentions.CountAsync());
+        Assert.Equal(206, await CountMentionsByMethodAsync(db, TargetAttributionMethods.Explicit));
         Assert.Equal(2, await CountMentionsByMethodAsync(db, TargetAttributionMethods.ParentInherited));
         Assert.Equal(1, await CountMentionsByMethodAsync(db, TargetAttributionMethods.AncestorInherited));
         Assert.Equal(0, await CountMentionsByMethodAsync(db, TargetAttributionMethods.ThreadTitleInherited));
@@ -377,7 +409,8 @@ public sealed class SnapshotProcessingTests
 
     private static SnapshotQueryService CreateQuery(
         FantasySentimentDbContext db,
-        int minimumMentions = 1)
+        int minimumMentions = 1,
+        string defaultSnapshotKey = "2026-week-4")
     {
         return new SnapshotQueryService(
             db,
@@ -388,6 +421,10 @@ public sealed class SnapshotProcessingTests
                 ExcludeLowConfidence = false,
                 MinimumAbsoluteSentimentChange = 0.01,
                 CommentExcerptLength = 190
+            }),
+            snapshotProcessingOptions: Options.Create(new SnapshotProcessingOptions
+            {
+                DefaultSnapshotKey = defaultSnapshotKey
             }));
     }
 
