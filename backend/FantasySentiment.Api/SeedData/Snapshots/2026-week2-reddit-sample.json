@@ -1,0 +1,2377 @@
+{
+  "key": "2026-week2-reddit-sample",
+  "name": "2026 Week 2 Reddit Sample",
+  "season": 2026,
+  "week": 2,
+  "metadata": {
+    "source": "Manually collected Reddit excerpts from Week 2 fantasyfootball threads.",
+    "timestampNote": "createdAt values are deterministic fixture metadata because original Reddit timestamps were not collected.",
+    "labelsNote": "This runtime snapshot intentionally contains no expected targets or sentiment labels."
+  },
+  "posts": [
+    {
+      "redditId": "w2-morning-game",
+      "subreddit": "fantasyfootball",
+      "postType": "GameThread",
+      "threadType": "GameThread",
+      "title": "OFFICIAL WEEK 2 SUNDAY MORNING GAME THREAD",
+      "createdAt": "2026-09-14T17:00:00Z",
+      "score": 68,
+      "comments": [
+        {
+          "redditId": "mor-001",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:00:45Z",
+          "score": 1,
+          "body": "Is it crazy I’m benching odunze and BTJ for wicks and Vele? Full PPR"
+        },
+        {
+          "redditId": "mor-002",
+          "parentRedditId": "mor-001",
+          "createdAt": "2026-09-14T17:01:30Z",
+          "score": 2,
+          "body": "Bench BTJ not Odunze."
+        },
+        {
+          "redditId": "mor-003",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:02:15Z",
+          "score": 3,
+          "body": "LETS GOOOOOOOO, GOOD LUCK EVERYONE"
+        },
+        {
+          "redditId": "mor-004",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:03:00Z",
+          "score": 1,
+          "body": "QJ or Monangai?"
+        },
+        {
+          "redditId": "mor-005",
+          "parentRedditId": "mor-004",
+          "createdAt": "2026-09-14T17:03:45Z",
+          "score": 1,
+          "body": "QJ"
+        },
+        {
+          "redditId": "mor-006",
+          "parentRedditId": "mor-005",
+          "createdAt": "2026-09-14T17:04:30Z",
+          "score": 1,
+          "body": "Monangai cause he's a guy"
+        },
+        {
+          "redditId": "mor-007",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:05:15Z",
+          "score": 5,
+          "body": "juwan johnson"
+        },
+        {
+          "redditId": "mor-008",
+          "parentRedditId": "mor-007",
+          "createdAt": "2026-09-14T17:06:00Z",
+          "score": 2,
+          "body": "HOOOO RAH!!!"
+        },
+        {
+          "redditId": "mor-009",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:06:45Z",
+          "score": -1,
+          "body": "Odunze or golden non ppr"
+        },
+        {
+          "redditId": "mor-010",
+          "parentRedditId": "mor-009",
+          "createdAt": "2026-09-14T17:07:30Z",
+          "score": 1,
+          "body": "Golden"
+        },
+        {
+          "redditId": "mor-011",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:08:15Z",
+          "score": 0,
+          "body": "start two: evans, London, ladd"
+        },
+        {
+          "redditId": "mor-012",
+          "parentRedditId": "mor-011",
+          "createdAt": "2026-09-14T17:09:00Z",
+          "score": 3,
+          "body": "Evan's Ladd"
+        },
+        {
+          "redditId": "mor-013",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:09:45Z",
+          "score": 1,
+          "body": "Juwan gimme 12 points. It's all I ask."
+        },
+        {
+          "redditId": "mor-014",
+          "parentRedditId": "mor-013",
+          "createdAt": "2026-09-14T17:10:30Z",
+          "score": 3,
+          "body": "Not a terrible first half"
+        },
+        {
+          "redditId": "mor-015",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:11:15Z",
+          "score": 0,
+          "body": "Are we worried about Tuten in Denver?"
+        },
+        {
+          "redditId": "mor-016",
+          "parentRedditId": "mor-015",
+          "createdAt": "2026-09-14T17:12:00Z",
+          "score": 6,
+          "body": "I am always worried about everything"
+        },
+        {
+          "redditId": "mor-017",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:12:45Z",
+          "score": 5,
+          "body": "I am ready to be hurt again."
+        },
+        {
+          "redditId": "mor-018",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:13:30Z",
+          "score": 1,
+          "body": "Andrews may indeed be cooked."
+        },
+        {
+          "redditId": "mor-019",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:14:15Z",
+          "score": 3,
+          "body": "Fucking retire Andrews you fucker"
+        },
+        {
+          "redditId": "mor-020",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:15:00Z",
+          "score": 4,
+          "body": "Saquon is hurt"
+        },
+        {
+          "redditId": "mor-021",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:15:45Z",
+          "score": 4,
+          "body": "Tank Bigsby truthers we up"
+        },
+        {
+          "redditId": "mor-022",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:16:30Z",
+          "score": 1,
+          "body": "My RB room is so fucking bad now JK Dobbins is my RB1 I guess"
+        },
+        {
+          "redditId": "mor-023",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:17:15Z",
+          "score": 1,
+          "body": "Cooper rush is awful"
+        },
+        {
+          "redditId": "mor-024",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:18:00Z",
+          "score": 11,
+          "body": "Henderson owners should be rejoicing"
+        },
+        {
+          "redditId": "mor-025",
+          "parentRedditId": "mor-024",
+          "createdAt": "2026-09-14T17:18:45Z",
+          "score": 8,
+          "body": "Stevenson could take a handoff and punt it backwards and Vrabel will still love him"
+        },
+        {
+          "redditId": "mor-026",
+          "parentRedditId": "mor-025",
+          "createdAt": "2026-09-14T17:19:30Z",
+          "score": 4,
+          "body": "lol nothing will change just like last year"
+        },
+        {
+          "redditId": "mor-027",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:20:15Z",
+          "score": 4,
+          "body": "Fucking Stevenson man"
+        },
+        {
+          "redditId": "mor-028",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:21:00Z",
+          "score": -3,
+          "body": "I start Bucky and he is now useless garbage. typical."
+        },
+        {
+          "redditId": "mor-029",
+          "parentRedditId": "mor-028",
+          "createdAt": "2026-09-14T17:21:45Z",
+          "score": 1,
+          "body": "It's been 10 minutes."
+        },
+        {
+          "redditId": "mor-030",
+          "parentRedditId": "mor-029",
+          "createdAt": "2026-09-14T17:22:30Z",
+          "score": -1,
+          "body": "never matters to me. doubt he puts up more than 5."
+        },
+        {
+          "redditId": "mor-031",
+          "parentRedditId": "mor-030",
+          "createdAt": "2026-09-14T17:23:15Z",
+          "score": 1,
+          "body": "lol chill out"
+        },
+        {
+          "redditId": "mor-032",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:24:00Z",
+          "score": 6,
+          "body": "Jayden Reed got smacked hard and they cut to commercial."
+        },
+        {
+          "redditId": "mor-033",
+          "parentRedditId": "mor-032",
+          "createdAt": "2026-09-14T17:24:45Z",
+          "score": 1,
+          "body": "thanks for the update"
+        },
+        {
+          "redditId": "mor-034",
+          "parentRedditId": "mor-033",
+          "createdAt": "2026-09-14T17:25:30Z",
+          "score": 1,
+          "body": "the cart is out"
+        },
+        {
+          "redditId": "mor-035",
+          "parentRedditId": "mor-034",
+          "createdAt": "2026-09-14T17:26:15Z",
+          "score": 1,
+          "body": "didn't look that bad"
+        },
+        {
+          "redditId": "mor-036",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:27:00Z",
+          "score": 1,
+          "body": "Coker is the panthers WR1"
+        },
+        {
+          "redditId": "mor-037",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:27:45Z",
+          "score": 1,
+          "body": "So Etienne is a total bust now right? Rotation with Kamara"
+        },
+        {
+          "redditId": "mor-038",
+          "parentRedditId": "mor-037",
+          "createdAt": "2026-09-14T17:28:30Z",
+          "score": 1,
+          "body": "yes"
+        },
+        {
+          "redditId": "mor-039",
+          "parentRedditId": "mor-038",
+          "createdAt": "2026-09-14T17:29:15Z",
+          "score": 1,
+          "body": "I'm so salty about it fuck me"
+        },
+        {
+          "redditId": "mor-040",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:30:00Z",
+          "score": 3,
+          "body": "Coker on the board :)"
+        },
+        {
+          "redditId": "mor-041",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:30:45Z",
+          "score": 5,
+          "body": "I was really confident in a saquon bounce back season :( 😞"
+        },
+        {
+          "redditId": "mor-042",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:31:30Z",
+          "score": 61,
+          "body": "protip : Don't open your fantasy app after kickoff til halftime of the AM games"
+        },
+        {
+          "redditId": "mor-043",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:32:15Z",
+          "score": 3,
+          "body": "Where the fuck is saquon"
+        },
+        {
+          "redditId": "mor-044",
+          "parentRedditId": "mor-043",
+          "createdAt": "2026-09-14T17:33:00Z",
+          "score": 3,
+          "body": "got hurt"
+        },
+        {
+          "redditId": "mor-045",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:33:45Z",
+          "score": 2,
+          "body": "So warren is just better"
+        },
+        {
+          "redditId": "mor-046",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:34:30Z",
+          "score": 2,
+          "body": "J Reed being carted off"
+        },
+        {
+          "redditId": "mor-047",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:35:15Z",
+          "score": 4,
+          "body": "Owning rhamondre and Henderson is going to be a disgusting choice every week isn't it"
+        },
+        {
+          "redditId": "mor-048",
+          "parentRedditId": "mor-047",
+          "createdAt": "2026-09-14T17:36:00Z",
+          "score": 1,
+          "body": "Henderson will outplay him every week."
+        },
+        {
+          "redditId": "mor-049",
+          "parentRedditId": "mor-048",
+          "createdAt": "2026-09-14T17:36:45Z",
+          "score": 1,
+          "body": "And still somehow only get 10 touches per game."
+        },
+        {
+          "redditId": "mor-050",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:37:30Z",
+          "score": 2,
+          "body": "Chuba TD?"
+        },
+        {
+          "redditId": "mor-051",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:38:15Z",
+          "score": 4,
+          "body": "Run the ball panthers, just run the ball"
+        },
+        {
+          "redditId": "mor-052",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:39:00Z",
+          "score": 2,
+          "body": "What happened to Barkley?"
+        },
+        {
+          "redditId": "mor-053",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:39:45Z",
+          "score": 5,
+          "body": "Rodgers is cooked."
+        },
+        {
+          "redditId": "mor-054",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:40:30Z",
+          "score": 5,
+          "body": "Hurts hates Smitty"
+        },
+        {
+          "redditId": "mor-055",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:41:15Z",
+          "score": 1,
+          "body": "When did Caleb become Michael Vick 😭"
+        },
+        {
+          "redditId": "mor-056",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:42:00Z",
+          "score": 2,
+          "body": "Last week I started Kyler. This week I started DJ Moore and Barkley AMA"
+        },
+        {
+          "redditId": "mor-057",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:42:45Z",
+          "score": 6,
+          "body": "15 minutes into the first slate is certainly enough time to enter full blown panic"
+        },
+        {
+          "redditId": "mor-058",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:43:30Z",
+          "score": 2,
+          "body": "Barkley and reed. burn it all down. I give up"
+        },
+        {
+          "redditId": "mor-059",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:44:15Z",
+          "score": 2,
+          "body": "ffs Jalen"
+        },
+        {
+          "redditId": "mor-060",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:45:00Z",
+          "score": 3,
+          "body": "lol Hurts"
+        },
+        {
+          "redditId": "mor-061",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:45:45Z",
+          "score": 3,
+          "body": "CHUUUBAAAAA"
+        },
+        {
+          "redditId": "mor-062",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:46:30Z",
+          "score": 2,
+          "body": "lmfao first puka and now saquon. my team is cooked yall"
+        },
+        {
+          "redditId": "mor-063",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:47:15Z",
+          "score": 1,
+          "body": "Cam ward please win this"
+        },
+        {
+          "redditId": "mor-064",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:48:00Z",
+          "score": 4,
+          "body": "Chuuuba I love you man"
+        },
+        {
+          "redditId": "mor-065",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:48:45Z",
+          "score": 3,
+          "body": "Rhamondre season over"
+        },
+        {
+          "redditId": "mor-066",
+          "parentRedditId": "mor-065",
+          "createdAt": "2026-09-14T17:49:30Z",
+          "score": 1,
+          "body": "I'm in danger"
+        },
+        {
+          "redditId": "mor-067",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:50:15Z",
+          "score": 3,
+          "body": "it's now been a week and a drive without a Loveland touch. I am not well"
+        },
+        {
+          "redditId": "mor-068",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:51:00Z",
+          "score": 2,
+          "body": "yeah we done messed up bruh"
+        },
+        {
+          "redditId": "mor-069",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:51:45Z",
+          "score": 1,
+          "body": "Are the days of lamar being an elite fantasy asset over?"
+        },
+        {
+          "redditId": "mor-070",
+          "parentRedditId": "mor-069",
+          "createdAt": "2026-09-14T17:52:30Z",
+          "score": 1,
+          "body": "No, but he needs his best WR back"
+        },
+        {
+          "redditId": "mor-071",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:53:15Z",
+          "score": 2,
+          "body": "Derrick Henry my KING!"
+        },
+        {
+          "redditId": "mor-072",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:54:00Z",
+          "score": 2,
+          "body": "Bucky my goat."
+        },
+        {
+          "redditId": "mor-073",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:54:45Z",
+          "score": 5,
+          "body": "Henry is fucking immortal"
+        },
+        {
+          "redditId": "mor-074",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:55:30Z",
+          "score": -1,
+          "body": "Dude Colston Loveland sucks ASS lol"
+        },
+        {
+          "redditId": "mor-075",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:56:15Z",
+          "score": 1,
+          "body": "I should have started young over burrow"
+        },
+        {
+          "redditId": "mor-076",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:57:00Z",
+          "score": 3,
+          "body": "Bucky is such a beast. what a 4th round pick"
+        },
+        {
+          "redditId": "mor-077",
+          "parentRedditId": "mor-076",
+          "createdAt": "2026-09-14T17:57:45Z",
+          "score": 1,
+          "body": "I got him in the 6th, can't believe it"
+        },
+        {
+          "redditId": "mor-078",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:58:30Z",
+          "score": 3,
+          "body": "the cooper rush era lmao"
+        },
+        {
+          "redditId": "mor-079",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T17:59:15Z",
+          "score": 4,
+          "body": "cooper rush cannot be fucking serious."
+        },
+        {
+          "redditId": "mor-080",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:00:00Z",
+          "score": 2,
+          "body": "Cooper Rush LOL"
+        },
+        {
+          "redditId": "mor-081",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:00:45Z",
+          "score": 2,
+          "body": "Benched pitts for Njoku in hopes I can get more than 0 points. I'll take 1 point."
+        },
+        {
+          "redditId": "mor-082",
+          "parentRedditId": "mor-081",
+          "createdAt": "2026-09-14T18:01:30Z",
+          "score": 1,
+          "body": "I like Njoku a lot, better than pitts today. you are smart."
+        },
+        {
+          "redditId": "mor-083",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:02:15Z",
+          "score": 5,
+          "body": "Aaron jones 22 yard loss? Really?"
+        },
+        {
+          "redditId": "mor-084",
+          "parentRedditId": "mor-083",
+          "createdAt": "2026-09-14T18:03:00Z",
+          "score": 1,
+          "body": "I'm assuming that was misattributed to him on the botched snap to Wentz"
+        },
+        {
+          "redditId": "mor-085",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:03:45Z",
+          "score": 2,
+          "body": "Juwan johnson not even in the game"
+        },
+        {
+          "redditId": "mor-086",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:04:30Z",
+          "score": 3,
+          "body": "YES BARKLEY"
+        },
+        {
+          "redditId": "mor-087",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:05:15Z",
+          "score": 4,
+          "body": "Olave sighting"
+        },
+        {
+          "redditId": "mor-088",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:06:00Z",
+          "score": 1,
+          "body": "who got the TD in the titans game? I'm not watching"
+        },
+        {
+          "redditId": "mor-089",
+          "parentRedditId": "mor-088",
+          "createdAt": "2026-09-14T18:06:45Z",
+          "score": 2,
+          "body": "Cam Ward QB sneak"
+        },
+        {
+          "redditId": "mor-090",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:07:30Z",
+          "score": 3,
+          "body": "Chuba, coker, Bryce, panthers offense looking full of value steals"
+        },
+        {
+          "redditId": "mor-091",
+          "parentRedditId": "mor-090",
+          "createdAt": "2026-09-14T18:08:15Z",
+          "score": 2,
+          "body": "People so afraid of Young lowers their cost"
+        },
+        {
+          "redditId": "mor-092",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:09:00Z",
+          "score": 1,
+          "body": "At least ETN got paid. waste of a draft pick"
+        },
+        {
+          "redditId": "mor-093",
+          "parentRedditId": "mor-092",
+          "createdAt": "2026-09-14T18:09:45Z",
+          "score": 1,
+          "body": "It's only been a quarter"
+        },
+        {
+          "redditId": "mor-094",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:10:30Z",
+          "score": 2,
+          "body": "Baker is so fucking dogshit it's actually hard to put into words"
+        },
+        {
+          "redditId": "mor-095",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:11:15Z",
+          "score": 3,
+          "body": "Cooper rush might be the worst football player ive seen in my life"
+        },
+        {
+          "redditId": "mor-096",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:12:00Z",
+          "score": 8,
+          "body": "why why why why did I draft Etienne"
+        },
+        {
+          "redditId": "mor-097",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:12:45Z",
+          "score": 2,
+          "body": "Burden not looking like an important part of this offense"
+        },
+        {
+          "redditId": "mor-098",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:13:30Z",
+          "score": 1,
+          "body": "Fannin TD pls"
+        },
+        {
+          "redditId": "mor-099",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:14:15Z",
+          "score": 3,
+          "body": "Rome was a wasted pick man."
+        },
+        {
+          "redditId": "mor-100",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:15:00Z",
+          "score": 5,
+          "body": "Woody marks rb1 szn 👀"
+        },
+        {
+          "redditId": "mor-101",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:15:45Z",
+          "score": 12,
+          "body": "this chat right now : insert player FUCKING SUCKS"
+        },
+        {
+          "redditId": "mor-102",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:16:30Z",
+          "score": 4,
+          "body": "Started Reed AMA"
+        },
+        {
+          "redditId": "mor-103",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:17:15Z",
+          "score": 4,
+          "body": "Burden useless so far"
+        },
+        {
+          "redditId": "mor-104",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:18:00Z",
+          "score": 5,
+          "body": "holy low scoring"
+        },
+        {
+          "redditId": "mor-105",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:18:45Z",
+          "score": 10,
+          "body": "is anybody having a good game? lol"
+        },
+        {
+          "redditId": "mor-106",
+          "parentRedditId": "mor-105",
+          "createdAt": "2026-09-14T18:19:30Z",
+          "score": 4,
+          "body": "King Henry... that's about it"
+        },
+        {
+          "redditId": "mor-107",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:20:15Z",
+          "score": 8,
+          "body": "wtf bucs"
+        },
+        {
+          "redditId": "mor-108",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:21:00Z",
+          "score": 1,
+          "body": "can they end the rush experience now."
+        },
+        {
+          "redditId": "mor-109",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:21:45Z",
+          "score": 2,
+          "body": "Burrow has 29 yards after 1 quarter"
+        },
+        {
+          "redditId": "mor-110",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:22:30Z",
+          "score": 4,
+          "body": "what's the point of having jamaar on your team??????"
+        },
+        {
+          "redditId": "mor-111",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:23:15Z",
+          "score": 2,
+          "body": "Kaleb Johnson looking decent"
+        },
+        {
+          "redditId": "mor-112",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:24:00Z",
+          "score": 6,
+          "body": "It's time to fully panic on Etienne"
+        },
+        {
+          "redditId": "mor-113",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:24:45Z",
+          "score": 4,
+          "body": "Tucker Kraft you deserve better my king"
+        },
+        {
+          "redditId": "mor-114",
+          "parentRedditId": "mor-113",
+          "createdAt": "2026-09-14T18:25:30Z",
+          "score": 1,
+          "body": "Jordan Love is a mid QB"
+        },
+        {
+          "redditId": "mor-115",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:26:15Z",
+          "score": 4,
+          "body": "Bijan is a cooper rush victim"
+        },
+        {
+          "redditId": "mor-116",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:27:00Z",
+          "score": 4,
+          "body": "Zay is going to have such a great year"
+        },
+        {
+          "redditId": "mor-117",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:27:45Z",
+          "score": 4,
+          "body": "Fuck breece hall I guess"
+        },
+        {
+          "redditId": "mor-118",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:28:30Z",
+          "score": 2,
+          "body": "Vele looks good"
+        },
+        {
+          "redditId": "mor-119",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:29:15Z",
+          "score": 4,
+          "body": "are we benching burden or dropping outright?"
+        },
+        {
+          "redditId": "mor-120",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:30:00Z",
+          "score": 1,
+          "body": "Poor bijan"
+        },
+        {
+          "redditId": "mor-121",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:30:45Z",
+          "score": 5,
+          "body": "Vele blowing up on my bench while Etienne blows up in a different way in my lineup"
+        },
+        {
+          "redditId": "mor-122",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:31:30Z",
+          "score": 3,
+          "body": "Tate is a ghost"
+        },
+        {
+          "redditId": "mor-123",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:32:15Z",
+          "score": 2,
+          "body": "Vele and coker gonna save my season"
+        },
+        {
+          "redditId": "mor-124",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:33:00Z",
+          "score": 19,
+          "body": "Fantasy wasteland week"
+        },
+        {
+          "redditId": "mor-125",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:33:45Z",
+          "score": 9,
+          "body": "the 5 people who own and started waller are rejoicing"
+        },
+        {
+          "redditId": "mor-126",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:34:30Z",
+          "score": 10,
+          "body": "baker is trash"
+        },
+        {
+          "redditId": "mor-127",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:35:15Z",
+          "score": 10,
+          "body": "BRUH IS LUTHER DEAD LIKE WTF"
+        },
+        {
+          "redditId": "mor-128",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:36:00Z",
+          "score": 9,
+          "body": "Khalif Raymond is lighting it up again lol"
+        },
+        {
+          "redditId": "mor-129",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:36:45Z",
+          "score": 8,
+          "body": "Smith, finally. Let's go."
+        },
+        {
+          "redditId": "mor-130",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:37:30Z",
+          "score": 8,
+          "body": "turns out CJ Stroud kinda sucks if every one of his WRs are injured"
+        },
+        {
+          "redditId": "mor-131",
+          "parentRedditId": "mor-130",
+          "createdAt": "2026-09-14T18:38:15Z",
+          "score": 3,
+          "body": "he sucks when they're healthy too."
+        },
+        {
+          "redditId": "mor-132",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:39:00Z",
+          "score": 8,
+          "body": "Loveland 3 yds in 2 games 🔥🔥🔥🔥🔥🔥"
+        },
+        {
+          "redditId": "mor-133",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:39:45Z",
+          "score": 7,
+          "body": "RIP Caleb"
+        },
+        {
+          "redditId": "mor-134",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:40:30Z",
+          "score": 6,
+          "body": "There we go JJettas"
+        },
+        {
+          "redditId": "mor-135",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:41:15Z",
+          "score": 6,
+          "body": "Tucker Kraft is invisible"
+        },
+        {
+          "redditId": "mor-136",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:42:00Z",
+          "score": 6,
+          "body": "SMITH OWNERS WHERE YOU AT 🦅"
+        },
+        {
+          "redditId": "mor-137",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:42:45Z",
+          "score": 6,
+          "body": "Alright! My Hurts Smith stack actually did something!!"
+        },
+        {
+          "redditId": "mor-138",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:43:30Z",
+          "score": 6,
+          "body": "Breece owners we just got fleeced"
+        },
+        {
+          "redditId": "mor-139",
+          "parentRedditId": "mor-138",
+          "createdAt": "2026-09-14T18:44:15Z",
+          "score": 1,
+          "body": "First time?"
+        },
+        {
+          "redditId": "mor-140",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:45:00Z",
+          "score": 6,
+          "body": "Cooper rush the GOAT of getting negative fantasy points"
+        },
+        {
+          "redditId": "mor-141",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:45:45Z",
+          "score": 6,
+          "body": "Coker is legit. Worth the FAAB"
+        },
+        {
+          "redditId": "mor-142",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:46:30Z",
+          "score": 6,
+          "body": "what has happened to Baker he looks horrible"
+        },
+        {
+          "redditId": "mor-143",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:47:15Z",
+          "score": 6,
+          "body": "Hurts BABY. fuck the haters!!"
+        },
+        {
+          "redditId": "mor-144",
+          "parentRedditId": "mor-143",
+          "createdAt": "2026-09-14T18:48:00Z",
+          "score": 1,
+          "body": "Fuck them haters"
+        },
+        {
+          "redditId": "mor-145",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:48:45Z",
+          "score": 5,
+          "body": "Henry continues to be a freak of nature I guess"
+        },
+        {
+          "redditId": "mor-146",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:49:30Z",
+          "score": 3,
+          "body": "Bucky is back folks."
+        },
+        {
+          "redditId": "mor-147",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:50:15Z",
+          "score": 5,
+          "body": "Devaughn Vele is legit good. Congrats guys"
+        },
+        {
+          "redditId": "mor-148",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:51:00Z",
+          "score": 3,
+          "body": "Does Garrett Wilson exist"
+        },
+        {
+          "redditId": "mor-149",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:51:45Z",
+          "score": 5,
+          "body": "Bengals defense looks legit"
+        },
+        {
+          "redditId": "mor-150",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:52:30Z",
+          "score": 4,
+          "body": "So where are these designed plays for burden. I don't get it. use your weapons"
+        },
+        {
+          "redditId": "mor-151",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:53:15Z",
+          "score": 4,
+          "body": "I think Garrett Wilson was a mistake guys"
+        },
+        {
+          "redditId": "mor-152",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:54:00Z",
+          "score": 5,
+          "body": "Every Bears receiver is droppable."
+        },
+        {
+          "redditId": "mor-153",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:54:45Z",
+          "score": 5,
+          "body": "Chase with an unreal catch. didn't look possible almost"
+        },
+        {
+          "redditId": "mor-154",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:55:30Z",
+          "score": 3,
+          "body": "Is burden in fact playing football this year for the bears?"
+        },
+        {
+          "redditId": "mor-155",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:56:15Z",
+          "score": 4,
+          "body": "I'm dropping rome"
+        },
+        {
+          "redditId": "mor-156",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:57:00Z",
+          "score": 3,
+          "body": "Man I fell for Burden"
+        },
+        {
+          "redditId": "mor-157",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:57:45Z",
+          "score": 5,
+          "body": "Damn Bryce young might be for real"
+        },
+        {
+          "redditId": "mor-158",
+          "parentRedditId": "mor-157",
+          "createdAt": "2026-09-14T18:58:30Z",
+          "score": 1,
+          "body": "Atlanta are cheeks"
+        },
+        {
+          "redditId": "mor-159",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T18:59:15Z",
+          "score": 5,
+          "body": "Monangai is a beast"
+        },
+        {
+          "redditId": "mor-160",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T19:00:00Z",
+          "score": 5,
+          "body": "Rush looks like me playing madden (i am bad at madden)"
+        },
+        {
+          "redditId": "mor-161",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T19:00:45Z",
+          "score": 5,
+          "body": "Drake maye welcome to my bench"
+        },
+        {
+          "redditId": "mor-162",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T19:01:30Z",
+          "score": 5,
+          "body": "Derrick Henry has outscored all 7 of my players by himself so far. might be my worst fantasy day ever"
+        },
+        {
+          "redditId": "mor-163",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T19:02:15Z",
+          "score": 5,
+          "body": "is boston the best rookie?"
+        },
+        {
+          "redditId": "mor-164",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T19:03:00Z",
+          "score": 5,
+          "body": "If you drafted Loveland you are 100% fucked."
+        },
+        {
+          "redditId": "mor-165",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T19:03:45Z",
+          "score": 5,
+          "body": "So Loveland is just booty. Got it"
+        },
+        {
+          "redditId": "mor-166",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T19:04:30Z",
+          "score": 4,
+          "body": "Fucking Stevenson man."
+        },
+        {
+          "redditId": "mor-167",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T19:05:15Z",
+          "score": 4,
+          "body": "Saquon hurt? RIP my season"
+        },
+        {
+          "redditId": "mor-168",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T19:06:00Z",
+          "score": 4,
+          "body": "WHY DID I BENCH HENDERSON"
+        },
+        {
+          "redditId": "mor-169",
+          "parentRedditId": "mor-168",
+          "createdAt": "2026-09-14T19:06:45Z",
+          "score": 1,
+          "body": "same"
+        },
+        {
+          "redditId": "mor-170",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T19:07:30Z",
+          "score": 4,
+          "body": "dumb throw Williams"
+        }
+      ]
+    },
+    {
+      "redditId": "w2-morning-postgame",
+      "subreddit": "fantasyfootball",
+      "postType": "PostGameThread",
+      "threadType": "PostgameThread",
+      "title": "OFFICIAL WEEK 2 SUNDAY MORNING POSTGAME THREAD",
+      "createdAt": "2026-09-14T20:35:00Z",
+      "score": 19,
+      "comments": [
+        {
+          "redditId": "mpg-001",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:35:45Z",
+          "score": 3,
+          "body": "bloodbath of a day. jesus"
+        },
+        {
+          "redditId": "mpg-002",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:36:30Z",
+          "score": 2,
+          "body": "What happened with David Montgomery? Injured?"
+        },
+        {
+          "redditId": "mpg-003",
+          "parentRedditId": "mpg-002",
+          "createdAt": "2026-09-14T20:37:15Z",
+          "score": 1,
+          "body": "neither Houston running backs did much of anything. lot of passing today."
+        },
+        {
+          "redditId": "mpg-004",
+          "parentRedditId": "mpg-003",
+          "createdAt": "2026-09-14T20:38:00Z",
+          "score": 3,
+          "body": "despite his great week 1, remember he was averaging 3 yards per carry. he did have touchdowns and obviously a shortened field by getting those looks, but not nothing."
+        },
+        {
+          "redditId": "mpg-005",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:38:45Z",
+          "score": 3,
+          "body": "people were down on omarion Hampton after one week. I told yall he's a stud."
+        },
+        {
+          "redditId": "mpg-006",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:39:30Z",
+          "score": 4,
+          "body": "is Loveland banging ben johnson's wife or something? all this hype about this guy being an elite TE and as of now I'd rather have waller or Schultz."
+        },
+        {
+          "redditId": "mpg-007",
+          "parentRedditId": "mpg-006",
+          "createdAt": "2026-09-14T20:40:15Z",
+          "score": 4,
+          "body": "while possible, the weather is this game was bad, keep that in mind."
+        },
+        {
+          "redditId": "mpg-008",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:41:00Z",
+          "score": 3,
+          "body": "I dropped Schultz for Loveland btw lol"
+        },
+        {
+          "redditId": "mpg-009",
+          "parentRedditId": "mpg-008",
+          "createdAt": "2026-09-14T20:41:45Z",
+          "score": 1,
+          "body": "dropped him for mayer. I'm bad at this."
+        },
+        {
+          "redditId": "mpg-010",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:42:30Z",
+          "score": 8,
+          "body": "all theses analysts hyped me on burden and now I feel absolutely robbed lol."
+        },
+        {
+          "redditId": "mpg-011",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:43:15Z",
+          "score": 2,
+          "body": "happy rhanodre looked good in the second half. I think both these guys can be top 25ish"
+        },
+        {
+          "redditId": "mpg-012",
+          "parentRedditId": "mpg-011",
+          "createdAt": "2026-09-14T20:44:00Z",
+          "score": 4,
+          "body": "LMAO no he didn't, he had one good play all game, terrible in every other snap besides that. cope."
+        },
+        {
+          "redditId": "mpg-013",
+          "parentRedditId": "mpg-012",
+          "createdAt": "2026-09-14T20:44:45Z",
+          "score": 2,
+          "body": "he had 4 carries for 42 yards"
+        },
+        {
+          "redditId": "mpg-014",
+          "parentRedditId": "mpg-013",
+          "createdAt": "2026-09-14T20:45:30Z",
+          "score": -1,
+          "body": "one of those were for 24 lmao, his one good play. he's terrible."
+        },
+        {
+          "redditId": "mpg-015",
+          "parentRedditId": "mpg-014",
+          "createdAt": "2026-09-14T20:46:15Z",
+          "score": 6,
+          "body": "well Henderson had 15 carries for 35 yards outside of his first TD he could've taken one of those to the house"
+        },
+        {
+          "redditId": "mpg-016",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:47:00Z",
+          "score": 2,
+          "body": "HENDERSON. SUCK IT MONDRE OWNERS"
+        },
+        {
+          "redditId": "mpg-017",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:47:45Z",
+          "score": 5,
+          "body": "serious question. is drake maye droppable?"
+        },
+        {
+          "redditId": "mpg-018",
+          "parentRedditId": "mpg-017",
+          "createdAt": "2026-09-14T20:48:30Z",
+          "score": 1,
+          "body": "droppable no, benchable, yes"
+        },
+        {
+          "redditId": "mpg-019",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:49:15Z",
+          "score": 15,
+          "body": "drake maye is garbage. bright side is I have shough to replace him."
+        },
+        {
+          "redditId": "mpg-020",
+          "parentRedditId": "mpg-019",
+          "createdAt": "2026-09-14T20:50:00Z",
+          "score": 3,
+          "body": "I'm in the same boat."
+        },
+        {
+          "redditId": "mpg-021",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:50:45Z",
+          "score": 7,
+          "body": "Loveland.... sigh"
+        },
+        {
+          "redditId": "mpg-022",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:51:30Z",
+          "score": -3,
+          "body": "lamar was a waste of a pick. should've waited for burrow."
+        },
+        {
+          "redditId": "mpg-023",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:52:15Z",
+          "score": 14,
+          "body": "the best case for Loveland is probably bagent."
+        },
+        {
+          "redditId": "mpg-024",
+          "parentRedditId": "mpg-023",
+          "createdAt": "2026-09-14T20:53:00Z",
+          "score": 3,
+          "body": "burden too honestly."
+        },
+        {
+          "redditId": "mpg-025",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:53:45Z",
+          "score": 1,
+          "body": "start purdy against the dolphins or dart against the rams?"
+        },
+        {
+          "redditId": "mpg-026",
+          "parentRedditId": "mpg-025",
+          "createdAt": "2026-09-14T20:54:30Z",
+          "score": -1,
+          "body": "dart"
+        },
+        {
+          "redditId": "mpg-027",
+          "parentRedditId": "mpg-026",
+          "createdAt": "2026-09-14T20:55:15Z",
+          "score": 3,
+          "body": "purdy"
+        },
+        {
+          "redditId": "mpg-028",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:56:00Z",
+          "score": 4,
+          "body": "is Bryce a QB1?"
+        },
+        {
+          "redditId": "mpg-029",
+          "parentRedditId": "mpg-028",
+          "createdAt": "2026-09-14T20:56:45Z",
+          "score": 1,
+          "body": "he def looks better"
+        },
+        {
+          "redditId": "mpg-030",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:57:30Z",
+          "score": 5,
+          "body": "Schultz with beautiful stat padding"
+        },
+        {
+          "redditId": "mpg-031",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:58:15Z",
+          "score": 5,
+          "body": "shough 4th quarter champion"
+        },
+        {
+          "redditId": "mpg-032",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:59:00Z",
+          "score": 3,
+          "body": "I really drafted maye over parker Washington"
+        },
+        {
+          "redditId": "mpg-033",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:59:45Z",
+          "score": -4,
+          "body": "philly cheating with no calls and paying off refs... sad really no talent, only win cause they pay refs."
+        },
+        {
+          "redditId": "mpg-034",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:00:30Z",
+          "score": 9,
+          "body": "was monty hurt? what happened after last weeks game?"
+        },
+        {
+          "redditId": "mpg-035",
+          "parentRedditId": "mpg-034",
+          "createdAt": "2026-09-14T21:01:15Z",
+          "score": 7,
+          "body": "bc the Texans are incompetent idiots"
+        },
+        {
+          "redditId": "mpg-036",
+          "parentRedditId": "mpg-035",
+          "createdAt": "2026-09-14T21:02:00Z",
+          "score": 2,
+          "body": "bengals d line was working the Texans all game"
+        },
+        {
+          "redditId": "mpg-037",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:02:45Z",
+          "score": 58,
+          "body": "Loveland is the worst draft pick ive ever made and its not close. completely unstartable even before the caleb injury and now its worse."
+        },
+        {
+          "redditId": "mpg-038",
+          "parentRedditId": "mpg-037",
+          "createdAt": "2026-09-14T21:03:30Z",
+          "score": 14,
+          "body": "I wouldn't say droppable but its clear now he was overdrafted."
+        },
+        {
+          "redditId": "mpg-039",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:04:15Z",
+          "score": 14,
+          "body": "bagent might be better for burden"
+        },
+        {
+          "redditId": "mpg-040",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:05:00Z",
+          "score": 4,
+          "body": "Fucking awful. thank you denzel boston for being the only player on my team to do anything."
+        },
+        {
+          "redditId": "mpg-041",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:05:45Z",
+          "score": 1,
+          "body": "Watson might be good again?"
+        },
+        {
+          "redditId": "mpg-042",
+          "parentRedditId": "mpg-041",
+          "createdAt": "2026-09-14T21:06:30Z",
+          "score": 4,
+          "body": "Cleveland's line gave him a clean pocket most of the day and he was hitting spots. not ready to say he's back but first time in awhile he looked like the guy they traded for."
+        },
+        {
+          "redditId": "mpg-043",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:07:15Z",
+          "score": 5,
+          "body": "YOOOOO BAGENT TARGETED BURDEN"
+        },
+        {
+          "redditId": "mpg-044",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:08:00Z",
+          "score": 4,
+          "body": "Etienne was a trap"
+        },
+        {
+          "redditId": "mpg-045",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:08:45Z",
+          "score": 24,
+          "body": "one of the worst set of games ever"
+        },
+        {
+          "redditId": "mpg-046",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:09:30Z",
+          "score": 20,
+          "body": "saints hate Etienne"
+        },
+        {
+          "redditId": "mpg-047",
+          "parentRedditId": "mpg-046",
+          "createdAt": "2026-09-14T21:10:15Z",
+          "score": 8,
+          "body": "he had a td called back, would've salvaged it."
+        },
+        {
+          "redditId": "mpg-048",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:11:00Z",
+          "score": 3,
+          "body": "fuck you saints"
+        },
+        {
+          "redditId": "mpg-049",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:11:45Z",
+          "score": 24,
+          "body": "I'm so upset about Caleb. fuck."
+        },
+        {
+          "redditId": "mpg-050",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:12:30Z",
+          "score": 12,
+          "body": "my caleb Loveland stack 💔"
+        },
+        {
+          "redditId": "mpg-051",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:13:15Z",
+          "score": 3,
+          "body": "can't believe denzel boston is my best receiver"
+        },
+        {
+          "redditId": "mpg-052",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:14:00Z",
+          "score": 5,
+          "body": "hopefully Texans realize after this game that marks sucks and put monty back on the field"
+        },
+        {
+          "redditId": "mpg-053",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:14:45Z",
+          "score": 36,
+          "body": "caleb owners, what type of bleach we going with tonight?"
+        }
+      ]
+    },
+    {
+      "redditId": "w2-afternoon-game",
+      "subreddit": "fantasyfootball",
+      "postType": "GameThread",
+      "threadType": "GameThread",
+      "title": "OFFICIAL WEEK 2 SUNDAY AFTERNOON GAME THREAD",
+      "createdAt": "2026-09-14T20:05:00Z",
+      "score": 31,
+      "comments": [
+        {
+          "redditId": "aft-001",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:05:45Z",
+          "score": 4,
+          "body": "JSN is him"
+        },
+        {
+          "redditId": "aft-002",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:06:30Z",
+          "score": 4,
+          "body": "How does JSN get that open. he's their only good player"
+        },
+        {
+          "redditId": "aft-003",
+          "parentRedditId": "aft-002",
+          "createdAt": "2026-09-14T20:07:15Z",
+          "score": 4,
+          "body": "cooked tf out that boy"
+        },
+        {
+          "redditId": "aft-004",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:08:00Z",
+          "score": 6,
+          "body": "taking puka over JSN just might haunt me"
+        },
+        {
+          "redditId": "aft-005",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:08:45Z",
+          "score": 5,
+          "body": "JSN is fucking INSANE!!!"
+        },
+        {
+          "redditId": "aft-006",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:09:30Z",
+          "score": 6,
+          "body": "JSN"
+        },
+        {
+          "redditId": "aft-007",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:10:15Z",
+          "score": 19,
+          "body": "JSN is the truth"
+        },
+        {
+          "redditId": "aft-008",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:11:00Z",
+          "score": 5,
+          "body": "JSN is a god"
+        },
+        {
+          "redditId": "aft-009",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:11:45Z",
+          "score": 3,
+          "body": "fell for the chargers hype"
+        },
+        {
+          "redditId": "aft-010",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:12:30Z",
+          "score": 3,
+          "body": "chargers are straight ASS"
+        },
+        {
+          "redditId": "aft-011",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:13:15Z",
+          "score": 4,
+          "body": "why tf did I start Ladd man.."
+        },
+        {
+          "redditId": "aft-012",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:14:00Z",
+          "score": 2,
+          "body": "you can drop Herbert"
+        },
+        {
+          "redditId": "aft-013",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:14:45Z",
+          "score": 2,
+          "body": "chargers are done"
+        },
+        {
+          "redditId": "aft-014",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:15:30Z",
+          "score": 4,
+          "body": "Tucker kraft welcome to the waiver wire buddy"
+        },
+        {
+          "redditId": "aft-015",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:16:15Z",
+          "score": 1,
+          "body": "ceedee already almost has 100 yards lol"
+        },
+        {
+          "redditId": "aft-016",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:17:00Z",
+          "score": 2,
+          "body": "people panicked way too much on CMC"
+        },
+        {
+          "redditId": "aft-017",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:17:45Z",
+          "score": 4,
+          "body": "Ceedee has 18 points halfway into the 1st quarter"
+        },
+        {
+          "redditId": "aft-018",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:18:30Z",
+          "score": 6,
+          "body": "jeanty man wtf 😭 this is not my week"
+        },
+        {
+          "redditId": "aft-019",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:19:15Z",
+          "score": 1,
+          "body": "Guess who started Caleb and Loveland and is facing JSN and Lamb 😀"
+        },
+        {
+          "redditId": "aft-020",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:20:00Z",
+          "score": 4,
+          "body": "Holy fuck CMC"
+        },
+        {
+          "redditId": "aft-021",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:20:45Z",
+          "score": 3,
+          "body": "CMC, we are back."
+        },
+        {
+          "redditId": "aft-022",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:21:30Z",
+          "score": 7,
+          "body": "So George Pickens is…..fantasy irrelevant"
+        },
+        {
+          "redditId": "aft-023",
+          "parentRedditId": "aft-022",
+          "createdAt": "2026-09-14T20:22:15Z",
+          "score": 1,
+          "body": "seems like it yeah"
+        },
+        {
+          "redditId": "aft-024",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:23:00Z",
+          "score": 1,
+          "body": "They call him Lamb League Winner"
+        },
+        {
+          "redditId": "aft-025",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:23:45Z",
+          "score": 4,
+          "body": "Justin Herbert is overrated garbage"
+        },
+        {
+          "redditId": "aft-026",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:24:30Z",
+          "score": 3,
+          "body": "have a feeling dak buries me"
+        },
+        {
+          "redditId": "aft-027",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:25:15Z",
+          "score": 6,
+          "body": "They really said to go all-in on the Chargers"
+        },
+        {
+          "redditId": "aft-028",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:26:00Z",
+          "score": 4,
+          "body": "Let's go Ceedee!"
+        },
+        {
+          "redditId": "aft-029",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:26:45Z",
+          "score": 5,
+          "body": "I could have had Lamb, but I chose Barkley instead. What the fuck was I thinking?"
+        },
+        {
+          "redditId": "aft-030",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:27:30Z",
+          "score": 7,
+          "body": "Pickens is firmly WR2 on the cowboys no idea why I drafted him so high"
+        },
+        {
+          "redditId": "aft-031",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:28:15Z",
+          "score": 1,
+          "body": "CeeDee save me from colston loveland"
+        },
+        {
+          "redditId": "aft-032",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:29:00Z",
+          "score": 4,
+          "body": "TLAW rushing td would be peak"
+        },
+        {
+          "redditId": "aft-033",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:29:45Z",
+          "score": 1,
+          "body": "Def should have started Washington over Ladd 🥲"
+        },
+        {
+          "redditId": "aft-034",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:30:30Z",
+          "score": 2,
+          "body": "Terrible throw to Pickens by Dak"
+        },
+        {
+          "redditId": "aft-035",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:31:15Z",
+          "score": 6,
+          "body": "Parker Washington hype was real"
+        },
+        {
+          "redditId": "aft-036",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:32:00Z",
+          "score": 2,
+          "body": "Where the fuck is Ladd man"
+        },
+        {
+          "redditId": "aft-037",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:32:45Z",
+          "score": 2,
+          "body": "Come on Herbert get it together"
+        },
+        {
+          "redditId": "aft-038",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:33:30Z",
+          "score": 7,
+          "body": "Was Ladd really a rug pull?"
+        },
+        {
+          "redditId": "aft-039",
+          "parentRedditId": "aft-038",
+          "createdAt": "2026-09-14T20:34:15Z",
+          "score": 3,
+          "body": "He has broken ribs!"
+        },
+        {
+          "redditId": "aft-040",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:35:00Z",
+          "score": 3,
+          "body": "Man all Chargers are Sell for a bag of chips."
+        },
+        {
+          "redditId": "aft-041",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:35:45Z",
+          "score": 3,
+          "body": "Waddle is droppable"
+        },
+        {
+          "redditId": "aft-042",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:36:30Z",
+          "score": 4,
+          "body": "Chargers might legit finish last this year"
+        },
+        {
+          "redditId": "aft-043",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:37:15Z",
+          "score": 11,
+          "body": "is herbert even startable bouta drop my next up qb for bryce young"
+        },
+        {
+          "redditId": "aft-044",
+          "parentRedditId": "aft-043",
+          "createdAt": "2026-09-14T20:38:00Z",
+          "score": 2,
+          "body": "Barring a big turnaround, he’s a QB2 at best"
+        },
+        {
+          "redditId": "aft-045",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:38:45Z",
+          "score": 1,
+          "body": "WADDLE WHAT A CATCH"
+        },
+        {
+          "redditId": "aft-046",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:39:30Z",
+          "score": 4,
+          "body": "How are the Chargers this bad? Genuinely how?"
+        },
+        {
+          "redditId": "aft-047",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:40:15Z",
+          "score": 2,
+          "body": "Have JSN + McBride let’s goooo"
+        },
+        {
+          "redditId": "aft-048",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:41:00Z",
+          "score": 4,
+          "body": "LADD IS ALIVE"
+        },
+        {
+          "redditId": "aft-049",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:41:45Z",
+          "score": 8,
+          "body": "FINALLY - THROW THE BALL TO HAMPTON HOLY SHIT"
+        },
+        {
+          "redditId": "aft-050",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:42:30Z",
+          "score": 8,
+          "body": "So Justin Herbert is droppable after this week right?"
+        },
+        {
+          "redditId": "aft-051",
+          "parentRedditId": "aft-050",
+          "createdAt": "2026-09-14T20:43:15Z",
+          "score": 2,
+          "body": "I'm doing it"
+        },
+        {
+          "redditId": "aft-052",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:44:00Z",
+          "score": 1,
+          "body": "I LOVE YOU HAMPTON!!!"
+        },
+        {
+          "redditId": "aft-053",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:44:45Z",
+          "score": 2,
+          "body": "Omarion Hampton my beautiful pookie"
+        },
+        {
+          "redditId": "aft-054",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:45:30Z",
+          "score": 12,
+          "body": "Loveland is bust of the yr so far"
+        },
+        {
+          "redditId": "aft-055",
+          "parentRedditId": "aft-054",
+          "createdAt": "2026-09-14T20:46:15Z",
+          "score": 2,
+          "body": "praying tyson bagent hyper targets him going forward. literally can't get worse"
+        },
+        {
+          "redditId": "aft-056",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:47:00Z",
+          "score": 14,
+          "body": "Damn Burden almost got saved if that TD was better thrown"
+        },
+        {
+          "redditId": "aft-057",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:47:45Z",
+          "score": 10,
+          "body": "Jsn is so fucking good"
+        },
+        {
+          "redditId": "aft-058",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:48:30Z",
+          "score": 21,
+          "body": "Opp JSN outscored my five early game players on one play. AMA."
+        },
+        {
+          "redditId": "aft-059",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:49:15Z",
+          "score": 12,
+          "body": "JSN is like WR8 on the day with one play"
+        },
+        {
+          "redditId": "aft-060",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:50:00Z",
+          "score": 7,
+          "body": "White looks way better than Croskey Merrit"
+        },
+        {
+          "redditId": "aft-061",
+          "parentRedditId": "aft-060",
+          "createdAt": "2026-09-14T20:50:45Z",
+          "score": 2,
+          "body": "agree"
+        },
+        {
+          "redditId": "aft-062",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:51:30Z",
+          "score": 9,
+          "body": "Parker Washington is going to be a top 10 WR. Can’t believe how many haters he had"
+        },
+        {
+          "redditId": "aft-063",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:52:15Z",
+          "score": 6,
+          "body": "I love the Arizona McBrides"
+        },
+        {
+          "redditId": "aft-064",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:53:00Z",
+          "score": 7,
+          "body": "Save me Lord JSN"
+        },
+        {
+          "redditId": "aft-065",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:53:45Z",
+          "score": 7,
+          "body": "jsn is fantasy god"
+        },
+        {
+          "redditId": "aft-066",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:54:30Z",
+          "score": 7,
+          "body": "PARKER WASHINGTON IS A STUD"
+        },
+        {
+          "redditId": "aft-067",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:55:15Z",
+          "score": 7,
+          "body": "🚨 🚨 Justin Herbert has a point 🚨 🚨"
+        },
+        {
+          "redditId": "aft-068",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:56:00Z",
+          "score": 7,
+          "body": "IMAGINE LOSING TO DESHAUN"
+        },
+        {
+          "redditId": "aft-069",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:56:45Z",
+          "score": 7,
+          "body": "Baker fucking up the revenge game that everyone took as a free win was the most predictable outcome"
+        },
+        {
+          "redditId": "aft-070",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:57:30Z",
+          "score": 6,
+          "body": "JSN IS A BEAST sheesh"
+        },
+        {
+          "redditId": "aft-071",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:58:15Z",
+          "score": 6,
+          "body": "JSN JSN JSN"
+        },
+        {
+          "redditId": "aft-072",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:59:00Z",
+          "score": 6,
+          "body": "BAKER LOL… Imfao even"
+        },
+        {
+          "redditId": "aft-073",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T20:59:45Z",
+          "score": 6,
+          "body": "BTJ earned his WR3 role"
+        },
+        {
+          "redditId": "aft-074",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:00:30Z",
+          "score": 6,
+          "body": "Javonte having 4.5 is gross"
+        },
+        {
+          "redditId": "aft-075",
+          "parentRedditId": "aft-074",
+          "createdAt": "2026-09-14T21:01:15Z",
+          "score": 1,
+          "body": "Probably gonna see this a lot from him. without TDs he's useless."
+        },
+        {
+          "redditId": "aft-076",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:02:00Z",
+          "score": 6,
+          "body": "Fuck I’m selling Hampton ASAP"
+        },
+        {
+          "redditId": "aft-077",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:02:45Z",
+          "score": 6,
+          "body": "JSN is unbelievable"
+        },
+        {
+          "redditId": "aft-078",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:03:30Z",
+          "score": 6,
+          "body": "OMARIAN NO"
+        },
+        {
+          "redditId": "aft-079",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:04:15Z",
+          "score": 6,
+          "body": "Jaxon Smith is killing me man..."
+        },
+        {
+          "redditId": "aft-080",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:05:00Z",
+          "score": 5,
+          "body": "JSN my lord and savior!!"
+        },
+        {
+          "redditId": "aft-081",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:05:45Z",
+          "score": 5,
+          "body": "I cannot believe I got ceedee in the 2nd round"
+        },
+        {
+          "redditId": "aft-082",
+          "parentRedditId": "aft-081",
+          "createdAt": "2026-09-14T21:06:30Z",
+          "score": 1,
+          "body": "same my bozo ass work league let him fall to 19 🤣"
+        },
+        {
+          "redditId": "aft-083",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:07:15Z",
+          "score": 5,
+          "body": "Imagine if Hampton was good."
+        },
+        {
+          "redditId": "aft-084",
+          "parentRedditId": "aft-083",
+          "createdAt": "2026-09-14T21:08:00Z",
+          "score": 2,
+          "body": "My team might have a chance if that were the case."
+        },
+        {
+          "redditId": "aft-085",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:08:45Z",
+          "score": 5,
+          "body": "Justin Herbert is ass cheeks"
+        },
+        {
+          "redditId": "aft-086",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:09:30Z",
+          "score": 5,
+          "body": "Yall Arizona might be a good team?"
+        },
+        {
+          "redditId": "aft-087",
+          "parentRedditId": "aft-086",
+          "createdAt": "2026-09-14T21:10:15Z",
+          "score": 2,
+          "body": "They have loads of talent on the offense, I was so confused how they were projected the worst team in the league."
+        },
+        {
+          "redditId": "aft-088",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:11:00Z",
+          "score": 5,
+          "body": "MCBRIDEEEEE"
+        },
+        {
+          "redditId": "aft-089",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:11:45Z",
+          "score": 5,
+          "body": "I'm about to drop Herbert. \"Screw it I'll figure it out\" might be a better plan anyway"
+        },
+        {
+          "redditId": "aft-090",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:12:30Z",
+          "score": 5,
+          "body": "Yea my terry pick was a fucking waste"
+        },
+        {
+          "redditId": "aft-091",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:13:15Z",
+          "score": 5,
+          "body": "I actually like the new Seattle OC better than Kubiak for JSN"
+        },
+        {
+          "redditId": "aft-092",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:14:00Z",
+          "score": 5,
+          "body": "Chargers might actually start 0-7"
+        },
+        {
+          "redditId": "aft-093",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:14:45Z",
+          "score": 5,
+          "body": "Holy shit Herbert you are disgusting man"
+        },
+        {
+          "redditId": "aft-094",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:15:30Z",
+          "score": 5,
+          "body": "Chargers are dog shit"
+        },
+        {
+          "redditId": "aft-095",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:16:15Z",
+          "score": 5,
+          "body": "JSN might be the best player in fantasy"
+        },
+        {
+          "redditId": "aft-096",
+          "parentRedditId": "aft-095",
+          "createdAt": "2026-09-14T21:17:00Z",
+          "score": 1,
+          "body": "Laughs in Josh Allen"
+        },
+        {
+          "redditId": "aft-097",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:17:45Z",
+          "score": 5,
+          "body": "So jealous of JSN owners"
+        },
+        {
+          "redditId": "aft-098",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:18:30Z",
+          "score": 5,
+          "body": "Hampton more fumbles than TDs"
+        },
+        {
+          "redditId": "aft-099",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:19:15Z",
+          "score": 4,
+          "body": "JSN wtf"
+        },
+        {
+          "redditId": "aft-100",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:20:00Z",
+          "score": 4,
+          "body": "Pretty good start for JSN, I'd say."
+        },
+        {
+          "redditId": "aft-101",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:20:45Z",
+          "score": 4,
+          "body": "JSN THE BEST FOR A REASON"
+        },
+        {
+          "redditId": "aft-102",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:21:30Z",
+          "score": 4,
+          "body": "Rude of Lamb to not buy me dinner before fucking me"
+        },
+        {
+          "redditId": "aft-103",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:22:15Z",
+          "score": 4,
+          "body": "I’m gonna get fucking boomed by Lamb huh. Thats sick"
+        },
+        {
+          "redditId": "aft-104",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:23:00Z",
+          "score": 4,
+          "body": "Nvm we might be back hampton owners"
+        },
+        {
+          "redditId": "aft-105",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:23:45Z",
+          "score": 4,
+          "body": "McBride touchdowns, taxes and death"
+        },
+        {
+          "redditId": "aft-106",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:24:30Z",
+          "score": 4,
+          "body": "JK dobbins is cooked"
+        },
+        {
+          "redditId": "aft-107",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:25:15Z",
+          "score": 4,
+          "body": "Parker Washington is gonna be the only one getting my points this afternoon"
+        },
+        {
+          "redditId": "aft-108",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:26:00Z",
+          "score": 4,
+          "body": "Why did I draft Justin Herbert oh my god"
+        },
+        {
+          "redditId": "aft-109",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:26:45Z",
+          "score": 4,
+          "body": "Rachaad White is RB1 Wow"
+        },
+        {
+          "redditId": "aft-110",
+          "parentRedditId": null,
+          "createdAt": "2026-09-14T21:27:30Z",
+          "score": 4,
+          "body": "NEED SOME JAVONTE POINTS PLEASE"
+        }
+      ]
+    }
+  ]
+}

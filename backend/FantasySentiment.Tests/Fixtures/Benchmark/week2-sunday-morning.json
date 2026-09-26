@@ -1,0 +1,2620 @@
+{
+  "thread": {
+    "name": "OFFICIAL WEEK 2 SUNDAY MORNING GAME THREAD",
+    "type": "GameThread",
+    "postType": "GameThread",
+    "subreddit": "fantasyfootball",
+    "datasetSplit": "Development",
+    "sourceFile": "D:/FF Sentiment Hand Data/Week2MorningGameData.txt"
+  },
+  "players": [
+    {
+      "name": "Aaron Rodgers",
+      "team": "PIT",
+      "position": "QB",
+      "aliases": [
+        "Rodgers",
+        "Aaron Rodgers"
+      ]
+    },
+    {
+      "name": "Baker Mayfield",
+      "team": "TB",
+      "position": "QB",
+      "aliases": [
+        "Baker",
+        "Baker Mayfield"
+      ]
+    },
+    {
+      "name": "Bijan Robinson",
+      "team": "ATL",
+      "position": "RB",
+      "aliases": [
+        "Bijan",
+        "Bijan Robinson"
+      ]
+    },
+    {
+      "name": "Breece Hall",
+      "team": "NYJ",
+      "position": "RB",
+      "aliases": [
+        "Breece",
+        "Breece Hall"
+      ]
+    },
+    {
+      "name": "Brian Thomas Jr.",
+      "team": "JAX",
+      "position": "WR",
+      "aliases": [
+        "BTJ",
+        "Brian Thomas Jr"
+      ]
+    },
+    {
+      "name": "Brock Purdy",
+      "team": "SF",
+      "position": "QB",
+      "aliases": [
+        "Purdy",
+        "Brock Purdy"
+      ]
+    },
+    {
+      "name": "Bucky Irving",
+      "team": "TB",
+      "position": "RB",
+      "aliases": [
+        "Bucky",
+        "Bucky Irving"
+      ]
+    },
+    {
+      "name": "Caleb Williams",
+      "team": "CHI",
+      "position": "QB",
+      "aliases": [
+        "Caleb",
+        "Caleb Williams"
+      ]
+    },
+    {
+      "name": "Cam Ward",
+      "team": "TEN",
+      "position": "QB",
+      "aliases": [
+        "Cam Ward"
+      ]
+    },
+    {
+      "name": "CeeDee Lamb",
+      "team": "DAL",
+      "position": "WR",
+      "aliases": [
+        "CeeDee",
+        "Ceedee",
+        "Lamb",
+        "CeeDee Lamb"
+      ]
+    },
+    {
+      "name": "Christian McCaffrey",
+      "team": "SF",
+      "position": "RB",
+      "aliases": [
+        "CMC",
+        "McCaffrey",
+        "Christian McCaffrey",
+        "C. McCaffrey"
+      ]
+    },
+    {
+      "name": "Chuba Hubbard",
+      "team": "CAR",
+      "position": "RB",
+      "aliases": [
+        "Chuba",
+        "Chuba Hubbard"
+      ]
+    },
+    {
+      "name": "Colston Loveland",
+      "team": "CHI",
+      "position": "TE",
+      "aliases": [
+        "Loveland",
+        "Colston Loveland"
+      ]
+    },
+    {
+      "name": "Cooper Rush",
+      "team": "BAL",
+      "position": "QB",
+      "aliases": [
+        "Cooper Rush"
+      ]
+    },
+    {
+      "name": "Dalton Schultz",
+      "team": "HOU",
+      "position": "TE",
+      "aliases": [
+        "Schultz",
+        "Dalton Schultz"
+      ]
+    },
+    {
+      "name": "Darren Waller",
+      "team": "MIA",
+      "position": "TE",
+      "aliases": [
+        "Waller",
+        "Darren Waller"
+      ]
+    },
+    {
+      "name": "Davante Adams",
+      "team": "LAR",
+      "position": "WR",
+      "aliases": [
+        "Adams",
+        "Davante Adams"
+      ]
+    },
+    {
+      "name": "David Montgomery",
+      "team": "DET",
+      "position": "RB",
+      "aliases": [
+        "Monty",
+        "Montgomery",
+        "David Montgomery"
+      ]
+    },
+    {
+      "name": "De'Von Achane",
+      "team": "MIA",
+      "position": "RB",
+      "aliases": [
+        "Achane",
+        "DeVon Achane",
+        "De'Von Achane"
+      ]
+    },
+    {
+      "name": "Denzel Boston",
+      "team": "TEN",
+      "position": "WR",
+      "aliases": [
+        "Denzel Boston"
+      ]
+    },
+    {
+      "name": "Derrick Henry",
+      "team": "BAL",
+      "position": "RB",
+      "aliases": [
+        "Derrick Henry",
+        "King Henry"
+      ]
+    },
+    {
+      "name": "Deshaun Watson",
+      "team": "CLE",
+      "position": "QB",
+      "aliases": [
+        "Watson",
+        "Deshaun",
+        "Deshaun Watson"
+      ]
+    },
+    {
+      "name": "Devaughn Vele",
+      "team": "DEN",
+      "position": "WR",
+      "aliases": [
+        "Vele",
+        "Devaughn Vele"
+      ]
+    },
+    {
+      "name": "DeVonta Smith",
+      "team": "PHI",
+      "position": "WR",
+      "aliases": [
+        "Devonta Smith",
+        "DeVonta Smith",
+        "Smitty"
+      ]
+    },
+    {
+      "name": "Drake London",
+      "team": "ATL",
+      "position": "WR",
+      "aliases": [
+        "Drake London",
+        "London"
+      ]
+    },
+    {
+      "name": "Drake Maye",
+      "team": "NE",
+      "position": "QB",
+      "aliases": [
+        "Drake Maye"
+      ]
+    },
+    {
+      "name": "Emeka Egbuka",
+      "team": "TB",
+      "position": "WR",
+      "aliases": [
+        "Egbuka",
+        "Emeka Egbuka"
+      ]
+    },
+    {
+      "name": "Garrett Wilson",
+      "team": "NYJ",
+      "position": "WR",
+      "aliases": [
+        "Garrett Wilson",
+        "G. Wilson"
+      ]
+    },
+    {
+      "name": "George Pickens",
+      "team": "DAL",
+      "position": "WR",
+      "aliases": [
+        "Pickens",
+        "George Pickens"
+      ]
+    },
+    {
+      "name": "Harold Fannin Jr.",
+      "team": "CLE",
+      "position": "TE",
+      "aliases": [
+        "Fannin",
+        "Harold Fannin"
+      ]
+    },
+    {
+      "name": "Isaiah Likely",
+      "team": "BAL",
+      "position": "TE",
+      "aliases": [
+        "Likely",
+        "Isaiah Likely"
+      ]
+    },
+    {
+      "name": "J.K. Dobbins",
+      "team": "DEN",
+      "position": "RB",
+      "aliases": [
+        "JK Dobbins",
+        "J.K. Dobbins",
+        "Dobbins"
+      ]
+    },
+    {
+      "name": "Ja'Marr Chase",
+      "team": "CIN",
+      "position": "WR",
+      "aliases": [
+        "JaMarr",
+        "Jamaar",
+        "Chase",
+        "Ja'Marr Chase"
+      ]
+    },
+    {
+      "name": "Jalen Coker",
+      "team": "CAR",
+      "position": "WR",
+      "aliases": [
+        "Coker",
+        "Jalen Coker"
+      ]
+    },
+    {
+      "name": "Jalen Hurts",
+      "team": "PHI",
+      "position": "QB",
+      "aliases": [
+        "Hurts",
+        "Jalen Hurts"
+      ]
+    },
+    {
+      "name": "James Cook",
+      "team": "BUF",
+      "position": "RB",
+      "aliases": [
+        "James Cook",
+        "J. Cook"
+      ]
+    },
+    {
+      "name": "Javonte Williams",
+      "team": "DAL",
+      "position": "RB",
+      "aliases": [
+        "Javonte",
+        "Javonte Williams"
+      ]
+    },
+    {
+      "name": "Jaxon Smith-Njigba",
+      "team": "SEA",
+      "position": "WR",
+      "aliases": [
+        "JSN",
+        "Jaxon Smith-Njigba",
+        "Jaxon Smith",
+        "Smith-Njigba"
+      ]
+    },
+    {
+      "name": "Jayden Reed",
+      "team": "GB",
+      "position": "WR",
+      "aliases": [
+        "Jayden Reed",
+        "J Reed"
+      ]
+    },
+    {
+      "name": "Jaylen Waddle",
+      "team": "MIA",
+      "position": "WR",
+      "aliases": [
+        "Waddle",
+        "Jaylen Waddle"
+      ]
+    },
+    {
+      "name": "Joe Burrow",
+      "team": "CIN",
+      "position": "QB",
+      "aliases": [
+        "Burrow",
+        "Joe Burrow"
+      ]
+    },
+    {
+      "name": "Justin Herbert",
+      "team": "LAC",
+      "position": "QB",
+      "aliases": [
+        "Herbert",
+        "Justin Herbert"
+      ]
+    },
+    {
+      "name": "Justin Jefferson",
+      "team": "MIN",
+      "position": "WR",
+      "aliases": [
+        "Jefferson",
+        "Justin Jefferson",
+        "JJettas",
+        "Jettas"
+      ]
+    },
+    {
+      "name": "Juwan Johnson",
+      "team": "NO",
+      "position": "TE",
+      "aliases": [
+        "Juwan",
+        "Juwan Johnson"
+      ]
+    },
+    {
+      "name": "Khalif Raymond",
+      "team": "DET",
+      "position": "WR",
+      "aliases": [
+        "Khalif Raymond"
+      ]
+    },
+    {
+      "name": "Kyle Monangai",
+      "team": "CHI",
+      "position": "RB",
+      "aliases": [
+        "Monangai",
+        "Kyle Monangai"
+      ]
+    },
+    {
+      "name": "Kyle Pitts",
+      "team": "ATL",
+      "position": "TE",
+      "aliases": [
+        "Pitts",
+        "Kyle Pitts"
+      ]
+    },
+    {
+      "name": "Ladd McConkey",
+      "team": "LAC",
+      "position": "WR",
+      "aliases": [
+        "Ladd",
+        "Ladd McConkey"
+      ]
+    },
+    {
+      "name": "Lamar Jackson",
+      "team": "BAL",
+      "position": "QB",
+      "aliases": [
+        "Lamar",
+        "Lamar Jackson"
+      ]
+    },
+    {
+      "name": "Luther Burden",
+      "team": "CHI",
+      "position": "WR",
+      "aliases": [
+        "Burden",
+        "Luther Burden"
+      ]
+    },
+    {
+      "name": "Malik Nabers",
+      "team": "NYG",
+      "position": "WR",
+      "aliases": [
+        "Nabers",
+        "Malik Nabers"
+      ]
+    },
+    {
+      "name": "Mark Andrews",
+      "team": "BAL",
+      "position": "TE",
+      "aliases": [
+        "Mandrews",
+        "Andrews",
+        "Mark Andrews"
+      ]
+    },
+    {
+      "name": "Mike Evans",
+      "team": "TB",
+      "position": "WR",
+      "aliases": [
+        "Evans",
+        "Mike Evans"
+      ]
+    },
+    {
+      "name": "Nick Chubb",
+      "team": "HOU",
+      "position": "RB",
+      "aliases": [
+        "Chubb",
+        "Nick Chubb"
+      ]
+    },
+    {
+      "name": "Omarion Hampton",
+      "team": "LAC",
+      "position": "RB",
+      "aliases": [
+        "Hampton",
+        "Omarion Hampton",
+        "Omarian",
+        "Omarion"
+      ]
+    },
+    {
+      "name": "Parker Washington",
+      "team": "JAX",
+      "position": "WR",
+      "aliases": [
+        "Parker Washington",
+        "Parker"
+      ]
+    },
+    {
+      "name": "Puka Nacua",
+      "team": "LAR",
+      "position": "WR",
+      "aliases": [
+        "Puka",
+        "Nacua",
+        "Puka Nacua"
+      ]
+    },
+    {
+      "name": "Quentin Johnston",
+      "team": "LAC",
+      "position": "WR",
+      "aliases": [
+        "QJ",
+        "Quentin Johnston"
+      ]
+    },
+    {
+      "name": "Rachaad White",
+      "team": "TB",
+      "position": "RB",
+      "aliases": [
+        "Rachaad",
+        "Rachaad White",
+        "White"
+      ]
+    },
+    {
+      "name": "Rhamondre Stevenson",
+      "team": "NE",
+      "position": "RB",
+      "aliases": [
+        "Rhamondre",
+        "Mondre",
+        "Rhamondre Stevenson"
+      ]
+    },
+    {
+      "name": "Rome Odunze",
+      "team": "CHI",
+      "position": "WR",
+      "aliases": [
+        "Rome Odunze",
+        "Odunze"
+      ]
+    },
+    {
+      "name": "Saquon Barkley",
+      "team": "PHI",
+      "position": "RB",
+      "aliases": [
+        "Saquon",
+        "Barkley",
+        "Saquon Barkley"
+      ]
+    },
+    {
+      "name": "Tank Bigsby",
+      "team": "JAX",
+      "position": "RB",
+      "aliases": [
+        "Tank Bigsby",
+        "Bigsby"
+      ]
+    },
+    {
+      "name": "Tetairoa McMillan",
+      "team": "CAR",
+      "position": "WR",
+      "aliases": [
+        "Tet",
+        "Tetairoa McMillan"
+      ]
+    },
+    {
+      "name": "Tory Horton",
+      "team": "SEA",
+      "position": "WR",
+      "aliases": [
+        "Horton",
+        "Tory Horton"
+      ]
+    },
+    {
+      "name": "Travis Etienne Jr.",
+      "team": "JAX",
+      "position": "RB",
+      "aliases": [
+        "Etienne",
+        "ETN",
+        "Travis Etienne"
+      ]
+    },
+    {
+      "name": "TreVeyon Henderson",
+      "team": "NE",
+      "position": "RB",
+      "aliases": [
+        "TreVeyon Henderson"
+      ]
+    },
+    {
+      "name": "Trevor Lawrence",
+      "team": "JAX",
+      "position": "QB",
+      "aliases": [
+        "TLAW",
+        "Trevor Lawrence"
+      ]
+    },
+    {
+      "name": "Trey McBride",
+      "team": "ARI",
+      "position": "TE",
+      "aliases": [
+        "McBride",
+        "Trey McBride"
+      ]
+    },
+    {
+      "name": "Tucker Kraft",
+      "team": "GB",
+      "position": "TE",
+      "aliases": [
+        "Kraft",
+        "Tucker Kraft"
+      ]
+    },
+    {
+      "name": "Tyler Shough",
+      "team": "NO",
+      "position": "QB",
+      "aliases": [
+        "Shough",
+        "Tyler Shough"
+      ]
+    },
+    {
+      "name": "Tyler Warren",
+      "team": "IND",
+      "position": "TE",
+      "aliases": [
+        "Warren",
+        "Tyler Warren"
+      ]
+    },
+    {
+      "name": "Woody Marks",
+      "team": "HOU",
+      "position": "RB",
+      "aliases": [
+        "Woody Marks"
+      ]
+    },
+    {
+      "name": "Zay Flowers",
+      "team": "BAL",
+      "position": "WR",
+      "aliases": [
+        "Zay",
+        "Flowers",
+        "Zay Flowers"
+      ]
+    }
+  ],
+  "referenceResults": [
+    {
+      "player": "Carolina Panthers DST",
+      "fantasyPointsHalfPpr": 25,
+      "weeklyOverallRank": 12
+    },
+    {
+      "player": "Bryce Young",
+      "fantasyPointsHalfPpr": 24.1,
+      "weeklyOverallRank": 13
+    },
+    {
+      "player": "Ja'Marr Chase",
+      "fantasyPointsHalfPpr": 23,
+      "weeklyOverallRank": 14
+    },
+    {
+      "player": "DeVonta Smith",
+      "fantasyPointsHalfPpr": 22.7,
+      "weeklyOverallRank": 15
+    },
+    {
+      "player": "Tyler Shough",
+      "fantasyPointsHalfPpr": 22.4,
+      "weeklyOverallRank": 16
+    },
+    {
+      "player": "Deshaun Watson",
+      "fantasyPointsHalfPpr": 19.7,
+      "weeklyOverallRank": 28
+    },
+    {
+      "player": "Derrick Henry",
+      "fantasyPointsHalfPpr": 16.2,
+      "weeklyOverallRank": 42
+    }
+  ],
+  "comments": [
+    {
+      "id": "mor-001",
+      "redditScore": 1,
+      "body": "Is it crazy I’m benching odunze and BTJ for wicks and Vele? Full PPR",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Rome Odunze",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Sit"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          },
+          {
+            "player": "Devaughn Vele",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Sit"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          },
+          {
+            "player": "Brian Thomas Jr.",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Sit"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-002",
+      "parentId": "mor-001",
+      "redditScore": 2,
+      "body": "Bench BTJ not Odunze.",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Rome Odunze",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Sit"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          },
+          {
+            "player": "Brian Thomas Jr.",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Sit"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-003",
+      "redditScore": 3,
+      "body": "LETS GOOOOOOOO, GOOD LUCK EVERYONE",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development",
+      "notes": "Thread-wide hype with no player target."
+    },
+    {
+      "id": "mor-004",
+      "redditScore": 1,
+      "body": "QJ or Monangai?",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Kyle Monangai",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Quentin Johnston",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-005",
+      "parentId": "mor-004",
+      "redditScore": 1,
+      "body": "QJ",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Quentin Johnston",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-006",
+      "parentId": "mor-005",
+      "redditScore": 1,
+      "body": "Monangai cause he's a guy",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyle Monangai",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-007",
+      "redditScore": 5,
+      "body": "juwan johnson",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Juwan Johnson",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-008",
+      "parentId": "mor-007",
+      "redditScore": 2,
+      "body": "HOOOO RAH!!!",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Juwan Johnson",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-009",
+      "redditScore": -1,
+      "body": "Odunze or golden non ppr",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Rome Odunze",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-010",
+      "parentId": "mor-009",
+      "redditScore": 1,
+      "body": "Golden",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Rome Odunze",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-011",
+      "redditScore": 0,
+      "body": "start two: evans, London, ladd",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Start"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          },
+          {
+            "player": "Mike Evans",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Start"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          },
+          {
+            "player": "Ladd McConkey",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Start"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-012",
+      "parentId": "mor-011",
+      "redditScore": 3,
+      "body": "Evan's Ladd",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Ladd McConkey",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-013",
+      "redditScore": 1,
+      "body": "Juwan gimme 12 points. It's all I ask.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Juwan Johnson",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-014",
+      "parentId": "mor-013",
+      "redditScore": 3,
+      "body": "Not a terrible first half",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Juwan Johnson",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-015",
+      "redditScore": 0,
+      "body": "Are we worried about Tuten in Denver?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-016",
+      "parentId": "mor-015",
+      "redditScore": 6,
+      "body": "I am always worried about everything",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-017",
+      "redditScore": 5,
+      "body": "I am ready to be hurt again.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-018",
+      "redditScore": 1,
+      "body": "Andrews may indeed be cooked.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Mark Andrews",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Panic"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-019",
+      "redditScore": 3,
+      "body": "Fucking retire Andrews you fucker",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Mark Andrews",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-020",
+      "redditScore": 4,
+      "body": "Saquon is hurt",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Saquon Barkley",
+            "sentiment": "Negative",
+            "playerEvaluation": "Neutral",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-021",
+      "redditScore": 4,
+      "body": "Tank Bigsby truthers we up",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tank Bigsby",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-022",
+      "redditScore": 1,
+      "body": "My RB room is so fucking bad now JK Dobbins is my RB1 I guess",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "J.K. Dobbins",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-023",
+      "redditScore": 1,
+      "body": "Cooper rush is awful",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Cooper Rush",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-024",
+      "redditScore": 11,
+      "body": "Henderson owners should be rejoicing",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-025",
+      "parentId": "mor-024",
+      "redditScore": 8,
+      "body": "Stevenson could take a handoff and punt it backwards and Vrabel will still love him",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-026",
+      "parentId": "mor-025",
+      "redditScore": 4,
+      "body": "lol nothing will change just like last year",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-027",
+      "redditScore": 4,
+      "body": "Fucking Stevenson man",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-028",
+      "redditScore": -3,
+      "body": "I start Bucky and he is now useless garbage. typical.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bucky Irving",
+            "sentiment": "StrongNegative",
+            "playerEvaluation": "StrongNegative",
+            "fantasyOutlook": "StrongNegative",
+            "intents": [
+              "Start"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-029",
+      "parentId": "mor-028",
+      "redditScore": 1,
+      "body": "It's been 10 minutes.",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Bucky Irving",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-030",
+      "parentId": "mor-029",
+      "redditScore": -1,
+      "body": "never matters to me. doubt he puts up more than 5.",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Bucky Irving",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-031",
+      "parentId": "mor-030",
+      "redditScore": 1,
+      "body": "lol chill out",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Bucky Irving",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-032",
+      "redditScore": 6,
+      "body": "Jayden Reed got smacked hard and they cut to commercial.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jayden Reed",
+            "sentiment": "Negative",
+            "playerEvaluation": "Neutral",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-033",
+      "parentId": "mor-032",
+      "redditScore": 1,
+      "body": "thanks for the update",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Jayden Reed",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Sarcasm"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-034",
+      "parentId": "mor-033",
+      "redditScore": 1,
+      "body": "the cart is out",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Jayden Reed",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-035",
+      "parentId": "mor-034",
+      "redditScore": 1,
+      "body": "didn't look that bad",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Jayden Reed",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-036",
+      "redditScore": 1,
+      "body": "Coker is the panthers WR1",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jalen Coker",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-037",
+      "redditScore": 1,
+      "body": "So Etienne is a total bust now right? Rotation with Kamara",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Travis Etienne Jr.",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-038",
+      "parentId": "mor-037",
+      "redditScore": 1,
+      "body": "yes",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Travis Etienne Jr.",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-039",
+      "parentId": "mor-038",
+      "redditScore": 1,
+      "body": "I'm so salty about it fuck me",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Travis Etienne Jr.",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-040",
+      "redditScore": 3,
+      "body": "Coker on the board :)",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jalen Coker",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-041",
+      "redditScore": 5,
+      "body": "I was really confident in a saquon bounce back season :( 😞",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Saquon Barkley",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-042",
+      "redditScore": 61,
+      "body": "protip : Don't open your fantasy app after kickoff til halftime of the AM games",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development",
+      "notes": "General fantasy advice; no named player."
+    },
+    {
+      "id": "mor-043",
+      "redditScore": 3,
+      "body": "Where the fuck is saquon",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Saquon Barkley",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-044",
+      "parentId": "mor-043",
+      "redditScore": 3,
+      "body": "got hurt",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Saquon Barkley",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-045",
+      "redditScore": 2,
+      "body": "So warren is just better",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tyler Warren",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-046",
+      "redditScore": 2,
+      "body": "J Reed being carted off",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jayden Reed",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-047",
+      "redditScore": 4,
+      "body": "Owning rhamondre and Henderson is going to be a disgusting choice every week isn't it",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Rhamondre Stevenson",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-048",
+      "parentId": "mor-047",
+      "redditScore": 1,
+      "body": "Henderson will outplay him every week.",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Rhamondre Stevenson",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-049",
+      "parentId": "mor-048",
+      "redditScore": 1,
+      "body": "And still somehow only get 10 touches per game.",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Rhamondre Stevenson",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-050",
+      "redditScore": 2,
+      "body": "Chuba TD?",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Chuba Hubbard",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-051",
+      "redditScore": 4,
+      "body": "Run the ball panthers, just run the ball",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-052",
+      "redditScore": 2,
+      "body": "What happened to Barkley?",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Saquon Barkley",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-053",
+      "redditScore": 5,
+      "body": "Rodgers is cooked.",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Aaron Rodgers",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Panic"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-054",
+      "redditScore": 5,
+      "body": "Hurts hates Smitty",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "DeVonta Smith",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          },
+          {
+            "player": "Jalen Hurts",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-055",
+      "redditScore": 1,
+      "body": "When did Caleb become Michael Vick 😭",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Caleb Williams",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-056",
+      "redditScore": 2,
+      "body": "Last week I started Kyler. This week I started DJ Moore and Barkley AMA",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Saquon Barkley",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "perspective": "OwnRoster",
+            "intents": [
+              "Start"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-057",
+      "redditScore": 6,
+      "body": "15 minutes into the first slate is certainly enough time to enter full blown panic",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-058",
+      "redditScore": 2,
+      "body": "Barkley and reed. burn it all down. I give up",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Saquon Barkley",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-059",
+      "redditScore": 2,
+      "body": "ffs Jalen",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-060",
+      "redditScore": 3,
+      "body": "lol Hurts",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Jalen Hurts",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-061",
+      "redditScore": 3,
+      "body": "CHUUUBAAAAA",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-062",
+      "redditScore": 2,
+      "body": "lmfao first puka and now saquon. my team is cooked yall",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Saquon Barkley",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "intents": [
+              "Panic"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          },
+          {
+            "player": "Puka Nacua",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "intents": [
+              "Panic"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-063",
+      "redditScore": 1,
+      "body": "Cam ward please win this",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Cam Ward",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-064",
+      "redditScore": 4,
+      "body": "Chuuuba I love you man",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-065",
+      "redditScore": 3,
+      "body": "Rhamondre season over",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Rhamondre Stevenson",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-066",
+      "parentId": "mor-065",
+      "redditScore": 1,
+      "body": "I'm in danger",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Rhamondre Stevenson",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-067",
+      "redditScore": 3,
+      "body": "it's now been a week and a drive without a Loveland touch. I am not well",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-068",
+      "redditScore": 2,
+      "body": "yeah we done messed up bruh",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-069",
+      "redditScore": 1,
+      "body": "Are the days of lamar being an elite fantasy asset over?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Lamar Jackson",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-070",
+      "parentId": "mor-069",
+      "redditScore": 1,
+      "body": "No, but he needs his best WR back",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Lamar Jackson",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-071",
+      "redditScore": 2,
+      "body": "Derrick Henry my KING!",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Derrick Henry",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-072",
+      "redditScore": 2,
+      "body": "Bucky my goat.",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Bucky Irving",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-073",
+      "redditScore": 5,
+      "body": "Henry is fucking immortal",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-074",
+      "redditScore": -1,
+      "body": "Dude Colston Loveland sucks ASS lol",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-075",
+      "redditScore": 1,
+      "body": "I should have started young over burrow",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Joe Burrow",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "perspective": "OwnRoster",
+            "intents": [
+              "Start"
+            ],
+            "reasons": [
+              "LineupRegret",
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-076",
+      "redditScore": 3,
+      "body": "Bucky is such a beast. what a 4th round pick",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bucky Irving",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-077",
+      "parentId": "mor-076",
+      "redditScore": 1,
+      "body": "I got him in the 6th, can't believe it",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Bucky Irving",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-078",
+      "redditScore": 3,
+      "body": "the cooper rush era lmao",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Cooper Rush",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-079",
+      "redditScore": 4,
+      "body": "cooper rush cannot be fucking serious.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Cooper Rush",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-080",
+      "redditScore": 2,
+      "body": "Cooper Rush LOL",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Cooper Rush",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-081",
+      "redditScore": 2,
+      "body": "Benched pitts for Njoku in hopes I can get more than 0 points. I'll take 1 point.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyle Pitts",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "LineupRegret",
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-082",
+      "parentId": "mor-081",
+      "redditScore": 1,
+      "body": "I like Njoku a lot, better than pitts today. you are smart.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyle Pitts",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-083",
+      "redditScore": 5,
+      "body": "Aaron jones 22 yard loss? Really?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-084",
+      "parentId": "mor-083",
+      "redditScore": 1,
+      "body": "I'm assuming that was misattributed to him on the botched snap to Wentz",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-085",
+      "redditScore": 2,
+      "body": "Juwan johnson not even in the game",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Juwan Johnson",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-086",
+      "redditScore": 3,
+      "body": "YES BARKLEY",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Saquon Barkley",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-087",
+      "redditScore": 4,
+      "body": "Olave sighting",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-088",
+      "redditScore": 1,
+      "body": "who got the TD in the titans game? I'm not watching",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-089",
+      "parentId": "mor-088",
+      "redditScore": 2,
+      "body": "Cam Ward QB sneak",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Cam Ward",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-090",
+      "redditScore": 3,
+      "body": "Chuba, coker, Bryce, panthers offense looking full of value steals",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Chuba Hubbard",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Jalen Coker",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-091",
+      "parentId": "mor-090",
+      "redditScore": 2,
+      "body": "People so afraid of Young lowers their cost",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-092",
+      "redditScore": 1,
+      "body": "At least ETN got paid. waste of a draft pick",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Travis Etienne Jr.",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "DraftRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-093",
+      "parentId": "mor-092",
+      "redditScore": 1,
+      "body": "It's only been a quarter",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Travis Etienne Jr.",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-094",
+      "redditScore": 2,
+      "body": "Baker is so fucking dogshit it's actually hard to put into words",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Baker Mayfield",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mor-095",
+      "redditScore": 3,
+      "body": "Cooper rush might be the worst football player ive seen in my life",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Cooper Rush",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    }
+  ]
+}

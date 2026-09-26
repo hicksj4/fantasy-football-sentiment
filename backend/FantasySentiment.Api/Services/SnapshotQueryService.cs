@@ -10,10 +10,12 @@ namespace FantasySentiment.Api.Services;
 public sealed class SnapshotQueryService(
     FantasySentimentDbContext db,
     IOptions<DashboardHighlightOptions> highlightOptions,
-    IOptions<ScoreExplanationOptions>? scoreExplanationOptions = null)
+    IOptions<ScoreExplanationOptions>? scoreExplanationOptions = null,
+    IOptions<SnapshotProcessingOptions>? snapshotProcessingOptions = null)
 {
     private readonly DashboardHighlightOptions _highlightOptions = highlightOptions.Value;
     private readonly ScoreExplanationOptions _scoreExplanationOptions = scoreExplanationOptions?.Value ?? new ScoreExplanationOptions();
+    private readonly SnapshotProcessingOptions _snapshotProcessingOptions = snapshotProcessingOptions?.Value ?? new SnapshotProcessingOptions();
 
     public async Task<IReadOnlyList<AnalysisSnapshotDto>> GetSnapshotsAsync(CancellationToken cancellationToken)
     {
@@ -187,6 +189,20 @@ public sealed class SnapshotQueryService(
 
         if (key.Equals("latest", StringComparison.OrdinalIgnoreCase))
         {
+            if (!string.IsNullOrWhiteSpace(_snapshotProcessingOptions.DefaultSnapshotKey))
+            {
+                var configuredDefault = await query.FirstOrDefaultAsync(
+                    snapshot =>
+                        snapshot.Key == _snapshotProcessingOptions.DefaultSnapshotKey
+                        && snapshot.Status == AnalysisSnapshotStatuses.Processed,
+                    cancellationToken);
+
+                if (configuredDefault is not null)
+                {
+                    return configuredDefault;
+                }
+            }
+
             return await query
                 .Where(snapshot => snapshot.Status == AnalysisSnapshotStatuses.Processed)
                 .OrderByDescending(snapshot => snapshot.Season)

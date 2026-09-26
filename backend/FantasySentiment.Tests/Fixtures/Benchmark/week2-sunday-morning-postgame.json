@@ -1,0 +1,1801 @@
+{
+  "thread": {
+    "name": "OFFICIAL WEEK 2 SUNDAY MORNING POSTGAME THREAD",
+    "type": "PostgameThread",
+    "postType": "PostGameThread",
+    "subreddit": "fantasyfootball",
+    "datasetSplit": "Development",
+    "sourceFile": "D:/FF Sentiment Hand Data/Week2MorningPostgameData.txt"
+  },
+  "players": [
+    {
+      "name": "Aaron Rodgers",
+      "team": "PIT",
+      "position": "QB",
+      "aliases": [
+        "Rodgers",
+        "Aaron Rodgers"
+      ]
+    },
+    {
+      "name": "Baker Mayfield",
+      "team": "TB",
+      "position": "QB",
+      "aliases": [
+        "Baker",
+        "Baker Mayfield"
+      ]
+    },
+    {
+      "name": "Bijan Robinson",
+      "team": "ATL",
+      "position": "RB",
+      "aliases": [
+        "Bijan",
+        "Bijan Robinson"
+      ]
+    },
+    {
+      "name": "Breece Hall",
+      "team": "NYJ",
+      "position": "RB",
+      "aliases": [
+        "Breece",
+        "Breece Hall"
+      ]
+    },
+    {
+      "name": "Brian Thomas Jr.",
+      "team": "JAX",
+      "position": "WR",
+      "aliases": [
+        "BTJ",
+        "Brian Thomas Jr"
+      ]
+    },
+    {
+      "name": "Brock Purdy",
+      "team": "SF",
+      "position": "QB",
+      "aliases": [
+        "Purdy",
+        "Brock Purdy"
+      ]
+    },
+    {
+      "name": "Bucky Irving",
+      "team": "TB",
+      "position": "RB",
+      "aliases": [
+        "Bucky",
+        "Bucky Irving"
+      ]
+    },
+    {
+      "name": "Caleb Williams",
+      "team": "CHI",
+      "position": "QB",
+      "aliases": [
+        "Caleb",
+        "Caleb Williams"
+      ]
+    },
+    {
+      "name": "Cam Ward",
+      "team": "TEN",
+      "position": "QB",
+      "aliases": [
+        "Cam Ward"
+      ]
+    },
+    {
+      "name": "CeeDee Lamb",
+      "team": "DAL",
+      "position": "WR",
+      "aliases": [
+        "CeeDee",
+        "Ceedee",
+        "Lamb",
+        "CeeDee Lamb"
+      ]
+    },
+    {
+      "name": "Christian McCaffrey",
+      "team": "SF",
+      "position": "RB",
+      "aliases": [
+        "CMC",
+        "McCaffrey",
+        "Christian McCaffrey",
+        "C. McCaffrey"
+      ]
+    },
+    {
+      "name": "Chuba Hubbard",
+      "team": "CAR",
+      "position": "RB",
+      "aliases": [
+        "Chuba",
+        "Chuba Hubbard"
+      ]
+    },
+    {
+      "name": "Colston Loveland",
+      "team": "CHI",
+      "position": "TE",
+      "aliases": [
+        "Loveland",
+        "Colston Loveland"
+      ]
+    },
+    {
+      "name": "Cooper Rush",
+      "team": "BAL",
+      "position": "QB",
+      "aliases": [
+        "Cooper Rush"
+      ]
+    },
+    {
+      "name": "Dalton Schultz",
+      "team": "HOU",
+      "position": "TE",
+      "aliases": [
+        "Schultz",
+        "Dalton Schultz"
+      ]
+    },
+    {
+      "name": "Darren Waller",
+      "team": "MIA",
+      "position": "TE",
+      "aliases": [
+        "Waller",
+        "Darren Waller"
+      ]
+    },
+    {
+      "name": "Davante Adams",
+      "team": "LAR",
+      "position": "WR",
+      "aliases": [
+        "Adams",
+        "Davante Adams"
+      ]
+    },
+    {
+      "name": "David Montgomery",
+      "team": "DET",
+      "position": "RB",
+      "aliases": [
+        "Monty",
+        "Montgomery",
+        "David Montgomery"
+      ]
+    },
+    {
+      "name": "De'Von Achane",
+      "team": "MIA",
+      "position": "RB",
+      "aliases": [
+        "Achane",
+        "DeVon Achane",
+        "De'Von Achane"
+      ]
+    },
+    {
+      "name": "Denzel Boston",
+      "team": "TEN",
+      "position": "WR",
+      "aliases": [
+        "Denzel Boston"
+      ]
+    },
+    {
+      "name": "Derrick Henry",
+      "team": "BAL",
+      "position": "RB",
+      "aliases": [
+        "Derrick Henry",
+        "King Henry"
+      ]
+    },
+    {
+      "name": "Deshaun Watson",
+      "team": "CLE",
+      "position": "QB",
+      "aliases": [
+        "Watson",
+        "Deshaun",
+        "Deshaun Watson"
+      ]
+    },
+    {
+      "name": "Devaughn Vele",
+      "team": "DEN",
+      "position": "WR",
+      "aliases": [
+        "Vele",
+        "Devaughn Vele"
+      ]
+    },
+    {
+      "name": "DeVonta Smith",
+      "team": "PHI",
+      "position": "WR",
+      "aliases": [
+        "Devonta Smith",
+        "DeVonta Smith",
+        "Smitty"
+      ]
+    },
+    {
+      "name": "Drake London",
+      "team": "ATL",
+      "position": "WR",
+      "aliases": [
+        "Drake London",
+        "London"
+      ]
+    },
+    {
+      "name": "Drake Maye",
+      "team": "NE",
+      "position": "QB",
+      "aliases": [
+        "Drake Maye"
+      ]
+    },
+    {
+      "name": "Emeka Egbuka",
+      "team": "TB",
+      "position": "WR",
+      "aliases": [
+        "Egbuka",
+        "Emeka Egbuka"
+      ]
+    },
+    {
+      "name": "Garrett Wilson",
+      "team": "NYJ",
+      "position": "WR",
+      "aliases": [
+        "Garrett Wilson",
+        "G. Wilson"
+      ]
+    },
+    {
+      "name": "George Pickens",
+      "team": "DAL",
+      "position": "WR",
+      "aliases": [
+        "Pickens",
+        "George Pickens"
+      ]
+    },
+    {
+      "name": "Harold Fannin Jr.",
+      "team": "CLE",
+      "position": "TE",
+      "aliases": [
+        "Fannin",
+        "Harold Fannin"
+      ]
+    },
+    {
+      "name": "Isaiah Likely",
+      "team": "BAL",
+      "position": "TE",
+      "aliases": [
+        "Likely",
+        "Isaiah Likely"
+      ]
+    },
+    {
+      "name": "J.K. Dobbins",
+      "team": "DEN",
+      "position": "RB",
+      "aliases": [
+        "JK Dobbins",
+        "J.K. Dobbins",
+        "Dobbins"
+      ]
+    },
+    {
+      "name": "Ja'Marr Chase",
+      "team": "CIN",
+      "position": "WR",
+      "aliases": [
+        "JaMarr",
+        "Jamaar",
+        "Chase",
+        "Ja'Marr Chase"
+      ]
+    },
+    {
+      "name": "Jalen Coker",
+      "team": "CAR",
+      "position": "WR",
+      "aliases": [
+        "Coker",
+        "Jalen Coker"
+      ]
+    },
+    {
+      "name": "Jalen Hurts",
+      "team": "PHI",
+      "position": "QB",
+      "aliases": [
+        "Hurts",
+        "Jalen Hurts"
+      ]
+    },
+    {
+      "name": "James Cook",
+      "team": "BUF",
+      "position": "RB",
+      "aliases": [
+        "James Cook",
+        "J. Cook"
+      ]
+    },
+    {
+      "name": "Javonte Williams",
+      "team": "DAL",
+      "position": "RB",
+      "aliases": [
+        "Javonte",
+        "Javonte Williams"
+      ]
+    },
+    {
+      "name": "Jaxon Smith-Njigba",
+      "team": "SEA",
+      "position": "WR",
+      "aliases": [
+        "JSN",
+        "Jaxon Smith-Njigba",
+        "Jaxon Smith",
+        "Smith-Njigba"
+      ]
+    },
+    {
+      "name": "Jayden Reed",
+      "team": "GB",
+      "position": "WR",
+      "aliases": [
+        "Jayden Reed",
+        "J Reed"
+      ]
+    },
+    {
+      "name": "Jaylen Waddle",
+      "team": "MIA",
+      "position": "WR",
+      "aliases": [
+        "Waddle",
+        "Jaylen Waddle"
+      ]
+    },
+    {
+      "name": "Joe Burrow",
+      "team": "CIN",
+      "position": "QB",
+      "aliases": [
+        "Burrow",
+        "Joe Burrow"
+      ]
+    },
+    {
+      "name": "Justin Herbert",
+      "team": "LAC",
+      "position": "QB",
+      "aliases": [
+        "Herbert",
+        "Justin Herbert"
+      ]
+    },
+    {
+      "name": "Justin Jefferson",
+      "team": "MIN",
+      "position": "WR",
+      "aliases": [
+        "Jefferson",
+        "Justin Jefferson",
+        "JJettas",
+        "Jettas"
+      ]
+    },
+    {
+      "name": "Juwan Johnson",
+      "team": "NO",
+      "position": "TE",
+      "aliases": [
+        "Juwan",
+        "Juwan Johnson"
+      ]
+    },
+    {
+      "name": "Khalif Raymond",
+      "team": "DET",
+      "position": "WR",
+      "aliases": [
+        "Khalif Raymond"
+      ]
+    },
+    {
+      "name": "Kyle Monangai",
+      "team": "CHI",
+      "position": "RB",
+      "aliases": [
+        "Monangai",
+        "Kyle Monangai"
+      ]
+    },
+    {
+      "name": "Kyle Pitts",
+      "team": "ATL",
+      "position": "TE",
+      "aliases": [
+        "Pitts",
+        "Kyle Pitts"
+      ]
+    },
+    {
+      "name": "Ladd McConkey",
+      "team": "LAC",
+      "position": "WR",
+      "aliases": [
+        "Ladd",
+        "Ladd McConkey"
+      ]
+    },
+    {
+      "name": "Lamar Jackson",
+      "team": "BAL",
+      "position": "QB",
+      "aliases": [
+        "Lamar",
+        "Lamar Jackson"
+      ]
+    },
+    {
+      "name": "Luther Burden",
+      "team": "CHI",
+      "position": "WR",
+      "aliases": [
+        "Burden",
+        "Luther Burden"
+      ]
+    },
+    {
+      "name": "Malik Nabers",
+      "team": "NYG",
+      "position": "WR",
+      "aliases": [
+        "Nabers",
+        "Malik Nabers"
+      ]
+    },
+    {
+      "name": "Mark Andrews",
+      "team": "BAL",
+      "position": "TE",
+      "aliases": [
+        "Mandrews",
+        "Andrews",
+        "Mark Andrews"
+      ]
+    },
+    {
+      "name": "Mike Evans",
+      "team": "TB",
+      "position": "WR",
+      "aliases": [
+        "Evans",
+        "Mike Evans"
+      ]
+    },
+    {
+      "name": "Nick Chubb",
+      "team": "HOU",
+      "position": "RB",
+      "aliases": [
+        "Chubb",
+        "Nick Chubb"
+      ]
+    },
+    {
+      "name": "Omarion Hampton",
+      "team": "LAC",
+      "position": "RB",
+      "aliases": [
+        "Hampton",
+        "Omarion Hampton",
+        "Omarian",
+        "Omarion"
+      ]
+    },
+    {
+      "name": "Parker Washington",
+      "team": "JAX",
+      "position": "WR",
+      "aliases": [
+        "Parker Washington",
+        "Parker"
+      ]
+    },
+    {
+      "name": "Puka Nacua",
+      "team": "LAR",
+      "position": "WR",
+      "aliases": [
+        "Puka",
+        "Nacua",
+        "Puka Nacua"
+      ]
+    },
+    {
+      "name": "Quentin Johnston",
+      "team": "LAC",
+      "position": "WR",
+      "aliases": [
+        "QJ",
+        "Quentin Johnston"
+      ]
+    },
+    {
+      "name": "Rachaad White",
+      "team": "TB",
+      "position": "RB",
+      "aliases": [
+        "Rachaad",
+        "Rachaad White",
+        "White"
+      ]
+    },
+    {
+      "name": "Rhamondre Stevenson",
+      "team": "NE",
+      "position": "RB",
+      "aliases": [
+        "Rhamondre",
+        "Mondre",
+        "Rhamondre Stevenson"
+      ]
+    },
+    {
+      "name": "Rome Odunze",
+      "team": "CHI",
+      "position": "WR",
+      "aliases": [
+        "Rome Odunze",
+        "Odunze"
+      ]
+    },
+    {
+      "name": "Saquon Barkley",
+      "team": "PHI",
+      "position": "RB",
+      "aliases": [
+        "Saquon",
+        "Barkley",
+        "Saquon Barkley"
+      ]
+    },
+    {
+      "name": "Tank Bigsby",
+      "team": "JAX",
+      "position": "RB",
+      "aliases": [
+        "Tank Bigsby",
+        "Bigsby"
+      ]
+    },
+    {
+      "name": "Tetairoa McMillan",
+      "team": "CAR",
+      "position": "WR",
+      "aliases": [
+        "Tet",
+        "Tetairoa McMillan"
+      ]
+    },
+    {
+      "name": "Tory Horton",
+      "team": "SEA",
+      "position": "WR",
+      "aliases": [
+        "Horton",
+        "Tory Horton"
+      ]
+    },
+    {
+      "name": "Travis Etienne Jr.",
+      "team": "JAX",
+      "position": "RB",
+      "aliases": [
+        "Etienne",
+        "ETN",
+        "Travis Etienne"
+      ]
+    },
+    {
+      "name": "TreVeyon Henderson",
+      "team": "NE",
+      "position": "RB",
+      "aliases": [
+        "TreVeyon Henderson"
+      ]
+    },
+    {
+      "name": "Trevor Lawrence",
+      "team": "JAX",
+      "position": "QB",
+      "aliases": [
+        "TLAW",
+        "Trevor Lawrence"
+      ]
+    },
+    {
+      "name": "Trey McBride",
+      "team": "ARI",
+      "position": "TE",
+      "aliases": [
+        "McBride",
+        "Trey McBride"
+      ]
+    },
+    {
+      "name": "Tucker Kraft",
+      "team": "GB",
+      "position": "TE",
+      "aliases": [
+        "Kraft",
+        "Tucker Kraft"
+      ]
+    },
+    {
+      "name": "Tyler Shough",
+      "team": "NO",
+      "position": "QB",
+      "aliases": [
+        "Shough",
+        "Tyler Shough"
+      ]
+    },
+    {
+      "name": "Tyler Warren",
+      "team": "IND",
+      "position": "TE",
+      "aliases": [
+        "Warren",
+        "Tyler Warren"
+      ]
+    },
+    {
+      "name": "Woody Marks",
+      "team": "HOU",
+      "position": "RB",
+      "aliases": [
+        "Woody Marks"
+      ]
+    },
+    {
+      "name": "Zay Flowers",
+      "team": "BAL",
+      "position": "WR",
+      "aliases": [
+        "Zay",
+        "Flowers",
+        "Zay Flowers"
+      ]
+    }
+  ],
+  "referenceResults": [
+    {
+      "player": "Carolina Panthers DST",
+      "fantasyPointsHalfPpr": 25,
+      "weeklyOverallRank": 12
+    },
+    {
+      "player": "Bryce Young",
+      "fantasyPointsHalfPpr": 24.1,
+      "weeklyOverallRank": 13
+    },
+    {
+      "player": "Ja'Marr Chase",
+      "fantasyPointsHalfPpr": 23,
+      "weeklyOverallRank": 14
+    },
+    {
+      "player": "DeVonta Smith",
+      "fantasyPointsHalfPpr": 22.7,
+      "weeklyOverallRank": 15
+    },
+    {
+      "player": "Tyler Shough",
+      "fantasyPointsHalfPpr": 22.4,
+      "weeklyOverallRank": 16
+    },
+    {
+      "player": "Deshaun Watson",
+      "fantasyPointsHalfPpr": 19.7,
+      "weeklyOverallRank": 28
+    },
+    {
+      "player": "Derrick Henry",
+      "fantasyPointsHalfPpr": 16.2,
+      "weeklyOverallRank": 42
+    }
+  ],
+  "comments": [
+    {
+      "id": "mpg-001",
+      "redditScore": 3,
+      "body": "bloodbath of a day. jesus",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-002",
+      "redditScore": 2,
+      "body": "What happened with David Montgomery? Injured?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "David Montgomery",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-003",
+      "parentId": "mpg-002",
+      "redditScore": 1,
+      "body": "neither Houston running backs did much of anything. lot of passing today.",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "David Montgomery",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-004",
+      "parentId": "mpg-003",
+      "redditScore": 3,
+      "body": "despite his great week 1, remember he was averaging 3 yards per carry. he did have touchdowns and obviously a shortened field by getting those looks, but not nothing.",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "David Montgomery",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "UsageOpportunity",
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-005",
+      "redditScore": 3,
+      "body": "people were down on omarion Hampton after one week. I told yall he's a stud.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-006",
+      "redditScore": 4,
+      "body": "is Loveland banging ben johnson's wife or something? all this hype about this guy being an elite TE and as of now I'd rather have waller or Schultz.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "DraftRegret",
+              "UsageOpportunity"
+            ]
+          },
+          {
+            "player": "Darren Waller",
+            "sentiment": "Positive",
+            "playerEvaluation": "Neutral",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Comparison"
+            ]
+          },
+          {
+            "player": "Dalton Schultz",
+            "sentiment": "Positive",
+            "playerEvaluation": "Neutral",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-007",
+      "parentId": "mpg-006",
+      "redditScore": 4,
+      "body": "while possible, the weather is this game was bad, keep that in mind.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-008",
+      "redditScore": 3,
+      "body": "I dropped Schultz for Loveland btw lol",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Dalton Schultz",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "OwnRoster",
+            "intents": [
+              "Drop"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          },
+          {
+            "player": "Colston Loveland",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "intents": [
+              "Add"
+            ],
+            "reasons": [
+              "LineupRegret",
+              "DraftRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development",
+      "notes": "Regret flips the fantasy meaning of the drop-for construction."
+    },
+    {
+      "id": "mpg-009",
+      "parentId": "mpg-008",
+      "redditScore": 1,
+      "body": "dropped him for mayer. I'm bad at this.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-010",
+      "redditScore": 8,
+      "body": "all theses analysts hyped me on burden and now I feel absolutely robbed lol.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Luther Burden",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "DraftRegret",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-011",
+      "redditScore": 2,
+      "body": "happy rhanodre looked good in the second half. I think both these guys can be top 25ish",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-012",
+      "parentId": "mpg-011",
+      "redditScore": 4,
+      "body": "LMAO no he didn't, he had one good play all game, terrible in every other snap besides that. cope.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-013",
+      "parentId": "mpg-012",
+      "redditScore": 2,
+      "body": "he had 4 carries for 42 yards",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-014",
+      "parentId": "mpg-013",
+      "redditScore": -1,
+      "body": "one of those were for 24 lmao, his one good play. he's terrible.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-015",
+      "parentId": "mpg-014",
+      "redditScore": 6,
+      "body": "well Henderson had 15 carries for 35 yards outside of his first TD he could've taken one of those to the house",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-016",
+      "redditScore": 2,
+      "body": "HENDERSON. SUCK IT MONDRE OWNERS",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Rhamondre Stevenson",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-017",
+      "redditScore": 5,
+      "body": "serious question. is drake maye droppable?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake Maye",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Drop"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-018",
+      "parentId": "mpg-017",
+      "redditScore": 1,
+      "body": "droppable no, benchable, yes",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Drake Maye",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Sit"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-019",
+      "redditScore": 15,
+      "body": "drake maye is garbage. bright side is I have shough to replace him.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake Maye",
+            "sentiment": "StrongNegative",
+            "playerEvaluation": "StrongNegative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "reasons": [
+              "Performance",
+              "LineupRegret"
+            ]
+          },
+          {
+            "player": "Tyler Shough",
+            "sentiment": "Positive",
+            "playerEvaluation": "Neutral",
+            "fantasyOutlook": "Positive",
+            "perspective": "OwnRoster",
+            "intents": [
+              "Add"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-020",
+      "parentId": "mpg-019",
+      "redditScore": 3,
+      "body": "I'm in the same boat.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-021",
+      "redditScore": 7,
+      "body": "Loveland.... sigh",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-022",
+      "redditScore": -3,
+      "body": "lamar was a waste of a pick. should've waited for burrow.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Joe Burrow",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Lamar Jackson",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-023",
+      "redditScore": 14,
+      "body": "the best case for Loveland is probably bagent.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-024",
+      "parentId": "mpg-023",
+      "redditScore": 3,
+      "body": "burden too honestly.",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Luther Burden",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-025",
+      "redditScore": 1,
+      "body": "start purdy against the dolphins or dart against the rams?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Brock Purdy",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Start"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-026",
+      "parentId": "mpg-025",
+      "redditScore": -1,
+      "body": "dart",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Brock Purdy",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-027",
+      "parentId": "mpg-026",
+      "redditScore": 3,
+      "body": "purdy",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Brock Purdy",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-028",
+      "redditScore": 4,
+      "body": "is Bryce a QB1?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-029",
+      "parentId": "mpg-028",
+      "redditScore": 1,
+      "body": "he def looks better",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-030",
+      "redditScore": 5,
+      "body": "Schultz with beautiful stat padding",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Dalton Schultz",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-031",
+      "redditScore": 5,
+      "body": "shough 4th quarter champion",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tyler Shough",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-032",
+      "redditScore": 3,
+      "body": "I really drafted maye over parker Washington",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Parker Washington",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "DraftRegret",
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-033",
+      "redditScore": -4,
+      "body": "philly cheating with no calls and paying off refs... sad really no talent, only win cause they pay refs.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-034",
+      "redditScore": 9,
+      "body": "was monty hurt? what happened after last weeks game?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "David Montgomery",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-035",
+      "parentId": "mpg-034",
+      "redditScore": 7,
+      "body": "bc the Texans are incompetent idiots",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "David Montgomery",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-036",
+      "parentId": "mpg-035",
+      "redditScore": 2,
+      "body": "bengals d line was working the Texans all game",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "David Montgomery",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-037",
+      "redditScore": 58,
+      "body": "Loveland is the worst draft pick ive ever made and its not close. completely unstartable even before the caleb injury and now its worse.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "sentiment": "StrongNegative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "StrongNegative",
+            "perspective": "OwnRoster",
+            "intents": [
+              "Sit",
+              "Panic"
+            ],
+            "reasons": [
+              "DraftRegret",
+              "FantasyProduction",
+              "Injury"
+            ]
+          },
+          {
+            "player": "Caleb Williams",
+            "sentiment": "Neutral",
+            "playerEvaluation": "Neutral",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-038",
+      "parentId": "mpg-037",
+      "redditScore": 14,
+      "body": "I wouldn't say droppable but its clear now he was overdrafted.",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Hold"
+            ],
+            "reasons": [
+              "DraftRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development",
+      "notes": "Reply context is ambiguous because the parent also mentions Caleb, but the pronoun should refer to Loveland."
+    },
+    {
+      "id": "mpg-039",
+      "redditScore": 14,
+      "body": "bagent might be better for burden",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Luther Burden",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-040",
+      "redditScore": 4,
+      "body": "Fucking awful. thank you denzel boston for being the only player on my team to do anything.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Denzel Boston",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "reasons": [
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-041",
+      "redditScore": 1,
+      "body": "Watson might be good again?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Deshaun Watson",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-042",
+      "parentId": "mpg-041",
+      "redditScore": 4,
+      "body": "Cleveland's line gave him a clean pocket most of the day and he was hitting spots. not ready to say he's back but first time in awhile he looked like the guy they traded for.",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Deshaun Watson",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "OffensiveLine",
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development",
+      "notes": "Child comment relies on parent target and pronouns."
+    },
+    {
+      "id": "mpg-043",
+      "redditScore": 5,
+      "body": "YOOOOO BAGENT TARGETED BURDEN",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Luther Burden",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "UsageOpportunity",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-044",
+      "redditScore": 4,
+      "body": "Etienne was a trap",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Travis Etienne Jr.",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-045",
+      "redditScore": 24,
+      "body": "one of the worst set of games ever",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-046",
+      "redditScore": 20,
+      "body": "saints hate Etienne",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Travis Etienne Jr.",
+            "sentiment": "Negative",
+            "playerEvaluation": "Neutral",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "CoachingPlaycalling",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-047",
+      "parentId": "mpg-046",
+      "redditScore": 8,
+      "body": "he had a td called back, would've salvaged it.",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Travis Etienne Jr.",
+            "sentiment": "Neutral",
+            "playerEvaluation": "Neutral",
+            "fantasyOutlook": "Neutral",
+            "reasons": [
+              "CalledBackPlay",
+              "TouchdownVariance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-048",
+      "redditScore": 3,
+      "body": "fuck you saints",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-049",
+      "redditScore": 24,
+      "body": "I'm so upset about Caleb. fuck.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Caleb Williams",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-050",
+      "redditScore": 12,
+      "body": "my caleb Loveland stack 💔",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          },
+          {
+            "player": "Caleb Williams",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-051",
+      "redditScore": 3,
+      "body": "can't believe denzel boston is my best receiver",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Denzel Boston",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-052",
+      "redditScore": 5,
+      "body": "hopefully Texans realize after this game that marks sucks and put monty back on the field",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "David Montgomery",
+            "sentiment": "StrongNegative",
+            "playerEvaluation": "StrongNegative",
+            "fantasyOutlook": "StrongNegative",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "mpg-053",
+      "redditScore": 36,
+      "body": "caleb owners, what type of bleach we going with tonight?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Caleb Williams",
+            "sentiment": "StrongNegative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "StrongNegative",
+            "perspective": "OwnRoster",
+            "intents": [
+              "Panic"
+            ],
+            "reasons": [
+              "Injury",
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development",
+      "notes": "Dark fantasy-football hyperbole. Evaluate target meaning, not literal self-harm intent."
+    }
+  ]
+}

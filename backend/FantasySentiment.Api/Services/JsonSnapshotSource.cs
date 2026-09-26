@@ -1,4 +1,5 @@
 using System.Text.Json;
+using FantasySentiment.Api.Domain;
 using FantasySentiment.Api.Options;
 using Microsoft.Extensions.Options;
 
@@ -62,7 +63,8 @@ public sealed class JsonSnapshotSource(
                             comment.Score,
                             comment.Body?.Trim() ?? string.Empty))
                         .ToList(),
-                    NormalizeSubreddit(post.Subreddit)))
+                    NormalizeSubreddit(post.Subreddit),
+                    NormalizePostType(post.PostType ?? post.ThreadType)))
                 .ToList());
 
         Validate(source, key);
@@ -135,6 +137,11 @@ public sealed class JsonSnapshotSource(
                 errors.Add($"Post '{post.RedditId}' must have a subreddit.");
             }
 
+            if (string.IsNullOrWhiteSpace(post.PostType))
+            {
+                errors.Add($"Post '{post.RedditId}' must have a postType.");
+            }
+
             if (post.Comments.Count == 0)
             {
                 errors.Add($"Post '{post.RedditId}' must contain at least one comment.");
@@ -197,6 +204,25 @@ public sealed class JsonSnapshotSource(
             : normalized;
     }
 
+    private static string NormalizePostType(string? postType)
+    {
+        var normalized = postType?.Trim();
+        if (string.IsNullOrWhiteSpace(normalized))
+        {
+            return RedditPostTypes.GameThread;
+        }
+
+        return normalized.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase) switch
+        {
+            "GameThread" => RedditPostTypes.GameThread,
+            "PostGameThread" => RedditPostTypes.PostGameThread,
+            "PostgameThread" => RedditPostTypes.PostGameThread,
+            "Normal" => RedditPostTypes.Normal,
+            "ImportantNews" => RedditPostTypes.ImportantNews,
+            _ => normalized
+        };
+    }
+
     private sealed record SnapshotFixture(
         string? Key,
         string? Name,
@@ -210,6 +236,8 @@ public sealed class JsonSnapshotSource(
     private sealed record SnapshotPostFixture(
         string? RedditId,
         string? Subreddit,
+        string? PostType,
+        string? ThreadType,
         string? Title,
         DateTimeOffset CreatedAt,
         int Score,

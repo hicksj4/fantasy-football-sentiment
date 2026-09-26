@@ -1,0 +1,2622 @@
+{
+  "thread": {
+    "name": "OFFICIAL WEEK 2 SUNDAY AFTERNOON GAME THREAD",
+    "type": "GameThread",
+    "postType": "GameThread",
+    "subreddit": "fantasyfootball",
+    "datasetSplit": "Development",
+    "sourceFile": "D:/FF Sentiment Hand Data/Week2AfternoonGameData.txt"
+  },
+  "players": [
+    {
+      "name": "Aaron Rodgers",
+      "team": "PIT",
+      "position": "QB",
+      "aliases": [
+        "Rodgers",
+        "Aaron Rodgers"
+      ]
+    },
+    {
+      "name": "Baker Mayfield",
+      "team": "TB",
+      "position": "QB",
+      "aliases": [
+        "Baker",
+        "Baker Mayfield"
+      ]
+    },
+    {
+      "name": "Bijan Robinson",
+      "team": "ATL",
+      "position": "RB",
+      "aliases": [
+        "Bijan",
+        "Bijan Robinson"
+      ]
+    },
+    {
+      "name": "Breece Hall",
+      "team": "NYJ",
+      "position": "RB",
+      "aliases": [
+        "Breece",
+        "Breece Hall"
+      ]
+    },
+    {
+      "name": "Brian Thomas Jr.",
+      "team": "JAX",
+      "position": "WR",
+      "aliases": [
+        "BTJ",
+        "Brian Thomas Jr"
+      ]
+    },
+    {
+      "name": "Brock Purdy",
+      "team": "SF",
+      "position": "QB",
+      "aliases": [
+        "Purdy",
+        "Brock Purdy"
+      ]
+    },
+    {
+      "name": "Bucky Irving",
+      "team": "TB",
+      "position": "RB",
+      "aliases": [
+        "Bucky",
+        "Bucky Irving"
+      ]
+    },
+    {
+      "name": "Caleb Williams",
+      "team": "CHI",
+      "position": "QB",
+      "aliases": [
+        "Caleb",
+        "Caleb Williams"
+      ]
+    },
+    {
+      "name": "Cam Ward",
+      "team": "TEN",
+      "position": "QB",
+      "aliases": [
+        "Cam Ward"
+      ]
+    },
+    {
+      "name": "CeeDee Lamb",
+      "team": "DAL",
+      "position": "WR",
+      "aliases": [
+        "CeeDee",
+        "Ceedee",
+        "Lamb",
+        "CeeDee Lamb"
+      ]
+    },
+    {
+      "name": "Christian McCaffrey",
+      "team": "SF",
+      "position": "RB",
+      "aliases": [
+        "CMC",
+        "McCaffrey",
+        "Christian McCaffrey",
+        "C. McCaffrey"
+      ]
+    },
+    {
+      "name": "Chuba Hubbard",
+      "team": "CAR",
+      "position": "RB",
+      "aliases": [
+        "Chuba",
+        "Chuba Hubbard"
+      ]
+    },
+    {
+      "name": "Colston Loveland",
+      "team": "CHI",
+      "position": "TE",
+      "aliases": [
+        "Loveland",
+        "Colston Loveland"
+      ]
+    },
+    {
+      "name": "Cooper Rush",
+      "team": "BAL",
+      "position": "QB",
+      "aliases": [
+        "Cooper Rush"
+      ]
+    },
+    {
+      "name": "Dalton Schultz",
+      "team": "HOU",
+      "position": "TE",
+      "aliases": [
+        "Schultz",
+        "Dalton Schultz"
+      ]
+    },
+    {
+      "name": "Darren Waller",
+      "team": "MIA",
+      "position": "TE",
+      "aliases": [
+        "Waller",
+        "Darren Waller"
+      ]
+    },
+    {
+      "name": "Davante Adams",
+      "team": "LAR",
+      "position": "WR",
+      "aliases": [
+        "Adams",
+        "Davante Adams"
+      ]
+    },
+    {
+      "name": "David Montgomery",
+      "team": "DET",
+      "position": "RB",
+      "aliases": [
+        "Monty",
+        "Montgomery",
+        "David Montgomery"
+      ]
+    },
+    {
+      "name": "De'Von Achane",
+      "team": "MIA",
+      "position": "RB",
+      "aliases": [
+        "Achane",
+        "DeVon Achane",
+        "De'Von Achane"
+      ]
+    },
+    {
+      "name": "Denzel Boston",
+      "team": "TEN",
+      "position": "WR",
+      "aliases": [
+        "Denzel Boston"
+      ]
+    },
+    {
+      "name": "Derrick Henry",
+      "team": "BAL",
+      "position": "RB",
+      "aliases": [
+        "Derrick Henry",
+        "King Henry"
+      ]
+    },
+    {
+      "name": "Deshaun Watson",
+      "team": "CLE",
+      "position": "QB",
+      "aliases": [
+        "Watson",
+        "Deshaun",
+        "Deshaun Watson"
+      ]
+    },
+    {
+      "name": "Devaughn Vele",
+      "team": "DEN",
+      "position": "WR",
+      "aliases": [
+        "Vele",
+        "Devaughn Vele"
+      ]
+    },
+    {
+      "name": "DeVonta Smith",
+      "team": "PHI",
+      "position": "WR",
+      "aliases": [
+        "Devonta Smith",
+        "DeVonta Smith",
+        "Smitty"
+      ]
+    },
+    {
+      "name": "Drake London",
+      "team": "ATL",
+      "position": "WR",
+      "aliases": [
+        "Drake London",
+        "London"
+      ]
+    },
+    {
+      "name": "Drake Maye",
+      "team": "NE",
+      "position": "QB",
+      "aliases": [
+        "Drake Maye"
+      ]
+    },
+    {
+      "name": "Emeka Egbuka",
+      "team": "TB",
+      "position": "WR",
+      "aliases": [
+        "Egbuka",
+        "Emeka Egbuka"
+      ]
+    },
+    {
+      "name": "Garrett Wilson",
+      "team": "NYJ",
+      "position": "WR",
+      "aliases": [
+        "Garrett Wilson",
+        "G. Wilson"
+      ]
+    },
+    {
+      "name": "George Pickens",
+      "team": "DAL",
+      "position": "WR",
+      "aliases": [
+        "Pickens",
+        "George Pickens"
+      ]
+    },
+    {
+      "name": "Harold Fannin Jr.",
+      "team": "CLE",
+      "position": "TE",
+      "aliases": [
+        "Fannin",
+        "Harold Fannin"
+      ]
+    },
+    {
+      "name": "Isaiah Likely",
+      "team": "BAL",
+      "position": "TE",
+      "aliases": [
+        "Likely",
+        "Isaiah Likely"
+      ]
+    },
+    {
+      "name": "J.K. Dobbins",
+      "team": "DEN",
+      "position": "RB",
+      "aliases": [
+        "JK Dobbins",
+        "J.K. Dobbins",
+        "Dobbins"
+      ]
+    },
+    {
+      "name": "Ja'Marr Chase",
+      "team": "CIN",
+      "position": "WR",
+      "aliases": [
+        "JaMarr",
+        "Jamaar",
+        "Chase",
+        "Ja'Marr Chase"
+      ]
+    },
+    {
+      "name": "Jalen Coker",
+      "team": "CAR",
+      "position": "WR",
+      "aliases": [
+        "Coker",
+        "Jalen Coker"
+      ]
+    },
+    {
+      "name": "Jalen Hurts",
+      "team": "PHI",
+      "position": "QB",
+      "aliases": [
+        "Hurts",
+        "Jalen Hurts"
+      ]
+    },
+    {
+      "name": "James Cook",
+      "team": "BUF",
+      "position": "RB",
+      "aliases": [
+        "James Cook",
+        "J. Cook"
+      ]
+    },
+    {
+      "name": "Javonte Williams",
+      "team": "DAL",
+      "position": "RB",
+      "aliases": [
+        "Javonte",
+        "Javonte Williams"
+      ]
+    },
+    {
+      "name": "Jaxon Smith-Njigba",
+      "team": "SEA",
+      "position": "WR",
+      "aliases": [
+        "JSN",
+        "Jaxon Smith-Njigba",
+        "Jaxon Smith",
+        "Smith-Njigba"
+      ]
+    },
+    {
+      "name": "Jayden Reed",
+      "team": "GB",
+      "position": "WR",
+      "aliases": [
+        "Jayden Reed",
+        "J Reed"
+      ]
+    },
+    {
+      "name": "Jaylen Waddle",
+      "team": "MIA",
+      "position": "WR",
+      "aliases": [
+        "Waddle",
+        "Jaylen Waddle"
+      ]
+    },
+    {
+      "name": "Joe Burrow",
+      "team": "CIN",
+      "position": "QB",
+      "aliases": [
+        "Burrow",
+        "Joe Burrow"
+      ]
+    },
+    {
+      "name": "Justin Herbert",
+      "team": "LAC",
+      "position": "QB",
+      "aliases": [
+        "Herbert",
+        "Justin Herbert"
+      ]
+    },
+    {
+      "name": "Justin Jefferson",
+      "team": "MIN",
+      "position": "WR",
+      "aliases": [
+        "Jefferson",
+        "Justin Jefferson",
+        "JJettas",
+        "Jettas"
+      ]
+    },
+    {
+      "name": "Juwan Johnson",
+      "team": "NO",
+      "position": "TE",
+      "aliases": [
+        "Juwan",
+        "Juwan Johnson"
+      ]
+    },
+    {
+      "name": "Khalif Raymond",
+      "team": "DET",
+      "position": "WR",
+      "aliases": [
+        "Khalif Raymond"
+      ]
+    },
+    {
+      "name": "Kyle Monangai",
+      "team": "CHI",
+      "position": "RB",
+      "aliases": [
+        "Monangai",
+        "Kyle Monangai"
+      ]
+    },
+    {
+      "name": "Kyle Pitts",
+      "team": "ATL",
+      "position": "TE",
+      "aliases": [
+        "Pitts",
+        "Kyle Pitts"
+      ]
+    },
+    {
+      "name": "Ladd McConkey",
+      "team": "LAC",
+      "position": "WR",
+      "aliases": [
+        "Ladd",
+        "Ladd McConkey"
+      ]
+    },
+    {
+      "name": "Lamar Jackson",
+      "team": "BAL",
+      "position": "QB",
+      "aliases": [
+        "Lamar",
+        "Lamar Jackson"
+      ]
+    },
+    {
+      "name": "Luther Burden",
+      "team": "CHI",
+      "position": "WR",
+      "aliases": [
+        "Burden",
+        "Luther Burden"
+      ]
+    },
+    {
+      "name": "Malik Nabers",
+      "team": "NYG",
+      "position": "WR",
+      "aliases": [
+        "Nabers",
+        "Malik Nabers"
+      ]
+    },
+    {
+      "name": "Mark Andrews",
+      "team": "BAL",
+      "position": "TE",
+      "aliases": [
+        "Mandrews",
+        "Andrews",
+        "Mark Andrews"
+      ]
+    },
+    {
+      "name": "Mike Evans",
+      "team": "TB",
+      "position": "WR",
+      "aliases": [
+        "Evans",
+        "Mike Evans"
+      ]
+    },
+    {
+      "name": "Nick Chubb",
+      "team": "HOU",
+      "position": "RB",
+      "aliases": [
+        "Chubb",
+        "Nick Chubb"
+      ]
+    },
+    {
+      "name": "Omarion Hampton",
+      "team": "LAC",
+      "position": "RB",
+      "aliases": [
+        "Hampton",
+        "Omarion Hampton",
+        "Omarian",
+        "Omarion"
+      ]
+    },
+    {
+      "name": "Parker Washington",
+      "team": "JAX",
+      "position": "WR",
+      "aliases": [
+        "Parker Washington",
+        "Parker"
+      ]
+    },
+    {
+      "name": "Puka Nacua",
+      "team": "LAR",
+      "position": "WR",
+      "aliases": [
+        "Puka",
+        "Nacua",
+        "Puka Nacua"
+      ]
+    },
+    {
+      "name": "Quentin Johnston",
+      "team": "LAC",
+      "position": "WR",
+      "aliases": [
+        "QJ",
+        "Quentin Johnston"
+      ]
+    },
+    {
+      "name": "Rachaad White",
+      "team": "TB",
+      "position": "RB",
+      "aliases": [
+        "Rachaad",
+        "Rachaad White",
+        "White"
+      ]
+    },
+    {
+      "name": "Rhamondre Stevenson",
+      "team": "NE",
+      "position": "RB",
+      "aliases": [
+        "Rhamondre",
+        "Mondre",
+        "Rhamondre Stevenson"
+      ]
+    },
+    {
+      "name": "Rome Odunze",
+      "team": "CHI",
+      "position": "WR",
+      "aliases": [
+        "Rome Odunze",
+        "Odunze"
+      ]
+    },
+    {
+      "name": "Saquon Barkley",
+      "team": "PHI",
+      "position": "RB",
+      "aliases": [
+        "Saquon",
+        "Barkley",
+        "Saquon Barkley"
+      ]
+    },
+    {
+      "name": "Tank Bigsby",
+      "team": "JAX",
+      "position": "RB",
+      "aliases": [
+        "Tank Bigsby",
+        "Bigsby"
+      ]
+    },
+    {
+      "name": "Tetairoa McMillan",
+      "team": "CAR",
+      "position": "WR",
+      "aliases": [
+        "Tet",
+        "Tetairoa McMillan"
+      ]
+    },
+    {
+      "name": "Tory Horton",
+      "team": "SEA",
+      "position": "WR",
+      "aliases": [
+        "Horton",
+        "Tory Horton"
+      ]
+    },
+    {
+      "name": "Travis Etienne Jr.",
+      "team": "JAX",
+      "position": "RB",
+      "aliases": [
+        "Etienne",
+        "ETN",
+        "Travis Etienne"
+      ]
+    },
+    {
+      "name": "TreVeyon Henderson",
+      "team": "NE",
+      "position": "RB",
+      "aliases": [
+        "TreVeyon Henderson"
+      ]
+    },
+    {
+      "name": "Trevor Lawrence",
+      "team": "JAX",
+      "position": "QB",
+      "aliases": [
+        "TLAW",
+        "Trevor Lawrence"
+      ]
+    },
+    {
+      "name": "Trey McBride",
+      "team": "ARI",
+      "position": "TE",
+      "aliases": [
+        "McBride",
+        "Trey McBride"
+      ]
+    },
+    {
+      "name": "Tucker Kraft",
+      "team": "GB",
+      "position": "TE",
+      "aliases": [
+        "Kraft",
+        "Tucker Kraft"
+      ]
+    },
+    {
+      "name": "Tyler Shough",
+      "team": "NO",
+      "position": "QB",
+      "aliases": [
+        "Shough",
+        "Tyler Shough"
+      ]
+    },
+    {
+      "name": "Tyler Warren",
+      "team": "IND",
+      "position": "TE",
+      "aliases": [
+        "Warren",
+        "Tyler Warren"
+      ]
+    },
+    {
+      "name": "Woody Marks",
+      "team": "HOU",
+      "position": "RB",
+      "aliases": [
+        "Woody Marks"
+      ]
+    },
+    {
+      "name": "Zay Flowers",
+      "team": "BAL",
+      "position": "WR",
+      "aliases": [
+        "Zay",
+        "Flowers",
+        "Zay Flowers"
+      ]
+    }
+  ],
+  "referenceResults": [
+    {
+      "player": "Jaxon Smith-Njigba",
+      "fantasyPointsHalfPpr": 33.5,
+      "weeklyOverallRank": 2
+    },
+    {
+      "player": "Dak Prescott",
+      "fantasyPointsHalfPpr": 29.8,
+      "weeklyOverallRank": 4
+    }
+  ],
+  "comments": [
+    {
+      "id": "aft-001",
+      "redditScore": 4,
+      "body": "JSN is him",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "StrongPositive",
+            "playerEvaluation": "StrongPositive",
+            "fantasyOutlook": "Positive",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-002",
+      "redditScore": 4,
+      "body": "How does JSN get that open. he's their only good player",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-003",
+      "parentId": "aft-002",
+      "redditScore": 4,
+      "body": "cooked tf out that boy",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development",
+      "notes": "Reply is interpreted as JSN beating coverage, not negative sentiment toward JSN."
+    },
+    {
+      "id": "aft-004",
+      "redditScore": 6,
+      "body": "taking puka over JSN just might haunt me",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Puka Nacua",
+            "sentiment": "Negative",
+            "playerEvaluation": "Neutral",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "reasons": [
+              "Comparison",
+              "DraftRegret"
+            ]
+          },
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Comparison",
+              "DraftRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-005",
+      "redditScore": 5,
+      "body": "JSN is fucking INSANE!!!",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-006",
+      "redditScore": 6,
+      "body": "JSN",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-007",
+      "redditScore": 19,
+      "body": "JSN is the truth",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-008",
+      "redditScore": 5,
+      "body": "JSN is a god",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "StrongPositive",
+            "playerEvaluation": "StrongPositive",
+            "fantasyOutlook": "Positive",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-009",
+      "redditScore": 3,
+      "body": "fell for the chargers hype",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development",
+      "notes": "Team-level regret should not create a player target."
+    },
+    {
+      "id": "aft-010",
+      "redditScore": 3,
+      "body": "chargers are straight ASS",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-011",
+      "redditScore": 4,
+      "body": "why tf did I start Ladd man..",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ladd McConkey",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "intents": [
+              "Start",
+              "Panic"
+            ],
+            "reasons": [
+              "LineupRegret",
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-012",
+      "redditScore": 2,
+      "body": "you can drop Herbert",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Drop"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-013",
+      "redditScore": 2,
+      "body": "chargers are done",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-014",
+      "redditScore": 4,
+      "body": "Tucker kraft welcome to the waiver wire buddy",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "intents": [
+              "Add"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-015",
+      "redditScore": 1,
+      "body": "ceedee already almost has 100 yards lol",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "CeeDee Lamb",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-016",
+      "redditScore": 2,
+      "body": "people panicked way too much on CMC",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian McCaffrey",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Panic"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-017",
+      "redditScore": 4,
+      "body": "Ceedee has 18 points halfway into the 1st quarter",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "CeeDee Lamb",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-018",
+      "redditScore": 6,
+      "body": "jeanty man wtf 😭 this is not my week",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-019",
+      "redditScore": 1,
+      "body": "Guess who started Caleb and Loveland and is facing JSN and Lamb 😀",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Caleb Williams",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "intents": [
+              "Start",
+              "Panic"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          },
+          {
+            "player": "Colston Loveland",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "intents": [
+              "Start",
+              "Panic"
+            ],
+            "reasons": [
+              "LineupRegret"
+            ]
+          },
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "StrongPositive",
+            "playerEvaluation": "StrongPositive",
+            "fantasyOutlook": "Positive",
+            "perspective": "OpponentRoster",
+            "reasons": [
+              "FantasyProduction",
+              "OpponentPerspective"
+            ]
+          },
+          {
+            "player": "CeeDee Lamb",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "OpponentRoster",
+            "reasons": [
+              "FantasyProduction",
+              "OpponentPerspective"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development",
+      "notes": "Two own-roster starts are contrasted against two opponent-roster players."
+    },
+    {
+      "id": "aft-020",
+      "redditScore": 4,
+      "body": "Holy fuck CMC",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Christian McCaffrey",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-021",
+      "redditScore": 3,
+      "body": "CMC, we are back.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian McCaffrey",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-022",
+      "redditScore": 7,
+      "body": "So George Pickens is…..fantasy irrelevant",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "George Pickens",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "UsageOpportunity",
+              "RoleCompetition"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-023",
+      "parentId": "aft-022",
+      "redditScore": 1,
+      "body": "seems like it yeah",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "George Pickens",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-024",
+      "redditScore": 1,
+      "body": "They call him Lamb League Winner",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "CeeDee Lamb",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-025",
+      "redditScore": 4,
+      "body": "Justin Herbert is overrated garbage",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "sentiment": "StrongNegative",
+            "playerEvaluation": "StrongNegative",
+            "fantasyOutlook": "StrongNegative",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-026",
+      "redditScore": 3,
+      "body": "have a feeling dak buries me",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-027",
+      "redditScore": 6,
+      "body": "They really said to go all-in on the Chargers",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-028",
+      "redditScore": 4,
+      "body": "Let's go Ceedee!",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "CeeDee Lamb",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-029",
+      "redditScore": 5,
+      "body": "I could have had Lamb, but I chose Barkley instead. What the fuck was I thinking?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "CeeDee Lamb",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "DraftRegret",
+              "Comparison"
+            ]
+          },
+          {
+            "player": "Saquon Barkley",
+            "sentiment": "Negative",
+            "playerEvaluation": "Neutral",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "reasons": [
+              "DraftRegret",
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-030",
+      "redditScore": 7,
+      "body": "Pickens is firmly WR2 on the cowboys no idea why I drafted him so high",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "George Pickens",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "perspective": "OwnRoster",
+            "reasons": [
+              "DraftRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-031",
+      "redditScore": 1,
+      "body": "CeeDee save me from colston loveland",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "CeeDee Lamb",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "OwnRoster",
+            "reasons": [
+              "FantasyProduction",
+              "LineupRegret"
+            ]
+          },
+          {
+            "player": "Colston Loveland",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "reasons": [
+              "FantasyProduction",
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-032",
+      "redditScore": 4,
+      "body": "TLAW rushing td would be peak",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Trevor Lawrence",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-033",
+      "redditScore": 1,
+      "body": "Def should have started Washington over Ladd 🥲",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ladd McConkey",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "perspective": "OwnRoster",
+            "intents": [
+              "Start"
+            ],
+            "reasons": [
+              "LineupRegret",
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-034",
+      "redditScore": 2,
+      "body": "Terrible throw to Pickens by Dak",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "George Pickens",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-035",
+      "redditScore": 6,
+      "body": "Parker Washington hype was real",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Parker Washington",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-036",
+      "redditScore": 2,
+      "body": "Where the fuck is Ladd man",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Ladd McConkey",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-037",
+      "redditScore": 2,
+      "body": "Come on Herbert get it together",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-038",
+      "redditScore": 7,
+      "body": "Was Ladd really a rug pull?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ladd McConkey",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Panic"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-039",
+      "parentId": "aft-038",
+      "redditScore": 3,
+      "body": "He has broken ribs!",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Ladd McConkey",
+            "sentiment": "Neutral",
+            "playerEvaluation": "Neutral",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-040",
+      "redditScore": 3,
+      "body": "Man all Chargers are Sell for a bag of chips.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-041",
+      "redditScore": 3,
+      "body": "Waddle is droppable",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Jaylen Waddle",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Drop"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-042",
+      "redditScore": 4,
+      "body": "Chargers might legit finish last this year",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-043",
+      "redditScore": 11,
+      "body": "is herbert even startable bouta drop my next up qb for bryce young",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Drop",
+              "Start"
+            ],
+            "reasons": [
+              "LineupRegret",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-044",
+      "parentId": "aft-043",
+      "redditScore": 2,
+      "body": "Barring a big turnaround, he’s a QB2 at best",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-045",
+      "redditScore": 1,
+      "body": "WADDLE WHAT A CATCH",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Jaylen Waddle",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-046",
+      "redditScore": 4,
+      "body": "How are the Chargers this bad? Genuinely how?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-047",
+      "redditScore": 2,
+      "body": "Have JSN + McBride let’s goooo",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Trey McBride",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-048",
+      "redditScore": 4,
+      "body": "LADD IS ALIVE",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Ladd McConkey",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-049",
+      "redditScore": 8,
+      "body": "FINALLY - THROW THE BALL TO HAMPTON HOLY SHIT",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-050",
+      "redditScore": 8,
+      "body": "So Justin Herbert is droppable after this week right?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Drop"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-051",
+      "parentId": "aft-050",
+      "redditScore": 2,
+      "body": "I'm doing it",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-052",
+      "redditScore": 1,
+      "body": "I LOVE YOU HAMPTON!!!",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-053",
+      "redditScore": 2,
+      "body": "Omarion Hampton my beautiful pookie",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-054",
+      "redditScore": 12,
+      "body": "Loveland is bust of the yr so far",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-055",
+      "parentId": "aft-054",
+      "redditScore": 2,
+      "body": "praying tyson bagent hyper targets him going forward. literally can't get worse",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "UsageOpportunity",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-056",
+      "redditScore": 14,
+      "body": "Damn Burden almost got saved if that TD was better thrown",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Luther Burden",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Neutral",
+            "fantasyOutlook": "Neutral",
+            "reasons": [
+              "CalledBackPlay",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development",
+      "notes": "Game-event context is needed to know whether this is praise, frustration, or neutral variance."
+    },
+    {
+      "id": "aft-057",
+      "redditScore": 10,
+      "body": "Jsn is so fucking good",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-058",
+      "redditScore": 21,
+      "body": "Opp JSN outscored my five early game players on one play. AMA.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "StrongPositive",
+            "playerEvaluation": "StrongPositive",
+            "fantasyOutlook": "Positive",
+            "perspective": "OpponentRoster",
+            "reasons": [
+              "FantasyProduction",
+              "OpponentPerspective"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-059",
+      "redditScore": 12,
+      "body": "JSN is like WR8 on the day with one play",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-060",
+      "redditScore": 7,
+      "body": "White looks way better than Croskey Merrit",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-061",
+      "parentId": "aft-060",
+      "redditScore": 2,
+      "body": "agree",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-062",
+      "redditScore": 9,
+      "body": "Parker Washington is going to be a top 10 WR. Can’t believe how many haters he had",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Parker Washington",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-063",
+      "redditScore": 6,
+      "body": "I love the Arizona McBrides",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-064",
+      "redditScore": 7,
+      "body": "Save me Lord JSN",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-065",
+      "redditScore": 7,
+      "body": "jsn is fantasy god",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-066",
+      "redditScore": 7,
+      "body": "PARKER WASHINGTON IS A STUD",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Parker Washington",
+            "sentiment": "StrongPositive",
+            "playerEvaluation": "StrongPositive",
+            "fantasyOutlook": "StrongPositive",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-067",
+      "redditScore": 7,
+      "body": "🚨 🚨 Justin Herbert has a point 🚨 🚨",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "sentiment": "StrongNegative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "Sarcasm",
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-068",
+      "redditScore": 7,
+      "body": "IMAGINE LOSING TO DESHAUN",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Deshaun Watson",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-069",
+      "redditScore": 7,
+      "body": "Baker fucking up the revenge game that everyone took as a free win was the most predictable outcome",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Baker Mayfield",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-070",
+      "redditScore": 6,
+      "body": "JSN IS A BEAST sheesh",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-071",
+      "redditScore": 6,
+      "body": "JSN JSN JSN",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-072",
+      "redditScore": 6,
+      "body": "BAKER LOL… Imfao even",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Baker Mayfield",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-073",
+      "redditScore": 6,
+      "body": "BTJ earned his WR3 role",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Brian Thomas Jr.",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-074",
+      "redditScore": 6,
+      "body": "Javonte having 4.5 is gross",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Javonte Williams",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Panic"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-075",
+      "parentId": "aft-074",
+      "redditScore": 1,
+      "body": "Probably gonna see this a lot from him. without TDs he's useless.",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Javonte Williams",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-076",
+      "redditScore": 6,
+      "body": "Fuck I’m selling Hampton ASAP",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Sell"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-077",
+      "redditScore": 6,
+      "body": "JSN is unbelievable",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-078",
+      "redditScore": 6,
+      "body": "OMARIAN NO",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-079",
+      "redditScore": 6,
+      "body": "Jaxon Smith is killing me man...",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-080",
+      "redditScore": 5,
+      "body": "JSN my lord and savior!!",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-081",
+      "redditScore": 5,
+      "body": "I cannot believe I got ceedee in the 2nd round",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "CeeDee Lamb",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-082",
+      "parentId": "aft-081",
+      "redditScore": 1,
+      "body": "same my bozo ass work league let him fall to 19 🤣",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "CeeDee Lamb",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-083",
+      "redditScore": 5,
+      "body": "Imagine if Hampton was good.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-084",
+      "parentId": "aft-083",
+      "redditScore": 2,
+      "body": "My team might have a chance if that were the case.",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "perspective": "OwnRoster",
+            "reasons": [
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-085",
+      "redditScore": 5,
+      "body": "Justin Herbert is ass cheeks",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-086",
+      "redditScore": 5,
+      "body": "Yall Arizona might be a good team?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-087",
+      "parentId": "aft-086",
+      "redditScore": 2,
+      "body": "They have loads of talent on the offense, I was so confused how they were projected the worst team in the league.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-088",
+      "redditScore": 5,
+      "body": "MCBRIDEEEEE",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-089",
+      "redditScore": 5,
+      "body": "I'm about to drop Herbert. \"Screw it I'll figure it out\" might be a better plan anyway",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "sentiment": "Negative",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "intents": [
+              "Drop"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-090",
+      "redditScore": 5,
+      "body": "Yea my terry pick was a fucking waste",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-091",
+      "redditScore": 5,
+      "body": "I actually like the new Seattle OC better than Kubiak for JSN",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-092",
+      "redditScore": 5,
+      "body": "Chargers might actually start 0-7",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-093",
+      "redditScore": 5,
+      "body": "Holy shit Herbert you are disgusting man",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "sentiment": "Unclear",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-094",
+      "redditScore": 5,
+      "body": "Chargers are dog shit",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Development"
+    },
+    {
+      "id": "aft-095",
+      "redditScore": 5,
+      "body": "JSN might be the best player in fantasy",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jaxon Smith-Njigba",
+            "sentiment": "Positive",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "intents": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Development"
+    }
+  ]
+}
