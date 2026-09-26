@@ -61,7 +61,8 @@ public sealed class JsonSnapshotSource(
                             comment.CreatedAt,
                             comment.Score,
                             comment.Body?.Trim() ?? string.Empty))
-                        .ToList()))
+                        .ToList(),
+                    NormalizeSubreddit(post.Subreddit)))
                 .ToList());
 
         Validate(source, key);
@@ -129,6 +130,11 @@ public sealed class JsonSnapshotSource(
                 errors.Add($"Post '{post.RedditId}' must have a title.");
             }
 
+            if (string.IsNullOrWhiteSpace(post.Subreddit))
+            {
+                errors.Add($"Post '{post.RedditId}' must have a subreddit.");
+            }
+
             if (post.Comments.Count == 0)
             {
                 errors.Add($"Post '{post.RedditId}' must contain at least one comment.");
@@ -178,6 +184,19 @@ public sealed class JsonSnapshotSource(
         }
     }
 
+    private static string NormalizeSubreddit(string? subreddit)
+    {
+        var normalized = subreddit?.Trim();
+        if (string.IsNullOrWhiteSpace(normalized))
+        {
+            return "fantasyfootball";
+        }
+
+        return normalized.StartsWith("r/", StringComparison.OrdinalIgnoreCase)
+            ? normalized[2..]
+            : normalized;
+    }
+
     private sealed record SnapshotFixture(
         string? Key,
         string? Name,
@@ -190,6 +209,7 @@ public sealed class JsonSnapshotSource(
 
     private sealed record SnapshotPostFixture(
         string? RedditId,
+        string? Subreddit,
         string? Title,
         DateTimeOffset CreatedAt,
         int Score,

@@ -47,20 +47,14 @@ builder.Services.AddSingleton<VoteWeightCalculator>();
 builder.Services.AddSingleton<FantasySentimentAnalyzer>();
 builder.Services.AddSingleton<VaderSentimentAnalyzer>();
 builder.Services.AddSingleton<RuleBasedFantasySentimentAnalyzer>();
-builder.Services.AddSingleton<RobertaSentimentAnalyzer>();
-builder.Services.AddSingleton<HybridSentimentAnalyzer>();
-builder.Services.AddSingleton<ComparisonSentimentAnalyzer>();
 builder.Services.AddSingleton<ISentimentAnalyzer>(provider =>
 {
     var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<SentimentOptions>>().Value;
     return options.Mode.Trim().ToLowerInvariant() switch
     {
-        "vader" => provider.GetRequiredService<VaderSentimentAnalyzer>(),
         "rulebased" or "rule-based" => provider.GetRequiredService<RuleBasedFantasySentimentAnalyzer>(),
-        "roberta" => provider.GetRequiredService<RobertaSentimentAnalyzer>(),
-        "hybrid" => provider.GetRequiredService<HybridSentimentAnalyzer>(),
-        "comparison" => provider.GetRequiredService<ComparisonSentimentAnalyzer>(),
-        _ => provider.GetRequiredService<ComparisonSentimentAnalyzer>()
+        "vader" => provider.GetRequiredService<VaderSentimentAnalyzer>(),
+        _ => provider.GetRequiredService<VaderSentimentAnalyzer>()
     };
 });
 builder.Services.AddSingleton<FantasyIntentClassifier>();
@@ -105,7 +99,7 @@ api.MapGet("/health", () => Results.Ok(new
     mockReddit = app.Configuration.GetValue("Reddit:UseMockReddit", true),
     snapshotMode = true,
     defaultSnapshotKey = app.Configuration.GetValue("SnapshotProcessing:DefaultSnapshotKey", "2026-week-4"),
-    sentimentMode = app.Configuration.GetValue("Sentiment:Mode", SentimentModes.Vader)
+    sentimentMode = ResolveSentimentModeName(app.Configuration.GetValue("Sentiment:Mode", SentimentModes.Vader))
 }));
 
 if (app.Environment.IsDevelopment())
@@ -460,9 +454,6 @@ static void ApplyEnvironmentOverrides(ConfigurationManager configuration)
     Override("REDDIT_USER_AGENT", "Reddit:UserAgent");
     Override("REDDIT_FETCH_LOOKBACK_MINUTES", "Reddit:FetchLookbackMinutes");
     Override("SENTIMENT_MODE", "Sentiment:Mode");
-    Override("SENTIMENT_ROBERTA_ENABLED", "Sentiment:Roberta:Enabled");
-    Override("SENTIMENT_ROBERTA_ONNX_MODEL_PATH", "Sentiment:Roberta:OnnxModelPath");
-    Override("SENTIMENT_ROBERTA_TOKENIZER_PATH", "Sentiment:Roberta:TokenizerPath");
     Override("REDDIT_ANALYSIS_DISCOVERY_INTERVAL_MINUTES", "RedditAnalysis:DiscoveryIntervalMinutes");
     Override("REDDIT_ANALYSIS_ANALYSIS_INTERVAL_MINUTES", "RedditAnalysis:AnalysisIntervalMinutes");
     Override("REDDIT_ANALYSIS_NORMAL_MINIMUM_COMMENTS", "RedditAnalysis:NormalPosts:MinimumComments");
@@ -503,6 +494,16 @@ static void ApplyEnvironmentOverrides(ConfigurationManager configuration)
         }.Any(name => !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(name)));
     }
 
+}
+
+static string ResolveSentimentModeName(string? configuredMode)
+{
+    return configuredMode?.Trim().ToLowerInvariant() switch
+    {
+        "rulebased" or "rule-based" => SentimentModes.RuleBased,
+        "vader" => SentimentModes.Vader,
+        _ => SentimentModes.Vader
+    };
 }
 
 static string BuildPostgresConnectionStringFromEnvironment()

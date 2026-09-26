@@ -45,6 +45,8 @@ Processing is idempotent. Reprocessing a snapshot removes that snapshot's prior 
 
 `PlayerMentionDetector` finds player aliases in each comment. The analyzer then scores target-specific context so comments like `CMC looked great but Purdy was awful` can produce separate sentiment for each player.
 
+The production analyzer is VADER plus fantasy-football semantic corrections. `RuleBased` remains available as a lightweight baseline/debug mode through `SENTIMENT_MODE=RuleBased`; unknown modes fall back to `Vader`.
+
 Each `PlayerMention` stores:
 
 - `RawSentimentScore`: base text sentiment.
@@ -161,8 +163,11 @@ Important snapshot settings:
 SNAPSHOT_DEFAULT_KEY=2026-week-4
 SNAPSHOT_PROCESS_ON_STARTUP=true
 SNAPSHOT_FIXTURE_DIRECTORY=SeedData/Snapshots
+SENTIMENT_MODE=Vader
 NEXT_PUBLIC_API_BASE_URL=http://localhost:5044
 ```
+
+Snapshot posts can optionally include a `subreddit` field. If omitted, the importer defaults to `fantasyfootball`; if present, the value is retained on `RedditPost.Subreddit` so future fantasy-community and team-subreddit analysis can be separated.
 
 The backend reads environment variables and also loads `.env` from the repo root for local development.
 

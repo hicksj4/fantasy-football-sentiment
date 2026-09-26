@@ -26,6 +26,7 @@ public sealed class SnapshotProcessingTests
               "posts": [
                 {
                   "redditId": "post-a",
+                  "subreddit": "minnesotavikings",
                   "title": "Thread A",
                   "createdAt": "2026-09-20T17:00:00Z",
                   "score": 12,
@@ -48,6 +49,7 @@ public sealed class SnapshotProcessingTests
 
         Assert.Equal("parse-test", snapshot.Key);
         Assert.Single(snapshot.Posts);
+        Assert.Equal("minnesotavikings", snapshot.Posts[0].Subreddit);
         Assert.Single(snapshot.Posts[0].Comments);
     }
 
