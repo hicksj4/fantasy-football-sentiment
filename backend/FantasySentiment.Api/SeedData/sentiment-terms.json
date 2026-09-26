@@ -4,56 +4,116 @@
       "stud",
       "great",
       "incredible",
-      "love",
       "monster",
       "elite",
+      "beast",
+      "automatic",
+      "underrated",
+      "steal"
+    ],
+    "NegativeTerms": [
+      "awful",
+      "terrible",
+      "bad",
+      "bust",
+      "jag",
+      "decoy",
+      "useless"
+    ],
+    "PositivePhrases": [
       "league winner",
+      "league-winning",
       "smash start",
       "must start",
-      "breakout",
-      "steal",
+      "automatic start",
+      "locked in",
+      "locked-in rb1",
+      "breakout game",
+      "set and forget",
       "buy low",
       "buy high",
       "rb1",
       "wr1",
       "te1",
-      "balling",
+      "balling out",
+      "sneaky add",
+      "cool as fuck",
+      "pillow are cool"
+    ],
+    "NegativePhrases": [
+      "roster clogger",
+      "goose egg",
+      "completely washed",
+      "dead roster spot",
+      "absolute bust",
+      "looks awful",
+      "looks terrible"
+    ],
+    "PositiveSlang": [
       "cooking",
       "filthy",
-      "disgusting",
-      "cool as fuck",
-      "pillow are cool",
-      "beast",
-      "automatic",
-      "locked in",
-      "underrated",
-      "sneaky add"
+      "disgusting"
     ],
-    "NegativeTerms": [
+    "NegativeSlang": [
       "washed",
-      "awful",
-      "terrible",
-      "bust",
-      "roster clogger",
-      "jag",
-      "drop",
-      "bench",
       "unstartable",
-      "decoy",
-      "cooked",
-      "2 points",
-      "thanks for the 2 points",
-      "goose egg",
-      "sell",
-      "dead",
-      "useless",
-      "panic",
-      "tilted",
-      "nervous"
+      "cooked"
     ],
+    "EmojiLexicon": {
+      "Positive": {
+        "📈": 0.35,
+        "🔥": 0.30,
+        "🚀": 0.30,
+        "🐐": 0.40
+      },
+      "Negative": {
+        "📉": -0.35,
+        "💀": -0.25
+      }
+    },
+    "PerspectivePatterns": {
+      "OpponentThreat": [
+        "fantasy week already over",
+        "week already over",
+        "week is over",
+        "ended my week",
+        "killed me",
+        "destroyed me",
+        "wish i didn't play against",
+        "wish i didnt play against",
+        "wish i wasn't facing",
+        "wish i wasnt facing"
+      ],
+      "OwnRosterPositive": [
+        "beyond happy",
+        "so happy",
+        "love",
+        "incredible",
+        "carried me"
+      ],
+      "OwnRosterRegret": [
+        "why did i start",
+        "cost me my week",
+        "ended my week",
+        "lost me my week",
+        "benched the wrong",
+        "should have benched"
+      ]
+    },
+    "Sarcasm": {
+      "LowPointMaximum": 5.0,
+      "LowPointPatterns": [
+        "thanks for the {points} points",
+        "thanks for {points} points",
+        "love the {points} points",
+        "great another {points} point game",
+        "great, another {points} point game"
+      ]
+    },
     "Intensifiers": [
       "very",
       "absolutely",
+      "completely",
       "total",
       "really",
       "super",

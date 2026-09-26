@@ -12,7 +12,54 @@ public interface ISentimentAnalyzer
 public sealed record TargetedSentimentRequest(
     string FullText,
     string Context,
-    PlayerMentionMatch Mention);
+    PlayerMentionMatch Mention,
+    string TargetText = "",
+    string TargetPerspective = TargetPerspectives.Unknown);
+
+public sealed record SentimentAnalysisResult(
+    string TargetText,
+    string Perspective,
+    string VaderText,
+    double RawVaderScore,
+    double FantasyAdjustment,
+    double EmojiAdjustment,
+    double PerspectiveAdjustment,
+    double QuestionAdjustment,
+    double FinalScore,
+    IReadOnlyList<string> MatchedPositiveTerms,
+    IReadOnlyList<string> MatchedNegativeTerms,
+    IReadOnlyList<string> MatchedPhrases,
+    IReadOnlyList<string> MatchedEmoji,
+    IReadOnlyList<string> AppliedRules)
+{
+    public double TotalAdjustment => Math.Round(FinalScore - RawVaderScore, 3);
+
+    public string ToDiagnostics()
+    {
+        return string.Join(
+            "; ",
+            new[]
+            {
+                $"vader={RawVaderScore:0.###}",
+                $"fantasy={FantasyAdjustment:0.###}",
+                $"emoji={EmojiAdjustment:0.###}",
+                $"perspective={PerspectiveAdjustment:0.###}",
+                $"question={QuestionAdjustment:0.###}",
+                $"final={FinalScore:0.###}",
+                $"perspectiveLabel={Perspective}",
+                $"positiveTerms={Join(MatchedPositiveTerms)}",
+                $"negativeTerms={Join(MatchedNegativeTerms)}",
+                $"phrases={Join(MatchedPhrases)}",
+                $"emojiMatches={Join(MatchedEmoji)}",
+                $"rules={Join(AppliedRules)}"
+            });
+    }
+
+    private static string Join(IReadOnlyList<string> values)
+    {
+        return values.Count == 0 ? "none" : string.Join('|', values);
+    }
+}
 
 public sealed record TargetedSentimentResult(
     double RawSentimentScore,

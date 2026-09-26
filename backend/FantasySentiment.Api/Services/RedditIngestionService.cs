@@ -308,7 +308,12 @@ public sealed class RedditIngestionService(
                 targets);
             var analysisContext = threadContextBuilder.Build(resolvedContext);
             var sentiment = await sentimentAnalyzer.AnalyzeAsync(
-                new TargetedSentimentRequest(comment.Body, analysisContext, match),
+                new TargetedSentimentRequest(
+                    comment.Body,
+                    analysisContext,
+                    match,
+                    resolvedContext.TargetText,
+                    resolvedContext.Perspective),
                 cancellationToken);
 
             db.PlayerMentions.Add(new PlayerMention

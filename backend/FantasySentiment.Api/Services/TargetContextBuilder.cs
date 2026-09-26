@@ -27,7 +27,7 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     private static readonly Regex OwnRosterRegex = new(
-        @"\bas\s+(?:a|an)\b.{0,80}\bowner\b|\bi\s+own\b|\bwe\s+own\b",
+        @"\bas\s+(?:a|an)\b.{0,80}\bowner\b|\b(?:i|we)\s+own\b|\bi\s+(?:started|start|played|play|rolled out|have|had)\b",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     private static readonly Regex OutcomeContinuationRegex = new(
@@ -364,10 +364,13 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
         var lower = sentence.Trim().ToLowerInvariant();
         return lower.StartsWith("he's ")
                || lower.StartsWith("he is ")
+               || lower.StartsWith("he ")
                || lower.StartsWith("she's ")
                || lower.StartsWith("she is ")
+               || lower.StartsWith("she ")
                || lower.StartsWith("they're ")
                || lower.StartsWith("they are ")
+               || lower.StartsWith("they ")
                || lower.StartsWith("still ")
                || lower.StartsWith("also ")
                || lower.StartsWith("that ")
