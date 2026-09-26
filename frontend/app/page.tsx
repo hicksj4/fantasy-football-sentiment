@@ -56,15 +56,19 @@ export default async function Home({ searchParams }: PageProps) {
       <section className="metrics-grid">
         <MetricCard label="Comments analyzed" value={snapshot.totalComments} detail={`${snapshot.totalPosts} game threads`} />
         <MetricCard label="Player mentions" value={snapshot.totalPlayerMentions} detail={`${snapshot.uniquePlayersMentioned} players`} />
-        <MetricCard label="Top impact" value={topImpact ? topImpact.impactScore.toFixed(1) : "0.0"} detail={topImpact?.name ?? "No data"} />
+        <MetricCard
+          label="Top discussion impact"
+          value={topImpact ? `#${topImpact.discussionImpactRank}` : "—"}
+          detail={topImpact ? `${topImpact.name} • ${topImpact.discussionImpactPercentile.toFixed(0)}th percentile` : "No data"}
+        />
         <MetricCard label="Processed" value={processedAt} detail={`${snapshot.commentsPerSecond.toFixed(1)} comments/sec`} />
       </section>
 
       <section className="dashboard-grid">
-        <DashboardTable title="Snapshot Impact" rows={impactPlayers} />
-        <DashboardTable title="Waiver / Hype Buzz" rows={waivers} mode="waiver" />
-        <DashboardTable title="Panic / Drop Buzz" rows={panic} mode="panic" />
-        <DashboardTable title="Most Discussed" rows={mostDiscussed} />
+        <DashboardTable title="Discussion Impact" rows={impactPlayers} snapshotKey={snapshot.key} />
+        <DashboardTable title="Waiver / Hype Buzz" rows={waivers} mode="waiver" snapshotKey={snapshot.key} />
+        <DashboardTable title="Panic / Drop Buzz" rows={panic} mode="panic" snapshotKey={snapshot.key} />
+        <DashboardTable title="Most Discussed" rows={mostDiscussed} snapshotKey={snapshot.key} />
       </section>
 
       <section className="panel">

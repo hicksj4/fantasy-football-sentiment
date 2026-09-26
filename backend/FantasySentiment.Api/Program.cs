@@ -29,6 +29,8 @@ builder.Services.Configure<RedditAnalysisOptions>(builder.Configuration.GetSecti
 builder.Services.Configure<SnapshotOptions>(builder.Configuration.GetSection("Snapshots"));
 builder.Services.Configure<SnapshotProcessingOptions>(builder.Configuration.GetSection("SnapshotProcessing"));
 builder.Services.Configure<DashboardHighlightOptions>(builder.Configuration.GetSection("DashboardHighlights"));
+builder.Services.Configure<VoteWeightingOptions>(builder.Configuration.GetSection("VoteWeighting"));
+builder.Services.Configure<ScoreExplanationOptions>(builder.Configuration.GetSection("ScoreExplanation"));
 builder.Services.Configure<SentimentOptions>(builder.Configuration.GetSection("Sentiment"));
 builder.Services.Configure<SentimentLexiconOptions>(builder.Configuration.GetSection("SentimentLexicon"));
 builder.Services.Configure<IntentLexiconOptions>(builder.Configuration.GetSection("IntentLexicon"));
@@ -472,6 +474,12 @@ static void ApplyEnvironmentOverrides(ConfigurationManager configuration)
     Override("DASHBOARD_HIGHLIGHT_EXCLUDE_LOW_CONFIDENCE", "DashboardHighlights:ExcludeLowConfidence");
     Override("DASHBOARD_HIGHLIGHT_MINIMUM_ABSOLUTE_SENTIMENT_CHANGE", "DashboardHighlights:MinimumAbsoluteSentimentChange");
     Override("DASHBOARD_HIGHLIGHT_COMMENT_EXCERPT_LENGTH", "DashboardHighlights:CommentExcerptLength");
+    Override("VOTE_WEIGHTING_POSITIVE_LOG_DIVISOR", "VoteWeighting:PositiveLogDivisor");
+    Override("VOTE_WEIGHTING_POSITIVE_MAXIMUM_WEIGHT", "VoteWeighting:PositiveMaximumWeight");
+    Override("VOTE_WEIGHTING_NEGATIVE_MINIMUM_WEIGHT", "VoteWeighting:NegativeMinimumWeight");
+    Override("VOTE_WEIGHTING_NEUTRAL_MAXIMUM_SCORE", "VoteWeighting:NeutralMaximumScore");
+    Override("SCORE_EXPLANATION_MOST_REJECTED_MAXIMUM_REDDIT_SCORE", "ScoreExplanation:MostRejectedMaximumRedditScore");
+    Override("SCORE_EXPLANATION_COMMENT_EXCERPT_LENGTH", "ScoreExplanation:CommentExcerptLength");
 
     void Override(string envName, string configKey)
     {

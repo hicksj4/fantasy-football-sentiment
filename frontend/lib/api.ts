@@ -26,6 +26,10 @@ export type DashboardPlayer = {
   negativeImpact: number;
   netImpact: number;
   impactScore: number;
+  votingEffect: number;
+  discussionImpact: number;
+  discussionImpactRank: number;
+  discussionImpactPercentile: number;
 };
 
 export type DashboardHighlightInfluence = {
@@ -122,6 +126,32 @@ export type PlayerMetrics = {
   injuryCount: number;
   hypeCount: number;
   panicCount: number;
+  votingEffect: number;
+  discussionImpact: number;
+  discussionImpactRank: number;
+  discussionImpactPercentile: number;
+  positiveImpact: number;
+  negativeImpact: number;
+  netImpact: number;
+  positiveMentions: number;
+  neutralMentions: number;
+  negativeMentions: number;
+  mostInfluentialComment: PlayerScoreComment | null;
+  mostEndorsedComment: PlayerScoreComment | null;
+  mostRejectedComment: PlayerScoreComment | null;
+};
+
+export type PlayerScoreComment = {
+  commentExcerpt: string;
+  postTitle: string;
+  subreddit: string;
+  redditScore: number;
+  voteWeight: number;
+  finalSentimentScore: number;
+  communityContribution: number;
+  targetAttributionMethod: string;
+  targetConfidence: number;
+  createdAt: string;
 };
 
 export type HistoryPoint = {

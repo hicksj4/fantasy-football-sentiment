@@ -133,10 +133,19 @@ h2 {
 .hero-score span,
 .chart-scale,
 .signal span,
+.score-stat span,
+.score-stat small,
+.impact-summary span,
+.impact-summary small,
+.distribution-card span,
+.impact-breakdown span,
+.comment-card-heading span,
+.comment-metrics span,
 .highlight-meta,
 .highlight-stats span,
 .thread-title,
 .influence-empty,
+.rejected-note,
 .highlight-empty span {
   color: var(--muted);
 }
@@ -481,6 +490,23 @@ tr:hover td {
   background: rgba(255, 255, 255, 0.025);
 }
 
+.impact-rank {
+  display: inline-grid;
+  gap: 2px;
+  min-width: 86px;
+}
+
+.impact-rank strong {
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.impact-rank span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
 .score-pill {
   display: inline-flex;
   min-width: 64px;
@@ -567,6 +593,193 @@ tr:hover td {
   padding: 18px;
 }
 
+.score-explanation {
+  margin-bottom: 14px;
+}
+
+.score-explanation-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.1fr) minmax(220px, 0.8fr) minmax(280px, 1fr) minmax(220px, 0.8fr);
+  gap: 18px;
+  padding: 16px;
+}
+
+.score-stack,
+.impact-summary,
+.distribution-card,
+.impact-breakdown {
+  min-width: 0;
+}
+
+.score-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.score-stat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 54px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(36, 48, 65, 0.55);
+}
+
+.score-stat:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.score-stat div,
+.impact-summary,
+.distribution-card,
+.impact-breakdown {
+  display: grid;
+  gap: 7px;
+}
+
+.score-stat span,
+.impact-summary span,
+.distribution-heading span,
+.impact-breakdown span,
+.comment-card-heading span {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.score-stat small,
+.impact-summary small {
+  line-height: 1.35;
+}
+
+.impact-summary strong {
+  color: var(--text);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.impact-summary p {
+  margin: 0;
+  color: var(--green);
+  font-weight: 850;
+}
+
+.distribution-heading,
+.comment-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.distribution-heading strong,
+.comment-card-heading strong {
+  color: var(--text);
+  font-size: 0.86rem;
+}
+
+.distribution-bar {
+  display: flex;
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(143, 160, 180, 0.16);
+}
+
+.distribution-bar span {
+  min-width: 2px;
+}
+
+.distribution-bar .positive {
+  background: var(--green);
+}
+
+.distribution-bar .neutral {
+  background: var(--muted);
+}
+
+.distribution-bar .negative {
+  background: var(--red);
+}
+
+.distribution-counts,
+.comment-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.distribution-counts span,
+.comment-metrics span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 28px;
+  padding: 4px 9px;
+  border: 1px solid rgba(36, 48, 65, 0.78);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.distribution-counts b {
+  color: var(--text);
+}
+
+.impact-breakdown {
+  align-content: start;
+}
+
+.impact-breakdown div {
+  display: grid;
+  gap: 6px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(36, 48, 65, 0.55);
+}
+
+.impact-breakdown div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.impact-breakdown strong {
+  color: var(--text);
+  font-size: 1.25rem;
+}
+
+.explanation-comments {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.comment-card {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 270px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(16, 22, 32, 0.92);
+}
+
+.comment-card blockquote {
+  margin: 0;
+  color: #f4f8fb;
+  font-size: 0.96rem;
+  line-height: 1.4;
+}
+
+.rejected-note {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
 .signal-grid {
   display: grid;
   grid-template-columns: repeat(10, minmax(0, 1fr));
@@ -607,6 +820,8 @@ tr:hover td {
   .dashboard-controls,
   .snapshot-banner,
   .highlight-grid,
+  .score-explanation-grid,
+  .explanation-comments,
   .dashboard-grid,
   .chart-grid,
   .metrics-grid {

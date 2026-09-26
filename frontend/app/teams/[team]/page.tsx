@@ -37,10 +37,14 @@ export default async function TeamPage({ params, searchParams }: PageProps) {
         <MetricCard label="Mentions" value={detail.mentions} detail="Within selected snapshot" />
         <MetricCard label="Discussion share" value={`${(detail.buzz * 100).toFixed(1)}%`} detail={snapshot.name} />
         <MetricCard label="Most discussed" value={leader?.mentions ?? 0} detail={leader?.name ?? "No data"} />
-        <MetricCard label="Top impact" value={impact ? impact.impactScore.toFixed(1) : "0.0"} detail={impact?.name ?? "No data"} />
+        <MetricCard
+          label="Top discussion impact"
+          value={impact ? `#${impact.discussionImpactRank}` : "—"}
+          detail={impact ? `${impact.name} • ${impact.discussionImpactPercentile.toFixed(0)}th percentile` : "No data"}
+        />
       </section>
 
-      <DashboardTable title={`${detail.team} Snapshot Players`} rows={detail.players} />
+      <DashboardTable title={`${detail.team} Snapshot Players`} rows={detail.players} snapshotKey={snapshot.key} />
     </main>
   );
 }
