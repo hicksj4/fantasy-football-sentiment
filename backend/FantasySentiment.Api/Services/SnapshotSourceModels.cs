@@ -12,7 +12,8 @@ public sealed record SnapshotSourcePost(
     string Title,
     DateTimeOffset CreatedAt,
     int Score,
-    IReadOnlyList<SnapshotSourceComment> Comments);
+    IReadOnlyList<SnapshotSourceComment> Comments,
+    string Subreddit = "fantasyfootball");
 
 public sealed record SnapshotSourceComment(
     string RedditId,

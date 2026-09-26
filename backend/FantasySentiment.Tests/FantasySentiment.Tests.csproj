@@ -23,4 +23,9 @@
     <ProjectReference Include="..\FantasySentiment.Api\FantasySentiment.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="artifacts\**" />
+    <None Remove="artifacts\**" />
+  </ItemGroup>
+
 </Project>

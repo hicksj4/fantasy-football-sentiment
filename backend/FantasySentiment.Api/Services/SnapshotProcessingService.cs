@@ -221,7 +221,7 @@ public sealed class SnapshotProcessingService(
             {
                 SnapshotId = snapshot.Id,
                 RedditId = sourcePost.RedditId,
-                Subreddit = "fantasyfootball",
+                Subreddit = sourcePost.Subreddit,
                 Title = sourcePost.Title,
                 CreatedAt = sourcePost.CreatedAt,
                 Url = $"https://reddit.com/r/fantasyfootball/comments/{sourcePost.RedditId}",

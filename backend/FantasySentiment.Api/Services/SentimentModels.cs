@@ -36,8 +36,3 @@ public sealed record TargetedSentimentResult(
     }
 }
 
-public sealed record ModelSentimentResult(
-    bool IsAvailable,
-    double Score,
-    string AnalyzerName,
-    string? Diagnostics = null);
