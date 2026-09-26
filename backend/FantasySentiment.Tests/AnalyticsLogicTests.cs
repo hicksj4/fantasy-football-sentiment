@@ -274,6 +274,7 @@ public sealed class AnalyticsLogicTests
 
         var zero = calculator.Calculate(0);
         var one = calculator.Calculate(1);
+        var two = calculator.Calculate(2);
         var ten = calculator.Calculate(10);
         var hundred = calculator.Calculate(100);
         var thousand = calculator.Calculate(1000);
@@ -281,13 +282,14 @@ public sealed class AnalyticsLogicTests
         var extreme = calculator.Calculate(1_000_000);
 
         Assert.Equal(1, zero);
-        Assert.True(one > zero);
-        Assert.True(ten > one);
+        Assert.Equal(1, one);
+        Assert.True(two > one);
+        Assert.True(ten > two);
         Assert.True(hundred > ten);
         Assert.True(thousand > hundred);
-        Assert.True(thousand < hundred * 2);
-        Assert.InRange(negative, 0.25, 1);
-        Assert.Equal(4, extreme);
+        Assert.True(thousand < hundred * 1.5);
+        Assert.InRange(negative, 0.10, 0.25);
+        Assert.Equal(6, extreme);
     }
 
     [Fact]

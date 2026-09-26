@@ -34,7 +34,20 @@ public sealed record PlayerMetricsDto(
     int HoldCount,
     int InjuryCount,
     int HypeCount,
-    int PanicCount);
+    int PanicCount,
+    double VotingEffect = 0,
+    double DiscussionImpact = 0,
+    int DiscussionImpactRank = 0,
+    double DiscussionImpactPercentile = 0,
+    double PositiveImpact = 0,
+    double NegativeImpact = 0,
+    double NetImpact = 0,
+    int PositiveMentions = 0,
+    int NeutralMentions = 0,
+    int NegativeMentions = 0,
+    PlayerScoreCommentDto? MostInfluentialComment = null,
+    PlayerScoreCommentDto? MostEndorsedComment = null,
+    PlayerScoreCommentDto? MostRejectedComment = null);
 
 public sealed record AnalysisSnapshotDto(
     int Id,
@@ -79,7 +92,11 @@ public sealed record DashboardPlayerDto(
     double PositiveImpact = 0,
     double NegativeImpact = 0,
     double NetImpact = 0,
-    double ImpactScore = 0);
+    double ImpactScore = 0,
+    double VotingEffect = 0,
+    double DiscussionImpact = 0,
+    int DiscussionImpactRank = 0,
+    double DiscussionImpactPercentile = 0);
 
 public sealed record DashboardHighlightsDto(
     DashboardHighlightPlayerDto? Positive,
@@ -116,6 +133,21 @@ public sealed record DashboardHighlightInfluenceDto(
     double VoteWeight,
     double SentimentContribution,
     string PostTitle,
+    DateTimeOffset CreatedAt,
+    string? Subreddit = null,
+    string? TargetAttributionMethod = null,
+    double? TargetConfidence = null);
+
+public sealed record PlayerScoreCommentDto(
+    string CommentExcerpt,
+    string PostTitle,
+    string Subreddit,
+    int RedditScore,
+    double VoteWeight,
+    double FinalSentimentScore,
+    double CommunityContribution,
+    string TargetAttributionMethod,
+    double TargetConfidence,
     DateTimeOffset CreatedAt);
 
 public sealed record PlayerHistoryPointDto(

@@ -41,7 +41,7 @@ POST /api/snapshots/2026-week-4/process?skipIfProcessed=false
 
 Processing is idempotent. Reprocessing a snapshot removes that snapshot's prior imported posts, comments, mentions, and aggregates before rebuilding them from the JSON fixture.
 
-## Sentiment And Impact
+## Score Definitions
 
 `PlayerMentionDetector` finds player aliases in each comment. The analyzer then scores target-specific context so comments like `CMC looked great but Purdy was awful` can produce separate sentiment for each player.
 
@@ -56,27 +56,67 @@ Each `PlayerMention` stores:
 - `VoteWeight`: diminishing-return score weight.
 - `WeightedSentimentContribution`: `FinalSentimentScore * VoteWeight`.
 
-Vote weighting is intentionally logarithmic, so 500 upvotes matters more than 50, but not 10x more:
+### Sentiment Score
 
 ```text
-score = 0: weight = 1
-score > 0: weight = clamp(1 + ln(1 + score) / 2.5, 1, 4)
-score < 0: weight = clamp(1 / (1 + ln(1 + abs(score)) / 2.5), 0.25, 1)
+SentimentScore = average(FinalSentimentScore)
 ```
 
-Snapshot community sentiment is:
+This answers: "What do the analyzed comments say about this player if every mention counts equally?"
+
+Range: `-1` to `+1`.
+
+### Community Sentiment
 
 ```text
 CommunitySentiment = SUM(FinalSentimentScore * VoteWeight) / SUM(VoteWeight)
 ```
 
-An influential comment's displayed impact is:
+This answers: "What does the community appear to think after Reddit voting changes the influence of each comment?"
+
+Range: `-1` to `+1`.
+
+### Reddit Vote Weight
+
+Vote weighting is intentionally logarithmic, so a Reddit score of `500` matters substantially more than `50`, but it does not count as 10x more influential. Reddit score is Reddit's displayed score value, not a literal count of downvotes.
 
 ```text
-Impact = (FinalSentimentScore * VoteWeight) / TotalVoteWeightForPlayerInSnapshot
+score 0 or 1: weight = 1
+score > 1: weight = clamp(1 + ln(score) / 2.0, 1, 6)
+score < 0: weight = clamp(1 / sqrt(1 + abs(score)), 0.10, 1)
 ```
 
-Those comment impacts sum approximately to the player's displayed community sentiment.
+Scores `0` and `1` are treated as neutral weight because Reddit comments generally begin around score `1`.
+
+Rejected comments are not inverted. A negative comment with Reddit score `-8` remains a negative comment; it simply receives less influence in Community Sentiment.
+
+### Voting Effect
+
+```text
+VotingEffect = CommunitySentiment - SentimentScore
+```
+
+This explains what Reddit voting did to the aggregate result. Positive values mean voting made sentiment more positive; negative values mean voting pulled it downward.
+
+### Discussion Impact
+
+```text
+PositiveImpact = SUM(max(FinalSentimentScore * VoteWeight, 0))
+NegativeImpact = SUM(min(FinalSentimentScore * VoteWeight, 0))
+DiscussionImpact = PositiveImpact + ABS(NegativeImpact)
+```
+
+Discussion Impact is not a positive/negative rating. It means: "How much weighted sentiment-bearing discussion exists around this player?"
+
+The UI emphasizes Discussion Impact percentile and rank within the selected snapshot, such as `94th percentile` and `#3 of 47 players`.
+
+For individual comments:
+
+```text
+CommunityContribution = (FinalSentimentScore * VoteWeight) / TotalVoteWeightForPlayerInSnapshot
+```
+
+Those comment contributions sum approximately to the player's Community Sentiment.
 
 ## Dashboard
 
@@ -100,7 +140,7 @@ DASHBOARD_HIGHLIGHT_COMMENT_EXCERPT_LENGTH=190
 
 The tables below the cards are still useful, but interpreted within the selected snapshot:
 
-- Snapshot Impact
+- Discussion Impact
 - Waiver / Hype Buzz
 - Panic / Drop Buzz
 - Most Discussed

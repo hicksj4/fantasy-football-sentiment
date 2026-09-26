@@ -9,9 +9,11 @@ namespace FantasySentiment.Api.Services;
 
 public sealed class SnapshotQueryService(
     FantasySentimentDbContext db,
-    IOptions<DashboardHighlightOptions> highlightOptions)
+    IOptions<DashboardHighlightOptions> highlightOptions,
+    IOptions<ScoreExplanationOptions>? scoreExplanationOptions = null)
 {
     private readonly DashboardHighlightOptions _highlightOptions = highlightOptions.Value;
+    private readonly ScoreExplanationOptions _scoreExplanationOptions = scoreExplanationOptions?.Value ?? new ScoreExplanationOptions();
 
     public async Task<IReadOnlyList<AnalysisSnapshotDto>> GetSnapshotsAsync(CancellationToken cancellationToken)
     {
@@ -40,14 +42,18 @@ public sealed class SnapshotQueryService(
             return [];
         }
 
-        return await db.SnapshotPlayerAggregates
+        var aggregates = await db.SnapshotPlayerAggregates
             .AsNoTracking()
             .Include(aggregate => aggregate.Player)
             .Where(aggregate => aggregate.SnapshotId == snapshot.Id)
             .OrderByDescending(aggregate => aggregate.ImpactScore)
             .ThenByDescending(aggregate => aggregate.MentionCount)
-            .Select(aggregate => ToDashboardPlayer(aggregate))
             .ToListAsync(cancellationToken);
+        var ranks = BuildDiscussionImpactRanks(aggregates);
+
+        return aggregates
+            .Select(aggregate => ToDashboardPlayer(aggregate, ranks[aggregate.PlayerId]))
+            .ToList();
     }
 
     public async Task<PlayerMetricsDto?> GetPlayerAsync(
@@ -69,7 +75,21 @@ public sealed class SnapshotQueryService(
                 item => item.SnapshotId == snapshot.Id && item.PlayerId == playerId,
                 cancellationToken);
 
-        return aggregate is null ? null : ToPlayerMetrics(aggregate);
+        if (aggregate is null)
+        {
+            return null;
+        }
+
+        var aggregates = await db.SnapshotPlayerAggregates
+            .AsNoTracking()
+            .Where(item => item.SnapshotId == snapshot.Id)
+            .ToListAsync(cancellationToken);
+        var ranks = BuildDiscussionImpactRanks(aggregates);
+        var rank = ranks.TryGetValue(aggregate.PlayerId, out var foundRank)
+            ? foundRank
+            : new DiscussionImpactRank(0, 0);
+
+        return await ToPlayerMetricsAsync(aggregate, rank, cancellationToken);
     }
 
     public async Task<DashboardHighlightsDto?> GetHighlightsAsync(
@@ -298,7 +318,44 @@ public sealed class SnapshotQueryService(
             snapshot.CommentsPerSecond);
     }
 
-    private static DashboardPlayerDto ToDashboardPlayer(SnapshotPlayerAggregate aggregate)
+    private static IReadOnlyDictionary<int, DiscussionImpactRank> BuildDiscussionImpactRanks(
+        IReadOnlyList<SnapshotPlayerAggregate> aggregates)
+    {
+        if (aggregates.Count == 0)
+        {
+            return new Dictionary<int, DiscussionImpactRank>();
+        }
+
+        var ordered = aggregates
+            .OrderByDescending(aggregate => aggregate.ImpactScore)
+            .ThenByDescending(aggregate => aggregate.MentionCount)
+            .ThenBy(aggregate => aggregate.PlayerId)
+            .ToList();
+        var result = new Dictionary<int, DiscussionImpactRank>();
+        var previousImpact = double.NaN;
+        var rank = 0;
+
+        for (var index = 0; index < ordered.Count; index++)
+        {
+            var aggregate = ordered[index];
+            if (index == 0 || Math.Abs(aggregate.ImpactScore - previousImpact) > 0.0001)
+            {
+                rank = index + 1;
+                previousImpact = aggregate.ImpactScore;
+            }
+
+            var percentile = ordered.Count == 1
+                ? 100
+                : Math.Round((ordered.Count - rank) * 100.0 / (ordered.Count - 1), 1);
+            result[aggregate.PlayerId] = new DiscussionImpactRank(rank, percentile);
+        }
+
+        return result;
+    }
+
+    private static DashboardPlayerDto ToDashboardPlayer(
+        SnapshotPlayerAggregate aggregate,
+        DiscussionImpactRank? impactRank = null)
     {
         return new DashboardPlayerDto(
             aggregate.PlayerId,
@@ -327,12 +384,24 @@ public sealed class SnapshotQueryService(
             aggregate.PositiveImpact,
             aggregate.NegativeImpact,
             aggregate.NetImpact,
-            aggregate.ImpactScore);
+            aggregate.ImpactScore,
+            Math.Round(aggregate.CommunitySentimentScore - aggregate.SentimentScore, 3),
+            aggregate.ImpactScore,
+            impactRank?.Rank ?? 0,
+            impactRank?.Percentile ?? 0);
     }
 
-    private static PlayerMetricsDto ToPlayerMetrics(SnapshotPlayerAggregate aggregate)
+    private async Task<PlayerMetricsDto> ToPlayerMetricsAsync(
+        SnapshotPlayerAggregate aggregate,
+        DiscussionImpactRank impactRank,
+        CancellationToken cancellationToken)
     {
         var denominator = Math.Max(1, aggregate.MentionCount);
+        var comments = await GetScoreCommentsAsync(
+            aggregate.SnapshotId,
+            aggregate.PlayerId,
+            cancellationToken);
+
         return new PlayerMetricsDto(
             aggregate.PlayerId,
             aggregate.Player.Name,
@@ -360,7 +429,80 @@ public sealed class SnapshotQueryService(
             aggregate.HoldCount,
             aggregate.InjuryCount,
             aggregate.HypeCount,
-            aggregate.PanicCount);
+            aggregate.PanicCount,
+            Math.Round(aggregate.CommunitySentimentScore - aggregate.SentimentScore, 3),
+            aggregate.ImpactScore,
+            impactRank.Rank,
+            impactRank.Percentile,
+            aggregate.PositiveImpact,
+            aggregate.NegativeImpact,
+            aggregate.NetImpact,
+            aggregate.PositiveCount,
+            aggregate.NeutralCount,
+            aggregate.NegativeCount,
+            comments.MostInfluential,
+            comments.MostEndorsed,
+            comments.MostRejected);
+    }
+
+    private async Task<PlayerScoreCommentSet> GetScoreCommentsAsync(
+        int snapshotId,
+        int playerId,
+        CancellationToken cancellationToken)
+    {
+        var mentions = await db.PlayerMentions
+            .AsNoTracking()
+            .Where(mention => mention.SnapshotId == snapshotId && mention.PlayerId == playerId)
+            .Select(mention => new ScoreCommentSource(
+                mention.Comment.Body,
+                mention.Comment.Post.Title,
+                mention.Comment.Post.Subreddit,
+                mention.RedditScore,
+                mention.VoteWeight,
+                mention.FinalSentimentScore,
+                mention.TargetAttributionMethod,
+                mention.TargetConfidence,
+                mention.CreatedAt))
+            .ToListAsync(cancellationToken);
+        var totalVoteWeight = mentions.Sum(mention => mention.VoteWeight);
+        if (totalVoteWeight <= 0 || mentions.Count == 0)
+        {
+            return new PlayerScoreCommentSet(null, null, null);
+        }
+
+        var comments = mentions
+            .Select(mention => ToScoreComment(mention, totalVoteWeight))
+            .ToList();
+        var mostInfluential = comments
+            .OrderByDescending(comment => Math.Abs(comment.CommunityContribution))
+            .FirstOrDefault();
+        var mostEndorsed = comments
+            .OrderByDescending(comment => comment.RedditScore)
+            .ThenByDescending(comment => Math.Abs(comment.CommunityContribution))
+            .FirstOrDefault();
+        var mostRejected = comments
+            .Where(comment => comment.RedditScore <= _scoreExplanationOptions.MostRejectedMaximumRedditScore)
+            .OrderBy(comment => comment.RedditScore)
+            .ThenByDescending(comment => Math.Abs(comment.CommunityContribution))
+            .FirstOrDefault();
+
+        return new PlayerScoreCommentSet(mostInfluential, mostEndorsed, mostRejected);
+    }
+
+    private PlayerScoreCommentDto ToScoreComment(ScoreCommentSource mention, double totalVoteWeight)
+    {
+        var contribution = mention.FinalSentimentScore * mention.VoteWeight / totalVoteWeight;
+        return new PlayerScoreCommentDto(
+            CreateExcerpt(mention.CommentBody, _scoreExplanationOptions.CommentExcerptLength),
+            mention.PostTitle,
+            mention.Subreddit,
+            mention.RedditScore,
+            Math.Round(mention.VoteWeight, 3),
+            Math.Round(mention.FinalSentimentScore, 3),
+            Math.Round(contribution, 3),
+            mention.TargetAttributionMethod,
+            Math.Round(mention.TargetConfidence, 3),
+            mention.CreatedAt);
     }
 
     private static string CreateExcerpt(string value, int maxLength)
@@ -381,4 +523,22 @@ public sealed class SnapshotQueryService(
 
         return $"{trimmed.TrimEnd()}...";
     }
+
+    private sealed record DiscussionImpactRank(int Rank, double Percentile);
+
+    private sealed record PlayerScoreCommentSet(
+        PlayerScoreCommentDto? MostInfluential,
+        PlayerScoreCommentDto? MostEndorsed,
+        PlayerScoreCommentDto? MostRejected);
+
+    private sealed record ScoreCommentSource(
+        string CommentBody,
+        string PostTitle,
+        string Subreddit,
+        int RedditScore,
+        double VoteWeight,
+        double FinalSentimentScore,
+        string TargetAttributionMethod,
+        double TargetConfidence,
+        DateTimeOffset CreatedAt);
 }

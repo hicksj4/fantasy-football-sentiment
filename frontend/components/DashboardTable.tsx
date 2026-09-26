@@ -6,9 +6,10 @@ type DashboardTableProps = {
   title: string;
   rows: DashboardPlayer[];
   mode?: "default" | "waiver" | "panic";
+  snapshotKey?: string;
 };
 
-export function DashboardTable({ title, rows, mode = "default" }: DashboardTableProps) {
+export function DashboardTable({ title, rows, mode = "default", snapshotKey }: DashboardTableProps) {
   return (
     <section className="panel">
       <div className="panel-heading">
@@ -26,7 +27,7 @@ export function DashboardTable({ title, rows, mode = "default" }: DashboardTable
               <th>Share</th>
               <th>Sentiment</th>
               <th>Community</th>
-              <th>Impact</th>
+              <th>Discussion Impact</th>
               {mode === "waiver" ? <th>Add/Hype</th> : null}
               {mode === "panic" ? <th>Drop/Panic</th> : null}
             </tr>
@@ -35,10 +36,10 @@ export function DashboardTable({ title, rows, mode = "default" }: DashboardTable
             {rows.map((row) => (
               <tr key={row.playerId}>
                 <td>
-                  <Link href={`/players/${row.playerId}`}>{row.name}</Link>
+                  <Link href={`/players/${row.playerId}${snapshotKey ? `?snapshot=${snapshotKey}` : ""}`}>{row.name}</Link>
                 </td>
                 <td>
-                  <Link href={`/teams/${row.team}`}>{row.team}</Link>
+                  <Link href={`/teams/${row.team}${snapshotKey ? `?snapshot=${snapshotKey}` : ""}`}>{row.team}</Link>
                 </td>
                 <td>{row.position}</td>
                 <td>{row.mentions}</td>
@@ -50,7 +51,14 @@ export function DashboardTable({ title, rows, mode = "default" }: DashboardTable
                   <ScorePill value={row.communitySentiment} />
                 </td>
                 <td>
-                  <ScorePill value={row.netImpact} kind="change" />
+                  <Link
+                    className="impact-rank"
+                    href={`/players/${row.playerId}${snapshotKey ? `?snapshot=${snapshotKey}` : ""}`}
+                    title="How much weighted sentiment-bearing discussion this player generated relative to other players."
+                  >
+                    <strong>#{row.discussionImpactRank || "—"}</strong>
+                    <span>{row.discussionImpactPercentile.toFixed(0)}th pct</span>
+                  </Link>
                 </td>
                 {mode === "waiver" ? <td>{row.addCount + row.hypeCount}</td> : null}
                 {mode === "panic" ? <td>{row.dropCount + row.sitCount + row.sellCount + row.panicCount}</td> : null}
