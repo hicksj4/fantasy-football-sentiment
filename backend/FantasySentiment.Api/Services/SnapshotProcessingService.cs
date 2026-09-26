@@ -308,7 +308,12 @@ public sealed class SnapshotProcessingService(
                 var match = resolvedContext.Target.ToMatch();
                 var analysisContext = threadContextBuilder.Build(resolvedContext);
                 var sentiment = await sentimentAnalyzer.AnalyzeAsync(
-                    new TargetedSentimentRequest(comment.Body, analysisContext, match),
+                    new TargetedSentimentRequest(
+                        comment.Body,
+                        analysisContext,
+                        match,
+                        resolvedContext.TargetText,
+                        resolvedContext.Perspective),
                     cancellationToken);
 
                 db.PlayerMentions.Add(new PlayerMention

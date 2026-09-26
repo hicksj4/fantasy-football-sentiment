@@ -12,23 +12,52 @@ public sealed class VaderSentimentAnalyzer(
         TargetedSentimentRequest request,
         CancellationToken cancellationToken)
     {
-        var vader = ScoreVader(request.Context);
-        var fantasy = fantasySentimentAnalyzer.Analyze(request.Context);
-        var finalScore = BlendScores(vader.Compound, fantasy.Score);
-        var fantasyAdjustment = Math.Round(finalScore - vader.Compound, 3);
-        var diagnostics =
-            $"vader={vader.Compound:0.###}; pos={vader.Positive:0.###}; neu={vader.Neutral:0.###}; neg={vader.Negative:0.###}; fantasyRule={fantasy.Score:0.###}; adjustment={fantasyAdjustment:0.###}";
+        var analysis = AnalyzeDetailed(request);
+        var semanticRuleScore = Math.Round(
+            analysis.FantasyAdjustment
+            + analysis.EmojiAdjustment
+            + analysis.PerspectiveAdjustment
+            + analysis.QuestionAdjustment,
+            3);
 
         return ValueTask.FromResult(new TargetedSentimentResult(
-            Math.Round(vader.Compound, 3),
-            finalScore,
-            TargetedSentimentResult.CategoryFromScore(finalScore),
-            fantasy.Score,
-            vader.Compound,
-            fantasyAdjustment,
+            analysis.RawVaderScore,
+            analysis.FinalScore,
+            TargetedSentimentResult.CategoryFromScore(analysis.FinalScore),
+            semanticRuleScore,
+            analysis.RawVaderScore,
+            analysis.TotalAdjustment,
             nameof(VaderSentimentAnalyzer),
             request.Context,
-            diagnostics));
+            analysis.ToDiagnostics()));
+    }
+
+    public SentimentAnalysisResult AnalyzeDetailed(TargetedSentimentRequest request)
+    {
+        var targetText = ResolveTargetText(request);
+        var preparation = fantasySentimentAnalyzer.PrepareForVader(targetText);
+        var vader = ScoreVader(preparation.VaderText);
+        var semantic = fantasySentimentAnalyzer.AnalyzeTarget(
+            targetText,
+            request.TargetPerspective,
+            vader.Compound,
+            preparation);
+
+        return new SentimentAnalysisResult(
+            targetText,
+            request.TargetPerspective,
+            preparation.VaderText,
+            Math.Round(vader.Compound, 3),
+            semantic.FantasyAdjustment,
+            semantic.EmojiAdjustment,
+            semantic.PerspectiveAdjustment,
+            semantic.QuestionAdjustment,
+            semantic.FinalScore,
+            semantic.MatchedPositiveTerms,
+            semantic.MatchedNegativeTerms,
+            semantic.MatchedPhrases,
+            semantic.MatchedEmoji,
+            semantic.AppliedRules);
     }
 
     private VaderScore ScoreVader(string context)
@@ -44,22 +73,22 @@ public sealed class VaderSentimentAnalyzer(
         }
     }
 
-    private static double BlendScores(double vaderScore, double fantasyScore)
+    private static string ResolveTargetText(TargetedSentimentRequest request)
     {
-        if (Math.Abs(fantasyScore) < 0.15)
+        if (!string.IsNullOrWhiteSpace(request.TargetText))
         {
-            return Math.Round(Math.Clamp(vaderScore, -1, 1), 3);
+            return request.TargetText;
         }
 
-        var signsDisagree = Math.Sign(vaderScore) != 0
-                            && Math.Sign(vaderScore) != Math.Sign(fantasyScore);
-        var vaderIsNeutral = Math.Abs(vaderScore) < 0.15;
+        var targetContext = request.Context
+            .Split(Environment.NewLine, StringSplitOptions.TrimEntries)
+            .FirstOrDefault(line => line.StartsWith("Target context:", StringComparison.OrdinalIgnoreCase));
+        if (targetContext is not null)
+        {
+            return targetContext["Target context:".Length..].Trim();
+        }
 
-        var blended = signsDisagree || vaderIsNeutral
-            ? fantasyScore * 1.75 + vaderScore * 0.25
-            : vaderScore * 0.75 + fantasyScore * 0.45;
-
-        return Math.Round(Math.Clamp(blended, -1, 1), 3);
+        return request.Context;
     }
 
     private sealed record VaderScore(

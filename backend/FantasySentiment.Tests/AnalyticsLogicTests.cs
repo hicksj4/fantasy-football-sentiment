@@ -536,9 +536,13 @@ public sealed class AnalyticsLogicTests
     {
         return new SentimentLexiconOptions
         {
-            PositiveTerms = [ "elite", "league winner", "beast", "great", "love", "disgusting", "cool as fuck", "pillow are cool" ],
-            NegativeTerms = [ "washed", "unstartable", "useless", "awful", "2 points", "thanks for the 2 points" ],
-            Intensifiers = [ "absolutely" ],
+            PositiveTerms = [ "elite", "beast", "great", "love" ],
+            NegativeTerms = [ "useless", "awful" ],
+            PositivePhrases = [ "league winner", "cool as fuck", "pillow are cool" ],
+            NegativePhrases = [ "thanks for the 2 points" ],
+            PositiveSlang = [ "disgusting", "filthy", "cooking" ],
+            NegativeSlang = [ "washed", "unstartable", "cooked" ],
+            Intensifiers = [ "absolutely", "completely" ],
             Negators = [ "not", "never" ]
         };
     }

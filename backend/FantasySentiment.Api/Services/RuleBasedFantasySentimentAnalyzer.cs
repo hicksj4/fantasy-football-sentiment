@@ -7,15 +7,27 @@ public sealed class RuleBasedFantasySentimentAnalyzer(
         TargetedSentimentRequest request,
         CancellationToken cancellationToken)
     {
-        var result = fantasySentimentAnalyzer.Analyze(request.Context);
+        var targetText = string.IsNullOrWhiteSpace(request.TargetText)
+            ? request.Context
+            : request.TargetText;
+        var preparation = fantasySentimentAnalyzer.PrepareForVader(targetText);
+        var result = fantasySentimentAnalyzer.AnalyzeTarget(
+            targetText,
+            request.TargetPerspective,
+            rawVaderScore: 0,
+            preparation);
+        var diagnostics =
+            $"fantasy={result.FantasyAdjustment:0.###}; emoji={result.EmojiAdjustment:0.###}; perspective={result.PerspectiveAdjustment:0.###}; question={result.QuestionAdjustment:0.###}; rules={string.Join('|', result.AppliedRules)}";
+
         return ValueTask.FromResult(new TargetedSentimentResult(
-            result.Score,
-            result.Score,
-            result.Category,
-            result.Score,
-            null,
             0,
+            result.FinalScore,
+            TargetedSentimentResult.CategoryFromScore(result.FinalScore),
+            result.FantasyAdjustment,
+            null,
+            result.FinalScore,
             nameof(RuleBasedFantasySentimentAnalyzer),
-            request.Context));
+            request.Context,
+            diagnostics));
     }
 }
