@@ -14,7 +14,8 @@ public sealed record TargetedSentimentRequest(
     string Context,
     PlayerMentionMatch Mention,
     string TargetText = "",
-    string TargetPerspective = TargetPerspectives.Unknown);
+    string TargetPerspective = TargetPerspectives.Unknown,
+    string TargetAttributionMethod = TargetAttributionMethods.Explicit);
 
 public sealed record SentimentAnalysisResult(
     string TargetText,
@@ -23,8 +24,10 @@ public sealed record SentimentAnalysisResult(
     double RawVaderScore,
     double FantasyAdjustment,
     double EmojiAdjustment,
+    double StructuralAdjustment,
     double PerspectiveAdjustment,
     double QuestionAdjustment,
+    double SemanticConfidence,
     double FinalScore,
     IReadOnlyList<string> MatchedPositiveTerms,
     IReadOnlyList<string> MatchedNegativeTerms,
@@ -43,8 +46,10 @@ public sealed record SentimentAnalysisResult(
                 $"vader={RawVaderScore:0.###}",
                 $"fantasy={FantasyAdjustment:0.###}",
                 $"emoji={EmojiAdjustment:0.###}",
+                $"structural={StructuralAdjustment:0.###}",
                 $"perspective={PerspectiveAdjustment:0.###}",
                 $"question={QuestionAdjustment:0.###}",
+                $"semanticConfidence={SemanticConfidence:0.###}",
                 $"final={FinalScore:0.###}",
                 $"perspectiveLabel={Perspective}",
                 $"positiveTerms={Join(MatchedPositiveTerms)}",

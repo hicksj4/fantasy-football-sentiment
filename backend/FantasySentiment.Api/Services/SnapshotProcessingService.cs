@@ -313,7 +313,8 @@ public sealed class SnapshotProcessingService(
                         analysisContext,
                         match,
                         resolvedContext.TargetText,
-                        resolvedContext.Perspective),
+                        resolvedContext.Perspective,
+                        target.AttributionMethod),
                     cancellationToken);
 
                 db.PlayerMentions.Add(new PlayerMention

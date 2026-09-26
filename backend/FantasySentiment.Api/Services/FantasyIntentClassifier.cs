@@ -36,6 +36,14 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
             }
         }
 
+        if (Regex.IsMatch(
+                context,
+                @"\bwelcome\s+to\s+the\s+waiver\s+wire\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            return FantasyIntents.Drop;
+        }
+
         if (ContainsAny(context, lexicon.Injury))
         {
             return FantasyIntents.Injury;
@@ -131,6 +139,17 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
     private static string Normalize(string value)
     {
         var lowered = value.ToLowerInvariant();
+        lowered = lowered.Replace("🤡", " clown ", StringComparison.Ordinal);
+        lowered = Regex.Replace(
+            lowered,
+            @"\b(?:let's|lets)\s+go+\b",
+            "lets go",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        lowered = Regex.Replace(
+            lowered,
+            @"\blfg+\b",
+            "lfg",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
         var normalized = Regex.Replace(lowered, @"[^a-z0-9']+", " ");
         return Regex.Replace(normalized, @"\s+", " ").Trim();
     }

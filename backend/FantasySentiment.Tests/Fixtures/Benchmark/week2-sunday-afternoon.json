@@ -976,7 +976,7 @@
           {
             "player": "Justin Herbert",
             "fantasyOutlook": "Negative",
-            "playerEvaluation": "Neutral",
+            "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [
               "Drop"
@@ -1011,15 +1011,15 @@
         "targets": [
           {
             "player": "Tucker Kraft",
-            "fantasyOutlook": "Positive",
-            "playerEvaluation": "Neutral",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [
-              "Add"
+              "Drop"
             ],
             "discussionSignals": [],
             "reasons": [
-              "WaiverAdd"
+              "WaiverDrop"
             ]
           }
         ]
@@ -1496,6 +1496,20 @@
       "expected": {
         "contextRequirement": "SelfContained",
         "targets": [
+          {
+            "player": "Parker Washington",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "LineupRegret",
+              "Comparison"
+            ]
+          },
           {
             "player": "Ladd McConkey",
             "fantasyOutlook": "Negative",

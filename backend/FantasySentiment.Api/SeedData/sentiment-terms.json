@@ -9,7 +9,9 @@
       "beast",
       "automatic",
       "underrated",
-      "steal"
+      "steal",
+      "dominant",
+      "unstoppable"
     ],
     "NegativeTerms": [
       "awful",
@@ -18,7 +20,17 @@
       "bust",
       "jag",
       "decoy",
-      "useless"
+      "useless",
+      "overrated",
+      "garbage",
+      "trash",
+      "dogshit",
+      "mid",
+      "fraud",
+      "bum",
+      "irrelevant",
+      "droppable",
+      "benchable"
     ],
     "PositivePhrases": [
       "league winner",
@@ -38,7 +50,45 @@
       "balling out",
       "sneaky add",
       "cool as fuck",
-      "pillow are cool"
+      "is him",
+      "he is him",
+      "the truth",
+      "is the truth",
+      "is a god",
+      "fantasy god",
+      "my goat",
+      "is the goat",
+      "my king",
+      "my lord and savior",
+      "we are back",
+      "we're back",
+      "might be back",
+      "looks legit",
+      "is legit",
+      "legit good",
+      "real deal",
+      "is for real",
+      "might be for real",
+      "worth the faab",
+      "top 10 wr",
+      "top 10 rb",
+      "top 10 te",
+      "top 10 qb",
+      "we are so back",
+      "we're so back",
+      "were so back",
+      "i am so back",
+      "i'm so back",
+      "im so back",
+      "to the moon",
+      "going off",
+      "goin off",
+      "go off",
+      "let's go",
+      "lets go",
+      "let's fucking go",
+      "lets fucking go",
+      "lfg"
     ],
     "NegativePhrases": [
       "roster clogger",
@@ -47,28 +97,69 @@
       "dead roster spot",
       "absolute bust",
       "looks awful",
-      "looks terrible"
+      "looks terrible",
+      "fantasy irrelevant",
+      "waste of a pick",
+      "wasted pick",
+      "waste of a draft pick",
+      "worst draft pick",
+      "rug pull",
+      "was a trap",
+      "is a trap",
+      "welcome to the waiver wire",
+      "not startable",
+      "is droppable",
+      "looks horrible",
+      "looks bad",
+      "straight ass",
+      "is ass",
+      "ass cheeks",
+      "dog shit",
+      "is mid",
+      "mid qb",
+      "overdrafted",
+      "can't start",
+      "cant start",
+      "it's so over",
+      "its so over",
+      "it's over",
+      "its over",
+      "is invisible",
+      "completely invisible",
+      "straight buns",
+      "is buns",
+      "playing like ass",
+      "playing like straight ass"
     ],
     "PositiveSlang": [
       "cooking",
       "filthy",
-      "disgusting"
+      "disgusting",
+      "cracked"
     ],
     "NegativeSlang": [
       "washed",
       "unstartable",
-      "cooked"
+      "cooked",
+      "trash",
+      "garbage",
+      "dogshit",
+      "mid",
+      "fraud",
+      "bum",
+      "booty",
+      "ass",
+      "buns"
     ],
     "EmojiLexicon": {
       "Positive": {
         "📈": 0.35,
-        "🔥": 0.30,
-        "🚀": 0.30,
-        "🐐": 0.40
+        "🔥": 0.3,
+        "🚀": 0.3,
+        "🐐": 0.4
       },
       "Negative": {
-        "📉": -0.35,
-        "💀": -0.25
+        "📉": -0.35
       }
     },
     "PerspectivePatterns": {
@@ -82,14 +173,25 @@
         "wish i didn't play against",
         "wish i didnt play against",
         "wish i wasn't facing",
-        "wish i wasnt facing"
+        "wish i wasnt facing",
+        "my opponent has",
+        "opponent has",
+        "i'm facing",
+        "im facing",
+        "playing against",
+        "boomed me",
+        "bury me",
+        "buries me",
+        "killing me",
+        "outscored my"
       ],
       "OwnRosterPositive": [
         "beyond happy",
         "so happy",
         "love",
         "incredible",
-        "carried me"
+        "carried me",
+        "carrying me"
       ],
       "OwnRosterRegret": [
         "why did i start",
@@ -97,7 +199,10 @@
         "ended my week",
         "lost me my week",
         "benched the wrong",
-        "should have benched"
+        "should have benched",
+        "why tf did i start",
+        "why did i draft",
+        "why tf did i draft"
       ]
     },
     "Sarcasm": {
@@ -107,7 +212,11 @@
         "thanks for {points} points",
         "love the {points} points",
         "great another {points} point game",
-        "great, another {points} point game"
+        "great, another {points} point game",
+        "wow {points} points",
+        "nice {points} points",
+        "amazing {points} points",
+        "elite {points} point game"
       ]
     },
     "Intensifiers": [
@@ -117,14 +226,26 @@
       "total",
       "really",
       "super",
-      "insanely"
+      "insanely",
+      "fucking",
+      "straight"
     ],
     "Negators": [
       "not",
       "never",
       "no",
       "dont",
-      "don't"
+      "don't",
+      "isnt",
+      "isn't",
+      "wasnt",
+      "wasn't",
+      "cant",
+      "can't",
+      "wont",
+      "won't",
+      "hardly",
+      "barely"
     ]
   },
   "IntentLexicon": {
@@ -136,33 +257,53 @@
       "scoop",
       "waiver",
       "waivers",
-      "stash"
+      "stash",
+      "adding",
+      "pick him up",
+      "waiver claim",
+      "worth the faab",
+      "faab bid"
     ],
     "Drop": [
       "drop",
       "cut",
-      "dump"
+      "dump",
+      "dropping",
+      "droppable",
+      "cuttable"
     ],
     "Start": [
       "start",
       "smash start",
       "must start",
-      "locked in"
+      "locked in",
+      "starting",
+      "started",
+      "startable"
     ],
     "Sit": [
       "sit",
       "bench",
-      "unstartable"
+      "unstartable",
+      "benching",
+      "benched",
+      "benchable",
+      "sitting",
+      "not startable"
     ],
     "Buy": [
       "buy",
       "buy low",
-      "buy high"
+      "buy high",
+      "buying",
+      "trade for"
     ],
     "Sell": [
       "sell",
       "selling",
-      "sell high"
+      "sell high",
+      "sell low",
+      "trade away"
     ],
     "Hold": [
       "hold",
@@ -173,7 +314,11 @@
       "injury",
       "injured",
       "limited",
-      "questionable"
+      "questionable",
+      "carted",
+      "broken ribs",
+      "concussion",
+      "hamstring"
     ],
     "Hype": [
       "hype",
@@ -181,13 +326,42 @@
       "breakout",
       "monster",
       "balling",
-      "cooking"
+      "cooking",
+      "is him",
+      "the truth",
+      "fantasy god",
+      "my goat",
+      "my king",
+      "we are back",
+      "we're back",
+      "stud",
+      "beast",
+      "we are so back",
+      "we're so back",
+      "i am so back",
+      "i'm so back",
+      "to the moon",
+      "going off",
+      "goin off",
+      "go off",
+      "let's go",
+      "lets go",
+      "let's fucking go",
+      "lets fucking go",
+      "lfg",
+      "from the top rope"
     ],
     "Panic": [
       "panic",
       "nervous",
       "tilted",
-      "dead"
+      "dead",
+      "panicking",
+      "worried",
+      "concerned",
+      "rug pull",
+      "it's so over",
+      "its so over"
     ]
   }
 }

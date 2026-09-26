@@ -323,7 +323,8 @@ internal sealed class SentimentBenchmarkRunner
                     analysisContext,
                     match,
                     resolvedContext.TargetText,
-                    resolvedContext.Perspective),
+                    resolvedContext.Perspective,
+                    target.AttributionMethod),
                 cancellationToken);
 
             actual.Add(new ActualTargetResult(
