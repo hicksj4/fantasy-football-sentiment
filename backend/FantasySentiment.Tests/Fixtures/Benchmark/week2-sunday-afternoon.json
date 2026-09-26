@@ -707,6 +707,7 @@
   "comments": [
     {
       "id": "aft-001",
+      "parentId": null,
       "redditScore": 4,
       "body": "JSN is him",
       "expected": {
@@ -714,10 +715,11 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "StrongPositive",
-            "playerEvaluation": "StrongPositive",
             "fantasyOutlook": "Positive",
-            "intents": [
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Hype"
             ],
             "reasons": [
@@ -730,6 +732,7 @@
     },
     {
       "id": "aft-002",
+      "parentId": null,
       "redditScore": 4,
       "body": "How does JSN get that open. he's their only good player",
       "expected": {
@@ -737,9 +740,11 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance",
               "UsageOpportunity"
@@ -759,11 +764,17 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
+            ],
+            "isDebatable": true,
+            "alternativeLabels": [
+              "Negative if interpreted as the defender being cooked rather than JSN making the play look easy."
             ]
           }
         ]
@@ -773,6 +784,7 @@
     },
     {
       "id": "aft-004",
+      "parentId": null,
       "redditScore": 6,
       "body": "taking puka over JSN just might haunt me",
       "expected": {
@@ -780,10 +792,11 @@
         "targets": [
           {
             "player": "Puka Nacua",
-            "sentiment": "Negative",
-            "playerEvaluation": "Neutral",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Comparison",
               "DraftRegret"
@@ -791,9 +804,11 @@
           },
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Comparison",
               "DraftRegret"
@@ -805,6 +820,7 @@
     },
     {
       "id": "aft-005",
+      "parentId": null,
       "redditScore": 5,
       "body": "JSN is fucking INSANE!!!",
       "expected": {
@@ -812,9 +828,11 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -825,6 +843,7 @@
     },
     {
       "id": "aft-006",
+      "parentId": null,
       "redditScore": 6,
       "body": "JSN",
       "expected": {
@@ -832,9 +851,11 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -845,17 +866,19 @@
     },
     {
       "id": "aft-007",
+      "parentId": null,
       "redditScore": 19,
       "body": "JSN is the truth",
       "expected": {
-        "contextRequirement": "GameEventContext",
+        "contextRequirement": "SelfContained",
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
-            "intents": [
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Hype"
             ],
             "reasons": [
@@ -868,6 +891,7 @@
     },
     {
       "id": "aft-008",
+      "parentId": null,
       "redditScore": 5,
       "body": "JSN is a god",
       "expected": {
@@ -875,10 +899,11 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "StrongPositive",
-            "playerEvaluation": "StrongPositive",
             "fantasyOutlook": "Positive",
-            "intents": [
+            "playerEvaluation": "StrongPositive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Hype"
             ],
             "reasons": [
@@ -891,6 +916,7 @@
     },
     {
       "id": "aft-009",
+      "parentId": null,
       "redditScore": 3,
       "body": "fell for the chargers hype",
       "expected": {
@@ -902,6 +928,7 @@
     },
     {
       "id": "aft-010",
+      "parentId": null,
       "redditScore": 3,
       "body": "chargers are straight ASS",
       "expected": {
@@ -912,6 +939,7 @@
     },
     {
       "id": "aft-011",
+      "parentId": null,
       "redditScore": 4,
       "body": "why tf did I start Ladd man..",
       "expected": {
@@ -919,12 +947,13 @@
         "targets": [
           {
             "player": "Ladd McConkey",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
-            "intents": [
-              "Start",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [
               "Panic"
             ],
             "reasons": [
@@ -938,21 +967,23 @@
     },
     {
       "id": "aft-012",
+      "parentId": null,
       "redditScore": 2,
       "body": "you can drop Herbert",
       "expected": {
-        "contextRequirement": "GameEventContext",
+        "contextRequirement": "SelfContained",
         "targets": [
           {
             "player": "Justin Herbert",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
-            "intents": [
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [
               "Drop"
             ],
+            "discussionSignals": [],
             "reasons": [
-              "Performance"
+              "FantasyProduction"
             ]
           }
         ]
@@ -961,6 +992,7 @@
     },
     {
       "id": "aft-013",
+      "parentId": null,
       "redditScore": 2,
       "body": "chargers are done",
       "expected": {
@@ -971,6 +1003,7 @@
     },
     {
       "id": "aft-014",
+      "parentId": null,
       "redditScore": 4,
       "body": "Tucker kraft welcome to the waiver wire buddy",
       "expected": {
@@ -978,14 +1011,15 @@
         "targets": [
           {
             "player": "Tucker Kraft",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
-            "intents": [
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [
               "Add"
             ],
+            "discussionSignals": [],
             "reasons": [
-              "Performance"
+              "WaiverAdd"
             ]
           }
         ]
@@ -994,6 +1028,7 @@
     },
     {
       "id": "aft-015",
+      "parentId": null,
       "redditScore": 1,
       "body": "ceedee already almost has 100 yards lol",
       "expected": {
@@ -1001,9 +1036,11 @@
         "targets": [
           {
             "player": "CeeDee Lamb",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "FantasyProduction"
             ]
@@ -1014,6 +1051,7 @@
     },
     {
       "id": "aft-016",
+      "parentId": null,
       "redditScore": 2,
       "body": "people panicked way too much on CMC",
       "expected": {
@@ -1021,15 +1059,19 @@
         "targets": [
           {
             "player": "Christian McCaffrey",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
-            "fantasyOutlook": "Negative",
-            "intents": [
-              "Panic"
-            ],
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
-              "Performance"
-            ]
+              "AntiPanic"
+            ],
+            "isDebatable": true,
+            "alternativeLabels": [
+              "Positive playerEvaluation if read as direct confidence in CMC."
+            ],
+            "notes": "Author says prior panic was excessive; do not label Panic just because the word appears."
           }
         ]
       },
@@ -1037,6 +1079,7 @@
     },
     {
       "id": "aft-017",
+      "parentId": null,
       "redditScore": 4,
       "body": "Ceedee has 18 points halfway into the 1st quarter",
       "expected": {
@@ -1044,9 +1087,11 @@
         "targets": [
           {
             "player": "CeeDee Lamb",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "FantasyProduction"
             ]
@@ -1057,6 +1102,7 @@
     },
     {
       "id": "aft-018",
+      "parentId": null,
       "redditScore": 6,
       "body": "jeanty man wtf 😭 this is not my week",
       "expected": {
@@ -1067,6 +1113,7 @@
     },
     {
       "id": "aft-019",
+      "parentId": null,
       "redditScore": 1,
       "body": "Guess who started Caleb and Loveland and is facing JSN and Lamb 😀",
       "expected": {
@@ -1074,12 +1121,13 @@
         "targets": [
           {
             "player": "Caleb Williams",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
-            "intents": [
-              "Start",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [
               "Panic"
             ],
             "reasons": [
@@ -1088,12 +1136,13 @@
           },
           {
             "player": "Colston Loveland",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
-            "intents": [
-              "Start",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [
               "Panic"
             ],
             "reasons": [
@@ -1102,10 +1151,13 @@
           },
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "StrongPositive",
-            "playerEvaluation": "StrongPositive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
             "perspective": "OpponentRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
             "reasons": [
               "FantasyProduction",
               "OpponentPerspective"
@@ -1113,10 +1165,13 @@
           },
           {
             "player": "CeeDee Lamb",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
             "perspective": "OpponentRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
             "reasons": [
               "FantasyProduction",
               "OpponentPerspective"
@@ -1129,6 +1184,7 @@
     },
     {
       "id": "aft-020",
+      "parentId": null,
       "redditScore": 4,
       "body": "Holy fuck CMC",
       "expected": {
@@ -1136,9 +1192,11 @@
         "targets": [
           {
             "player": "Christian McCaffrey",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1149,6 +1207,7 @@
     },
     {
       "id": "aft-021",
+      "parentId": null,
       "redditScore": 3,
       "body": "CMC, we are back.",
       "expected": {
@@ -1156,10 +1215,11 @@
         "targets": [
           {
             "player": "Christian McCaffrey",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
-            "intents": [
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Hype"
             ],
             "reasons": [
@@ -1172,6 +1232,7 @@
     },
     {
       "id": "aft-022",
+      "parentId": null,
       "redditScore": 7,
       "body": "So George Pickens is…..fantasy irrelevant",
       "expected": {
@@ -1179,9 +1240,11 @@
         "targets": [
           {
             "player": "George Pickens",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "UsageOpportunity",
               "RoleCompetition"
@@ -1201,11 +1264,13 @@
         "targets": [
           {
             "player": "George Pickens",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
-              "Performance"
+              "UsageOpportunity"
             ]
           }
         ]
@@ -1214,6 +1279,7 @@
     },
     {
       "id": "aft-024",
+      "parentId": null,
       "redditScore": 1,
       "body": "They call him Lamb League Winner",
       "expected": {
@@ -1221,10 +1287,11 @@
         "targets": [
           {
             "player": "CeeDee Lamb",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
-            "intents": [
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Hype"
             ],
             "reasons": [
@@ -1237,6 +1304,7 @@
     },
     {
       "id": "aft-025",
+      "parentId": null,
       "redditScore": 4,
       "body": "Justin Herbert is overrated garbage",
       "expected": {
@@ -1244,9 +1312,11 @@
         "targets": [
           {
             "player": "Justin Herbert",
-            "sentiment": "StrongNegative",
+            "fantasyOutlook": "Negative",
             "playerEvaluation": "StrongNegative",
-            "fantasyOutlook": "StrongNegative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1257,6 +1327,7 @@
     },
     {
       "id": "aft-026",
+      "parentId": null,
       "redditScore": 3,
       "body": "have a feeling dak buries me",
       "expected": {
@@ -1267,6 +1338,7 @@
     },
     {
       "id": "aft-027",
+      "parentId": null,
       "redditScore": 6,
       "body": "They really said to go all-in on the Chargers",
       "expected": {
@@ -1277,6 +1349,7 @@
     },
     {
       "id": "aft-028",
+      "parentId": null,
       "redditScore": 4,
       "body": "Let's go Ceedee!",
       "expected": {
@@ -1284,9 +1357,11 @@
         "targets": [
           {
             "player": "CeeDee Lamb",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1297,6 +1372,7 @@
     },
     {
       "id": "aft-029",
+      "parentId": null,
       "redditScore": 5,
       "body": "I could have had Lamb, but I chose Barkley instead. What the fuck was I thinking?",
       "expected": {
@@ -1304,9 +1380,11 @@
         "targets": [
           {
             "player": "CeeDee Lamb",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "DraftRegret",
               "Comparison"
@@ -1314,10 +1392,11 @@
           },
           {
             "player": "Saquon Barkley",
-            "sentiment": "Negative",
-            "playerEvaluation": "Neutral",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "DraftRegret",
               "Comparison"
@@ -1329,6 +1408,7 @@
     },
     {
       "id": "aft-030",
+      "parentId": null,
       "redditScore": 7,
       "body": "Pickens is firmly WR2 on the cowboys no idea why I drafted him so high",
       "expected": {
@@ -1336,10 +1416,11 @@
         "targets": [
           {
             "player": "George Pickens",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "DraftRegret"
             ]
@@ -1350,6 +1431,7 @@
     },
     {
       "id": "aft-031",
+      "parentId": null,
       "redditScore": 1,
       "body": "CeeDee save me from colston loveland",
       "expected": {
@@ -1357,10 +1439,11 @@
         "targets": [
           {
             "player": "CeeDee Lamb",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
             "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "FantasyProduction",
               "LineupRegret"
@@ -1368,10 +1451,11 @@
           },
           {
             "player": "Colston Loveland",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
             "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "FantasyProduction",
               "LineupRegret"
@@ -1383,6 +1467,7 @@
     },
     {
       "id": "aft-032",
+      "parentId": null,
       "redditScore": 4,
       "body": "TLAW rushing td would be peak",
       "expected": {
@@ -1390,9 +1475,11 @@
         "targets": [
           {
             "player": "Trevor Lawrence",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "FantasyProduction"
             ]
@@ -1403,6 +1490,7 @@
     },
     {
       "id": "aft-033",
+      "parentId": null,
       "redditScore": 1,
       "body": "Def should have started Washington over Ladd 🥲",
       "expected": {
@@ -1410,13 +1498,13 @@
         "targets": [
           {
             "player": "Ladd McConkey",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
-            "intents": [
+            "fantasyActions": [
               "Start"
             ],
+            "discussionSignals": [],
             "reasons": [
               "LineupRegret",
               "Comparison"
@@ -1428,6 +1516,7 @@
     },
     {
       "id": "aft-034",
+      "parentId": null,
       "redditScore": 2,
       "body": "Terrible throw to Pickens by Dak",
       "expected": {
@@ -1435,9 +1524,11 @@
         "targets": [
           {
             "player": "George Pickens",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "QuarterbackPlay"
             ]
@@ -1448,6 +1539,7 @@
     },
     {
       "id": "aft-035",
+      "parentId": null,
       "redditScore": 6,
       "body": "Parker Washington hype was real",
       "expected": {
@@ -1455,10 +1547,11 @@
         "targets": [
           {
             "player": "Parker Washington",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
-            "intents": [
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Hype"
             ],
             "reasons": [
@@ -1471,6 +1564,7 @@
     },
     {
       "id": "aft-036",
+      "parentId": null,
       "redditScore": 2,
       "body": "Where the fuck is Ladd man",
       "expected": {
@@ -1478,9 +1572,11 @@
         "targets": [
           {
             "player": "Ladd McConkey",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1491,6 +1587,7 @@
     },
     {
       "id": "aft-037",
+      "parentId": null,
       "redditScore": 2,
       "body": "Come on Herbert get it together",
       "expected": {
@@ -1498,9 +1595,11 @@
         "targets": [
           {
             "player": "Justin Herbert",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1511,6 +1610,7 @@
     },
     {
       "id": "aft-038",
+      "parentId": null,
       "redditScore": 7,
       "body": "Was Ladd really a rug pull?",
       "expected": {
@@ -1518,10 +1618,11 @@
         "targets": [
           {
             "player": "Ladd McConkey",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
-            "intents": [
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Panic"
             ],
             "reasons": [
@@ -1542,10 +1643,11 @@
         "targets": [
           {
             "player": "Ladd McConkey",
-            "sentiment": "Neutral",
-            "playerEvaluation": "Neutral",
             "fantasyOutlook": "Negative",
-            "intents": [
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Injury"
             ],
             "reasons": [
@@ -1558,6 +1660,7 @@
     },
     {
       "id": "aft-040",
+      "parentId": null,
       "redditScore": 3,
       "body": "Man all Chargers are Sell for a bag of chips.",
       "expected": {
@@ -1568,19 +1671,21 @@
     },
     {
       "id": "aft-041",
+      "parentId": null,
       "redditScore": 3,
       "body": "Waddle is droppable",
       "expected": {
-        "contextRequirement": "GameEventContext",
+        "contextRequirement": "SelfContained",
         "targets": [
           {
             "player": "Jaylen Waddle",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
-            "intents": [
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [
               "Drop"
             ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1591,6 +1696,7 @@
     },
     {
       "id": "aft-042",
+      "parentId": null,
       "redditScore": 4,
       "body": "Chargers might legit finish last this year",
       "expected": {
@@ -1601,6 +1707,7 @@
     },
     {
       "id": "aft-043",
+      "parentId": null,
       "redditScore": 11,
       "body": "is herbert even startable bouta drop my next up qb for bryce young",
       "expected": {
@@ -1608,13 +1715,14 @@
         "targets": [
           {
             "player": "Justin Herbert",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
-            "intents": [
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [
               "Drop",
               "Start"
             ],
+            "discussionSignals": [],
             "reasons": [
               "LineupRegret",
               "QuarterbackPlay"
@@ -1634,9 +1742,11 @@
         "targets": [
           {
             "player": "Justin Herbert",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "QuarterbackPlay"
             ]
@@ -1647,6 +1757,7 @@
     },
     {
       "id": "aft-045",
+      "parentId": null,
       "redditScore": 1,
       "body": "WADDLE WHAT A CATCH",
       "expected": {
@@ -1654,9 +1765,11 @@
         "targets": [
           {
             "player": "Jaylen Waddle",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "FantasyProduction"
             ]
@@ -1667,6 +1780,7 @@
     },
     {
       "id": "aft-046",
+      "parentId": null,
       "redditScore": 4,
       "body": "How are the Chargers this bad? Genuinely how?",
       "expected": {
@@ -1677,6 +1791,7 @@
     },
     {
       "id": "aft-047",
+      "parentId": null,
       "redditScore": 2,
       "body": "Have JSN + McBride let’s goooo",
       "expected": {
@@ -1684,18 +1799,22 @@
         "targets": [
           {
             "player": "Trey McBride",
-            "sentiment": "Unclear",
+            "fantasyOutlook": "Positive",
             "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
           },
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Unclear",
+            "fantasyOutlook": "Positive",
             "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1706,6 +1825,7 @@
     },
     {
       "id": "aft-048",
+      "parentId": null,
       "redditScore": 4,
       "body": "LADD IS ALIVE",
       "expected": {
@@ -1713,9 +1833,11 @@
         "targets": [
           {
             "player": "Ladd McConkey",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1726,6 +1848,7 @@
     },
     {
       "id": "aft-049",
+      "parentId": null,
       "redditScore": 8,
       "body": "FINALLY - THROW THE BALL TO HAMPTON HOLY SHIT",
       "expected": {
@@ -1733,11 +1856,13 @@
         "targets": [
           {
             "player": "Omarion Hampton",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
-              "QuarterbackPlay"
+              "UsageOpportunity"
             ]
           }
         ]
@@ -1746,6 +1871,7 @@
     },
     {
       "id": "aft-050",
+      "parentId": null,
       "redditScore": 8,
       "body": "So Justin Herbert is droppable after this week right?",
       "expected": {
@@ -1753,12 +1879,13 @@
         "targets": [
           {
             "player": "Justin Herbert",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
-            "intents": [
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [
               "Drop"
             ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1777,9 +1904,11 @@
         "targets": [
           {
             "player": "Justin Herbert",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1790,6 +1919,7 @@
     },
     {
       "id": "aft-052",
+      "parentId": null,
       "redditScore": 1,
       "body": "I LOVE YOU HAMPTON!!!",
       "expected": {
@@ -1797,9 +1927,11 @@
         "targets": [
           {
             "player": "Omarion Hampton",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1810,6 +1942,7 @@
     },
     {
       "id": "aft-053",
+      "parentId": null,
       "redditScore": 2,
       "body": "Omarion Hampton my beautiful pookie",
       "expected": {
@@ -1817,9 +1950,11 @@
         "targets": [
           {
             "player": "Omarion Hampton",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1830,6 +1965,7 @@
     },
     {
       "id": "aft-054",
+      "parentId": null,
       "redditScore": 12,
       "body": "Loveland is bust of the yr so far",
       "expected": {
@@ -1837,11 +1973,16 @@
         "targets": [
           {
             "player": "Colston Loveland",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
-            "fantasyOutlook": "Positive",
+            "fantasyOutlook": "StrongNegative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
+            ],
             "reasons": [
-              "Performance"
+              "FantasyProduction",
+              "DraftRegret"
             ]
           }
         ]
@@ -1858,11 +1999,12 @@
         "targets": [
           {
             "player": "Colston Loveland",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
-            "intents": [
-              "Hype"
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
             ],
             "reasons": [
               "UsageOpportunity",
@@ -1875,6 +2017,7 @@
     },
     {
       "id": "aft-056",
+      "parentId": null,
       "redditScore": 14,
       "body": "Damn Burden almost got saved if that TD was better thrown",
       "expected": {
@@ -1882,9 +2025,11 @@
         "targets": [
           {
             "player": "Luther Burden",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Neutral",
             "fantasyOutlook": "Neutral",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "CalledBackPlay",
               "QuarterbackPlay"
@@ -1897,6 +2042,7 @@
     },
     {
       "id": "aft-057",
+      "parentId": null,
       "redditScore": 10,
       "body": "Jsn is so fucking good",
       "expected": {
@@ -1904,9 +2050,11 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1917,6 +2065,7 @@
     },
     {
       "id": "aft-058",
+      "parentId": null,
       "redditScore": 21,
       "body": "Opp JSN outscored my five early game players on one play. AMA.",
       "expected": {
@@ -1924,10 +2073,11 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "StrongPositive",
-            "playerEvaluation": "StrongPositive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "StrongPositive",
             "perspective": "OpponentRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "FantasyProduction",
               "OpponentPerspective"
@@ -1939,6 +2089,7 @@
     },
     {
       "id": "aft-059",
+      "parentId": null,
       "redditScore": 12,
       "body": "JSN is like WR8 on the day with one play",
       "expected": {
@@ -1946,11 +2097,13 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
-              "Performance"
+              "FantasyProduction"
             ]
           }
         ]
@@ -1959,6 +2112,7 @@
     },
     {
       "id": "aft-060",
+      "parentId": null,
       "redditScore": 7,
       "body": "White looks way better than Croskey Merrit",
       "expected": {
@@ -1980,6 +2134,7 @@
     },
     {
       "id": "aft-062",
+      "parentId": null,
       "redditScore": 9,
       "body": "Parker Washington is going to be a top 10 WR. Can’t believe how many haters he had",
       "expected": {
@@ -1987,10 +2142,11 @@
         "targets": [
           {
             "player": "Parker Washington",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
-            "intents": [
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Hype"
             ],
             "reasons": [
@@ -2003,6 +2159,7 @@
     },
     {
       "id": "aft-063",
+      "parentId": null,
       "redditScore": 6,
       "body": "I love the Arizona McBrides",
       "expected": {
@@ -2013,6 +2170,7 @@
     },
     {
       "id": "aft-064",
+      "parentId": null,
       "redditScore": 7,
       "body": "Save me Lord JSN",
       "expected": {
@@ -2020,9 +2178,11 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2033,17 +2193,19 @@
     },
     {
       "id": "aft-065",
+      "parentId": null,
       "redditScore": 7,
       "body": "jsn is fantasy god",
       "expected": {
-        "contextRequirement": "GameEventContext",
+        "contextRequirement": "SelfContained",
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
-            "intents": [
+            "fantasyOutlook": "StrongPositive",
+            "playerEvaluation": "StrongPositive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Hype"
             ],
             "reasons": [
@@ -2056,6 +2218,7 @@
     },
     {
       "id": "aft-066",
+      "parentId": null,
       "redditScore": 7,
       "body": "PARKER WASHINGTON IS A STUD",
       "expected": {
@@ -2063,10 +2226,11 @@
         "targets": [
           {
             "player": "Parker Washington",
-            "sentiment": "StrongPositive",
-            "playerEvaluation": "StrongPositive",
             "fantasyOutlook": "StrongPositive",
-            "intents": [
+            "playerEvaluation": "StrongPositive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Hype"
             ],
             "reasons": [
@@ -2079,6 +2243,7 @@
     },
     {
       "id": "aft-067",
+      "parentId": null,
       "redditScore": 7,
       "body": "🚨 🚨 Justin Herbert has a point 🚨 🚨",
       "expected": {
@@ -2086,9 +2251,11 @@
         "targets": [
           {
             "player": "Justin Herbert",
-            "sentiment": "StrongNegative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Sarcasm",
               "FantasyProduction"
@@ -2100,6 +2267,7 @@
     },
     {
       "id": "aft-068",
+      "parentId": null,
       "redditScore": 7,
       "body": "IMAGINE LOSING TO DESHAUN",
       "expected": {
@@ -2107,9 +2275,11 @@
         "targets": [
           {
             "player": "Deshaun Watson",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2120,6 +2290,7 @@
     },
     {
       "id": "aft-069",
+      "parentId": null,
       "redditScore": 7,
       "body": "Baker fucking up the revenge game that everyone took as a free win was the most predictable outcome",
       "expected": {
@@ -2127,9 +2298,11 @@
         "targets": [
           {
             "player": "Baker Mayfield",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "QuarterbackPlay"
             ]
@@ -2140,6 +2313,7 @@
     },
     {
       "id": "aft-070",
+      "parentId": null,
       "redditScore": 6,
       "body": "JSN IS A BEAST sheesh",
       "expected": {
@@ -2147,10 +2321,11 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
-            "intents": [
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Hype"
             ],
             "reasons": [
@@ -2163,6 +2338,7 @@
     },
     {
       "id": "aft-071",
+      "parentId": null,
       "redditScore": 6,
       "body": "JSN JSN JSN",
       "expected": {
@@ -2170,9 +2346,11 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2183,6 +2361,7 @@
     },
     {
       "id": "aft-072",
+      "parentId": null,
       "redditScore": 6,
       "body": "BAKER LOL… Imfao even",
       "expected": {
@@ -2190,9 +2369,11 @@
         "targets": [
           {
             "player": "Baker Mayfield",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "QuarterbackPlay"
             ]
@@ -2203,6 +2384,7 @@
     },
     {
       "id": "aft-073",
+      "parentId": null,
       "redditScore": 6,
       "body": "BTJ earned his WR3 role",
       "expected": {
@@ -2210,9 +2392,11 @@
         "targets": [
           {
             "player": "Brian Thomas Jr.",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "UsageOpportunity"
             ]
@@ -2223,6 +2407,7 @@
     },
     {
       "id": "aft-074",
+      "parentId": null,
       "redditScore": 6,
       "body": "Javonte having 4.5 is gross",
       "expected": {
@@ -2230,10 +2415,11 @@
         "targets": [
           {
             "player": "Javonte Williams",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
-            "intents": [
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Panic"
             ],
             "reasons": [
@@ -2254,9 +2440,11 @@
         "targets": [
           {
             "player": "Javonte Williams",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2267,6 +2455,7 @@
     },
     {
       "id": "aft-076",
+      "parentId": null,
       "redditScore": 6,
       "body": "Fuck I’m selling Hampton ASAP",
       "expected": {
@@ -2274,12 +2463,13 @@
         "targets": [
           {
             "player": "Omarion Hampton",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
-            "intents": [
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [
               "Sell"
             ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2290,6 +2480,7 @@
     },
     {
       "id": "aft-077",
+      "parentId": null,
       "redditScore": 6,
       "body": "JSN is unbelievable",
       "expected": {
@@ -2297,9 +2488,11 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2310,6 +2503,7 @@
     },
     {
       "id": "aft-078",
+      "parentId": null,
       "redditScore": 6,
       "body": "OMARIAN NO",
       "expected": {
@@ -2317,9 +2511,11 @@
         "targets": [
           {
             "player": "Omarion Hampton",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2330,6 +2526,7 @@
     },
     {
       "id": "aft-079",
+      "parentId": null,
       "redditScore": 6,
       "body": "Jaxon Smith is killing me man...",
       "expected": {
@@ -2337,11 +2534,13 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "OpponentRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
-              "Performance"
+              "OpponentPerspective"
             ]
           }
         ]
@@ -2350,6 +2549,7 @@
     },
     {
       "id": "aft-080",
+      "parentId": null,
       "redditScore": 5,
       "body": "JSN my lord and savior!!",
       "expected": {
@@ -2357,9 +2557,13 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
             "reasons": [
               "Performance"
             ]
@@ -2370,6 +2574,7 @@
     },
     {
       "id": "aft-081",
+      "parentId": null,
       "redditScore": 5,
       "body": "I cannot believe I got ceedee in the 2nd round",
       "expected": {
@@ -2377,11 +2582,13 @@
         "targets": [
           {
             "player": "CeeDee Lamb",
-            "sentiment": "Unclear",
+            "fantasyOutlook": "Positive",
             "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
-              "Performance"
+              "DraftRegret"
             ]
           }
         ]
@@ -2398,11 +2605,13 @@
         "targets": [
           {
             "player": "CeeDee Lamb",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
-            "fantasyOutlook": "Negative",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
-              "Performance"
+              "DraftRegret"
             ]
           }
         ]
@@ -2411,6 +2620,7 @@
     },
     {
       "id": "aft-083",
+      "parentId": null,
       "redditScore": 5,
       "body": "Imagine if Hampton was good.",
       "expected": {
@@ -2418,9 +2628,11 @@
         "targets": [
           {
             "player": "Omarion Hampton",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2439,10 +2651,11 @@
         "targets": [
           {
             "player": "Omarion Hampton",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
             "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "LineupRegret"
             ]
@@ -2453,6 +2666,7 @@
     },
     {
       "id": "aft-085",
+      "parentId": null,
       "redditScore": 5,
       "body": "Justin Herbert is ass cheeks",
       "expected": {
@@ -2460,9 +2674,11 @@
         "targets": [
           {
             "player": "Justin Herbert",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2473,6 +2689,7 @@
     },
     {
       "id": "aft-086",
+      "parentId": null,
       "redditScore": 5,
       "body": "Yall Arizona might be a good team?",
       "expected": {
@@ -2494,6 +2711,7 @@
     },
     {
       "id": "aft-088",
+      "parentId": null,
       "redditScore": 5,
       "body": "MCBRIDEEEEE",
       "expected": {
@@ -2504,6 +2722,7 @@
     },
     {
       "id": "aft-089",
+      "parentId": null,
       "redditScore": 5,
       "body": "I'm about to drop Herbert. \"Screw it I'll figure it out\" might be a better plan anyway",
       "expected": {
@@ -2511,12 +2730,13 @@
         "targets": [
           {
             "player": "Justin Herbert",
-            "sentiment": "Negative",
-            "playerEvaluation": "Negative",
             "fantasyOutlook": "Negative",
-            "intents": [
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [
               "Drop"
             ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2527,6 +2747,7 @@
     },
     {
       "id": "aft-090",
+      "parentId": null,
       "redditScore": 5,
       "body": "Yea my terry pick was a fucking waste",
       "expected": {
@@ -2537,6 +2758,7 @@
     },
     {
       "id": "aft-091",
+      "parentId": null,
       "redditScore": 5,
       "body": "I actually like the new Seattle OC better than Kubiak for JSN",
       "expected": {
@@ -2544,9 +2766,11 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
-            "fantasyOutlook": "Unknown",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Comparison"
             ]
@@ -2557,6 +2781,7 @@
     },
     {
       "id": "aft-092",
+      "parentId": null,
       "redditScore": 5,
       "body": "Chargers might actually start 0-7",
       "expected": {
@@ -2567,6 +2792,7 @@
     },
     {
       "id": "aft-093",
+      "parentId": null,
       "redditScore": 5,
       "body": "Holy shit Herbert you are disgusting man",
       "expected": {
@@ -2574,12 +2800,20 @@
         "targets": [
           {
             "player": "Justin Herbert",
-            "sentiment": "Unclear",
-            "playerEvaluation": "Unknown",
             "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
-            ]
+            ],
+            "isDebatable": true,
+            "alternativeLabels": [
+              "Positive if disgusting is used as sports slang for an impressive play.",
+              "Negative if disgust is literal frustration."
+            ],
+            "notes": "Sports slang makes the target polarity unclear without game context."
           }
         ]
       },
@@ -2587,6 +2821,7 @@
     },
     {
       "id": "aft-094",
+      "parentId": null,
       "redditScore": 5,
       "body": "Chargers are dog shit",
       "expected": {
@@ -2597,6 +2832,7 @@
     },
     {
       "id": "aft-095",
+      "parentId": null,
       "redditScore": 5,
       "body": "JSN might be the best player in fantasy",
       "expected": {
@@ -2604,10 +2840,11 @@
         "targets": [
           {
             "player": "Jaxon Smith-Njigba",
-            "sentiment": "Positive",
-            "playerEvaluation": "Positive",
             "fantasyOutlook": "Positive",
-            "intents": [
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
               "Hype"
             ],
             "reasons": [
