@@ -14,7 +14,7 @@ internal static class BenchmarkFixtureLoader
         WriteIndented = true
     };
 
-    public static BenchmarkCorpus LoadCorpus()
+    public static BenchmarkCorpus LoadCorpus(string? datasetSplit = null)
     {
         var repositoryRoot = FindRepositoryRoot();
         var fixturesDirectory = Path.Combine(
@@ -30,9 +30,14 @@ internal static class BenchmarkFixtureLoader
         }
 
         var fixtures = Directory
-            .EnumerateFiles(fixturesDirectory, "week2-*.json")
+            .EnumerateFiles(fixturesDirectory, "week*.json")
             .Order(StringComparer.OrdinalIgnoreCase)
             .Select(path => LoadFixture(path))
+            .Where(fixture => datasetSplit is null
+                              || string.Equals(
+                                  fixture.Thread.DatasetSplit,
+                                  datasetSplit,
+                                  StringComparison.OrdinalIgnoreCase))
             .ToList();
 
         foreach (var fixture in fixtures)
