@@ -135,6 +135,18 @@ public sealed class TargetContextBuilderTests
     }
 
     [Fact]
+    public void FemalePronounSentence_DoesNotExtendPlayerContext()
+    {
+        const string text = "Reed scored. She is furious about it.";
+        var target = Assert.Single(DetectTargets(text));
+
+        var context = Build(text, target, [target]);
+
+        Assert.Contains("Reed scored", context.TargetText);
+        Assert.DoesNotContain("She is furious", context.TargetText);
+    }
+
+    [Fact]
     public void OwnerCommunityLanguage_DoesNotForceOwnRosterPerspective()
     {
         const string text = "London owners are cooked";
@@ -259,7 +271,8 @@ public sealed class TargetContextBuilderTests
             Player(17, "David Njoku", "CLE", "TE", "Njoku", "David Njoku"),
             Player(18, "Tucker Kraft", "GB", "TE", "Kraft", "Tucker Kraft"),
             Player(19, "Jordan Love", "GB", "QB", "Love", "Jordan Love"),
-            Player(20, "Kyle Pitts", "ATL", "TE", "Pitts", "Kyle Pitts")
+            Player(20, "Kyle Pitts", "ATL", "TE", "Pitts", "Kyle Pitts"),
+            Player(21, "Jayden Reed", "GB", "WR", "Reed", "Jayden Reed")
         ];
     }
 

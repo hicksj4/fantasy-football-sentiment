@@ -422,6 +422,16 @@
     ]
   },
   {
+    "name": "Jordan Love",
+    "team": "GB",
+    "position": "QB",
+    "externalId": "nfl-jordan-love",
+    "aliases": [
+      "Love",
+      "Jordan Love"
+    ]
+  },
+  {
     "name": "Justin Herbert",
     "team": "LAC",
     "position": "QB",

@@ -148,6 +148,24 @@ public sealed class TargetSentimentSemanticsTests
         Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("sarcasm:", StringComparison.OrdinalIgnoreCase));
     }
 
+    [Fact]
+    public async Task GenericLowPointExclamation_IsNotAutomaticallySarcasm()
+    {
+        var result = await AnalyzeAsync("Wow 5 points on that play Bijan", "Bijan Robinson");
+
+        Assert.True(result.Detail.FinalScore > -0.15, result.Detail.ToDiagnostics());
+        Assert.DoesNotContain(result.Detail.AppliedRules, rule => rule.StartsWith("sarcasm:", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task FreakOfNature_IsPositivePhrase()
+    {
+        var result = await AnalyzeAsync("Henry continues to be a freak of nature I guess", "Derrick Henry");
+
+        Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+        Assert.Contains("freak of nature", result.Detail.MatchedPhrases);
+    }
+
     [Theory]
     [InlineData("CMC is disgusting.")]
     [InlineData("CMC is disgusting 🔥")]
@@ -286,12 +304,44 @@ public sealed class TargetSentimentSemanticsTests
     [Theory]
     [InlineData("JSN", "Jaxon Smith-Njigba")]
     [InlineData("Holy shit Herbert", "Justin Herbert")]
+    [InlineData("Holy fuck CMC", "Christian McCaffrey")]
+    [InlineData("Damn Bijan", "Bijan Robinson")]
     public async Task NameOnlyReactions_AreNeutral(string text, string playerName)
     {
         var result = await AnalyzeAsync(text, playerName);
 
         Assert.Equal(0, result.Detail.FinalScore);
         Assert.Contains("nameOnlyReactionNeutral", result.Detail.AppliedRules);
+    }
+
+    [Theory]
+    [InlineData("Holy fuck CMC is awful", "Christian McCaffrey")]
+    [InlineData("Damn Bijan looks terrible", "Bijan Robinson")]
+    public async Task DirectionalExclamations_StillUseEvaluation(string text, string playerName)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+    }
+
+    [Theory]
+    [InlineData("Herbert lmao", "Justin Herbert")]
+    [InlineData("lmaoooo Herbert", "Justin Herbert")]
+    public async Task NameOnlyLmaoMockery_IsMildlyNegative(string text, string playerName)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("nameOnlyMockeryNegative", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task LmaoWithDirectionalProduction_IsNotGloballyNegative()
+    {
+        var result = await AnalyzeAsync("Bijan just broke three tackles lmao", "Bijan Robinson");
+
+        Assert.True(result.Detail.FinalScore > -0.15, result.Detail.ToDiagnostics());
+        Assert.DoesNotContain(result.Detail.AppliedRules, rule => rule.StartsWith("nameOnlyMockeryNegative", StringComparison.OrdinalIgnoreCase));
     }
 
     [Theory]
@@ -353,6 +403,96 @@ public sealed class TargetSentimentSemanticsTests
 
         Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
         Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("fantasyTierAtBest", StringComparison.OrdinalIgnoreCase));
+        Assert.NotEqual(FantasyIntents.Drop, result.Intent);
+    }
+
+    [Theory]
+    [InlineData("Herbert is a solid QB2 in superflex", "Justin Herbert")]
+    [InlineData("London is a good WR2", "Drake London")]
+    public async Task SolidTierLanguage_IsNotNegative(string text, string playerName)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.True(result.Detail.FinalScore > -0.15, result.Detail.ToDiagnostics());
+        Assert.DoesNotContain(result.Detail.AppliedRules, rule => rule.StartsWith("fantasyTierAtBest", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Theory]
+    [InlineData("Herbert is only a QB2", "Justin Herbert")]
+    [InlineData("Herbert is nothing more than a QB2", "Justin Herbert")]
+    public async Task CappedTierLanguage_IsNegativeWithoutDropIntent(string text, string playerName)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        Assert.Equal(FantasyIntents.General, result.Intent);
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("fantasyTierAtBest", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task DirectDropLanguage_IsTargetScopedNegative()
+    {
+        var result = await AnalyzeAsync("I'm dropping Rome", "Rome Odunze");
+
+        Assert.Equal(TargetPerspectives.OwnRoster, result.Context.Perspective);
+        Assert.Equal(FantasyIntents.Drop, result.Intent);
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+    }
+
+    [Fact]
+    public async Task DroppedForReplacement_AssignsOppositeIntentsAndSentiment()
+    {
+        const string text = "I dropped Schultz for Loveland";
+
+        var schultz = await AnalyzeAsync(text, "Dalton Schultz");
+        var loveland = await AnalyzeAsync(text, "Colston Loveland");
+
+        Assert.Equal(FantasyIntents.Drop, schultz.Intent);
+        Assert.Equal(FantasyIntents.Add, loveland.Intent);
+        Assert.True(schultz.Detail.FinalScore < -0.15, schultz.Detail.ToDiagnostics());
+        Assert.True(loveland.Detail.FinalScore > -0.15, loveland.Detail.ToDiagnostics());
+    }
+
+    [Fact]
+    public async Task WaiverDropLanguage_IsNegativeAndScoped()
+    {
+        var result = await AnalyzeAsync("Bijan to the waiver wire", "Bijan Robinson");
+
+        Assert.Equal(FantasyIntents.Drop, result.Intent);
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+    }
+
+    [Fact]
+    public async Task WaiverAddLanguage_IsPositiveAndScoped()
+    {
+        var result = await AnalyzeAsync("Pick up Bijan off waivers", "Bijan Robinson");
+
+        Assert.Equal(FantasyIntents.Add, result.Intent);
+        Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+    }
+
+    [Theory]
+    [InlineData("Started Reed AMA", "Jayden Reed", FantasyIntents.Start, -1)]
+    [InlineData("Drafted Pitts AMA", "Kyle Pitts", FantasyIntents.General, -1)]
+    [InlineData("Benched Bijan AMA", "Bijan Robinson", FantasyIntents.Sit, 1)]
+    public async Task AmaRegretLanguage_IsTargetScoped(
+        string text,
+        string playerName,
+        string expectedIntent,
+        int expectedDirection)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.Equal(TargetPerspectives.OwnRoster, result.Context.Perspective);
+        Assert.Equal(expectedIntent, result.Intent);
+        if (expectedDirection < 0)
+        {
+            Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        }
+        else
+        {
+            Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+        }
     }
 
     [Fact]
@@ -566,6 +706,7 @@ public sealed class TargetSentimentSemanticsTests
                 "set and forget",
                 "is him",
                 "is the truth",
+                "freak of nature",
                 "we're so back",
                 "to the moon",
                 "lets go"
@@ -632,7 +773,7 @@ public sealed class TargetSentimentSemanticsTests
             Player(16, "Parker Washington", "JAX", "WR", "Washington", "Parker Washington"),
             Player(17, "Trey McBride", "ARI", "TE", "McBride"),
             Player(18, "Tucker Kraft", "GB", "TE", "Kraft", "Tucker Kraft"),
-            Player(19, "Rome Odunze", "CHI", "WR", "Odunze", "Rome Odunze"),
+            Player(19, "Rome Odunze", "CHI", "WR", "Rome", "Odunze", "Rome Odunze"),
             Player(20, "Brian Thomas Jr.", "JAX", "WR", "BTJ", "Brian Thomas", "Brian Thomas Jr."),
             Player(21, "Dontayvion Wicks", "GB", "WR", "Wicks", "Dontayvion Wicks"),
             Player(22, "Devaughn Vele", "NO", "WR", "Vele", "Devaughn Vele"),
@@ -641,7 +782,10 @@ public sealed class TargetSentimentSemanticsTests
             Player(25, "Christian Watson", "GB", "WR", "Watson", "Christian Watson"),
             Player(26, "Jahmyr Gibbs", "DET", "RB", "Gibbs", "Jahmyr Gibbs"),
             Player(27, "David Njoku", "CLE", "TE", "Njoku", "David Njoku"),
-            Player(28, "Michael Penix Jr.", "ATL", "QB", "Penix", "Michael Penix")
+            Player(28, "Michael Penix Jr.", "ATL", "QB", "Penix", "Michael Penix"),
+            Player(29, "Derrick Henry", "BAL", "RB", "Henry", "Derrick Henry"),
+            Player(30, "Dalton Schultz", "HOU", "TE", "Schultz", "Dalton Schultz"),
+            Player(31, "Jayden Reed", "GB", "WR", "Reed", "Jayden Reed")
         ];
     }
 

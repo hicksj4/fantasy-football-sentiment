@@ -147,6 +147,40 @@ public sealed class CommentTargetResolverTests
         Assert.Equal("Bijan Robinson", target.PlayerName);
     }
 
+    [Theory]
+    [InlineData("Love stinks")]
+    [InlineData("Is Love okay?")]
+    public void RiskyLoveAlias_UsesPlayerWhenQuarterbackContextExists(string text)
+    {
+        var resolution = Resolve(text, "Game thread");
+
+        var target = Assert.Single(resolution.Targets);
+        Assert.Equal("Jordan Love", target.PlayerName);
+    }
+
+    [Theory]
+    [InlineData("Love that dude, Bijan")]
+    [InlineData("I love Bijan")]
+    [InlineData("Love the usage for Bijan")]
+    public void RiskyLoveAlias_DoesNotStealGenericPositiveLanguage(string text)
+    {
+        var resolution = Resolve(text, "Game thread");
+
+        var target = Assert.Single(resolution.Targets);
+        Assert.Equal("Bijan Robinson", target.PlayerName);
+    }
+
+    [Fact]
+    public void RiskyLoveAlias_CanCoexistWithExplicitReceiverTarget()
+    {
+        var resolution = Resolve("Love is killing my Kraft stonks", "Game thread");
+
+        Assert.Collection(
+            resolution.Targets,
+            first => Assert.Equal("Jordan Love", first.PlayerName),
+            second => Assert.Equal("Tucker Kraft", second.PlayerName));
+    }
+
     [Fact]
     public void AmbiguousTitle_DoesNotInferTarget()
     {
@@ -217,7 +251,8 @@ public sealed class CommentTargetResolverTests
             Player(7, "Jordan Addison", "MIN", "WR", "Addison"),
             Player(8, "Matthew Golden", "GB", "WR", "Golden"),
             Player(9, "Jordan Love", "GB", "QB", "Love"),
-            Player(10, "Bijan Robinson", "ATL", "RB", "Bijan")
+            Player(10, "Bijan Robinson", "ATL", "RB", "Bijan"),
+            Player(11, "Tucker Kraft", "GB", "TE", "Kraft", "Tucker Kraft")
         ];
     }
 

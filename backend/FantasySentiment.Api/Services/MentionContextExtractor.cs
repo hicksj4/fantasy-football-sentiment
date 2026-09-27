@@ -100,8 +100,6 @@ public sealed class MentionContextExtractor
         var lower = sentence.Trim().ToLowerInvariant();
         return lower.StartsWith("he's ")
                || lower.StartsWith("he is ")
-               || lower.StartsWith("she's ")
-               || lower.StartsWith("she is ")
                || lower.StartsWith("they're ")
                || lower.StartsWith("they are ")
                || lower.StartsWith("still ")
