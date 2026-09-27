@@ -181,13 +181,17 @@ internal sealed class BenchmarkReport
     public List<ActionSignalCoOccurrenceExample> ActionSignalCoOccurrences { get; set; } = [];
     public List<BenchmarkFailure> DebatableLabels { get; set; } = [];
     public List<BenchmarkFailure> RepresentativeFailures { get; set; } = [];
+    public List<BenchmarkFailure> AllFailures { get; set; } = [];
+    public List<BenchmarkTargetEvaluation> TargetEvaluations { get; set; } = [];
 }
 
 internal sealed class ThreadBenchmarkSummary
 {
     public string ThreadName { get; set; } = string.Empty;
+    public string DatasetSplit { get; set; } = "Development";
     public int CommentCount { get; set; }
     public int ExpectedTargetCount { get; set; }
+    public int CommentsWithoutExpectedTargets { get; set; }
     public int FantasyOutlookExcludedByContext { get; set; }
     public int FantasyOutlookLabeledTargets { get; set; }
     public int PlayerEvaluationLabeledTargets { get; set; }
@@ -310,6 +314,7 @@ internal sealed class MultiLabelMetricSummary
 
 internal sealed class BenchmarkFailure
 {
+    public string DatasetSplit { get; set; } = "Development";
     public string Category { get; set; } = string.Empty;
     public string ThreadName { get; set; } = string.Empty;
     public string CommentId { get; set; } = string.Empty;
@@ -319,6 +324,24 @@ internal sealed class BenchmarkFailure
     public string? ContextRequirement { get; set; }
     public string? Notes { get; set; }
     public string? Diagnostics { get; set; }
+}
+
+internal sealed class BenchmarkTargetEvaluation
+{
+    public string DatasetSplit { get; set; } = "Development";
+    public string ThreadName { get; set; } = string.Empty;
+    public int CommentIndex { get; set; }
+    public string CommentId { get; set; } = string.Empty;
+    public string Body { get; set; } = string.Empty;
+    public string Player { get; set; } = string.Empty;
+    public string ContextRequirement { get; set; } = string.Empty;
+    public string ExpectedFantasyOutlook { get; set; } = BenchmarkFantasyLabels.Unknown;
+    public string ExpectedDirection { get; set; } = string.Empty;
+    public string ActualDirection { get; set; } = string.Empty;
+    public double? ActualScore { get; set; }
+    public string Reasons { get; set; } = string.Empty;
+    public bool IsDebatable { get; set; }
+    public string? Notes { get; set; }
 }
 
 internal sealed class SemanticDivergenceExample

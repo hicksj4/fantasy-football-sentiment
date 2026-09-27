@@ -16,7 +16,6 @@ internal sealed class SentimentBenchmarkRunner
     private const double PreviousPerspectiveAccuracy = 0.125;
     private const double PreviousSingleIntentAccuracy = 0.308;
     private const string SemanticProfile = "fantasy-semantics-v2";
-    private const string DatasetSplit = "Development";
 
     private readonly BenchmarkCorpus _corpus;
     private readonly CommentTargetResolver _targetResolver;
@@ -46,6 +45,7 @@ internal sealed class SentimentBenchmarkRunner
         var labelAudits = new List<BenchmarkFailure>();
         var divergences = new List<SemanticDivergenceExample>();
         var coOccurrences = new List<ActionSignalCoOccurrenceExample>();
+        var targetEvaluations = new List<BenchmarkTargetEvaluation>();
         var report = new BenchmarkReport
         {
             GeneratedAtUtc = DateTimeOffset.UtcNow,
@@ -62,6 +62,7 @@ internal sealed class SentimentBenchmarkRunner
                 labelAudits,
                 divergences,
                 coOccurrences,
+                targetEvaluations,
                 cancellationToken);
             report.ByThread.Add(threadSummary);
             report.TotalComments += threadSummary.CommentCount;
@@ -116,6 +117,8 @@ internal sealed class SentimentBenchmarkRunner
         report.ActionSignalCoOccurrences = coOccurrences.Take(20).ToList();
         report.DebatableLabels = labelAudits.Take(30).ToList();
         report.RepresentativeFailures = failures.Take(40).ToList();
+        report.AllFailures = failures;
+        report.TargetEvaluations = targetEvaluations;
 
         return report;
     }
@@ -123,12 +126,12 @@ internal sealed class SentimentBenchmarkRunner
     public string ToMarkdown(BenchmarkReport report)
     {
         var builder = new StringBuilder();
-        builder.AppendLine("# Development Semantic Benchmark");
+        builder.AppendLine("# Semantic Benchmark by Dataset Split");
         builder.AppendLine();
         builder.AppendLine($"Generated: {report.GeneratedAtUtc:O}");
-        builder.AppendLine($"Dataset split: {DatasetSplit}");
+        builder.AppendLine($"Dataset splits: {string.Join(", ", report.ByThread.Select(thread => thread.DatasetSplit).Distinct(StringComparer.OrdinalIgnoreCase))}");
         builder.AppendLine($"Semantic profile: {SemanticProfile}");
-        builder.AppendLine($"Analyzer: {report.Analyzer}");
+        builder.AppendLine($"Analyzer: {report.Analyzer} (frozen)");
         builder.AppendLine($"Target resolver: {report.TargetResolver}");
         builder.AppendLine($"Fixtures: {report.FixtureCount}");
         builder.AppendLine($"Comments: {report.TotalComments}");
@@ -136,6 +139,8 @@ internal sealed class SentimentBenchmarkRunner
         builder.AppendLine($"Comments with no expected targets: {report.CommentsWithoutExpectedTargets}");
         builder.AppendLine($"Scorable fantasy-outlook targets: {report.ScorableFantasyOutlookTargets}");
         builder.AppendLine($"Fantasy-outlook targets excluded by context: {report.FantasyOutlookExcludedByContext}");
+        builder.AppendLine();
+        AppendDatasetSplitSection(builder, report);
         builder.AppendLine();
         builder.AppendLine("## Semantic Coverage");
         builder.AppendLine();
@@ -198,6 +203,7 @@ internal sealed class SentimentBenchmarkRunner
         AppendAuditSection(builder, "Discussion Signal Failure Audit", report.DiscussionSignalFailureCategories, report.DiscussionSignalFailureExamples);
         AppendDebatableSection(builder, report.DebatableLabels);
         AppendRepresentativeFailures(builder, report.RepresentativeFailures);
+        AppendHoldoutDiagnostics(builder, report);
 
         return builder.ToString();
     }
@@ -208,6 +214,7 @@ internal sealed class SentimentBenchmarkRunner
         List<BenchmarkFailure> labelAudits,
         List<SemanticDivergenceExample> divergences,
         List<ActionSignalCoOccurrenceExample> coOccurrences,
+        List<BenchmarkTargetEvaluation> targetEvaluations,
         CancellationToken cancellationToken)
     {
         var commentsById = fixture.Comments.ToDictionary(
@@ -215,22 +222,27 @@ internal sealed class SentimentBenchmarkRunner
             StringComparer.OrdinalIgnoreCase);
         var resolutionByCommentId = new Dictionary<string, CommentTargetResolution>(StringComparer.OrdinalIgnoreCase);
         var processingCommentIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var players = PlayersForFixture(fixture);
         var summary = new ThreadBenchmarkSummary
         {
+            DatasetSplit = fixture.Thread.DatasetSplit,
             ThreadName = fixture.Thread.Name,
             CommentCount = fixture.Comments.Count,
-            ExpectedTargetCount = fixture.Comments.Sum(comment => comment.Expected.Targets.Count)
+            ExpectedTargetCount = fixture.Comments.Sum(comment => comment.Expected.Targets.Count),
+            CommentsWithoutExpectedTargets = fixture.Comments.Count(comment => comment.Expected.Targets.Count == 0)
         };
         summary.ContextRequirementCounts = fixture.Comments
             .GroupBy(comment => comment.Expected.ContextRequirement, StringComparer.OrdinalIgnoreCase)
             .OrderBy(group => group.Key, StringComparer.OrdinalIgnoreCase)
             .ToDictionary(group => group.Key, group => group.Count(), StringComparer.OrdinalIgnoreCase);
 
-        foreach (var comment in fixture.Comments)
+        for (var commentIndex = 0; commentIndex < fixture.Comments.Count; commentIndex++)
         {
+            var comment = fixture.Comments[commentIndex];
             var resolution = ResolveCommentTargets(
                 fixture,
                 comment,
+                players,
                 commentsById,
                 resolutionByCommentId,
                 processingCommentIds);
@@ -250,7 +262,9 @@ internal sealed class SentimentBenchmarkRunner
                 failures,
                 labelAudits,
                 divergences,
-                coOccurrences);
+                coOccurrences,
+                targetEvaluations,
+                commentIndex + 1);
         }
 
         return summary;
@@ -259,6 +273,7 @@ internal sealed class SentimentBenchmarkRunner
     private CommentTargetResolution ResolveCommentTargets(
         BenchmarkFixture fixture,
         BenchmarkComment comment,
+        IReadOnlyList<Player> players,
         IReadOnlyDictionary<string, BenchmarkComment> commentsById,
         Dictionary<string, CommentTargetResolution> resolutionByCommentId,
         HashSet<string> processingCommentIds)
@@ -282,6 +297,7 @@ internal sealed class SentimentBenchmarkRunner
             parentTargets = ResolveCommentTargets(
                 fixture,
                 parentComment,
+                players,
                 commentsById,
                 resolutionByCommentId,
                 processingCommentIds).Targets;
@@ -291,7 +307,7 @@ internal sealed class SentimentBenchmarkRunner
             comment.Id,
             comment.Body,
             fixture.Thread.Name,
-            _corpus.Players,
+            players,
             parentTargets));
         resolutionByCommentId[comment.Id] = resolution;
         processingCommentIds.Remove(comment.Id);
@@ -346,6 +362,33 @@ internal sealed class SentimentBenchmarkRunner
         return actual;
     }
 
+    private IReadOnlyList<Player> PlayersForFixture(BenchmarkFixture fixture)
+    {
+        if (fixture.Players.Count == 0)
+        {
+            return _corpus.Players;
+        }
+
+        var id = 1;
+        return fixture.Players
+            .OrderBy(player => player.Name, StringComparer.OrdinalIgnoreCase)
+            .Select(player => new Player
+            {
+                Id = id++,
+                Name = player.Name,
+                Team = player.Team,
+                Position = player.Position,
+                ExternalId = player.ExternalId,
+                IsActive = true,
+                Aliases = player.Aliases
+                    .Where(alias => !string.IsNullOrWhiteSpace(alias))
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .Select(alias => new PlayerAlias { Alias = alias })
+                    .ToList()
+            })
+            .ToList();
+    }
+
     private static void ScoreTargetResolution(
         BenchmarkFixture fixture,
         BenchmarkComment comment,
@@ -372,6 +415,7 @@ internal sealed class SentimentBenchmarkRunner
             summary.TargetMetrics.FalseNegative++;
             failures.Add(new BenchmarkFailure
             {
+                DatasetSplit = fixture.Thread.DatasetSplit,
                 Category = "TargetFalseNegative",
                 ThreadName = fixture.Thread.Name,
                 CommentId = comment.Id,
@@ -395,6 +439,7 @@ internal sealed class SentimentBenchmarkRunner
             summary.TargetMetrics.FalsePositive++;
             failures.Add(new BenchmarkFailure
             {
+                DatasetSplit = fixture.Thread.DatasetSplit,
                 Category = "TargetFalsePositive",
                 ThreadName = fixture.Thread.Name,
                 CommentId = comment.Id,
@@ -415,7 +460,9 @@ internal sealed class SentimentBenchmarkRunner
         List<BenchmarkFailure> failures,
         List<BenchmarkFailure> labelAudits,
         List<SemanticDivergenceExample> divergences,
-        List<ActionSignalCoOccurrenceExample> coOccurrences)
+        List<ActionSignalCoOccurrenceExample> coOccurrences,
+        List<BenchmarkTargetEvaluation> targetEvaluations,
+        int commentIndex)
     {
         foreach (var expectedTarget in comment.Expected.Targets)
         {
@@ -425,9 +472,11 @@ internal sealed class SentimentBenchmarkRunner
                 string.Equals(target.Player, expectedTarget.Player, StringComparison.OrdinalIgnoreCase));
             if (actual is null)
             {
+                AddTargetEvaluation(fixture, comment, commentIndex, expectedTarget, null, targetEvaluations);
                 continue;
             }
 
+            AddTargetEvaluation(fixture, comment, commentIndex, expectedTarget, actual, targetEvaluations);
             ScoreFantasyOutlook(fixture, comment, expectedTarget, actual, summary, failures);
             ScorePlayerEvaluation(fixture, comment, expectedTarget, actual, summary, failures);
             ScorePerspective(fixture, comment, expectedTarget, actual, summary, failures);
@@ -479,6 +528,7 @@ internal sealed class SentimentBenchmarkRunner
         {
             failures.Add(new BenchmarkFailure
             {
+                DatasetSplit = fixture.Thread.DatasetSplit,
                 Category = FailureCategory("FantasyOutlook", expectedTarget),
                 ThreadName = fixture.Thread.Name,
                 CommentId = comment.Id,
@@ -490,6 +540,35 @@ internal sealed class SentimentBenchmarkRunner
                 Diagnostics = actual.Diagnostics
             });
         }
+    }
+
+    private static void AddTargetEvaluation(
+        BenchmarkFixture fixture,
+        BenchmarkComment comment,
+        int commentIndex,
+        BenchmarkExpectedTarget expectedTarget,
+        ActualTargetResult? actual,
+        List<BenchmarkTargetEvaluation> targetEvaluations)
+    {
+        targetEvaluations.Add(new BenchmarkTargetEvaluation
+        {
+            DatasetSplit = fixture.Thread.DatasetSplit,
+            ThreadName = fixture.Thread.Name,
+            CommentIndex = commentIndex,
+            CommentId = comment.Id,
+            Body = comment.Body,
+            Player = expectedTarget.Player,
+            ContextRequirement = comment.Expected.ContextRequirement,
+            ExpectedFantasyOutlook = expectedTarget.FantasyOutlook,
+            ExpectedDirection = BenchmarkDirections.FromExpectedLabel(expectedTarget.FantasyOutlook)
+                                ?? BenchmarkDirections.FromExpectedLabel(expectedTarget.Sentiment)
+                                ?? BenchmarkFantasyLabels.Unknown,
+            ActualDirection = actual?.SentimentDirection ?? "Missing",
+            ActualScore = actual?.SentimentScore,
+            Reasons = string.Join("/", expectedTarget.Reasons),
+            IsDebatable = expectedTarget.IsDebatable || expectedTarget.AlternativeLabels.Count > 0,
+            Notes = expectedTarget.Notes ?? comment.Notes
+        });
     }
 
     private static void ScorePlayerEvaluation(
@@ -516,6 +595,7 @@ internal sealed class SentimentBenchmarkRunner
         {
             failures.Add(new BenchmarkFailure
             {
+                DatasetSplit = fixture.Thread.DatasetSplit,
                 Category = FailureCategory("PlayerEvaluation", expectedTarget),
                 ThreadName = fixture.Thread.Name,
                 CommentId = comment.Id,
@@ -551,6 +631,7 @@ internal sealed class SentimentBenchmarkRunner
         {
             failures.Add(new BenchmarkFailure
             {
+                DatasetSplit = fixture.Thread.DatasetSplit,
                 Category = $"Perspective:{expectedTarget.Perspective}",
                 ThreadName = fixture.Thread.Name,
                 CommentId = comment.Id,
@@ -646,6 +727,7 @@ internal sealed class SentimentBenchmarkRunner
         {
             labelAudits.Add(new BenchmarkFailure
             {
+                DatasetSplit = fixture.Thread.DatasetSplit,
                 Category = "DebatableAnnotation",
                 ThreadName = fixture.Thread.Name,
                 CommentId = comment.Id,
@@ -692,6 +774,7 @@ internal sealed class SentimentBenchmarkRunner
 
         failures.Add(new BenchmarkFailure
         {
+            DatasetSplit = fixture.Thread.DatasetSplit,
             Category = category,
             ThreadName = fixture.Thread.Name,
             CommentId = comment.Id,
@@ -892,6 +975,273 @@ internal sealed class SentimentBenchmarkRunner
             || failure.Body.Contains("truth", StringComparison.OrdinalIgnoreCase))
         {
             return "Slang";
+        }
+
+        return "Other";
+    }
+
+    private static ThreadBenchmarkSummary AggregateThreads(
+        string datasetSplit,
+        IEnumerable<ThreadBenchmarkSummary> threads)
+    {
+        var aggregate = new ThreadBenchmarkSummary
+        {
+            DatasetSplit = datasetSplit,
+            ThreadName = datasetSplit
+        };
+
+        foreach (var thread in threads)
+        {
+            aggregate.CommentCount += thread.CommentCount;
+            aggregate.ExpectedTargetCount += thread.ExpectedTargetCount;
+            aggregate.CommentsWithoutExpectedTargets += thread.CommentsWithoutExpectedTargets;
+            aggregate.FantasyOutlookExcludedByContext += thread.FantasyOutlookExcludedByContext;
+            aggregate.FantasyOutlookLabeledTargets += thread.FantasyOutlookLabeledTargets;
+            aggregate.PlayerEvaluationLabeledTargets += thread.PlayerEvaluationLabeledTargets;
+            aggregate.PerspectiveLabeledTargets += thread.PerspectiveLabeledTargets;
+            aggregate.FantasyActionLabeledTargets += thread.FantasyActionLabeledTargets;
+            aggregate.FantasyActionLabelCount += thread.FantasyActionLabelCount;
+            aggregate.DiscussionSignalLabeledTargets += thread.DiscussionSignalLabeledTargets;
+            aggregate.DiscussionSignalLabelCount += thread.DiscussionSignalLabelCount;
+            aggregate.TargetMetrics.Add(thread.TargetMetrics);
+            aggregate.FantasyOutlookMetrics.Add(thread.FantasyOutlookMetrics);
+            aggregate.PlayerEvaluationMetrics.Add(thread.PlayerEvaluationMetrics);
+            aggregate.PerspectiveMetrics.Add(thread.PerspectiveMetrics);
+            aggregate.FantasyActionMetrics.Add(thread.FantasyActionMetrics);
+            aggregate.DiscussionSignalMetrics.Add(thread.DiscussionSignalMetrics);
+            AddConfusionMatrix(aggregate.FantasyOutlookConfusionMatrix, thread.FantasyOutlookConfusionMatrix);
+            AddConfusionMatrix(aggregate.PlayerEvaluationConfusionMatrix, thread.PlayerEvaluationConfusionMatrix);
+            AddCounts(aggregate.ContextRequirementCounts, thread.ContextRequirementCounts);
+        }
+
+        EnsureContextKeys(aggregate.ContextRequirementCounts);
+        return aggregate;
+    }
+
+    private static void AppendDatasetSplitSection(StringBuilder builder, BenchmarkReport report)
+    {
+        builder.AppendLine("## Dataset Split Summary");
+        builder.AppendLine();
+        builder.AppendLine("| Split | Comments | Expected targets | Target F1 | FantasyOutlook | Perspective | Actions F1 | Signals F1 |");
+        builder.AppendLine("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |");
+
+        foreach (var group in report.ByThread.GroupBy(thread => thread.DatasetSplit, StringComparer.OrdinalIgnoreCase))
+        {
+            var split = AggregateThreads(group.Key, group);
+            builder.AppendLine(
+                $"| {group.Key} | {split.CommentCount} | {split.ExpectedTargetCount} | {split.TargetMetrics.F1:0.###} | {split.FantasyOutlookMetrics.Accuracy:0.###} | {split.PerspectiveMetrics.Accuracy:0.###} | {split.FantasyActionMetrics.F1:0.###} | {split.DiscussionSignalMetrics.F1:0.###} |");
+        }
+    }
+
+    private static void AppendHoldoutDiagnostics(StringBuilder builder, BenchmarkReport report)
+    {
+        var holdoutThreads = report.ByThread
+            .Where(thread => string.Equals(thread.DatasetSplit, "Holdout", StringComparison.OrdinalIgnoreCase))
+            .ToList();
+        if (holdoutThreads.Count == 0)
+        {
+            return;
+        }
+
+        var holdout = AggregateThreads("Holdout", holdoutThreads);
+        var holdoutFailures = report.AllFailures
+            .Where(failure => string.Equals(failure.DatasetSplit, "Holdout", StringComparison.OrdinalIgnoreCase))
+            .ToList();
+        var holdoutEvaluations = report.TargetEvaluations
+            .Where(evaluation => string.Equals(evaluation.DatasetSplit, "Holdout", StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        AppendConfusionMatrix(builder, "Holdout Fantasy Outlook Confusion Matrix", holdout.FantasyOutlookConfusionMatrix);
+        AppendHoldoutPlayerSummary(builder, holdoutEvaluations, holdoutFailures);
+        AppendLondonTrajectory(builder, holdoutEvaluations);
+        AppendHoldoutFailureCategories(builder, holdoutFailures);
+        AppendHoldoutRepresentativeFailures(builder, holdoutFailures);
+        AppendUnseenSlangFailures(builder, holdoutFailures);
+        AppendDebatableSection(
+            builder,
+            report.DebatableLabels
+                .Where(label => string.Equals(label.DatasetSplit, "Holdout", StringComparison.OrdinalIgnoreCase))
+                .ToList());
+    }
+
+    private static void AppendHoldoutPlayerSummary(
+        StringBuilder builder,
+        IReadOnlyList<BenchmarkTargetEvaluation> evaluations,
+        IReadOnlyList<BenchmarkFailure> failures)
+    {
+        builder.AppendLine();
+        builder.AppendLine("## Holdout Player Summary");
+        builder.AppendLine();
+        builder.AppendLine("| Player | Scored mentions | Expected -/0/+ | Actual -/0/+ | Most common failure |");
+        builder.AppendLine("| --- | ---: | --- | --- | --- |");
+
+        foreach (var group in evaluations
+                     .Where(IsScorableEvaluation)
+                     .GroupBy(evaluation => evaluation.Player, StringComparer.OrdinalIgnoreCase)
+                     .OrderByDescending(group => group.Count())
+                     .ThenBy(group => group.Key, StringComparer.OrdinalIgnoreCase)
+                     .Take(12))
+        {
+            var expected = DirectionCounts(group.Select(evaluation => evaluation.ExpectedDirection));
+            var actual = DirectionCounts(group.Select(evaluation => evaluation.ActualDirection));
+            var commonFailure = failures
+                .Where(failure => FailureMentionsPlayer(failure, group.Key))
+                .GroupBy(CategorizeHoldoutFailure, StringComparer.OrdinalIgnoreCase)
+                .OrderByDescending(failureGroup => failureGroup.Count())
+                .ThenBy(failureGroup => failureGroup.Key, StringComparer.OrdinalIgnoreCase)
+                .Select(failureGroup => $"{failureGroup.Key} ({failureGroup.Count()})")
+                .FirstOrDefault() ?? "none";
+
+            builder.AppendLine(
+                $"| {group.Key} | {group.Count()} | {expected.Negative}/{expected.Neutral}/{expected.Positive} | {actual.Negative}/{actual.Neutral}/{actual.Positive} | {commonFailure} |");
+        }
+    }
+
+    private static void AppendLondonTrajectory(
+        StringBuilder builder,
+        IReadOnlyList<BenchmarkTargetEvaluation> evaluations)
+    {
+        var london = evaluations
+            .Where(evaluation => string.Equals(evaluation.Player, "Drake London", StringComparison.OrdinalIgnoreCase))
+            .Where(IsScorableEvaluation)
+            .OrderBy(evaluation => evaluation.CommentIndex)
+            .ToList();
+        if (london.Count == 0)
+        {
+            return;
+        }
+
+        builder.AppendLine();
+        builder.AppendLine("## Drake London Holdout Trajectory");
+        builder.AppendLine();
+        foreach (var (evaluation, index) in london.Select((evaluation, index) => (evaluation, index + 1)))
+        {
+            builder.AppendLine(
+                $"- {index:00}. {evaluation.ExpectedDirection} -> model {evaluation.ActualDirection}: {Trim(evaluation.Body, 130)}");
+        }
+    }
+
+    private static void AppendHoldoutFailureCategories(
+        StringBuilder builder,
+        IReadOnlyList<BenchmarkFailure> failures)
+    {
+        builder.AppendLine();
+        builder.AppendLine("## Holdout Failure Categories");
+        builder.AppendLine();
+        foreach (var group in failures
+                     .GroupBy(CategorizeHoldoutFailure, StringComparer.OrdinalIgnoreCase)
+                     .OrderByDescending(group => group.Count())
+                     .ThenBy(group => group.Key, StringComparer.OrdinalIgnoreCase))
+        {
+            builder.AppendLine($"- {group.Key}: {group.Count()}");
+        }
+    }
+
+    private static void AppendHoldoutRepresentativeFailures(
+        StringBuilder builder,
+        IReadOnlyList<BenchmarkFailure> failures)
+    {
+        builder.AppendLine();
+        builder.AppendLine("## Representative Holdout Failures");
+        builder.AppendLine();
+        foreach (var failure in failures.Take(25))
+        {
+            builder.AppendLine($"- [{CategorizeHoldoutFailure(failure)} / {failure.Category}] {failure.CommentId}");
+            builder.AppendLine($"  - Text: {Trim(failure.Body, 180)}");
+            builder.AppendLine($"  - Expected: {failure.Expected}");
+            builder.AppendLine($"  - Actual: {failure.Actual}");
+        }
+    }
+
+    private static void AppendUnseenSlangFailures(
+        StringBuilder builder,
+        IReadOnlyList<BenchmarkFailure> failures)
+    {
+        var unseen = failures
+            .Where(failure => CategorizeHoldoutFailure(failure).Equals("UnseenSlang", StringComparison.OrdinalIgnoreCase))
+            .ToList();
+        builder.AppendLine();
+        builder.AppendLine("## Unseen Slang Failures");
+        builder.AppendLine();
+        foreach (var failure in unseen)
+        {
+            builder.AppendLine($"- {failure.CommentId}: {Trim(failure.Body, 170)}");
+            builder.AppendLine($"  - Expected: {failure.Expected}");
+            builder.AppendLine($"  - Actual: {failure.Actual}");
+        }
+    }
+
+    private static bool IsScorableEvaluation(BenchmarkTargetEvaluation evaluation)
+    {
+        return !string.Equals(evaluation.ContextRequirement, BenchmarkContextRequirements.GameEventContext, StringComparison.OrdinalIgnoreCase)
+               && !string.Equals(evaluation.ContextRequirement, BenchmarkContextRequirements.Ambiguous, StringComparison.OrdinalIgnoreCase)
+               && (evaluation.ExpectedDirection.Equals(BenchmarkDirections.Negative, StringComparison.OrdinalIgnoreCase)
+                   || evaluation.ExpectedDirection.Equals(BenchmarkDirections.Neutral, StringComparison.OrdinalIgnoreCase)
+                   || evaluation.ExpectedDirection.Equals(BenchmarkDirections.Positive, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static (int Negative, int Neutral, int Positive) DirectionCounts(IEnumerable<string> values)
+    {
+        var list = values.ToList();
+        return (
+            list.Count(value => string.Equals(value, BenchmarkDirections.Negative, StringComparison.OrdinalIgnoreCase)),
+            list.Count(value => string.Equals(value, BenchmarkDirections.Neutral, StringComparison.OrdinalIgnoreCase)),
+            list.Count(value => string.Equals(value, BenchmarkDirections.Positive, StringComparison.OrdinalIgnoreCase)));
+    }
+
+    private static bool FailureMentionsPlayer(BenchmarkFailure failure, string player)
+    {
+        return failure.Expected.StartsWith($"{player} ", StringComparison.OrdinalIgnoreCase)
+               || failure.Actual.StartsWith($"{player} ", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string CategorizeHoldoutFailure(BenchmarkFailure failure)
+    {
+        if (failure.Category.StartsWith("Target", StringComparison.OrdinalIgnoreCase))
+        {
+            return "TargetResolution";
+        }
+
+        if (string.Equals(failure.ContextRequirement, BenchmarkContextRequirements.GameEventContext, StringComparison.OrdinalIgnoreCase))
+        {
+            return "GameEventRequired";
+        }
+
+        if (string.Equals(failure.ContextRequirement, BenchmarkContextRequirements.ReplyContext, StringComparison.OrdinalIgnoreCase))
+        {
+            return "ReplyContext";
+        }
+
+        var body = failure.Body.ToLowerInvariant();
+        if (body.Contains("built different")
+            || body.Contains("dawg")
+            || body.Contains("owners 9/11")
+            || body.Contains("daddy")
+            || body.Contains("stonks"))
+        {
+            return "UnseenSlang";
+        }
+
+        foreach (var category in new[]
+                 {
+                     "LineupRegret",
+                     "DraftRegret",
+                     "OpponentPerspective",
+                     "OwnRosterPerspective",
+                     "Comparison",
+                     "Negation",
+                     "Sarcasm",
+                     "UsageOpportunity",
+                     "QuarterbackPlay",
+                     "Injury",
+                     "Performance"
+                 })
+        {
+            if (failure.Category.Contains(category, StringComparison.OrdinalIgnoreCase)
+                || (failure.Notes?.Contains(category, StringComparison.OrdinalIgnoreCase) ?? false))
+            {
+                return category;
+            }
         }
 
         return "Other";

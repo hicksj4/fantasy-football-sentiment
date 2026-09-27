@@ -1,0 +1,4384 @@
+{
+  "thread": {
+    "name": "OFFICIAL WEEK 3 THURSDAY NIGHT GAME THREAD",
+    "type": "GameThread",
+    "postType": "GameThread",
+    "subreddit": "fantasyfootball",
+    "datasetSplit": "Holdout",
+    "sourceFile": "D:/FF Sentiment Hand Data/Week3ThursdayGameData.txt"
+  },
+  "players": [
+    {
+      "name": "Bijan Robinson",
+      "team": "ATL",
+      "position": "RB",
+      "aliases": [
+        "Bijan",
+        "Bijan Robinson",
+        "Atlanta Bijans",
+        "Atlanta Bijan Robinsons"
+      ]
+    },
+    {
+      "name": "Drake London",
+      "team": "ATL",
+      "position": "WR",
+      "aliases": [
+        "Drake London",
+        "London"
+      ]
+    },
+    {
+      "name": "Michael Penix Jr.",
+      "team": "ATL",
+      "position": "QB",
+      "aliases": [
+        "Penix",
+        "Michael Penix",
+        "Michael Penix Jr",
+        "Michael Penis"
+      ]
+    },
+    {
+      "name": "Kyle Pitts",
+      "team": "ATL",
+      "position": "TE",
+      "aliases": [
+        "Pitts",
+        "Kyle Pitts"
+      ]
+    },
+    {
+      "name": "Jordan Love",
+      "team": "GB",
+      "position": "QB",
+      "aliases": [
+        "Jordan Love",
+        "Love"
+      ]
+    },
+    {
+      "name": "Matthew Golden",
+      "team": "GB",
+      "position": "WR",
+      "aliases": [
+        "Matthew Golden",
+        "Golden"
+      ]
+    },
+    {
+      "name": "Christian Watson",
+      "team": "GB",
+      "position": "WR",
+      "aliases": [
+        "Christian Watson",
+        "Watson"
+      ]
+    },
+    {
+      "name": "Tucker Kraft",
+      "team": "GB",
+      "position": "TE",
+      "aliases": [
+        "Tucker Kraft",
+        "Kraft"
+      ]
+    },
+    {
+      "name": "Marshawn Lloyd",
+      "team": "GB",
+      "position": "RB",
+      "aliases": [
+        "Marshawn Lloyd",
+        "Lloyd",
+        "Marshawn"
+      ]
+    },
+    {
+      "name": "Rome Odunze",
+      "team": "CHI",
+      "position": "WR",
+      "aliases": [
+        "Odunze",
+        "Rome Odunze"
+      ]
+    },
+    {
+      "name": "Josh Jacobs",
+      "team": "GB",
+      "position": "RB",
+      "aliases": [
+        "Jacobs",
+        "Josh Jacobs"
+      ]
+    },
+    {
+      "name": "Josh Allen",
+      "team": "BUF",
+      "position": "QB",
+      "aliases": [
+        "Josh Allen"
+      ]
+    },
+    {
+      "name": "Jahmyr Gibbs",
+      "team": "DET",
+      "position": "RB",
+      "aliases": [
+        "Gibbs",
+        "Jahmyr Gibbs"
+      ]
+    }
+  ],
+  "referenceResults": [
+    {
+      "player": "Bijan Robinson",
+      "fantasyPointsHalfPpr": 34.3,
+      "weeklyOverallRank": 1,
+      "notes": "Reference only; not used as sentiment ground truth."
+    },
+    {
+      "player": "Drake London",
+      "fantasyPointsHalfPpr": 23.9,
+      "weeklyOverallRank": 2,
+      "notes": "Reference only; early and late comments are labeled individually."
+    },
+    {
+      "player": "Christian Watson",
+      "fantasyPointsHalfPpr": 19.1,
+      "weeklyOverallRank": 3,
+      "notes": "Reference only; not used as sentiment ground truth."
+    }
+  ],
+  "comments": [
+    {
+      "id": "w3tn-001",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Need Bijan to destroy tonight",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-002",
+      "parentId": null,
+      "redditScore": 0,
+      "body": "I need Bijan to do even worse than last week 🙏🏻",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "OpponentPerspective"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-003",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Kraft and London Tds incoming",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          },
+          {
+            "player": "Tucker Kraft",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-004",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Golden or Odunze?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ],
+            "notes": "Start/sit choice, no standalone sentiment in the question."
+          },
+          {
+            "player": "Rome Odunze",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-004-r1",
+      "parentId": "w3tn-004",
+      "redditScore": 1,
+      "body": "Neither",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Sit"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext"
+            ],
+            "notes": "Reply to Golden/Odunze start choice rejects Golden."
+          },
+          {
+            "player": "Rome Odunze",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Sit"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext"
+            ],
+            "notes": "Reply to Golden/Odunze start choice rejects Odunze."
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-004-r2",
+      "parentId": "w3tn-004",
+      "redditScore": 2,
+      "body": "Golden",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-005",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Kraft going for 150",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-006",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "Golden breakout game",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-007",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Starting both Watson and Golden! Looking for a Moss and Carter type night",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-008",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Fired up Pitts with zero confidence",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyle Pitts",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-009",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "I hate bad quarterbacks so much.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-010",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Penix is him...who sucks.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Michael Penix Jr.",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay",
+              "Negation"
+            ],
+            "isDebatable": true,
+            "alternativeLabels": [
+              "Positive if the first clause is over-weighted"
+            ],
+            "notes": "The trailing 'who sucks' reverses the positive 'is him' idiom."
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-011",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Wide open London, ignored and throws a pick",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-012",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Fucking Penix",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Michael Penix Jr.",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-013",
+      "parentId": null,
+      "redditScore": -1,
+      "body": "London trash time gonna feed families",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ],
+            "isDebatable": true,
+            "alternativeLabels": [
+              "Negative if trash-time framing is read as low-quality production"
+            ],
+            "notes": "Expected positive fantasy production despite sarcastic garbage-time wording."
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-014",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Falcons make the dolphins look good",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-015",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Jordan love is hot trash this year",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-016",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Love stinks",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-017",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Wow penix looks like absolute dog shit",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Michael Penix Jr.",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-018",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "The falcons are an embarrassment",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-019",
+      "parentId": null,
+      "redditScore": -1,
+      "body": "Drake London is cooked.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-020",
+      "parentId": null,
+      "redditScore": 0,
+      "body": "I wish I could drop London but there aren’t really any serviceable WRs left to pick up",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-021",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Penix looks like a guy coming off major knee surgery who got basically no reps in the preseason",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Michael Penix Jr.",
+            "fantasyOutlook": "Neutral",
+            "playerEvaluation": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-022",
+      "parentId": null,
+      "redditScore": 0,
+      "body": "Michael Vick would be a better option at this point",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-023",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "This game is cooked",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-024",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "my Golden vs her Watson, cmon Greenbay",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          },
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OpponentRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "OpponentPerspective"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-025",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Just need a Bijan breakaway run tonight, it’ll happen",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-026",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Holy fuck Love looks terrible",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-027",
+      "parentId": null,
+      "redditScore": 0,
+      "body": "Jordan Love sucks lol",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-028",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "I feel like Lloyd is droppable if this is the rotation til Jacobs gets back",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Josh Jacobs",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Performance",
+              "Injury"
+            ]
+          },
+          {
+            "player": "Marshawn Lloyd",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-028-r1",
+      "parentId": "w3tn-028",
+      "redditScore": 1,
+      "body": "All packers RBs are",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-029",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Is Love okay?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-030",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "GOLDEN",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-031",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "We're going up up up",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-032",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "I put Golden last minute…",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-033",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Golden making a catch? Is that legal?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ],
+            "isDebatable": true,
+            "alternativeLabels": [
+              "Negative if read as surprise that he rarely catches passes"
+            ],
+            "notes": "Sarcastic surprise, but the event itself is a positive Golden play."
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-034",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Man golden is so good",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-035",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "GOLDEN TO THE MOOONNNNN",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-036",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Jesus Christ both these QB are trash",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-037",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "guess its gonna be a Golden game",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-038",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Both of these qbs look horrible",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-038-r1",
+      "parentId": "w3tn-038",
+      "redditScore": 1,
+      "body": "outside of josh allen what qb has looked good on prime time",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Josh Allen",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-039",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "this Marshawn is not in fact Beastmode",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity",
+              "Negation"
+            ],
+            "isDebatable": true,
+            "alternativeLabels": [
+              "Neutral if read only as a joke about the first name"
+            ],
+            "notes": "Comparison says Marshawn Lloyd is not Marshawn Lynch/Beastmode."
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-040",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Who’s ATLs back up QB?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-040-r1",
+      "parentId": "w3tn-040",
+      "redditScore": 4,
+      "body": "Some guy in the stands",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-041",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "As someone who put Lloyd in because Price let me down the last two weeks and was questionable, if he can hit even 8 points again I'll call that a win",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-041-r1",
+      "parentId": "w3tn-041",
+      "redditScore": 3,
+      "body": "He isn't looking bad this drive.",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext",
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-042",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Nightmare backfield holy",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-043",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "TD for Watson please",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-044",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "MATTHEW GOLDEN TD. FUCKING WATCH",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-045",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Penix looks rusty",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Michael Penix Jr.",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-046",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Watson gets the first TD!",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-047",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Watson owners off the ledge",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-048",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Thanks Watson, I can officially unclench now",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-049",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Holy shit we actually did it with Watson",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-050",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Happy for the Watson owners, I just want Kraft to finally get his",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Tucker Kraft",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-051",
+      "parentId": null,
+      "redditScore": 0,
+      "body": "Does Matthew Golden not exist? Watson and Love must be besties",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          },
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-051-r1",
+      "parentId": "w3tn-051",
+      "redditScore": 2,
+      "body": "he just caught a bomb pass.",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext",
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-052",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Watson is a league winner",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance",
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-053",
+      "parentId": null,
+      "redditScore": 15,
+      "body": "fuck I wanted a Kraft TD",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-054",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Love is such a confusing QB",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-055",
+      "parentId": null,
+      "redditScore": 16,
+      "body": "they feed watson in the end zone",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-056",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Watson is a beast, I have him in my another league I’m so glad I drafted him",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-057",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Need Kraft to do more",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-057-r1",
+      "parentId": "w3tn-057",
+      "redditScore": 3,
+      "body": "Multiple catches in the first quarter is promising",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-057-r2",
+      "parentId": "w3tn-057",
+      "redditScore": 1,
+      "body": "patience",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "fantasyOutlook": "Neutral",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext"
+            ],
+            "isDebatable": true,
+            "alternativeLabels": [
+              "Positive because it reassures a Kraft manager"
+            ],
+            "notes": "Reply is reassuring but not strongly directional by itself."
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-058",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Feed Kraft pls",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-059",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Golden is better than Watson",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-059-r1",
+      "parentId": "w3tn-059",
+      "redditScore": 2,
+      "body": "ok",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-060",
+      "parentId": null,
+      "redditScore": 24,
+      "body": "I close my eyes everytime Penix throws the ball, same as Penix himself does",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Michael Penix Jr.",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-061",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Is BIJAN hurt ????",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-062",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Where the HELL is Bijan",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-063",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Penix is so ass",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Michael Penix Jr.",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-064",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "We got a target!! London Truthers FEASTING!!",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-065",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "If bijan gets zero carries this drive Atlanta deserves to lose",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-066",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Penix fucking sucks JFC",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Michael Penix Jr.",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-067",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "London owners are cooked",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-068",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Bijan is so damn fun to watch",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-069",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "THAT'S MY RB1",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-070",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "One of the most ELECTRIC players out there. Love that dude, Bijan.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-071",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "best rb in the game",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-072",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "I would die for Bijan",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-073",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Bijan doing bijan",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-074",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Bijan said fuck it, I carry this team on my shoulders",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-075",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Packers dst got fucked on that wow",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-076",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Bijan always on Madden mode",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-077",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "BIJAN TD FINISH IT",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-078",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Jeez hes so good",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-079",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "This team really should just be called the Atlanta Bijans lol",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-080",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "Bijan you sweet sweet man",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-081",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Watching Bijan play alone makes it tolerable to watch primetime Falcons",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-082",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "EZ BIJAN LEYS GO",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-083",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Thats my GOAT",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-084",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Bijan is the whole team",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-085",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "People were worried about Bijan in here? Wild.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-085-r1",
+      "parentId": "w3tn-085",
+      "redditScore": 1,
+      "body": "some guy said sell the falcons lol",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-086",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Bijan is a dawg",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance",
+              "UnseenSlang"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-087",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Wow BiJAN so fucking good",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-088",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Penix looked great that drive",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Michael Penix Jr.",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-089",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "We're so back, Bijan owners",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-090",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Man it feels good to be a Bijan Robinson owner.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-091",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "YESSIR! BIJAN!",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-092",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "I'ma say it, Bijan the best overall RB talent in the league",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "StrongPositive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-093",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Bijan is that dude",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-094",
+      "parentId": null,
+      "redditScore": 0,
+      "body": "GB defense is ironically Swiss cheese",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-095",
+      "parentId": null,
+      "redditScore": 28,
+      "body": "Yeah Bijan is the best RB in the NFL right now",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "StrongPositive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-096",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "I love you bijan",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-097",
+      "parentId": null,
+      "redditScore": 20,
+      "body": "By far and away the most skilled back in the league",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-097-r1",
+      "parentId": "w3tn-097",
+      "redditScore": -9,
+      "body": "Gibbs clears",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Jahmyr Gibbs",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-097-r2",
+      "parentId": "w3tn-097-r1",
+      "redditScore": 0,
+      "body": "Gibbs is more explosive, not more skilled. It’s not even arguable lmao",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Jahmyr Gibbs",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Comparison"
+            ]
+          },
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-098",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Greenbay kinda ass",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-099",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Golden td please",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-100",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Bijan you beautiful bastard",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-101",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Started London Yikes",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-101-r1",
+      "parentId": "w3tn-101",
+      "redditScore": 2,
+      "body": "0 targets 😞",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
+            ],
+            "reasons": [
+              "ReplyContext",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-102",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Kraft getting involved early, love to see it",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-103",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "I regret starting London so far🤦‍♂️",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-104",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Ain’t heard from Drake London in a minute",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-105",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "WHY IS HE NOT THROWING TO THE LONDON",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-106",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Is London cooked?",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-107",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Atlanta Bijan Robinsons",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-108",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "London non existent lmao",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-109",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "packers D sucks",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-110",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Is London a decoy today",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-111",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "London Owners 9/11",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
+            ],
+            "reasons": [
+              "Performance",
+              "UnseenSlang"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-112",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "London was a mistake",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-113",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "These London targets suck",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-114",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "I feel bad for anyone that owns London",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-115",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "London is alive.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-116",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "London lives!!!!",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-117",
+      "parentId": null,
+      "redditScore": 40,
+      "body": "Gibbs is so explosive but bijan’s footwork and cuts are so fucking pleasing to watch",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Jahmyr Gibbs",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Comparison"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-118",
+      "parentId": null,
+      "redditScore": 24,
+      "body": "Golden gets so much separation but Love is terrible.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-118-r1",
+      "parentId": "w3tn-118",
+      "redditScore": 1,
+      "body": "it's week 3",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-119",
+      "parentId": null,
+      "redditScore": 15,
+      "body": "Watson and London owners, stand up",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-119-r1",
+      "parentId": "w3tn-119",
+      "redditScore": 3,
+      "body": "I got London and Golden. Had them both in. First time playing either this season. Turned out pretty well",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext",
+              "FantasyProduction"
+            ]
+          },
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext",
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-120",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "As a Bijan owner I love you Michael Penis",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Michael Penix Jr.",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-121",
+      "parentId": null,
+      "redditScore": 12,
+      "body": "Garbage time Golden incoming",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-122",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "Bijan master class",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-123",
+      "parentId": null,
+      "redditScore": 9,
+      "body": "Drake London bros we’re so back",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-124",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "Love sucks",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-125",
+      "parentId": null,
+      "redditScore": 9,
+      "body": "Packers not throwing to Watson is an interesting strategy",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-126",
+      "parentId": null,
+      "redditScore": 18,
+      "body": "Love really likes Watson fuck man",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-127",
+      "parentId": null,
+      "redditScore": 9,
+      "body": "Oh boy is London slow",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-128",
+      "parentId": null,
+      "redditScore": 8,
+      "body": "At least they're trying to make Golden happen",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-129",
+      "parentId": null,
+      "redditScore": 8,
+      "body": "Bijan comes out and the drive dies.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-130",
+      "parentId": null,
+      "redditScore": 8,
+      "body": "london owners we back up for the 5-8 weeks penix is alive",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Michael Penix Jr.",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-131",
+      "parentId": null,
+      "redditScore": 8,
+      "body": "I can’t believe Bijan Robinson fell to me with the #2. talk about value",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-132",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "Thank you daddy Bijan",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance",
+              "UnseenSlang"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-133",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "Love is killing my Kraft stonks",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity",
+              "UnseenSlang"
+            ]
+          },
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay",
+              "UnseenSlang"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-134",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "London needs to work on his cardio",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-135",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "I'm 0-2. Started both London and Golden. Feeling pretty good right now",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [
+              "Start"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-136",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Why God why did I draft Drake London",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-137",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Already dropped Lloyd",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-138",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "THATS MY BOI GOLDEN",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-139",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "Facing bijan and London fuck me",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "OpponentRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OpponentRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "OpponentPerspective"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-140",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "London owners off the ledge",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-141",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Holy shit this is an ugly game by Love",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-142",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "London I never doubted you for a second.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-142-r1",
+      "parentId": "w3tn-142",
+      "redditScore": 2,
+      "body": "uh yeah me too. deletes comment history",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext"
+            ],
+            "isDebatable": true,
+            "alternativeLabels": [
+              "Neutral because the positive stance is ironic self-correction"
+            ],
+            "notes": "Agreement with parent after London improved; the deleted history joke acknowledges prior doubt."
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-143",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "London bros that bad man Cooper can’t hurt us anymore",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-144",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Drake London has arrived!!!!",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-145",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Pitts is a waiver player, f this",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyle Pitts",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-146",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "London could’ve have 2 long TDs",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ],
+            "isDebatable": true,
+            "alternativeLabels": [
+              "Neutral because missed chances did not score"
+            ],
+            "notes": "Opportunity was positive, even though the plays were missed."
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-147",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Watson was wide open",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-148",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Tucker Kraft fucking my ass yet again",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-149",
+      "parentId": null,
+      "redditScore": 18,
+      "body": "Y'all mf with Bijan greedy AF. Chill he's at 24 lol",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Unknown",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-150",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "I need Kraft to do something if not I will be 0-3",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
+            ],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-151",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Christian Watson WR1 season is HERE.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance",
+              "FantasyProduction"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-152",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Bijan out there gliding.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-153",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "London owners we are in hell",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
+            ],
+            "reasons": [
+              "Performance",
+              "LineupRegret"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-154",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Designed London plays 🥰",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-155",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Vibes are BAD in Green Bay",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-156",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Damn London is getting fed",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Drake London",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-157",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "so Pitts is dead this year right? can’t wait to drop him.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyle Pitts",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [
+              "Panic"
+            ],
+            "reasons": [
+              "Performance",
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-158",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Jordan love straight ass",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-159",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Please kraft td here",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "fantasyOutlook": "Negative",
+            "playerEvaluation": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    },
+    {
+      "id": "w3tn-160",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Golden could be an automatic flex play. Love seems to trust him a lot.",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Matthew Golden",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Jordan Love",
+            "fantasyOutlook": "Positive",
+            "playerEvaluation": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance",
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      },
+      "datasetSplit": "Holdout"
+    }
+  ]
+}
