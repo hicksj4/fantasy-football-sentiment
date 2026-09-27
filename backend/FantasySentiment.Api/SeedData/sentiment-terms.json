@@ -11,7 +11,9 @@
       "underrated",
       "steal",
       "dominant",
-      "unstoppable"
+      "unstoppable",
+      "electric",
+      "goated"
     ],
     "NegativeTerms": [
       "awful",
@@ -30,7 +32,10 @@
       "bum",
       "irrelevant",
       "droppable",
-      "benchable"
+      "benchable",
+      "sucks",
+      "stinks",
+      "horrible"
     ],
     "PositivePhrases": [
       "league winner",
@@ -88,7 +93,53 @@
       "lets go",
       "let's fucking go",
       "lets fucking go",
-      "lfg"
+      "lfg",
+      "built different",
+      "built dif",
+      "he's just different",
+      "hes just different",
+      "is just different",
+      "he is just different",
+      "is a dawg",
+      "a dawg",
+      "absolute dawg",
+      "is goated",
+      "goated",
+      "td incoming",
+      "tds incoming",
+      "touchdown incoming",
+      "touchdowns incoming",
+      "going for 100",
+      "going for 150",
+      "going for 200",
+      "getting fed",
+      "is getting fed",
+      "gets fed",
+      "feed him",
+      "feed this man",
+      "fed in the end zone",
+      "getting involved",
+      "love to see it",
+      "owners stand up",
+      "owner stand up",
+      "off the ledge",
+      "has arrived",
+      "is alive",
+      "lives",
+      "feeling pretty good",
+      "turned out pretty well",
+      "master class",
+      "masterclass",
+      "automatic flex",
+      "automatic flex play",
+      "wr1 season",
+      "rb1 season",
+      "te1 season",
+      "qb1 season",
+      "stonks up",
+      "stonks are up",
+      "stonks rising",
+      "stonks going up"
     ],
     "NegativePhrases": [
       "roster clogger",
@@ -129,13 +180,50 @@
       "straight buns",
       "is buns",
       "playing like ass",
-      "playing like straight ass"
+      "playing like straight ass",
+      "does not exist",
+      "doesn't exist",
+      "doesnt exist",
+      "not exist",
+      "non existent",
+      "non-existent",
+      "zero targets",
+      "0 targets",
+      "no targets",
+      "not getting targets",
+      "zero confidence",
+      "with zero confidence",
+      "was a mistake",
+      "owners are cooked",
+      "owner is cooked",
+      "owners cooked",
+      "owners 9/11",
+      "owner's 9/11",
+      "owners' 9/11",
+      "owners are in hell",
+      "owners in hell",
+      "we are in hell",
+      "can't wait to drop",
+      "cant wait to drop",
+      "waiver player",
+      "waiver wire player",
+      "is dead this year",
+      "dead this year",
+      "looks rusty",
+      "is slow",
+      "looks slow",
+      "killing my stonks",
+      "stonks are down",
+      "stonks down",
+      "stonks crashing"
     ],
     "PositiveSlang": [
       "cooking",
       "filthy",
       "disgusting",
-      "cracked"
+      "cracked",
+      "dawg",
+      "goated"
     ],
     "NegativeSlang": [
       "washed",
@@ -149,7 +237,9 @@
       "bum",
       "booty",
       "ass",
-      "buns"
+      "buns",
+      "sucks",
+      "stinks"
     ],
     "EmojiLexicon": {
       "Positive": {
@@ -183,7 +273,9 @@
         "bury me",
         "buries me",
         "killing me",
-        "outscored my"
+        "outscored my",
+        "facing ",
+        "against my"
       ],
       "OwnRosterPositive": [
         "beyond happy",
@@ -191,7 +283,9 @@
         "love",
         "incredible",
         "carried me",
-        "carrying me"
+        "carrying me",
+        "as an owner",
+        "as a proud owner"
       ],
       "OwnRosterRegret": [
         "why did i start",
@@ -202,7 +296,11 @@
         "should have benched",
         "why tf did i start",
         "why did i draft",
-        "why tf did i draft"
+        "why tf did i draft",
+        "started ",
+        "starting both",
+        "i regret starting",
+        "already dropped"
       ]
     },
     "Sarcasm": {
@@ -270,7 +368,11 @@
       "dump",
       "dropping",
       "droppable",
-      "cuttable"
+      "cuttable",
+      "already dropped",
+      "can't wait to drop",
+      "cant wait to drop",
+      "waiver player"
     ],
     "Start": [
       "start",
@@ -279,7 +381,9 @@
       "locked in",
       "starting",
       "started",
-      "startable"
+      "startable",
+      "fired up",
+      "starting both"
     ],
     "Sit": [
       "sit",
@@ -349,7 +453,31 @@
       "let's fucking go",
       "lets fucking go",
       "lfg",
-      "from the top rope"
+      "from the top rope",
+      "built different",
+      "built dif",
+      "he's just different",
+      "hes just different",
+      "is just different",
+      "is a dawg",
+      "a dawg",
+      "goated",
+      "owners stand up",
+      "off the ledge",
+      "has arrived",
+      "is alive",
+      "master class",
+      "masterclass",
+      "td incoming",
+      "tds incoming",
+      "touchdown incoming",
+      "touchdowns incoming",
+      "wr1 season",
+      "rb1 season",
+      "te1 season",
+      "qb1 season",
+      "stonks up",
+      "stonks rising"
     ],
     "Panic": [
       "panic",
@@ -361,7 +489,16 @@
       "concerned",
       "rug pull",
       "it's so over",
-      "its so over"
+      "its so over",
+      "owners are cooked",
+      "owners cooked",
+      "owners 9/11",
+      "owner's 9/11",
+      "owners' 9/11",
+      "owners are in hell",
+      "owners in hell",
+      "we are in hell",
+      "zero confidence"
     ]
   }
 }

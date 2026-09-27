@@ -26,6 +26,11 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
             : Normalize(targetText);
         var alias = Normalize(mention.MatchedAlias);
         var playerName = Normalize(mention.PlayerName);
+        if (IsStartChoice(normalizedTargetText, alias, playerName))
+        {
+            return FantasyIntents.Start;
+        }
+
         if (TryClassifyScopedAction(normalizedFullText, alias, playerName, out var scopedIntent))
         {
             return scopedIntent;
@@ -123,7 +128,7 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
 
         var sitFor = Regex.Match(
             normalized,
-            @"\b(?:benching|bench|sitting|sit)\s+(?<left>.+?)\s+for\s+(?<right>.+)$",
+            @"\b(?:benched|benching|bench|sitting|sit)\s+(?<left>.+?)\s+for\s+(?<right>.+)$",
             RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
         if (sitFor.Success)
         {
@@ -144,7 +149,7 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
 
         var sitNot = Regex.Match(
             normalized,
-            @"\b(?:benching|bench|sitting|sit)\s+(?<left>.+?)\s+not\s+(?<right>.+)$",
+            @"\b(?:benched|benching|bench|sitting|sit)\s+(?<left>.+?)\s+not\s+(?<right>.+)$",
             RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
         if (sitNot.Success)
         {
@@ -186,6 +191,21 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
 
         intent = FantasyIntents.General;
         return false;
+    }
+
+    private static bool IsStartChoice(string normalized, string alias, string playerName)
+    {
+        if (!ContainsMention(normalized, alias, playerName)
+            || !Regex.IsMatch(normalized, @"\b(?:or|vs|versus)\b|/", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            return false;
+        }
+
+        return normalized.Length <= 120
+               || Regex.IsMatch(
+                   normalized,
+                   @"\b(?:start|starting|flex|lineup|who)\b",
+                   RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
     }
 
     private static string BuildContext(string normalized, string alias, string playerName)

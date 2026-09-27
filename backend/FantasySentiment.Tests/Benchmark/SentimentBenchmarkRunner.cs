@@ -15,7 +15,7 @@ internal sealed class SentimentBenchmarkRunner
     private const double PreviousFantasyOutlookAccuracy = 0.505;
     private const double PreviousPerspectiveAccuracy = 0.125;
     private const double PreviousSingleIntentAccuracy = 0.308;
-    private const string SemanticProfile = "fantasy-semantics-v2";
+    private const string SemanticProfile = "fantasy-semantics-v3";
 
     private readonly BenchmarkCorpus _corpus;
     private readonly CommentTargetResolver _targetResolver;
@@ -174,7 +174,7 @@ internal sealed class SentimentBenchmarkRunner
         builder.AppendLine("## Old Contract Comparison");
         builder.AppendLine();
         builder.AppendLine($"Previous benchmark interpretation: comments={PreviousCommentCount}, expectedTargets={PreviousExpectedTargetCount}, targetF1={PreviousTargetF1:0.###}, sentimentAccuracy={PreviousFantasyOutlookAccuracy:0.###}, perspectiveAccuracy={PreviousPerspectiveAccuracy:0.###}, singleIntentAccuracy={PreviousSingleIntentAccuracy:0.###}.");
-        builder.AppendLine("This report evaluates the current fantasy-semantics-v2 production semantics on the Development dataset. Metric changes may reflect both annotation corrections and production semantic tuning.");
+        builder.AppendLine("This report evaluates the current fantasy-semantics-v3 production semantics on the Development dataset. Metric changes may reflect both annotation corrections and production semantic tuning.");
         builder.AppendLine();
         builder.AppendLine("## By Thread");
         builder.AppendLine();
@@ -203,7 +203,7 @@ internal sealed class SentimentBenchmarkRunner
         AppendAuditSection(builder, "Discussion Signal Failure Audit", report.DiscussionSignalFailureCategories, report.DiscussionSignalFailureExamples);
         AppendDebatableSection(builder, report.DebatableLabels);
         AppendRepresentativeFailures(builder, report.RepresentativeFailures);
-        AppendHoldoutDiagnostics(builder, report);
+        AppendValidationDiagnostics(builder, report);
 
         return builder.ToString();
     }
@@ -1033,44 +1033,44 @@ internal sealed class SentimentBenchmarkRunner
         }
     }
 
-    private static void AppendHoldoutDiagnostics(StringBuilder builder, BenchmarkReport report)
+    private static void AppendValidationDiagnostics(StringBuilder builder, BenchmarkReport report)
     {
-        var holdoutThreads = report.ByThread
-            .Where(thread => string.Equals(thread.DatasetSplit, "Holdout", StringComparison.OrdinalIgnoreCase))
+        var validationThreads = report.ByThread
+            .Where(thread => string.Equals(thread.DatasetSplit, "Validation", StringComparison.OrdinalIgnoreCase))
             .ToList();
-        if (holdoutThreads.Count == 0)
+        if (validationThreads.Count == 0)
         {
             return;
         }
 
-        var holdout = AggregateThreads("Holdout", holdoutThreads);
-        var holdoutFailures = report.AllFailures
-            .Where(failure => string.Equals(failure.DatasetSplit, "Holdout", StringComparison.OrdinalIgnoreCase))
+        var validation = AggregateThreads("Validation", validationThreads);
+        var validationFailures = report.AllFailures
+            .Where(failure => string.Equals(failure.DatasetSplit, "Validation", StringComparison.OrdinalIgnoreCase))
             .ToList();
-        var holdoutEvaluations = report.TargetEvaluations
-            .Where(evaluation => string.Equals(evaluation.DatasetSplit, "Holdout", StringComparison.OrdinalIgnoreCase))
+        var validationEvaluations = report.TargetEvaluations
+            .Where(evaluation => string.Equals(evaluation.DatasetSplit, "Validation", StringComparison.OrdinalIgnoreCase))
             .ToList();
 
-        AppendConfusionMatrix(builder, "Holdout Fantasy Outlook Confusion Matrix", holdout.FantasyOutlookConfusionMatrix);
-        AppendHoldoutPlayerSummary(builder, holdoutEvaluations, holdoutFailures);
-        AppendLondonTrajectory(builder, holdoutEvaluations);
-        AppendHoldoutFailureCategories(builder, holdoutFailures);
-        AppendHoldoutRepresentativeFailures(builder, holdoutFailures);
-        AppendUnseenSlangFailures(builder, holdoutFailures);
+        AppendConfusionMatrix(builder, "Validation Fantasy Outlook Confusion Matrix", validation.FantasyOutlookConfusionMatrix);
+        AppendValidationPlayerSummary(builder, validationEvaluations, validationFailures);
+        AppendLondonTrajectory(builder, validationEvaluations);
+        AppendValidationFailureCategories(builder, validationFailures);
+        AppendValidationRepresentativeFailures(builder, validationFailures);
+        AppendUnseenSlangFailures(builder, validationFailures);
         AppendDebatableSection(
             builder,
             report.DebatableLabels
-                .Where(label => string.Equals(label.DatasetSplit, "Holdout", StringComparison.OrdinalIgnoreCase))
+                .Where(label => string.Equals(label.DatasetSplit, "Validation", StringComparison.OrdinalIgnoreCase))
                 .ToList());
     }
 
-    private static void AppendHoldoutPlayerSummary(
+    private static void AppendValidationPlayerSummary(
         StringBuilder builder,
         IReadOnlyList<BenchmarkTargetEvaluation> evaluations,
         IReadOnlyList<BenchmarkFailure> failures)
     {
         builder.AppendLine();
-        builder.AppendLine("## Holdout Player Summary");
+        builder.AppendLine("## Validation Player Summary");
         builder.AppendLine();
         builder.AppendLine("| Player | Scored mentions | Expected -/0/+ | Actual -/0/+ | Most common failure |");
         builder.AppendLine("| --- | ---: | --- | --- | --- |");
@@ -1086,7 +1086,7 @@ internal sealed class SentimentBenchmarkRunner
             var actual = DirectionCounts(group.Select(evaluation => evaluation.ActualDirection));
             var commonFailure = failures
                 .Where(failure => FailureMentionsPlayer(failure, group.Key))
-                .GroupBy(CategorizeHoldoutFailure, StringComparer.OrdinalIgnoreCase)
+                .GroupBy(CategorizeValidationFailure, StringComparer.OrdinalIgnoreCase)
                 .OrderByDescending(failureGroup => failureGroup.Count())
                 .ThenBy(failureGroup => failureGroup.Key, StringComparer.OrdinalIgnoreCase)
                 .Select(failureGroup => $"{failureGroup.Key} ({failureGroup.Count()})")
@@ -1112,7 +1112,7 @@ internal sealed class SentimentBenchmarkRunner
         }
 
         builder.AppendLine();
-        builder.AppendLine("## Drake London Holdout Trajectory");
+        builder.AppendLine("## Drake London Validation Trajectory");
         builder.AppendLine();
         foreach (var (evaluation, index) in london.Select((evaluation, index) => (evaluation, index + 1)))
         {
@@ -1121,15 +1121,15 @@ internal sealed class SentimentBenchmarkRunner
         }
     }
 
-    private static void AppendHoldoutFailureCategories(
+    private static void AppendValidationFailureCategories(
         StringBuilder builder,
         IReadOnlyList<BenchmarkFailure> failures)
     {
         builder.AppendLine();
-        builder.AppendLine("## Holdout Failure Categories");
+        builder.AppendLine("## Validation Failure Categories");
         builder.AppendLine();
         foreach (var group in failures
-                     .GroupBy(CategorizeHoldoutFailure, StringComparer.OrdinalIgnoreCase)
+                     .GroupBy(CategorizeValidationFailure, StringComparer.OrdinalIgnoreCase)
                      .OrderByDescending(group => group.Count())
                      .ThenBy(group => group.Key, StringComparer.OrdinalIgnoreCase))
         {
@@ -1137,16 +1137,16 @@ internal sealed class SentimentBenchmarkRunner
         }
     }
 
-    private static void AppendHoldoutRepresentativeFailures(
+    private static void AppendValidationRepresentativeFailures(
         StringBuilder builder,
         IReadOnlyList<BenchmarkFailure> failures)
     {
         builder.AppendLine();
-        builder.AppendLine("## Representative Holdout Failures");
+        builder.AppendLine("## Representative Validation Failures");
         builder.AppendLine();
         foreach (var failure in failures.Take(25))
         {
-            builder.AppendLine($"- [{CategorizeHoldoutFailure(failure)} / {failure.Category}] {failure.CommentId}");
+            builder.AppendLine($"- [{CategorizeValidationFailure(failure)} / {failure.Category}] {failure.CommentId}");
             builder.AppendLine($"  - Text: {Trim(failure.Body, 180)}");
             builder.AppendLine($"  - Expected: {failure.Expected}");
             builder.AppendLine($"  - Actual: {failure.Actual}");
@@ -1158,7 +1158,7 @@ internal sealed class SentimentBenchmarkRunner
         IReadOnlyList<BenchmarkFailure> failures)
     {
         var unseen = failures
-            .Where(failure => CategorizeHoldoutFailure(failure).Equals("UnseenSlang", StringComparison.OrdinalIgnoreCase))
+            .Where(failure => CategorizeValidationFailure(failure).Equals("UnseenSlang", StringComparison.OrdinalIgnoreCase))
             .ToList();
         builder.AppendLine();
         builder.AppendLine("## Unseen Slang Failures");
@@ -1195,7 +1195,7 @@ internal sealed class SentimentBenchmarkRunner
                || failure.Actual.StartsWith($"{player} ", StringComparison.OrdinalIgnoreCase);
     }
 
-    private static string CategorizeHoldoutFailure(BenchmarkFailure failure)
+    private static string CategorizeValidationFailure(BenchmarkFailure failure)
     {
         if (failure.Category.StartsWith("Target", StringComparison.OrdinalIgnoreCase))
         {

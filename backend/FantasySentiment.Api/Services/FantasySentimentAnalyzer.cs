@@ -157,7 +157,7 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
                     continue;
                 }
 
-                var wordsBefore = WordsBefore(normalizedText, match.Index, 3);
+                var wordsBefore = WordsBefore(normalizedText, match.Index, 5);
                 var hasNegator = wordsBefore.Any(word => lexicon.Negators.Contains(word, StringComparer.OrdinalIgnoreCase));
                 var hasIntensifier = wordsBefore.Any(word => lexicon.Intensifiers.Contains(word, StringComparer.OrdinalIgnoreCase));
                 var score = entry.Score;
@@ -439,6 +439,110 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
                     RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
                 0.45,
                 "startOverBenchedPlayer");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,50}}\b(?:who|but|actually)\s+sucks\b|{aliasPattern}\b.{{0,80}}\b(?:is|was)\s+not\s+(?:in\s+fact\s+)?(?:a\s+|the\s+)?(?:beast|beastmode|him|goat|dawg|truth|elite|good|great|legit)\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.90,
+                "reversalNegative");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,40}}\b(?:td|touchdown)\b|{aliasPattern}\b.{{0,50}}\bgets?\s+(?:the\s+)?first\s+(?:td|touchdown)\b|\b(?:td|touchdown)\s+{aliasPattern}\b|\b(?:td|touchdown)\b.{{0,30}}{aliasPattern}\b|{aliasPattern}\b.{{0,70}}\b(?:making|makes|made|caught|catches?|gets?)\s+(?:a\s+)?catch\b|\b(?:they|we)\s+feed\s+{aliasPattern}\b.{{0,40}}\bend\s+zone\b|{aliasPattern}\b.{{0,80}}\b(?:target|targets)\b.{{0,30}}\b(?:feasting|truthers\s+feasting)\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.62,
+                "productionEventPositive");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:need|just\s+need)\s+{aliasPattern}\b.{{0,80}}\b(?:destroy|breakaway|td|touchdown|go\s+off|finish\s+it)\b|{aliasPattern}\b.{{0,80}}\b(?:td\s+finish\s+it|breakaway\s+run)\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.75,
+                "desiredProductionPositive");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,80}}\b(?:gonna|going\s+to)\s+feed\s+families\b|\bwe\s+actually\s+did\s+it\s+with\s+{aliasPattern}\b|{aliasPattern}\b.{{0,80}}\b(?:truthers\s+)?feasting\b|\b(?:garbage|late\s+game)\s+time\b.{{0,40}}{aliasPattern}\b.{{0,40}}\bincoming\b|{aliasPattern}\b.{{0,60}}\b(?:my\s+boi|boi|boy)\b|\b(?:that'?s|thats)\s+my\s+(?:boi|boy)\s+{aliasPattern}\b|{aliasPattern}\b.{{0,80}}\bselected\s+answer\b|\bselected\s+answer\b.{{0,80}}{aliasPattern}\b|\bmy\s+{aliasPattern}\b.{{0,80}}\bvs\b.{{0,80}}\bcmon\b|\bher\s+{aliasPattern}\b.{{0,80}}\bcmon\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.75,
+                "fantasyProductionPositive");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:need|want|just\s+want)\s+{aliasPattern}\b.{{0,80}}\b(?:to\s+do\s+more|to\s+do\s+something|to\s+finally\s+get\s+his|to\s+finally\s+get\s+theirs)\b|\bfeed\s+{aliasPattern}\s+(?:pls|please)\b|\b(?:wish\s+i\s+could|can'?t\s+wait\s+to|cant\s+wait\s+to)\s+drop\s+{aliasPattern}\b|\b(?:wanted|want|needed)\s+(?:a\s+)?{aliasPattern}\s+(?:td|touchdown)\b|\bplease\s+{aliasPattern}\s+(?:td|touchdown)\b|{aliasPattern}\b.{{0,80}}\byikes\b|\bfucking\s+{aliasPattern}\b$|\bkilling\s+my\s+{aliasPattern}\s+stonks\b|\bnot\s+throwing\s+to\s+{aliasPattern}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.85,
+                "usageConcernNegative");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,100}}\b(?:throw|throws|throwing)\s+the\s+ball\b.{{0,80}}\b(?:close\s+my\s+eyes|same\s+as)|\bclose\s+my\s+eyes\b.{{0,100}}{aliasPattern}\b.{{0,80}}\b(?:throw|throws|throwing)\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.62,
+                "quarterbackConcernNegative");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,50}}\b(?:is\s+)?better\s+than\b|{aliasPattern}\b.{{0,40}}\bclears\b|{aliasPattern}\b.{{0,70}}\b(?:more|so|super|very)\s+explosive\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.60,
+                "comparisonPositive");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\bbetter\s+than\s+{aliasPattern}\b|\bmore\s+\w+\s+than\s+{aliasPattern}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.60,
+                "comparisonNegative");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,100}}\b(?:fun\s+to\s+watch|carry\s+this\s+team|carries\s+this\s+team|whole\s+team|madden\s+mode|that\s+dude|beautiful\s+bastard|best\s+(?:rb|wr|te|qb)\s+in|automatic\s+flex\s+play)\b|\b(?:die\s+for|would\s+die\s+for|thank\s+you\s+daddy)\s+{aliasPattern}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.85,
+                "performancePraisePositive");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,70}}\b(?:(?:is|was|looks?|looked|seems?|seemed|plays?|playing)\s+(?:so\s+|very\s+|really\s+|straight\s+|like\s+)?(?:awful|terrible|bad|slow|dead|washed|cooked|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|buns|dogshit|mid|fraud|bum)|(?:so\s+|very\s+|really\s+|straight\s+)?(?:slow|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|buns|dogshit|mid|fraud|bum))\b|\b(?:is|was|looks?|looked|seems?|seemed)\s+{aliasPattern}\s+(?:awful|terrible|bad|slow|dead|washed|cooked|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|buns|dogshit|mid|fraud|bum)\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.58,
+                "targetEvaluationNegative");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,80}}\b(?:comes\s+out|came\s+out)\b.{{0,80}}\bdrive\s+dies\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.58,
+                "targetRemovedDriveNegative");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,80}}\bfell\s+to\s+me\b(?:.{{0,80}}\b(?:value|steal)\b)?",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.58,
+                "draftValuePositive");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\bmultiple\s+catches\b.{{0,80}}\bpromising\b|{aliasPattern}\b.{{0,80}}\bcould'?ve\s+ha(?:d|ve)\b.{{0,60}}\b(?:td|touchdown)s?\b|{aliasPattern}\b.{{0,80}}\b(?:out\s+there\s+)?gliding\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.95,
+                "opportunityPositive");
         }
 
         return DiminishingSum(scores, StructuralAdjustmentCap);
@@ -643,10 +747,20 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
         string normalizedText,
         TextSpan span)
     {
-        if (normalizedEntry.Equals("garbage", StringComparison.OrdinalIgnoreCase)
+        if ((normalizedEntry.Equals("garbage", StringComparison.OrdinalIgnoreCase)
+             || normalizedEntry.Equals("trash", StringComparison.OrdinalIgnoreCase))
             && Regex.IsMatch(
                 normalizedText,
-                @"\bgarbage\s+time\b",
+                @"\b(?:garbage|trash)\s+time\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            return true;
+        }
+
+        if (normalizedEntry.Equals("love", StringComparison.OrdinalIgnoreCase)
+            && Regex.IsMatch(
+                normalizedText[span.Start..Math.Min(normalizedText.Length, span.End + 16)],
+                @"^love\s+(?:is|was|looks?|looked|throws?|throwing|killing|has|had|needs?|seems?)\b",
                 RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
             return true;

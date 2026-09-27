@@ -16,7 +16,7 @@ They are evaluation inputs only. Do not treat comments or notes here as developm
 - `contextRequirement` is `SelfContained`, `ReplyContext`, `GameEventContext`, or `Ambiguous`.
 - `perspective` is `Unknown`, `OwnRoster`, or `OpponentRoster`.
 - `reasons` identify likely failure categories such as `Performance`, `FantasyProduction`, `UsageOpportunity`, `Injury`, `QuarterbackPlay`, `OffensiveLine`, `CoachingPlaycalling`, `RoleCompetition`, `OpponentDefense`, `TouchdownVariance`, `CalledBackPlay`, `Comparison`, `DraftRegret`, `LineupRegret`, `Sarcasm`, `Slang`, `PlayerVsSituation`, `OpponentPerspective`, or `Unknown`.
-- `datasetSplit` is currently `Development` for all Week 2 fixtures. Future untouched threads should be added as `Holdout`.
+- `datasetSplit` is currently `Development` for Week 2 fixtures and `Validation` for the Week 3 Thursday fixture. Future untouched holdout data is reserved for a later branch.
 - `isDebatable` and `alternativeLabels` mark annotations that deserve later human review.
 
 The current production `FantasyIntentClassifier` still returns one legacy label. The benchmark projects it into either one `fantasyAction`, one `discussionSignal`, or neither so multi-label limitations stay visible.
