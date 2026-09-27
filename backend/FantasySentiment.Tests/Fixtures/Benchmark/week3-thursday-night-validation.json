@@ -4,7 +4,7 @@
     "type": "GameThread",
     "postType": "GameThread",
     "subreddit": "fantasyfootball",
-    "datasetSplit": "Holdout",
+    "datasetSplit": "Validation",
     "sourceFile": "D:/FF Sentiment Hand Data/Week3ThursdayGameData.txt"
   },
   "players": [
@@ -172,7 +172,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-002",
@@ -186,17 +186,18 @@
             "player": "Bijan Robinson",
             "fantasyOutlook": "Negative",
             "playerEvaluation": "Unknown",
-            "perspective": "OwnRoster",
+            "perspective": "Unknown",
             "fantasyActions": [],
             "discussionSignals": [],
             "reasons": [
               "Performance",
               "OpponentPerspective"
-            ]
+            ],
+            "notes": "Need/desire for worse output does not establish that the author rosters the player."
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-003",
@@ -230,7 +231,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-004",
@@ -269,7 +270,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-004-r1",
@@ -309,7 +310,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-004-r2",
@@ -334,7 +335,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-005",
@@ -358,7 +359,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-006",
@@ -374,14 +375,17 @@
             "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [],
+            "discussionSignals": [
+              "Hype"
+            ],
             "reasons": [
               "Performance"
-            ]
+            ],
+            "notes": "Breakout-game phrasing is an explicit hype signal."
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-007",
@@ -419,7 +423,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-008",
@@ -445,7 +449,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-009",
@@ -456,7 +460,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-010",
@@ -486,7 +490,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-011",
@@ -510,7 +514,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-012",
@@ -533,7 +537,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-013",
@@ -561,7 +565,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-014",
@@ -572,7 +576,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-015",
@@ -596,7 +600,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-016",
@@ -620,7 +624,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-017",
@@ -644,7 +648,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-018",
@@ -655,7 +659,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-019",
@@ -680,7 +684,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-020",
@@ -705,7 +709,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-021",
@@ -730,7 +734,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-022",
@@ -741,7 +745,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-023",
@@ -752,7 +756,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-024",
@@ -786,7 +790,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-025",
@@ -809,7 +813,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-026",
@@ -833,7 +837,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-027",
@@ -857,7 +861,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-028",
@@ -899,7 +903,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-028-r1",
@@ -925,7 +929,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-029",
@@ -948,7 +952,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-030",
@@ -971,7 +975,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-031",
@@ -982,7 +986,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-032",
@@ -1005,7 +1009,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-033",
@@ -1033,7 +1037,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-034",
@@ -1056,7 +1060,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-035",
@@ -1079,7 +1083,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-036",
@@ -1090,7 +1094,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-037",
@@ -1113,7 +1117,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-038",
@@ -1124,7 +1128,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-038-r1",
@@ -1147,7 +1151,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-039",
@@ -1177,7 +1181,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-040",
@@ -1188,7 +1192,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-040-r1",
@@ -1199,7 +1203,7 @@
         "contextRequirement": "ReplyContext",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-041",
@@ -1224,7 +1228,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-041-r1",
@@ -1248,7 +1252,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-042",
@@ -1259,7 +1263,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-043",
@@ -1282,7 +1286,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-044",
@@ -1305,7 +1309,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-045",
@@ -1329,7 +1333,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-046",
@@ -1353,7 +1357,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-047",
@@ -1367,17 +1371,18 @@
             "player": "Christian Watson",
             "fantasyOutlook": "Positive",
             "playerEvaluation": "Unknown",
-            "perspective": "OwnRoster",
+            "perspective": "Unknown",
             "fantasyActions": [],
             "discussionSignals": [],
             "reasons": [
               "Performance",
               "FantasyProduction"
-            ]
+            ],
+            "notes": "Plural owner/community language does not by itself establish the author rostered this player."
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-048",
@@ -1401,7 +1406,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-049",
@@ -1424,7 +1429,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-050",
@@ -1438,27 +1443,29 @@
             "player": "Christian Watson",
             "fantasyOutlook": "Unknown",
             "playerEvaluation": "Unknown",
-            "perspective": "OwnRoster",
+            "perspective": "Unknown",
             "fantasyActions": [],
             "discussionSignals": [],
             "reasons": [
               "Performance"
-            ]
+            ],
+            "notes": "Plural owner/community language does not by itself establish the author rostered this player."
           },
           {
             "player": "Tucker Kraft",
             "fantasyOutlook": "Negative",
             "playerEvaluation": "Unknown",
-            "perspective": "OwnRoster",
+            "perspective": "Unknown",
             "fantasyActions": [],
             "discussionSignals": [],
             "reasons": [
               "UsageOpportunity"
-            ]
+            ],
+            "notes": "Plural owner/community language does not by itself establish the author rostered this player."
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-051",
@@ -1503,7 +1510,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-051-r1",
@@ -1527,7 +1534,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-052",
@@ -1553,7 +1560,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-053",
@@ -1576,7 +1583,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-054",
@@ -1599,7 +1606,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-055",
@@ -1622,7 +1629,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-056",
@@ -1645,7 +1652,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-057",
@@ -1668,7 +1675,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-057-r1",
@@ -1692,7 +1699,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-057-r2",
@@ -1720,7 +1727,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-058",
@@ -1743,7 +1750,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-059",
@@ -1777,7 +1784,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-059-r1",
@@ -1788,7 +1795,7 @@
         "contextRequirement": "ReplyContext",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-060",
@@ -1811,7 +1818,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-061",
@@ -1837,7 +1844,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-062",
@@ -1860,7 +1867,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-063",
@@ -1884,7 +1891,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-064",
@@ -1907,7 +1914,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-065",
@@ -1931,7 +1938,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-066",
@@ -1955,7 +1962,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-067",
@@ -1969,18 +1976,19 @@
             "player": "Drake London",
             "fantasyOutlook": "Negative",
             "playerEvaluation": "Unknown",
-            "perspective": "OwnRoster",
+            "perspective": "Unknown",
             "fantasyActions": [],
             "discussionSignals": [
               "Panic"
             ],
             "reasons": [
               "Performance"
-            ]
+            ],
+            "notes": "Plural owner/community language does not by itself establish the author rostered this player."
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-068",
@@ -2003,7 +2011,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-069",
@@ -2014,7 +2022,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-070",
@@ -2048,7 +2056,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-071",
@@ -2059,7 +2067,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-072",
@@ -2082,7 +2090,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-073",
@@ -2105,7 +2113,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-074",
@@ -2128,7 +2136,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-075",
@@ -2139,7 +2147,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-076",
@@ -2162,7 +2170,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-077",
@@ -2185,7 +2193,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-078",
@@ -2196,7 +2204,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-079",
@@ -2219,7 +2227,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-080",
@@ -2242,7 +2250,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-081",
@@ -2265,7 +2273,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-082",
@@ -2288,7 +2296,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-083",
@@ -2299,7 +2307,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-084",
@@ -2322,7 +2330,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-085",
@@ -2345,7 +2353,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-085-r1",
@@ -2356,7 +2364,7 @@
         "contextRequirement": "ReplyContext",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-086",
@@ -2382,7 +2390,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-087",
@@ -2405,7 +2413,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-088",
@@ -2429,7 +2437,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-089",
@@ -2443,18 +2451,19 @@
             "player": "Bijan Robinson",
             "fantasyOutlook": "Positive",
             "playerEvaluation": "Unknown",
-            "perspective": "OwnRoster",
+            "perspective": "Unknown",
             "fantasyActions": [],
             "discussionSignals": [
               "Hype"
             ],
             "reasons": [
               "Performance"
-            ]
+            ],
+            "notes": "Plural owner/community language does not by itself establish the author rostered this player."
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-090",
@@ -2477,7 +2486,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-091",
@@ -2500,7 +2509,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-092",
@@ -2523,7 +2532,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-093",
@@ -2546,7 +2555,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-094",
@@ -2557,7 +2566,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-095",
@@ -2582,7 +2591,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-096",
@@ -2605,7 +2614,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-097",
@@ -2616,7 +2625,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-097-r1",
@@ -2641,7 +2650,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-097-r2",
@@ -2675,7 +2684,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-098",
@@ -2686,7 +2695,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-099",
@@ -2709,7 +2718,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-100",
@@ -2732,7 +2741,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-101",
@@ -2757,7 +2766,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-101-r1",
@@ -2783,7 +2792,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-102",
@@ -2807,7 +2816,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-103",
@@ -2832,7 +2841,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-104",
@@ -2855,7 +2864,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-105",
@@ -2879,7 +2888,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-106",
@@ -2904,7 +2913,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-107",
@@ -2927,7 +2936,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-108",
@@ -2951,7 +2960,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-109",
@@ -2962,7 +2971,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-110",
@@ -2986,7 +2995,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-111",
@@ -3000,7 +3009,7 @@
             "player": "Drake London",
             "fantasyOutlook": "Negative",
             "playerEvaluation": "Unknown",
-            "perspective": "OwnRoster",
+            "perspective": "Unknown",
             "fantasyActions": [],
             "discussionSignals": [
               "Panic"
@@ -3008,11 +3017,12 @@
             "reasons": [
               "Performance",
               "UnseenSlang"
-            ]
+            ],
+            "notes": "Plural owner/community language does not by itself establish the author rostered this player."
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-112",
@@ -3035,7 +3045,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-113",
@@ -3059,7 +3069,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-114",
@@ -3082,7 +3092,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-115",
@@ -3105,7 +3115,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-116",
@@ -3128,7 +3138,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-117",
@@ -3162,7 +3172,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-118",
@@ -3197,7 +3207,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-118-r1",
@@ -3208,7 +3218,7 @@
         "contextRequirement": "ReplyContext",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-119",
@@ -3222,28 +3232,30 @@
             "player": "Drake London",
             "fantasyOutlook": "Positive",
             "playerEvaluation": "Unknown",
-            "perspective": "OwnRoster",
+            "perspective": "Unknown",
             "fantasyActions": [],
             "discussionSignals": [],
             "reasons": [
               "Performance"
-            ]
+            ],
+            "notes": "Plural owner/community language does not by itself establish the author rostered this player."
           },
           {
             "player": "Christian Watson",
             "fantasyOutlook": "Positive",
             "playerEvaluation": "Unknown",
-            "perspective": "OwnRoster",
+            "perspective": "Unknown",
             "fantasyActions": [],
             "discussionSignals": [],
             "reasons": [
               "Performance",
               "FantasyProduction"
-            ]
+            ],
+            "notes": "Plural owner/community language does not by itself establish the author rostered this player."
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-119-r1",
@@ -3283,7 +3295,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-120",
@@ -3317,7 +3329,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-121",
@@ -3341,7 +3353,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-122",
@@ -3366,7 +3378,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-123",
@@ -3391,7 +3403,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-124",
@@ -3415,7 +3427,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-125",
@@ -3439,7 +3451,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-126",
@@ -3473,7 +3485,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-127",
@@ -3497,7 +3509,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-128",
@@ -3520,7 +3532,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-129",
@@ -3543,7 +3555,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-130",
@@ -3557,31 +3569,33 @@
             "player": "Drake London",
             "fantasyOutlook": "Positive",
             "playerEvaluation": "Unknown",
-            "perspective": "OwnRoster",
+            "perspective": "Unknown",
             "fantasyActions": [],
             "discussionSignals": [
               "Hype"
             ],
             "reasons": [
               "Performance"
-            ]
+            ],
+            "notes": "Plural owner/community language does not by itself establish the author rostered this player."
           },
           {
             "player": "Michael Penix Jr.",
             "fantasyOutlook": "Positive",
             "playerEvaluation": "Unknown",
-            "perspective": "OwnRoster",
+            "perspective": "Unknown",
             "fantasyActions": [],
             "discussionSignals": [
               "Hype"
             ],
             "reasons": [
               "Performance"
-            ]
+            ],
+            "notes": "Plural owner/community language does not by itself establish the author rostered this player."
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-131",
@@ -3604,7 +3618,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-132",
@@ -3630,7 +3644,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-133",
@@ -3657,18 +3671,19 @@
             "player": "Jordan Love",
             "fantasyOutlook": "Negative",
             "playerEvaluation": "Negative",
-            "perspective": "OwnRoster",
+            "perspective": "Unknown",
             "fantasyActions": [],
             "discussionSignals": [],
             "reasons": [
               "Performance",
               "QuarterbackPlay",
               "UnseenSlang"
-            ]
+            ],
+            "notes": "Love affects the author’s Kraft outlook, but the comment does not establish that Love is on the author’s roster."
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-134",
@@ -3692,7 +3707,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-135",
@@ -3730,7 +3745,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-136",
@@ -3754,7 +3769,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-137",
@@ -3779,7 +3794,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-138",
@@ -3802,7 +3817,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-139",
@@ -3836,7 +3851,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-140",
@@ -3850,16 +3865,17 @@
             "player": "Drake London",
             "fantasyOutlook": "Positive",
             "playerEvaluation": "Unknown",
-            "perspective": "OwnRoster",
+            "perspective": "Unknown",
             "fantasyActions": [],
             "discussionSignals": [],
             "reasons": [
               "Performance"
-            ]
+            ],
+            "notes": "Plural owner/community language does not by itself establish the author rostered this player."
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-141",
@@ -3883,7 +3899,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-142",
@@ -3906,7 +3922,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-142-r1",
@@ -3934,7 +3950,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-143",
@@ -3959,7 +3975,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-144",
@@ -3982,7 +3998,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-145",
@@ -4007,7 +4023,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-146",
@@ -4035,7 +4051,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-147",
@@ -4059,7 +4075,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-148",
@@ -4083,7 +4099,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-149",
@@ -4106,7 +4122,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-150",
@@ -4132,7 +4148,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-151",
@@ -4158,7 +4174,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-152",
@@ -4181,7 +4197,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-153",
@@ -4207,7 +4223,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-154",
@@ -4230,7 +4246,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-155",
@@ -4241,7 +4257,7 @@
         "contextRequirement": "SelfContained",
         "targets": []
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-156",
@@ -4264,7 +4280,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-157",
@@ -4292,7 +4308,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-158",
@@ -4316,7 +4332,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-159",
@@ -4339,7 +4355,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     },
     {
       "id": "w3tn-160",
@@ -4378,7 +4394,7 @@
           }
         ]
       },
-      "datasetSplit": "Holdout"
+      "datasetSplit": "Validation"
     }
   ]
 }

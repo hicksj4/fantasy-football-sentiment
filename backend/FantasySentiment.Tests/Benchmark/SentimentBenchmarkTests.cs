@@ -36,7 +36,7 @@ public sealed class SentimentBenchmarkTests(ITestOutputHelper output)
 
     [Fact]
     [Trait("Category", "Benchmark")]
-    public async Task DevelopmentAndHoldoutFixtures_ReportDatasetSplits()
+    public async Task DevelopmentAndValidationFixtures_ReportDatasetSplits()
     {
         var corpus = BenchmarkFixtureLoader.LoadCorpus();
         var runner = new SentimentBenchmarkRunner(corpus);
@@ -45,8 +45,8 @@ public sealed class SentimentBenchmarkTests(ITestOutputHelper output)
         var benchmarkDirectory = Path.Combine(corpus.RepositoryRoot, "artifacts", "benchmark");
         Directory.CreateDirectory(benchmarkDirectory);
 
-        var jsonPath = Path.Combine(benchmarkDirectory, "sentiment-holdout.json");
-        var markdownPath = Path.Combine(benchmarkDirectory, "sentiment-holdout.md");
+        var jsonPath = Path.Combine(benchmarkDirectory, "sentiment-validation.json");
+        var markdownPath = Path.Combine(benchmarkDirectory, "sentiment-validation.md");
         await File.WriteAllTextAsync(
             jsonPath,
             JsonSerializer.Serialize(report, BenchmarkFixtureLoader.SerializerOptions));
@@ -56,10 +56,10 @@ public sealed class SentimentBenchmarkTests(ITestOutputHelper output)
         output.WriteLine(markdown);
 
         Assert.Contains(report.ByThread, thread => thread.DatasetSplit == "Development");
-        Assert.Contains(report.ByThread, thread => thread.DatasetSplit == "Holdout");
+        Assert.Contains(report.ByThread, thread => thread.DatasetSplit == "Validation");
         Assert.Contains("## Dataset Split Summary", markdown);
-        Assert.Contains("## Holdout Fantasy Outlook Confusion Matrix", markdown);
-        Assert.Contains("## Drake London Holdout Trajectory", markdown);
+        Assert.Contains("## Validation Fantasy Outlook Confusion Matrix", markdown);
+        Assert.Contains("## Drake London Validation Trajectory", markdown);
         Assert.True(File.Exists(jsonPath));
         Assert.True(File.Exists(markdownPath));
     }

@@ -110,6 +110,74 @@ public sealed class TargetContextBuilderTests
     }
 
     [Fact]
+    public void StartingBoth_AppliesOwnRosterPerspectiveToEachTarget()
+    {
+        const string text = "Starting both Watson and Golden! Looking for a Moss and Carter type night";
+        var targets = DetectTargets(text);
+
+        var contexts = targets.Select(target => Build(text, target, targets)).ToList();
+
+        Assert.Equal(2, contexts.Count);
+        Assert.All(contexts, context => Assert.Equal(TargetPerspectives.OwnRoster, context.Perspective));
+    }
+
+    [Fact]
+    public void MyVersusHer_SplitsOwnAndOpponentPerspective()
+    {
+        const string text = "my Golden vs her Watson, cmon Greenbay";
+        var targets = DetectTargets(text);
+
+        var golden = Build(text, targets.Single(target => target.PlayerName == "Matthew Golden"), targets);
+        var watson = Build(text, targets.Single(target => target.PlayerName == "Christian Watson"), targets);
+
+        Assert.Equal(TargetPerspectives.OwnRoster, golden.Perspective);
+        Assert.Equal(TargetPerspectives.OpponentRoster, watson.Perspective);
+    }
+
+    [Fact]
+    public void OwnerCommunityLanguage_DoesNotForceOwnRosterPerspective()
+    {
+        const string text = "London owners are cooked";
+        var target = Assert.Single(DetectTargets(text));
+
+        var context = Build(text, target, [target]);
+
+        Assert.Equal(TargetPerspectives.Unknown, context.Perspective);
+    }
+
+    [Theory]
+    [InlineData("Denzel Boston is my best receiver", "Denzel Boston")]
+    [InlineData("My RB room is awful, Dobbins is my RB1", "J.K. Dobbins")]
+    [InlineData("Owning Rhamondre and Henderson is pain", "Rhamondre Stevenson")]
+    [InlineData("Owning Rhamondre and Henderson is pain", "TreVeyon Henderson")]
+    [InlineData("Benched Pitts for Njoku", "Kyle Pitts")]
+    [InlineData("Benched Pitts for Njoku", "David Njoku")]
+    [InlineData("Love is killing my Kraft stonks", "Tucker Kraft")]
+    [InlineData("Man it feels good to be a Bijan Robinson owner.", "Bijan Robinson")]
+    [InlineData("THATS MY BOI GOLDEN", "Matthew Golden")]
+    public void DirectRosterRelationshipPatterns_AreOwnRoster(string text, string playerName)
+    {
+        var targets = DetectTargets(text);
+
+        var context = Build(text, targets.Single(target => target.PlayerName == playerName), targets);
+
+        Assert.Equal(TargetPerspectives.OwnRoster, context.Perspective);
+    }
+
+    [Fact]
+    public void RelatedQuarterback_IsNotOwnRosterJustBecauseMyPlayerIsMentioned()
+    {
+        const string text = "Love is killing my Kraft stonks";
+        var targets = DetectTargets(text);
+
+        var love = Build(text, targets.Single(target => target.PlayerName == "Jordan Love"), targets);
+        var kraft = Build(text, targets.Single(target => target.PlayerName == "Tucker Kraft"), targets);
+
+        Assert.Equal(TargetPerspectives.Unknown, love.Perspective);
+        Assert.Equal(TargetPerspectives.OwnRoster, kraft.Perspective);
+    }
+
+    [Fact]
     public void MixedStartedAndFacingStatement_SplitsOwnAndOpponentTargets()
     {
         const string text = "Guess who started Caleb and Loveland and is facing JSN and Lamb 😀";
@@ -182,7 +250,16 @@ public sealed class TargetContextBuilderTests
             Player(8, "Caleb Williams", "CHI", "QB", "Caleb", "Caleb Williams"),
             Player(9, "Colston Loveland", "CHI", "TE", "Loveland", "Colston Loveland"),
             Player(10, "CeeDee Lamb", "DAL", "WR", "CeeDee", "Lamb"),
-            Player(11, "George Pickens", "DAL", "WR", "Pickens", "George Pickens")
+            Player(11, "George Pickens", "DAL", "WR", "Pickens", "George Pickens"),
+            Player(12, "Christian Watson", "GB", "WR", "Watson", "Christian Watson"),
+            Player(13, "Denzel Boston", "ARI", "WR", "Boston", "Denzel Boston"),
+            Player(14, "J.K. Dobbins", "DEN", "RB", "Dobbins", "JK Dobbins"),
+            Player(15, "Rhamondre Stevenson", "NE", "RB", "Rhamondre", "Stevenson"),
+            Player(16, "TreVeyon Henderson", "NE", "RB", "Henderson", "TreVeyon Henderson"),
+            Player(17, "David Njoku", "CLE", "TE", "Njoku", "David Njoku"),
+            Player(18, "Tucker Kraft", "GB", "TE", "Kraft", "Tucker Kraft"),
+            Player(19, "Jordan Love", "GB", "QB", "Love", "Jordan Love"),
+            Player(20, "Kyle Pitts", "ATL", "TE", "Pitts", "Kyle Pitts")
         ];
     }
 

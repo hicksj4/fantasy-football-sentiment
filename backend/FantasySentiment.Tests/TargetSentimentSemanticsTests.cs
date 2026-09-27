@@ -199,6 +199,72 @@ public sealed class TargetSentimentSemanticsTests
         Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
     }
 
+    [Theory]
+    [InlineData("Penix is him...who sucks.", "Michael Penix Jr.")]
+    [InlineData("Bijan is not in fact a beast", "Bijan Robinson")]
+    [InlineData("this Marshawn is not in fact Beastmode", "Marshawn Lloyd")]
+    public async Task TargetLocalReversal_BeatsPositiveSlang(string text, string playerName)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.Contains("reversal", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Theory]
+    [InlineData("Watson gets the first TD!", "Christian Watson")]
+    [InlineData("MATTHEW GOLDEN TD. FUCKING WATCH", "Matthew Golden")]
+    [InlineData("they feed watson in the end zone", "Christian Watson")]
+    [InlineData("Golden making a catch? Is that legal?", "Matthew Golden")]
+    [InlineData("We got a target!! London Truthers FEASTING!!", "Drake London")]
+    [InlineData("Just need a Bijan breakaway run tonight, it’ll happen", "Bijan Robinson")]
+    public async Task FantasyProductionEvents_ArePositiveForTarget(string text, string playerName)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+    }
+
+    [Theory]
+    [InlineData("Need Kraft to do more", "Tucker Kraft")]
+    [InlineData("Feed Kraft pls", "Tucker Kraft")]
+    [InlineData("Started London Yikes", "Drake London")]
+    [InlineData("I wish I could drop London", "Drake London")]
+    [InlineData("Fucking Penix", "Michael Penix Jr.")]
+    [InlineData("Love is killing my Kraft stonks", "Tucker Kraft")]
+    public async Task UsageAndLineupConcern_AreNegativeForTarget(string text, string playerName)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+    }
+
+    [Fact]
+    public async Task BetterThanComparison_GivesDifferentDirectionToEachPlayer()
+    {
+        var golden = await AnalyzeAsync("Golden is better than Watson", "Matthew Golden");
+        var watson = await AnalyzeAsync("Golden is better than Watson", "Christian Watson");
+
+        Assert.True(golden.Detail.FinalScore > 0.15, golden.Detail.ToDiagnostics());
+        Assert.True(watson.Detail.FinalScore < -0.15, watson.Detail.ToDiagnostics());
+    }
+
+    [Theory]
+    [InlineData("Bijan is so damn fun to watch", "Bijan Robinson")]
+    [InlineData("I would die for Bijan", "Bijan Robinson")]
+    [InlineData("Bijan said fuck it, I carry this team on my shoulders", "Bijan Robinson")]
+    [InlineData("Bijan always on Madden mode", "Bijan Robinson")]
+    [InlineData("Bijan is the whole team", "Bijan Robinson")]
+    [InlineData("Bijan is that dude", "Bijan Robinson")]
+    [InlineData("Gibbs clears", "Jahmyr Gibbs")]
+    [InlineData("Bijan you beautiful bastard", "Bijan Robinson")]
+    public async Task ModernPerformancePraise_IsPositiveForTarget(string text, string playerName)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+    }
+
     [Fact]
     public async Task ShortSubstrings_DoNotMatchInsideOtherWords()
     {
@@ -306,6 +372,24 @@ public sealed class TargetSentimentSemanticsTests
         const string text = "Bench BTJ not Odunze.";
 
         Assert.Equal(FantasyIntents.Sit, (await AnalyzeAsync(text, "Brian Thomas Jr.")).Intent);
+        Assert.Equal(FantasyIntents.Start, (await AnalyzeAsync(text, "Rome Odunze")).Intent);
+    }
+
+    [Fact]
+    public async Task BenchedFor_AssignsSitAndStartIntent()
+    {
+        const string text = "Benched Pitts for Njoku";
+
+        Assert.Equal(FantasyIntents.Sit, (await AnalyzeAsync(text, "Kyle Pitts")).Intent);
+        Assert.Equal(FantasyIntents.Start, (await AnalyzeAsync(text, "David Njoku")).Intent);
+    }
+
+    [Fact]
+    public async Task StartChoiceQuestion_AssignsStartIntentToOptions()
+    {
+        const string text = "Golden or Odunze?";
+
+        Assert.Equal(FantasyIntents.Start, (await AnalyzeAsync(text, "Matthew Golden")).Intent);
         Assert.Equal(FantasyIntents.Start, (await AnalyzeAsync(text, "Rome Odunze")).Intent);
     }
 
@@ -551,7 +635,13 @@ public sealed class TargetSentimentSemanticsTests
             Player(19, "Rome Odunze", "CHI", "WR", "Odunze", "Rome Odunze"),
             Player(20, "Brian Thomas Jr.", "JAX", "WR", "BTJ", "Brian Thomas", "Brian Thomas Jr."),
             Player(21, "Dontayvion Wicks", "GB", "WR", "Wicks", "Dontayvion Wicks"),
-            Player(22, "Devaughn Vele", "NO", "WR", "Vele", "Devaughn Vele")
+            Player(22, "Devaughn Vele", "NO", "WR", "Vele", "Devaughn Vele"),
+            Player(23, "Marshawn Lloyd", "GB", "RB", "Marshawn", "Lloyd"),
+            Player(24, "Jordan Love", "GB", "QB", "Love", "Jordan Love"),
+            Player(25, "Christian Watson", "GB", "WR", "Watson", "Christian Watson"),
+            Player(26, "Jahmyr Gibbs", "DET", "RB", "Gibbs", "Jahmyr Gibbs"),
+            Player(27, "David Njoku", "CLE", "TE", "Njoku", "David Njoku"),
+            Player(28, "Michael Penix Jr.", "ATL", "QB", "Penix", "Michael Penix")
         ];
     }
 

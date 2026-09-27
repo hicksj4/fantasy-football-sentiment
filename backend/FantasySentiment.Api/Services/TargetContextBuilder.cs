@@ -27,7 +27,7 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     private static readonly Regex OwnRosterRegex = new(
-        @"\bas\s+(?:a|an)\b.{0,80}\bowner\b|\b(?:i|we)\s+(?:own|owned|started|start|played|play|rolled out|have|had|got|dropped|drafted|draft|chose|took)\b|\b(?:i've|ive|we've|weve)\s+got\b|\bhave\b|\bguess\s+who\s+(?:started|played)\b|\btaking\b.{0,100}\bover\b|\b(?:should\s+have|should've|shouldve|needed\s+to|shoulda)\s+started\b|\bon\s+my\s+bench\b|\bin\s+my\s+lineup\b|\b(?:my|our)\b.{0,80}\b(?:stack|team|room)\b|\bsave\s+me\s+from\b|\bgimme\b.{0,30}\bpoints\b|\b(?:waste\s+of\s+a\s+pick|draft\s+pick)\b",
+        @"\bas\s+(?:a|an)\b.{0,80}\bowner\b|\b(?:i|we)\s+(?:own|owning|owned|started|starting|start|played|play|rolled out|have|had|got|put|benched|benching|dropped|drafted|draft|chose|took)\b|\b(?:i've|ive|we've|weve)\s+got\b|\bowning\b|\bguess\s+who\s+(?:started|played)\b|\btaking\b.{0,100}\bover\b|\b(?:should\s+have|should've|shouldve|needed\s+to|shoulda)\s+started\b|\bon\s+my\s+bench\b|\bin\s+my\s+lineup\b|\b(?:my|our)\b.{0,80}\b(?:stack|team|room)\b|\bsave\s+me\s+from\b|\bgimme\b.{0,30}\bpoints\b|\b(?:waste\s+of\s+a\s+pick|draft\s+pick)\b",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     private static readonly Regex SharedComparisonRegex = new(
@@ -51,6 +51,12 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
         var targetText = target.AttributionMethod == TargetAttributionMethods.Explicit
             ? ExtractExplicitTargetText(commentBody, target, targets)
             : BuildInheritedTargetText(trimmedParent, trimmedCurrent);
+        if (target.AttributionMethod == TargetAttributionMethods.Explicit
+            && IsChoiceAnswer(trimmedParent, targetText, target))
+        {
+            targetText = $"{trimmedParent} Selected answer: {target.PlayerName}";
+        }
+
         var perspective = ResolvePerspective(targetText, target);
 
         return new ResolvedTargetContext(
@@ -101,10 +107,17 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
         }
 
         var parts = new List<string> { targetText.Trim() };
-        if (sentenceIndex + 1 < sentences.Count
-            && ShouldIncludeNextSentence(sentence, sentences[sentenceIndex + 1], sharedStatement, targetsInSentence))
+        var previousSentence = sentence;
+        for (var nextIndex = sentenceIndex + 1; nextIndex < sentences.Count && parts.Count < 4; nextIndex++)
         {
-            parts.Add(sentences[sentenceIndex + 1].Text);
+            var nextSentence = sentences[nextIndex];
+            if (!ShouldIncludeNextSentence(previousSentence, nextSentence, sharedStatement, targetsInSentence))
+            {
+                break;
+            }
+
+            parts.Add(nextSentence.Text);
+            previousSentence = nextSentence;
         }
 
         return string.Join(' ', parts).Trim();
@@ -252,6 +265,28 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
                && !OwnRosterRegex.IsMatch(sentence);
     }
 
+    private static bool IsChoiceAnswer(
+        string? parentComment,
+        string targetText,
+        ResolvedCommentTarget target)
+    {
+        if (string.IsNullOrWhiteSpace(parentComment)
+            || string.IsNullOrWhiteSpace(targetText)
+            || targetText.Length > 80
+            || !Regex.IsMatch(parentComment, @"\b(?:or|vs|versus)\b|/", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            return false;
+        }
+
+        var aliases = TargetAliases(target);
+        var answerOnly = aliases.Any(alias =>
+            Regex.IsMatch(
+                targetText,
+                $@"^\s*{Regex.Escape(alias).Replace("\\ ", "\\s+")}\s*[.!?]*\s*$",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant));
+        return answerOnly && aliases.Any(alias => ResolveAliasInText(parentComment, alias));
+    }
+
     private static bool ShouldIncludeNextSentence(
         TextSpan previousSentence,
         TextSpan nextSentence,
@@ -330,7 +365,7 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
         return OpponentRosterRegex.IsMatch(text)
                || Regex.IsMatch(
                    text,
-                   $@"\b(?:facing|faced)\s+{aliasPattern}\b|\b(?:i\s+am|i'm|im)\s+facing\s+{aliasPattern}\b|\bopp(?:onent)?\s+(?:has\s+)?{aliasPattern}\b|{aliasPattern}.{{0,70}}\b(?:killing|destroying|burying|booming|outscoring|fucking)\s+me\b|{aliasPattern}.{{0,70}}\b(?:ended|ruined|buried|boomed)\s+my\s+(?:week|matchup)\b",
+                   $@"\b(?:facing|faced)\s+{aliasPattern}\b|\b(?:i\s+am|i'm|im)\s+facing\s+{aliasPattern}\b|\bopp(?:onent)?\s+(?:has\s+)?{aliasPattern}\b|\b(?:her|his|their)\s+{aliasPattern}\b|{aliasPattern}.{{0,70}}\b(?:killing|destroying|burying|booming|outscoring|fucking)\s+me\b|{aliasPattern}.{{0,70}}\b(?:ended|ruined|buried|boomed)\s+my\s+(?:week|matchup)\b",
                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
     }
 
@@ -347,7 +382,7 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
         return OwnRosterRegex.IsMatch(text)
                || Regex.IsMatch(
                    text,
-                   $@"\bas\s+(?:a|an)\b.{{0,80}}{aliasPattern}.{{0,80}}\bowner\b|\b(?:i|we)\s+(?:own|owned|started|start|played|play|rolled\s+out|have|had|got|dropped|drafted|draft|chose|took)\b.{{0,80}}{aliasPattern}|\b(?:i've|ive|we've|weve)\s+got\b.{{0,80}}{aliasPattern}|\bhave\s+{aliasPattern}\b|\bguess\s+who\s+(?:started|played)\b.{{0,80}}{aliasPattern}|\bmy\s+(?:(?:qb|rb|wr|te|flex|starter|bench|lineup|best\s+receiver)\s+)?{aliasPattern}|{aliasPattern}.{{0,50}}\b(?:on\s+my\s+bench|in\s+my\s+lineup|on\s+my\s+team|is\s+my\s+(?:qb|rb|wr|te|flex|receiver))\b|\b(?:should\s+have|should've|shouldve|needed\s+to|shoulda)\s+started\b.{{0,100}}{aliasPattern}|\bi\s+chose\b.{{0,80}}{aliasPattern}|\bmy\b.{{0,80}}{aliasPattern}.{{0,50}}\b(?:stack|room)\b|{aliasPattern}.{{0,80}}\b(?:waste\s+of\s+a\s+pick|draft\s+pick)\b|{aliasPattern}.{{0,30}}\b(?:save\s+me|gimme\b.{{0,30}}\bpoints)\b|{aliasPattern}.{{0,120}}\bi\s+have\b.{{0,80}}\b(?:replace\s+him|replace\s+them|replace\s+that)\b",
+                   $@"\bas\s+(?:a|an)\b.{{0,80}}{aliasPattern}.{{0,80}}\bowner\b|\bto\s+be\s+(?:a|an)\b.{{0,80}}{aliasPattern}.{{0,80}}\bowner\b|\b(?:i|we)\s+(?:own|owned|started|starting|start|played|play|rolled\s+out|have|had|got|put|benched|benching|dropped|drafted|draft|chose|took)\b.{{0,80}}{aliasPattern}|\b(?:started|starting|benched|benching|dropped|put)\b.{{0,80}}{aliasPattern}|\bowning\b.{{0,80}}{aliasPattern}|\b(?:i've|ive|we've|weve)\s+got\b.{{0,80}}{aliasPattern}|\bhave\b.{{0,80}}{aliasPattern}\b|\bguess\s+who\s+(?:started|played)\b.{{0,80}}{aliasPattern}|\bmy\s+(?:(?:qb|rb|wr|te|flex|starter|bench|lineup|best\s+receiver)\s+)?{aliasPattern}|{aliasPattern}.{{0,70}}\b(?:on\s+my\s+bench|in\s+my\s+lineup|on\s+my\s+team|is\s+my\s+(?:qb|rb|wr|te|flex|best\s+receiver|receiver|player|boi|boy))\b|{aliasPattern}\s+is\s+my\s+best\s+receiver\b|\b(?:should\s+have|should've|shouldve|needed\s+to|shoulda)\s+started\b.{{0,100}}{aliasPattern}|\bi\s+chose\b.{{0,80}}{aliasPattern}|\bmy\b.{{0,80}}{aliasPattern}.{{0,50}}\b(?:stack|room|stonks)\b|\b(?:that'?s|thats)\s+my\s+(?:boi|boy|guy|dude)\s+{aliasPattern}\b|{aliasPattern}.{{0,80}}\b(?:waste\s+of\s+a\s+pick|draft\s+pick)\b|{aliasPattern}.{{0,30}}\b(?:save\s+me|gimme\b.{{0,30}}\bpoints)\b|{aliasPattern}.{{0,120}}\bi\s+have\b.{{0,80}}\b(?:replace\s+him|replace\s+them|replace\s+that)\b",
                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
     }
 
@@ -404,6 +439,12 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
                || lower.StartsWith("they're ")
                || lower.StartsWith("they are ")
                || lower.StartsWith("they ")
+               || lower.StartsWith("had him ")
+               || lower.StartsWith("had her ")
+               || lower.StartsWith("had them ")
+               || lower.StartsWith("feeling ")
+               || lower.StartsWith("first time ")
+               || lower.StartsWith("turned out ")
                || lower.StartsWith("still ")
                || lower.StartsWith("also ")
                || lower.StartsWith("that ")
