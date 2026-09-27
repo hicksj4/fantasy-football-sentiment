@@ -63,4 +63,31 @@ public sealed class SentimentBenchmarkTests(ITestOutputHelper output)
         Assert.True(File.Exists(jsonPath));
         Assert.True(File.Exists(markdownPath));
     }
+
+    [Fact]
+    [Trait("Category", "Benchmark")]
+    public async Task HoldoutBFixture_GeneratesFrozenV4GeneralizationReport()
+    {
+        var corpus = BenchmarkFixtureLoader.LoadCorpus();
+        var runner = new SentimentBenchmarkRunner(corpus);
+
+        var report = await runner.RunAsync();
+        var benchmarkDirectory = Path.Combine(corpus.RepositoryRoot, "artifacts", "benchmark");
+        Directory.CreateDirectory(benchmarkDirectory);
+
+        var jsonPath = Path.Combine(benchmarkDirectory, "sentiment-holdout-b.json");
+        var markdownPath = Path.Combine(benchmarkDirectory, "sentiment-holdout-b.md");
+        await File.WriteAllTextAsync(
+            jsonPath,
+            JsonSerializer.Serialize(report, BenchmarkFixtureLoader.SerializerOptions));
+        var markdown = runner.ToMarkdown(report);
+        await File.WriteAllTextAsync(markdownPath, markdown);
+
+        output.WriteLine(markdown);
+
+        Assert.Contains(report.ByThread, thread => thread.DatasetSplit == "Holdout");
+        Assert.Contains("fantasy-semantics-v4", markdown);
+        Assert.True(File.Exists(jsonPath));
+        Assert.True(File.Exists(markdownPath));
+    }
 }

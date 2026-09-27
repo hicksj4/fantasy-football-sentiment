@@ -337,8 +337,19 @@ internal sealed class BenchmarkTargetEvaluation
     public string ContextRequirement { get; set; } = string.Empty;
     public string ExpectedFantasyOutlook { get; set; } = BenchmarkFantasyLabels.Unknown;
     public string ExpectedDirection { get; set; } = string.Empty;
+    public string ExpectedPerspective { get; set; } = TargetPerspectives.Unknown;
+    public string ExpectedActions { get; set; } = string.Empty;
+    public string ExpectedSignals { get; set; } = string.Empty;
     public string ActualDirection { get; set; } = string.Empty;
     public double? ActualScore { get; set; }
+    public string? ActualPerspective { get; set; }
+    public string? ActualIntent { get; set; }
+    public string? AttributionMethod { get; set; }
+    public double? TargetConfidence { get; set; }
+    public double? SemanticConfidence { get; set; }
+    public string? SemanticConfidenceBand { get; set; }
+    public string? TargetText { get; set; }
+    public string? Diagnostics { get; set; }
     public string Reasons { get; set; } = string.Empty;
     public bool IsDebatable { get; set; }
     public string? Notes { get; set; }

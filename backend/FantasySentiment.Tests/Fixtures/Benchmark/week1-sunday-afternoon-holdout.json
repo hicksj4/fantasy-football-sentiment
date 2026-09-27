@@ -1,0 +1,5691 @@
+{
+  "thread": {
+    "name": "OFFICIAL WEEK 1 SUNDAY AFTERNOON GAME THREAD",
+    "type": "GameThread",
+    "postType": "GameThread",
+    "subreddit": "fantasyfootball",
+    "datasetSplit": "Holdout",
+    "sourceFile": "D:/FF Sentiment Hand Data/Week1AfternoonGameData.txt",
+    "games": [
+      "Dolphins vs. Raiders",
+      "Packers vs. Vikings",
+      "Commanders vs. Eagles",
+      "Chargers vs. Cardinals"
+    ],
+    "semanticProfile": "fantasy-semantics-v4"
+  },
+  "players": [
+    {
+      "name": "A.J. Brown",
+      "team": "PHI",
+      "position": "WR",
+      "aliases": [
+        "A.J. Brown",
+        "AJ Brown",
+        "AJB"
+      ]
+    },
+    {
+      "name": "Aaron Jones",
+      "team": "MIN",
+      "position": "RB",
+      "aliases": [
+        "Aaron Jones"
+      ]
+    },
+    {
+      "name": "Ashton Jeanty",
+      "team": "LV",
+      "position": "RB",
+      "aliases": [
+        "Ashton Jeanty",
+        "Jeanty"
+      ]
+    },
+    {
+      "name": "Bijan Robinson",
+      "team": "ATL",
+      "position": "RB",
+      "aliases": [
+        "Bijan",
+        "Bijan Robinson"
+      ]
+    },
+    {
+      "name": "C.J. Stroud",
+      "team": "HOU",
+      "position": "QB",
+      "aliases": [
+        "C.J. Stroud",
+        "CJ Stroud",
+        "Stroud"
+      ]
+    },
+    {
+      "name": "Caleb Williams",
+      "team": "CHI",
+      "position": "QB",
+      "aliases": [
+        "Caleb",
+        "Caleb Williams"
+      ]
+    },
+    {
+      "name": "Chris Olave",
+      "team": "NO",
+      "position": "WR",
+      "aliases": [
+        "Olave",
+        "Chris Olave"
+      ]
+    },
+    {
+      "name": "Christian Watson",
+      "team": "GB",
+      "position": "WR",
+      "aliases": [
+        "Christian Watson",
+        "Watson"
+      ]
+    },
+    {
+      "name": "Chuba Hubbard",
+      "team": "CAR",
+      "position": "RB",
+      "aliases": [
+        "Chuba Hubbard",
+        "Chuba",
+        "Chubba"
+      ]
+    },
+    {
+      "name": "Colston Loveland",
+      "team": "CHI",
+      "position": "TE",
+      "aliases": [
+        "Colston Loveland",
+        "Loveland"
+      ]
+    },
+    {
+      "name": "Dalton Kincaid",
+      "team": "BUF",
+      "position": "TE",
+      "aliases": [
+        "Dalton Kincaid",
+        "Kincaid"
+      ]
+    },
+    {
+      "name": "D'Andre Swift",
+      "team": "CHI",
+      "position": "RB",
+      "aliases": [
+        "D'Andre Swift",
+        "Dandre Swift",
+        "Swift"
+      ]
+    },
+    {
+      "name": "De'Von Achane",
+      "team": "MIA",
+      "position": "RB",
+      "aliases": [
+        "De'Von Achane",
+        "DeVon Achane",
+        "Achane"
+      ]
+    },
+    {
+      "name": "DeVonta Smith",
+      "team": "PHI",
+      "position": "WR",
+      "aliases": [
+        "DeVonta Smith",
+        "Devonta Smith",
+        "Smitty"
+      ]
+    },
+    {
+      "name": "Derrick Henry",
+      "team": "BAL",
+      "position": "RB",
+      "aliases": [
+        "Derrick Henry",
+        "Henry",
+        "King Henry"
+      ]
+    },
+    {
+      "name": "Dontayvion Wicks",
+      "team": "GB",
+      "position": "WR",
+      "aliases": [
+        "Dontayvion Wicks",
+        "Dontavion Wicks",
+        "Wicks"
+      ]
+    },
+    {
+      "name": "Drake London",
+      "team": "ATL",
+      "position": "WR",
+      "aliases": [
+        "Drake London",
+        "London"
+      ]
+    },
+    {
+      "name": "Jahmyr Gibbs",
+      "team": "DET",
+      "position": "RB",
+      "aliases": [
+        "Jahmyr Gibbs",
+        "Gibbs"
+      ]
+    },
+    {
+      "name": "Ja'Marr Chase",
+      "team": "CIN",
+      "position": "WR",
+      "aliases": [
+        "Ja'Marr Chase",
+        "Jamaar Chase",
+        "JaMarr Chase",
+        "Jamaar",
+        "Chase"
+      ]
+    },
+    {
+      "name": "Jalen Coker",
+      "team": "CAR",
+      "position": "WR",
+      "aliases": [
+        "Jalen Coker",
+        "Coker"
+      ]
+    },
+    {
+      "name": "Jalen Hurts",
+      "team": "PHI",
+      "position": "QB",
+      "aliases": [
+        "Jalen Hurts",
+        "Hurts"
+      ]
+    },
+    {
+      "name": "James Cook",
+      "team": "BUF",
+      "position": "RB",
+      "aliases": [
+        "James Cook",
+        "J. Cook"
+      ]
+    },
+    {
+      "name": "Jayden Daniels",
+      "team": "WAS",
+      "position": "QB",
+      "aliases": [
+        "Jayden Daniels",
+        "Jaden Daniels",
+        "Daniels"
+      ]
+    },
+    {
+      "name": "Jeremiyah Love",
+      "team": "WAS",
+      "position": "RB",
+      "aliases": [
+        "Jeremiyah Love",
+        "Jeremyiah Love",
+        "Jeremiyah",
+        "Jeremyiah",
+        "Love"
+      ]
+    },
+    {
+      "name": "Jordan Love",
+      "team": "GB",
+      "position": "QB",
+      "aliases": [
+        "Jordan Love",
+        "Love"
+      ]
+    },
+    {
+      "name": "Jordan Mason",
+      "team": "MIN",
+      "position": "RB",
+      "aliases": [
+        "Jordan Mason",
+        "Mason"
+      ]
+    },
+    {
+      "name": "Josh Allen",
+      "team": "BUF",
+      "position": "QB",
+      "aliases": [
+        "Josh Allen"
+      ]
+    },
+    {
+      "name": "Josh Palmer",
+      "team": "BUF",
+      "position": "WR",
+      "aliases": [
+        "Josh Palmer",
+        "Palmer"
+      ]
+    },
+    {
+      "name": "Justin Herbert",
+      "team": "LAC",
+      "position": "QB",
+      "aliases": [
+        "Justin Herbert",
+        "Herbert"
+      ]
+    },
+    {
+      "name": "Justin Jefferson",
+      "team": "MIN",
+      "position": "WR",
+      "aliases": [
+        "Justin Jefferson",
+        "Jefferson",
+        "JJettas",
+        "Jettas"
+      ]
+    },
+    {
+      "name": "Juwan Johnson",
+      "team": "NO",
+      "position": "TE",
+      "aliases": [
+        "Juwan Johnson",
+        "Juwan"
+      ]
+    },
+    {
+      "name": "Kyle Pitts",
+      "team": "ATL",
+      "position": "TE",
+      "aliases": [
+        "Kyle Pitts",
+        "Pitts"
+      ]
+    },
+    {
+      "name": "Kyler Murray",
+      "team": "ARI",
+      "position": "QB",
+      "aliases": [
+        "Kyler Murray",
+        "Kyler",
+        "Murray"
+      ]
+    },
+    {
+      "name": "Ladd McConkey",
+      "team": "LAC",
+      "position": "WR",
+      "aliases": [
+        "Ladd McConkey",
+        "Ladd"
+      ]
+    },
+    {
+      "name": "Luther Burden",
+      "team": "CHI",
+      "position": "WR",
+      "aliases": [
+        "Luther Burden",
+        "Burden"
+      ]
+    },
+    {
+      "name": "Malik Nabers",
+      "team": "NYG",
+      "position": "WR",
+      "aliases": [
+        "Malik Nabers",
+        "Nabers"
+      ]
+    },
+    {
+      "name": "Marshawn Lloyd",
+      "team": "GB",
+      "position": "RB",
+      "aliases": [
+        "Marshawn Lloyd",
+        "Marshawn",
+        "Lloyd"
+      ]
+    },
+    {
+      "name": "Marvin Harrison Jr.",
+      "team": "ARI",
+      "position": "WR",
+      "aliases": [
+        "Marvin Harrison Jr.",
+        "Marvin Harrison",
+        "MHJ"
+      ]
+    },
+    {
+      "name": "Michael Mayer",
+      "team": "LV",
+      "position": "TE",
+      "aliases": [
+        "Michael Mayer",
+        "Mayer"
+      ]
+    },
+    {
+      "name": "Omarion Hampton",
+      "team": "LAC",
+      "position": "RB",
+      "aliases": [
+        "Omarion Hampton",
+        "Omarion",
+        "Hampton"
+      ]
+    },
+    {
+      "name": "Quentin Johnston",
+      "team": "LAC",
+      "position": "WR",
+      "aliases": [
+        "Quentin Johnston",
+        "QJ"
+      ]
+    },
+    {
+      "name": "Saquon Barkley",
+      "team": "PHI",
+      "position": "RB",
+      "aliases": [
+        "Saquon Barkley",
+        "Saquon",
+        "Barkley"
+      ]
+    },
+    {
+      "name": "Terry McLaurin",
+      "team": "WAS",
+      "position": "WR",
+      "aliases": [
+        "Terry McLaurin",
+        "Terry",
+        "McLaurin"
+      ]
+    },
+    {
+      "name": "Tre Tucker",
+      "team": "LV",
+      "position": "WR",
+      "aliases": [
+        "Tre Tucker"
+      ]
+    },
+    {
+      "name": "Travis Etienne Jr.",
+      "team": "JAX",
+      "position": "RB",
+      "aliases": [
+        "Travis Etienne",
+        "Travis Etienne Jr.",
+        "Etienne",
+        "ETN"
+      ]
+    },
+    {
+      "name": "Trey McBride",
+      "team": "ARI",
+      "position": "TE",
+      "aliases": [
+        "Trey McBride",
+        "McBride"
+      ]
+    },
+    {
+      "name": "Tucker Kraft",
+      "team": "GB",
+      "position": "TE",
+      "aliases": [
+        "Tucker Kraft",
+        "Kraft"
+      ]
+    },
+    {
+      "name": "Tyler Shough",
+      "team": "NO",
+      "position": "QB",
+      "aliases": [
+        "Tyler Shough",
+        "Shough"
+      ]
+    },
+    {
+      "name": "Zay Flowers",
+      "team": "BAL",
+      "position": "WR",
+      "aliases": [
+        "Zay Flowers",
+        "Flowers"
+      ]
+    }
+  ],
+  "referenceResults": [],
+  "comments": [
+    {
+      "id": "w1a-001",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "So Kincaid might be legit",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Dalton Kincaid",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-002",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Josh Palmer truthers",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Josh Palmer",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Signal"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-003",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "51 points and no fucking Luther Burden",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Luther Burden",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-004",
+      "parentId": "w1a-003",
+      "redditScore": 2,
+      "body": "Or Loveland. Wild.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-005",
+      "parentId": null,
+      "redditScore": 8,
+      "body": "52 points and Burden only a smidge... not good",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Luther Burden",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-006",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Caleb I love you.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Caleb Williams",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-007",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Fuck kyle pitts",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyle Pitts",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-008",
+      "parentId": "w1a-007",
+      "redditScore": 2,
+      "body": "Fuck Loveland",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-009",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "My entire team might lose to Allen and Gibbs",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Josh Allen",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "OpponentRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "OpponentPerspective"
+            ]
+          },
+          {
+            "player": "Jahmyr Gibbs",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "OpponentRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "OpponentPerspective"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-010",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Olave is a beast, hope he's ok",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Chris Olave",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-011",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Jamaar chase straight up fucked me in the ass smh",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ja'Marr Chase",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-012",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Jamaar really sucks in week 1 every year huh 😂",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ja'Marr Chase",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-013",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Where is juwan johnson",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Juwan Johnson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-014",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Juwan Johnson winning TD catch please",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Juwan Johnson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-015",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Juwan finally lmfao",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Juwan Johnson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-016",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "what a turnaround for Shough",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tyler Shough",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-017",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Maybe shough was him",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tyler Shough",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-018",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Juwan johnson owners GET IN HERE",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Juwan Johnson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-019",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Juwan Johnson in the clutch",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Juwan Johnson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-020",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Chubba a nice mid round pick",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Chuba Hubbard",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftValue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-021",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Chase and Loveland talk a big game just to do cardio out there. screw the coaches",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Ja'Marr Chase",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-022",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Chase you have some explaining to do",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ja'Marr Chase",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-023",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "lmao stroud",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "C.J. Stroud",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "AmbiguousLiveReaction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-024",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "F U Malik Nabers",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Malik Nabers",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              null
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-025",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Holy shit Jalen coker",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Jalen Coker",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Add"
+            ],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-026",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Loveland with a fat 0",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-027",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Texans defense 💀😭",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-028",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Colston BUMland 🥀",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-029",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Detroit is really the flying Gibbs'",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jahmyr Gibbs",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-030",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Kyler is trash",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-031",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Man swift was a steal!",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "D'Andre Swift",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftValue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-032",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "I’m going against Swift, on their bench 😂",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "D'Andre Swift",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "OpponentRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftValue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-033",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Kyler doing Kyler things",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-034",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Wtf is Kyler Murray doing",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-035",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Swift is good",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "D'Andre Swift",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftValue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-036",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "JFC kyler murray. lol.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-037",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Kyler sucks",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-038",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Kyler lmao",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-039",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "JEREMYIAH YOURE THE GOAT",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jeremiyah Love",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "UnseenLanguage"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-040",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Chargers defense is ass",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-041",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Is Olave out?",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Chris Olave",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Unknown",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-042",
+      "parentId": "w1a-041",
+      "redditScore": 1,
+      "body": "No",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Chris Olave",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "ReplyContext"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-043",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Jeremiyah Love doubters in shambles!",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jeremiyah Love",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "UnseenLanguage"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-044",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Save my garbage team love",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "Ambiguous",
+        "targets": []
+      },
+      "notes": "Ambiguous ordinary love/name usage."
+    },
+    {
+      "id": "w1a-045",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Chargers d already fucking me",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-046",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Olave is feasting",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Chris Olave",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-047",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Etienne looks fucking horrible man lol",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Travis Etienne Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-048",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Starting to think Kyler might not be that good",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-049",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "I need 2024 Saquon badly.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Saquon Barkley",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-050",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Why did I start tre tucker lol",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tre Tucker",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "LineupRegret"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-051",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "My team is ass",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-052",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Ladd getting fed good lord",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ladd McConkey",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-053",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Ladd baby",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ladd McConkey",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-054",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Alright Juwan I see you.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Juwan Johnson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-055",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Hampton is him",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-056",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Hampton baby 😤",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-057",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Hampton is a dawg wtf",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-058",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "What a manly run by Hampton",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-059",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "I wish I had hampton in every league 🥹",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "DraftValue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-060",
+      "parentId": null,
+      "redditScore": 14,
+      "body": "Omarion is a grown man holy shit",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-061",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Lloyd already a drop",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "Action"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-062",
+      "parentId": "w1a-061",
+      "redditScore": 1,
+      "body": "Gotta be shittin me.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-063",
+      "parentId": null,
+      "redditScore": 8,
+      "body": "Hampton is such a beast",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-064",
+      "parentId": "w1a-063",
+      "redditScore": 3,
+      "body": "7 guys couldn't bring him down",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "ReplyContext"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-065",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Hampton McConkey combo treating me well in this drive",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ladd McConkey",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          },
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-066",
+      "parentId": "w1a-065",
+      "redditScore": 1,
+      "body": "Yes brother!!",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "ReplyContext"
+            ]
+          },
+          {
+            "player": "Ladd McConkey",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "ReplyContext"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-067",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "is tucker kraft the only fantasy relevant player on the packers now",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-068",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Is it safe to drop Pitts week 1?",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyle Pitts",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-069",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "I'm so fucking cooked thanks to Lloyd",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-070",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "No Lloyd yet? Oh boy",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-071",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "WATSON",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "GameEventRequired"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-072",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "CHRISTIAN WATSON BABYYYYYY",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-073",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Christian Watson. That’s the comment.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-074",
+      "parentId": null,
+      "redditScore": -1,
+      "body": "Watson sell high",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Sell"
+            ],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Action"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-075",
+      "parentId": "w1a-074",
+      "redditScore": 2,
+      "body": "idiot",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-076",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "WATSON!!!!!!!!!!!!!!!!!!!!!!!!!",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "GameEventRequired"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-077",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "LETS GOOOOOOOO WATSON",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-078",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Thank god my packers friend opponent benched Watson",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-079",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "That was actually fucking insane",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-080",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "McBride is such a daddy.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Trey McBride",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-081",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Watson WR1 szn incoming",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-082",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Christian Watson was a quick decision to replace Nabers. Glad it’s going well",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Malik Nabers",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              null
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          },
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-083",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Thought London and Jamar would win me the league",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ja'Marr Chase",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftRegret"
+            ]
+          },
+          {
+            "player": "Drake London",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftRegret"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-084",
+      "parentId": "w1a-083",
+      "redditScore": 2,
+      "body": "they might from next week on. that's my cope",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Drake London",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext"
+            ]
+          },
+          {
+            "player": "Ja'Marr Chase",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-085",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "My opponent has Watson. Not an ideal start 😬",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "OpponentRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "OpponentPerspective"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-086",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "So is Devonta the WR2 in Philly or what",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "DeVonta Smith",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-087",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Just dropped Wicks 🤦🏾‍♂️",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Dontayvion Wicks",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "OwnRoster",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "TransactionRegret"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-088",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Future HOFer Dontavion Wicks",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Dontayvion Wicks",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "UnseenLanguage"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-089",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Lloyd gonna go down as an awful pick",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftRegret"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-090",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Lloyd was probably my worst fantasy draft pick of all time I deserve this",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftRegret"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-091",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Yeah MHJ wasn't the move lol",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-092",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "What’s going on with Lloyd? Is he even on the field?",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-093",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Damn it's over already for Kyler",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-094",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Kyler dead",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-095",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Kyler Murray is done for",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-096",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Goodbye Kyler",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-097",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Murray done for the day just like that. Wow",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-098",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "oh Murray is fucked, jesus",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-099",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "RIP Justin Jefferson fantasy managers.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Jefferson",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftRegret"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-100",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "lol I started Kyler. Week is over sick",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-101",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Well Murray is cooked, out with concussion",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-102",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Stupid hit by the defender",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-103",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "Packers dirty af for that",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-104",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Where the hell is marshawn Lloyd",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-105",
+      "parentId": null,
+      "redditScore": 11,
+      "body": "So Lloyd was bait",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UnseenLanguage"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-106",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Butterfingers Hampton",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-107",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Hampton fumble exactly wtf I needed smh",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-108",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Jeanty season!! (I couldn’t draft him but am rooting for him)",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ashton Jeanty",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-109",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "I wish I drafted Henry over Hampton ugh",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Comparison"
+            ]
+          },
+          {
+            "player": "Derrick Henry",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Comparison"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-110",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Marvin Harrison invisible again What a bust",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UnseenLanguage"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-111",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Mayers what the fack",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Michael Mayer",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-112",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Fucking hell Mayer",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Michael Mayer",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-113",
+      "parentId": null,
+      "redditScore": -4,
+      "body": "Mayer down. Thank god.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Michael Mayer",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-114",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Does MHJ exist?",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UnseenLanguage"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-115",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Having to root for Marvin Bust Jr and ETN every week is going to depress me QUICK",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Travis Etienne Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-116",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Love looka good",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "Ambiguous",
+        "targets": []
+      },
+      "notes": "AliasCollision: bare Love could be Jordan Love or Jeremiyah Love."
+    },
+    {
+      "id": "w1a-117",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Daniels looks terrible",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jayden Daniels",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-118",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "I was told Smith would get many targets. Where targets?",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "DeVonta Smith",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-119",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Bruh LLOYD is asscheeks.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-120",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Watson gonna eat this year.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-121",
+      "parentId": "w1a-120",
+      "redditScore": -1,
+      "body": "the 5 games he's healthy",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-122",
+      "parentId": "w1a-121",
+      "redditScore": 3,
+      "body": "don't be jealous",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-123",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Packers should just stop running Lloyd",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-124",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Vele or Coker ROS?",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jalen Coker",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Add"
+            ],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-125",
+      "parentId": "w1a-124",
+      "redditScore": 5,
+      "body": "Coker I think",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Jalen Coker",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Add"
+            ],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-126",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "I don’t know what possessed me to take MHJ, but I sure wish I didn’t now.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-127",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "Christian Watson league winner?",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-128",
+      "parentId": "w1a-127",
+      "redditScore": 3,
+      "body": "Looks like it",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "ReplyContext"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-129",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "Starting to think MHJ might just be bad",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-130",
+      "parentId": null,
+      "redditScore": 9,
+      "body": "I think I suck at fantasy football.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-131",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "I think at this point jayden daniels is actually ass",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jayden Daniels",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-132",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "This Washington offense....",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-133",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Mason looks pretty good",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jordan Mason",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-134",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "So they pay Kraft all that money for nothing",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-135",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Kyler ruled out",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-136",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Dolphins are beyond garbage",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-137",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Why did I think tbis was a good year for mclaurin",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Terry McLaurin",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-138",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "It’s over for Saquon",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Saquon Barkley",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-139",
+      "parentId": "w1a-138",
+      "redditScore": 3,
+      "body": "bruh",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Saquon Barkley",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Neutral",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext"
+            ],
+            "notes": "Reply is pushback rather than direct player sentiment."
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-140",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Devonta Smith is COOKING without AJ Brown in his way anymore, one catch 🔥",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "DeVonta Smith",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Sarcasm"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-141",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Let’s go Barkley!!!",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Saquon Barkley",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-142",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "Wicks target machine.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Dontayvion Wicks",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-143",
+      "parentId": null,
+      "redditScore": 10,
+      "body": "So Wicks is the Eagles WR1 apparently",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Dontayvion Wicks",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-144",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "feels bad to be Smith owner, grabbing Wicks on waiver",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "DeVonta Smith",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "TransactionRegret"
+            ]
+          },
+          {
+            "player": "Dontayvion Wicks",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Add"
+            ],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Action"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-145",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Funny I thought Devonta was WR1 on the depth chart",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "DeVonta Smith",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-146",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "What are the chargers doing?!?!",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-147",
+      "parentId": null,
+      "redditScore": 2,
+      "body": "They showed Nabers walking into MetLife and he was smiling. He’s playing",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Malik Nabers",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-148",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "JEANTYYYYYY",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ashton Jeanty",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-149",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "Jeanty/bijan combo needs to carry my AJB/flowers rn",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ashton Jeanty",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Bijan Robinson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "A.J. Brown",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          },
+          {
+            "player": "Zay Flowers",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-150",
+      "parentId": null,
+      "redditScore": 10,
+      "body": "Coker is WR1 so far.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jalen Coker",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Add"
+            ],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-151",
+      "parentId": null,
+      "redditScore": 11,
+      "body": "JEANTY OWNERS COME IN HERE",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ashton Jeanty",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-152",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "Jeanty good",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ashton Jeanty",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-153",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Starting to think Achane was a bad pick",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "De'Von Achane",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftRegret"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-154",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "Devonta Smith might have been a bad pick",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "DeVonta Smith",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-155",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "I fell for it drafting Jefferson :(",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Jefferson",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftRegret"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-156",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Chargers defense is just swiss cheese",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-157",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "McBride is silly good, and he’s got a dumpy.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Trey McBride",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-158",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Ngl I faded Jeanty a lot. Might have been wrong. Or just the dolphins",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ashton Jeanty",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "DraftValue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-159",
+      "parentId": "w1a-158",
+      "redditScore": 3,
+      "body": "Little bit of both",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "ReplyContext",
+        "targets": [
+          {
+            "player": "Ashton Jeanty",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "ReplyContext"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-160",
+      "parentId": null,
+      "redditScore": 10,
+      "body": "Can’t believe I drafted Jayden Daniels over Caleb…",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jayden Daniels",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-161",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Glad to see jeanty is doing solid",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ashton Jeanty",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-162",
+      "parentId": null,
+      "redditScore": 18,
+      "body": "TE rankings: 1.McBride LARGE GAP The rest…",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Trey McBride",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-163",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "TERRY WAKE UP",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Terry McLaurin",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-164",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "The Chargers are kind of shitty.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-165",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Jeanty dip was the easiest buy ever",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ashton Jeanty",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-166",
+      "parentId": null,
+      "redditScore": 3,
+      "body": "Why the fuck did I draft MHJ…????",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftRegret"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-167",
+      "parentId": null,
+      "redditScore": 1,
+      "body": "McBride",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Trey McBride",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-168",
+      "parentId": null,
+      "redditScore": 9,
+      "body": "Dontavion Wicks WR1",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Dontayvion Wicks",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-169",
+      "parentId": null,
+      "redditScore": 9,
+      "body": "McBride TE1 again",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Trey McBride",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-170",
+      "parentId": null,
+      "redditScore": 8,
+      "body": "Ladd McConkey is popping off this drive",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ladd McConkey",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-171",
+      "parentId": null,
+      "redditScore": 8,
+      "body": "Jeanty looks fantastic",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ashton Jeanty",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-172",
+      "parentId": null,
+      "redditScore": 8,
+      "body": "Devonta Smith gonna be on milk cartons soon",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "DeVonta Smith",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UnseenLanguage"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-173",
+      "parentId": null,
+      "redditScore": 8,
+      "body": "Achane x Cook lookin like im fucked",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "De'Von Achane",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftRegret"
+            ]
+          },
+          {
+            "player": "James Cook",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftRegret"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-174",
+      "parentId": null,
+      "redditScore": 11,
+      "body": "Kyler just got fucking murdered",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-175",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "Man if McBride stays healthy he's gonna end up a top 5 all time TE.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Trey McBride",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-176",
+      "parentId": null,
+      "redditScore": 7,
+      "body": "God damn I live for the week 1 overreactions",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-177",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Is this the Loveland support group",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Colston Loveland",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-178",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Good Guy Jordan Mason",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jordan Mason",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-179",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Just throw it up to Jettas",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Jefferson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-180",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Can Watson please stay healthy he always shows up when he plays",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-181",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Ladd is eating.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ladd McConkey",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-182",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Manifesting a Kraft TD",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Tucker Kraft",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-183",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Come on Christian Watson gimme another",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-184",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "Chargers look ass holy shit",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-185",
+      "parentId": null,
+      "redditScore": 6,
+      "body": "I cannot believe Aaron Jones gets a tuddy after doing jack all game",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Aaron Jones",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-186",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Bijan is a god btw",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Bijan Robinson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-187",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "CALLED THAT SHIT LFG JUWAN",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Juwan Johnson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-188",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Jeremiyah Love is looking healthy",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jeremiyah Love",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "UnseenLanguage"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-189",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Hampton haters eating shit already.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Omarion Hampton",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-190",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Man, I was rooting for Kyler this year. That looked horrible...",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Injury"
+            ],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-191",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "LMFAO I KNEW KYLER MURRAY WAS A PSYOP SAME BUM AS EVER",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Kyler Murray",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Injury"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-192",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "C'mon Daniels, wake up",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jayden Daniels",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-193",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Jayden Daniels doing absolutely nothing to protect himself.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jayden Daniels",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-194",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "MHJ is a drop for literally anybody",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-195",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Lets go JJ!!!",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "Ambiguous",
+        "targets": []
+      },
+      "notes": "AliasCollision: bare JJ could refer to Justin Jefferson or Juwan Johnson."
+    },
+    {
+      "id": "w1a-196",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "JJETTAS IS BACK!",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Jefferson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-197",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Chargers are trash. Herbert is a perennial loser",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
+            ],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-198",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "So much hype for Devonta….",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "DeVonta Smith",
+            "playerEvaluation": "Unknown",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-199",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Quentin Johnston wide open again, so naturally its time for Herbert to rip another pass 200 MPH into double coverage.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Quentin Johnston",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          },
+          {
+            "player": "Justin Herbert",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Panic"
+            ],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-200",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Jeanty is a god send. Jaden Daniels? Literally Satan.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ashton Jeanty",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Jayden Daniels",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-201",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Watching Henry earlier and Jeanty now has been a real treat",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ashton Jeanty",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          },
+          {
+            "player": "Derrick Henry",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Comparison"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-202",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Prayer circle for whoever is playing against Jeanty",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Ashton Jeanty",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "OpponentRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "OpponentPerspective"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-203",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Hurts is terrible",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jalen Hurts",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-204",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Herbert rage drop is going to hit like crack.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [
+              "Panic"
+            ],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-205",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "The Chargers are fucking pathetic",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-206",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Trade Herbert for cash considerations",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Justin Herbert",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [
+              "Panic"
+            ],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-207",
+      "parentId": null,
+      "redditScore": 5,
+      "body": "Fell for MHJ again man FUCK",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftRegret"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-208",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Holy Watson",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "GameEventContext",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "GameEventRequired"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-209",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Marvin Harrison Jr is playing right lol",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-210",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "MHJ is a colossal bust. It’s unreal how bad he is",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-211",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "MHJ is so silly he convinced me to draft him again",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "DraftRegret"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-212",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "did the chargers defense know they had a game today?",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": []
+      }
+    },
+    {
+      "id": "w1a-213",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "If you’re starting marshawn lloyd u are bum",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marshawn Lloyd",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "OwnRoster",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "UsageOpportunity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-214",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Watson is gonna win me so many leagues as my WR3 and 4 lmaoooo.",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "FantasyProduction"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-215",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Pretty good catch by the dead MHJ",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-216",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Hurts fell off since 2022",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Jalen Hurts",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [],
+            "reasons": [
+              "QuarterbackPlay"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-217",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "McBride is so damn reliable",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Trey McBride",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "Unknown",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-218",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "I am dropping the shit outta MHJ",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Marvin Harrison Jr.",
+            "playerEvaluation": "Negative",
+            "fantasyOutlook": "Negative",
+            "perspective": "Unknown",
+            "fantasyActions": [
+              "Drop"
+            ],
+            "discussionSignals": [],
+            "reasons": [
+              "Performance"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "w1a-219",
+      "parentId": null,
+      "redditScore": 4,
+      "body": "Watson torching me awesome",
+      "datasetSplit": "Holdout",
+      "expected": {
+        "contextRequirement": "SelfContained",
+        "targets": [
+          {
+            "player": "Christian Watson",
+            "playerEvaluation": "Positive",
+            "fantasyOutlook": "Positive",
+            "perspective": "OpponentRoster",
+            "fantasyActions": [],
+            "discussionSignals": [
+              "Hype"
+            ],
+            "reasons": [
+              "OpponentPerspective"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
