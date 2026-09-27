@@ -113,6 +113,25 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
         var matches = new List<SemanticTermMatch>();
         var appliedRules = new List<string>(preparation.AppliedRules);
 
+        if (IsNameOnlyMockeryReaction(normalizedText, targetAliases) && preparation.MatchedEmoji.Count == 0)
+        {
+            const double score = -0.32;
+            appliedRules.Add($"nameOnlyMockeryNegative={FormatSigned(score)}");
+            return new FantasySemanticAnalysis(
+                0,
+                0,
+                score,
+                0,
+                0,
+                0.55,
+                score,
+                [],
+                [],
+                [],
+                [],
+                appliedRules);
+        }
+
         if (IsNameOnlyReaction(normalizedText, targetAliases) && preparation.MatchedEmoji.Count == 0)
         {
             appliedRules.Add("nameOnlyReactionNeutral");
@@ -331,18 +350,18 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
         AddStructuralScore(
             Regex.IsMatch(
                 normalizedText,
-                @"\bwelcome\s+to\s+the\s+waiver\s+wire\b",
+                @"\b(?:(?:qb|rb|wr|te)[2-9]\s+at\s+best|only\s+a\s+(?:qb|rb|wr|te)[2-9]|nothing\s+more\s+than\s+a\s+(?:qb|rb|wr|te)[2-9])\b",
                 RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
-            -0.45,
-            "waiverWireDrop");
+            -0.85,
+            "fantasyTierAtBest");
 
         AddStructuralScore(
             Regex.IsMatch(
                 normalizedText,
-                @"\b(?:qb|rb|wr|te)[2-9]\s+at\s+best\b",
+                @"\bfreak\s+of\s+nature\b",
                 RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
-            -0.85,
-            "fantasyTierAtBest");
+            0.30,
+            "freakOfNaturePositive");
 
         foreach (var alias in targetAliases)
         {
@@ -367,6 +386,66 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
                     RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
                 -0.55,
                 "draftRegret");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:started|starting)\s+{aliasPattern}\b.{{0,40}}\bama\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.65,
+                "lineupRegretAma");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\bdrafted\s+{aliasPattern}\b.{{0,40}}\bama\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.58,
+                "draftRegretAma");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:benched|benching)\s+{aliasPattern}\b.{{0,40}}\bama\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.62,
+                "benchRegretAmaPositive");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:(?:i|we)\s+(?:am\s+|are\s+)?|i'm\s+|we're\s+)?(?:already\s+)?(?:drop|dropping|dropped)\s+{aliasPattern}\b|\b(?:gonna|going\s+to|about\s+to|can't\s+wait\s+to|cant\s+wait\s+to)\s+drop\s+{aliasPattern}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)
+                && !Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:should|can|do)\s+(?:i|we)\s+drop\s+{aliasPattern}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.70,
+                "dropTargetNegative");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:drop|dropping|dropped)\b.{{0,100}}\bfor\s+{aliasPattern}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.45,
+                "dropReplacementPositive");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\s+(?:to|straight\s+to)\s+(?:the\s+)?(?:waiver\s+wire|waivers)\b|\bsend\s+{aliasPattern}\s+to\s+(?:the\s+)?(?:waiver\s+wire|waivers)\b|{aliasPattern}\b.{{0,80}}\bwelcome\s+to\s+(?:the\s+)?(?:waiver\s+wire|waivers)\b|{aliasPattern}\b.{{0,40}}\b(?:is|looks?|seems?)\s+(?:a\s+)?(?:waiver\s+player|waiver\s+wire\s+player)\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.65,
+                "waiverDropNegative");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:pick\s+up|pickup|grab|claim|scoop)\s+{aliasPattern}\b.{{0,40}}\b(?:off|on|from)\s+waivers?\b|\b(?:best|top)\s+waiver\s+(?:add|pickup)\b.{{0,80}}{aliasPattern}\b|{aliasPattern}\b.{{0,80}}\b(?:best|top)\s+waiver\s+(?:add|pickup)\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.45,
+                "waiverAddPositive");
 
             AddStructuralScore(
                 Regex.IsMatch(
@@ -475,7 +554,7 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
             AddStructuralScore(
                 Regex.IsMatch(
                     normalizedText,
-                    $@"\b(?:need|want|just\s+want)\s+{aliasPattern}\b.{{0,80}}\b(?:to\s+do\s+more|to\s+do\s+something|to\s+finally\s+get\s+his|to\s+finally\s+get\s+theirs)\b|\bfeed\s+{aliasPattern}\s+(?:pls|please)\b|\b(?:wish\s+i\s+could|can'?t\s+wait\s+to|cant\s+wait\s+to)\s+drop\s+{aliasPattern}\b|\b(?:wanted|want|needed)\s+(?:a\s+)?{aliasPattern}\s+(?:td|touchdown)\b|\bplease\s+{aliasPattern}\s+(?:td|touchdown)\b|{aliasPattern}\b.{{0,80}}\byikes\b|\bfucking\s+{aliasPattern}\b$|\bkilling\s+my\s+{aliasPattern}\s+stonks\b|\bnot\s+throwing\s+to\s+{aliasPattern}\b",
+                    $@"\b(?:need|want|just\s+want)\s+{aliasPattern}\b.{{0,80}}\b(?:to\s+do\s+more|to\s+do\s+something|to\s+finally\s+get\s+his|to\s+finally\s+get\s+theirs)\b|\bfeed\s+{aliasPattern}\s+(?:pls|please)\b|\b(?:wish\s+i\s+could|can'?t\s+wait\s+to|cant\s+wait\s+to)\s+drop\s+{aliasPattern}\b|\b(?:wanted|want|needed)\s+(?:a\s+)?{aliasPattern}\s+(?:td|touchdown)\b|\bplease\s+{aliasPattern}\s+(?:td|touchdown)\b|{aliasPattern}\b.{{0,80}}\byikes\b|\bfucking\s+{aliasPattern}\b$|\bkilling\s+my\s+{aliasPattern}\s+stonks\b|{aliasPattern}\b.{{0,40}}\bkilling\s+my\b.{{0,60}}\bstonks\b|\bnot\s+throwing\s+to\s+{aliasPattern}\b",
                     RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
                 -0.85,
                 "usageConcernNegative");
@@ -515,7 +594,7 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
             AddStructuralScore(
                 Regex.IsMatch(
                     normalizedText,
-                    $@"{aliasPattern}\b.{{0,70}}\b(?:(?:is|was|looks?|looked|seems?|seemed|plays?|playing)\s+(?:so\s+|very\s+|really\s+|straight\s+|like\s+)?(?:awful|terrible|bad|slow|dead|washed|cooked|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|buns|dogshit|mid|fraud|bum)|(?:so\s+|very\s+|really\s+|straight\s+)?(?:slow|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|buns|dogshit|mid|fraud|bum))\b|\b(?:is|was|looks?|looked|seems?|seemed)\s+{aliasPattern}\s+(?:awful|terrible|bad|slow|dead|washed|cooked|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|buns|dogshit|mid|fraud|bum)\b",
+                    $@"{aliasPattern}\b.{{0,70}}\b(?:(?:is|was|looks?|looked|seems?|seemed|plays?|playing)\s+(?:so\s+|very\s+|really\s+|straight\s+|like\s+)?(?:awful|terrible|bad|slow|dead|washed|cooked|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|buns|dogshit|mid|fraud|bum|stinks)|(?:so\s+|very\s+|really\s+|straight\s+)?(?:slow|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|buns|dogshit|mid|fraud|bum|stinks))\b|\b(?:is|was|looks?|looked|seems?|seemed)\s+{aliasPattern}\s+(?:awful|terrible|bad|slow|dead|washed|cooked|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|buns|dogshit|mid|fraud|bum|stinks)\b",
                     RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
                 -0.58,
                 "targetEvaluationNegative");
@@ -803,7 +882,36 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
 
             if (Regex.IsMatch(
                     normalizedText,
-                    $@"^(?:(?:holy\s+shit|wow|damn|bro|lol|lmao)\s+)?{aliasPattern}(?:\s+(?:holy\s+shit|wow|damn|bro|lol|lmao))?$",
+                    $@"^(?:(?:holy\s+(?:shit|fuck)|wow|damn|bro|lol|lmao+)\s+)?{aliasPattern}(?:\s+(?:holy\s+(?:shit|fuck)|wow|damn|bro|lol|lmao+))?$",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool IsNameOnlyMockeryReaction(
+        string normalizedText,
+        IReadOnlyList<string> targetAliases)
+    {
+        if (normalizedText.Length == 0 || targetAliases.Count == 0)
+        {
+            return false;
+        }
+
+        foreach (var alias in targetAliases)
+        {
+            var aliasPattern = AliasPattern(alias);
+            if (aliasPattern.Length == 0)
+            {
+                continue;
+            }
+
+            if (Regex.IsMatch(
+                    normalizedText,
+                    $@"^(?:lmao+\s+{aliasPattern}|{aliasPattern}\s+lmao+)$",
                     RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
             {
                 return true;

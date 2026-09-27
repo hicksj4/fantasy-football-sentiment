@@ -24,7 +24,7 @@ public sealed class PlayerMentionDetector
     };
 
     private static readonly Regex RiskyAliasFollowingContextRegex = new(
-        @"^(?:is|was|looks?|looked|has|had|will|should|can|could|needs?|throws?|throwing|played|playing|started|starting|cooked|bad|good|great|awful|solid|washed)\b",
+        @"^(?:is|was|looks?|looked|has|had|will|should|can|could|needs?|throws?|throwing|played|playing|started|starting|cooked|bad|good|great|awful|solid|washed|stinks|ok(?:ay)?)\b",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     public IReadOnlyList<PlayerMentionMatch> DetectMentions(string text, IEnumerable<Player> players)

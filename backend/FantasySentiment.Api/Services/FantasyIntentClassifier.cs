@@ -38,14 +38,6 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
 
         var context = BuildContext(normalizedTargetText, alias, playerName);
 
-        if (Regex.IsMatch(
-                context,
-                @"\bwelcome\s+to\s+the\s+waiver\s+wire\b",
-                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
-        {
-            return FantasyIntents.Drop;
-        }
-
         if (ContainsAny(context, lexicon.Injury))
         {
             return FantasyIntents.Injury;
@@ -105,9 +97,10 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
         string playerName,
         out string intent)
     {
+        var mentionPattern = MentionPattern(alias, playerName);
         var dropFor = Regex.Match(
             normalized,
-            @"\bdrop\s+(?<left>.+?)\s+for\s+(?<right>.+)$",
+            @"\b(?:drop|dropping|dropped)\s+(?<left>.+?)\s+for\s+(?<right>.+)$",
             RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
         if (dropFor.Success)
         {
@@ -124,6 +117,51 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
                 intent = FantasyIntents.Add;
                 return true;
             }
+        }
+
+        if (Regex.IsMatch(
+                normalized,
+                $@"\b(?:(?:i|we)\s+(?:am\s+|are\s+)?|i'm\s+|we're\s+)?(?:already\s+)?(?:drop|dropping|dropped)\s+{mentionPattern}\b|\b(?:gonna|going\s+to|about\s+to|can't\s+wait\s+to|cant\s+wait\s+to)\s+drop\s+{mentionPattern}\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            intent = FantasyIntents.Drop;
+            return true;
+        }
+
+        if (Regex.IsMatch(
+                normalized,
+                $@"(?:{mentionPattern}\s+(?:to|straight\s+to)\s+(?:the\s+)?(?:waiver\s+wire|waivers)\b|\bsend\s+{mentionPattern}\s+to\s+(?:the\s+)?(?:waiver\s+wire|waivers)\b|{mentionPattern}\b.{{0,80}}\bwelcome\s+to\s+(?:the\s+)?(?:waiver\s+wire|waivers)\b|{mentionPattern}\b.{{0,40}}\b(?:is|looks?|seems?)\s+(?:a\s+)?(?:waiver\s+player|waiver\s+wire\s+player)\b)",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            intent = FantasyIntents.Drop;
+            return true;
+        }
+
+        if (Regex.IsMatch(
+                normalized,
+                $@"\b(?:pick\s+up|pickup|grab|claim|scoop)\s+{mentionPattern}\b.{{0,40}}\b(?:off|on|from)\s+waivers?\b|\b(?:best|top)\s+waiver\s+(?:add|pickup)\b.{{0,80}}{mentionPattern}\b|{mentionPattern}\b.{{0,80}}\b(?:best|top)\s+waiver\s+(?:add|pickup)\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            intent = FantasyIntents.Add;
+            return true;
+        }
+
+        if (Regex.IsMatch(
+                normalized,
+                $@"\b(?:started|starting)\s+{mentionPattern}\b.{{0,40}}\bama\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            intent = FantasyIntents.Start;
+            return true;
+        }
+
+        if (Regex.IsMatch(
+                normalized,
+                $@"\b(?:benched|benching)\s+{mentionPattern}\b.{{0,40}}\bama\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            intent = FantasyIntents.Sit;
+            return true;
         }
 
         var sitFor = Regex.Match(
@@ -230,6 +268,19 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
     {
         return IsTermMatch(value, alias)
                || IsTermMatch(value, playerName);
+    }
+
+    private static string MentionPattern(string alias, string playerName)
+    {
+        var patterns = new[] { alias, playerName }
+            .Where(term => !string.IsNullOrWhiteSpace(term))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .Select(term => Regex.Escape(term).Replace("\\ ", "\\s+"))
+            .ToArray();
+
+        return patterns.Length == 0
+            ? @"(?!)"
+            : $@"(?<![a-z0-9])(?:{string.Join('|', patterns)})(?![a-z0-9])";
     }
 
     private static bool ContainsAny(string value, IEnumerable<string> terms)
