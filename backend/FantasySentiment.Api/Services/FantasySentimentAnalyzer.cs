@@ -13,7 +13,8 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
     private const double SarcasmWeight = -0.95;
     private const double FantasyAdjustmentCap = 0.95;
     private const double EmojiAdjustmentCap = 0.60;
-    private const double PerspectiveAdjustmentCap = 0.75;
+    private const double StructuralAdjustmentCap = 0.85;
+    private const double PerspectiveAdjustmentCap = 0.95;
 
     public SentimentResult Analyze(string text)
     {
@@ -50,7 +51,11 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
         var values = new List<double>();
         var matchedEmoji = new List<string>();
         var appliedRules = new List<string>();
-        var vaderText = targetText;
+        var vaderText = Regex.Replace(
+            targetText,
+            @"\bgarbage\s+time\b",
+            "late game time",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
         foreach (var (emoji, weight) in emojiWeights)
         {
@@ -81,7 +86,8 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
         string targetText,
         string perspective,
         double rawVaderScore,
-        FantasySemanticPreparation preparation)
+        FantasySemanticPreparation preparation,
+        PlayerMentionMatch? target = null)
     {
         if (string.IsNullOrWhiteSpace(targetText))
         {
@@ -90,6 +96,8 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
                 preparation.EmojiAdjustment,
                 0,
                 0,
+                0,
+                0.15,
                 Math.Round(Math.Clamp(rawVaderScore + preparation.EmojiAdjustment, -1, 1), 3),
                 [],
                 [],
@@ -100,9 +108,28 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
 
         var lexicon = options.CurrentValue;
         var normalizedText = NormalizePhrase(preparation.VaderText);
+        var targetAliases = TargetAliases(target);
         var consumedSpans = new List<TextSpan>();
         var matches = new List<SemanticTermMatch>();
         var appliedRules = new List<string>(preparation.AppliedRules);
+
+        if (IsNameOnlyReaction(normalizedText, targetAliases) && preparation.MatchedEmoji.Count == 0)
+        {
+            appliedRules.Add("nameOnlyReactionNeutral");
+            return new FantasySemanticAnalysis(
+                0,
+                0,
+                0,
+                0,
+                0,
+                0.15,
+                0,
+                [],
+                [],
+                [],
+                [],
+                appliedRules);
+        }
 
         foreach (var sarcasmMatch in MatchLowPointSarcasm(normalizedText, lexicon))
         {
@@ -121,6 +148,12 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
                 var span = new TextSpan(match.Index, match.Length);
                 if (consumedSpans.Any(existing => existing.Overlaps(span)))
                 {
+                    continue;
+                }
+
+                if (ShouldSkipEntryMatch(entry.NormalizedText, normalizedText, span))
+                {
+                    appliedRules.Add($"contextSkipped:{entry.Text}");
                     continue;
                 }
 
@@ -148,16 +181,22 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
         }
 
         var fantasyAdjustment = DiminishingSum(matches.Select(match => match.Score), FantasyAdjustmentCap);
+        var structuralAdjustment = CalculateStructuralAdjustment(
+            normalizedText,
+            targetAliases,
+            appliedRules);
         var perspectiveAdjustment = CalculatePerspectiveAdjustment(
             normalizedText,
             perspective,
             rawVaderScore,
             fantasyAdjustment,
+            structuralAdjustment,
             matches,
+            targetAliases,
             lexicon,
             appliedRules);
         var baseBeforeQuestion = Math.Clamp(
-            rawVaderScore + fantasyAdjustment + preparation.EmojiAdjustment + perspectiveAdjustment,
+            rawVaderScore + fantasyAdjustment + preparation.EmojiAdjustment + structuralAdjustment + perspectiveAdjustment,
             -1,
             1);
         var questionAdjustment = CalculateQuestionAdjustment(
@@ -166,6 +205,14 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
             baseBeforeQuestion,
             appliedRules);
         var finalScore = Math.Round(Math.Clamp(baseBeforeQuestion + questionAdjustment, -1, 1), 3);
+        var semanticConfidence = CalculateSemanticConfidence(
+            finalScore,
+            fantasyAdjustment,
+            preparation.EmojiAdjustment,
+            structuralAdjustment,
+            perspectiveAdjustment,
+            questionAdjustment,
+            matches);
 
         var positiveTerms = matches
             .Where(match => match.Score > 0)
@@ -196,8 +243,10 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
         return new FantasySemanticAnalysis(
             fantasyAdjustment,
             preparation.EmojiAdjustment,
+            structuralAdjustment,
             perspectiveAdjustment,
             questionAdjustment,
+            semanticConfidence,
             finalScore,
             positiveTerms,
             negativeTerms,
@@ -211,31 +260,43 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
         string perspective,
         double rawVaderScore,
         double fantasyAdjustment,
+        double structuralAdjustment,
         IReadOnlyList<SemanticTermMatch> matches,
+        IReadOnlyList<string> targetAliases,
         SentimentLexiconOptions lexicon,
         List<string> appliedRules)
     {
         var adjustment = 0.0;
-        var hasExplicitNegative = fantasyAdjustment <= -0.20
-                                  || matches.Any(match => match.Score < -0.40);
+        var hasTargetAliases = targetAliases.Count > 0;
+        var hasTargetNegativeEvaluation = !hasTargetAliases
+                                          ? fantasyAdjustment <= -0.20 || matches.Any(match => match.Score < -0.40)
+                                          : HasTargetNegativeEvaluation(normalizedText, targetAliases);
+        var hasExplicitNegative = structuralAdjustment < -0.20
+                                  || hasTargetNegativeEvaluation;
         var hasExplicitPositive = fantasyAdjustment >= 0.20
                                   || matches.Any(match => match.Score > 0.40);
 
         if (string.Equals(perspective, TargetPerspectives.OpponentRoster, StringComparison.OrdinalIgnoreCase))
         {
+            var hasDirectTargetThreat = HasOpponentThreatAgainstTarget(normalizedText, targetAliases);
             var hasThreatLanguage = ContainsAny(normalizedText, lexicon.PerspectivePatterns.OpponentThreat)
-                                    || Regex.IsMatch(
-                                        normalizedText,
-                                        @"\b(?:playing against|played against|facing|against me)\b",
-                                        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)
-                                    && Regex.IsMatch(
-                                        normalizedText,
-                                        @"\b(?:wish|regret|hate|over|done|rip|lost|toast)\b",
-                                        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+                                    || hasDirectTargetThreat
+                                    || (Regex.IsMatch(
+                                            normalizedText,
+                                            @"\b(?:playing against|played against|facing|against me)\b",
+                                            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)
+                                        && Regex.IsMatch(
+                                            normalizedText,
+                                            @"\b(?:wish|regret|hate|over|done|rip|lost|toast|cooked)\b",
+                                            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant));
 
             if (hasThreatLanguage && !hasExplicitNegative)
             {
-                adjustment = rawVaderScore < -0.10 ? 0.75 : 0.55;
+                adjustment = hasDirectTargetThreat && rawVaderScore < -0.10
+                    ? 0.90
+                    : rawVaderScore < -0.10
+                        ? 0.75
+                        : 0.55;
                 appliedRules.Add($"opponentThreat={FormatSigned(adjustment)}");
             }
         }
@@ -254,6 +315,144 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
         }
 
         return Math.Round(Math.Clamp(adjustment, -PerspectiveAdjustmentCap, PerspectiveAdjustmentCap), 3);
+    }
+
+    private static double CalculateStructuralAdjustment(
+        string normalizedText,
+        IReadOnlyList<string> targetAliases,
+        List<string> appliedRules)
+    {
+        if (targetAliases.Count == 0 || normalizedText.Length == 0)
+        {
+            return 0;
+        }
+
+        var scores = new List<double>();
+        AddStructuralScore(
+            Regex.IsMatch(
+                normalizedText,
+                @"\bwelcome\s+to\s+the\s+waiver\s+wire\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+            -0.45,
+            "waiverWireDrop");
+
+        AddStructuralScore(
+            Regex.IsMatch(
+                normalizedText,
+                @"\b(?:qb|rb|wr|te)[2-9]\s+at\s+best\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+            -0.85,
+            "fantasyTierAtBest");
+
+        foreach (var alias in targetAliases)
+        {
+            var aliasPattern = AliasPattern(alias);
+            if (aliasPattern.Length == 0)
+            {
+                continue;
+            }
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\bwhy\s+(?:tf\s+)?did\s+i\s+(?:start|play|played|started)\s+{aliasPattern}\b|\b(?:cant|can't|cannot)\s+believe\s+i\s+(?:started|played)\s+{aliasPattern}\b|\bi\s+(?:started|played)\s+{aliasPattern}\b.{{0,60}}\bclown\b|\bguess\s+who\s+(?:started|played)\b.{{0,80}}{aliasPattern}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.65,
+                "lineupRegret");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\bwhy\s+(?:tf\s+)?did\s+i\s+draft\s+{aliasPattern}\b|\b(?:cant|can't|cannot)\s+believe\s+i\s+drafted\s+{aliasPattern}\b|\bdrafted\s+{aliasPattern}\b.{{0,80}}\b(?:too\s+high|mistake|regret)\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.55,
+                "draftRegret");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\bshould\s+have\s+started\s+{aliasPattern}\s+over\b|\bcould\s+have\s+had\s+{aliasPattern}\b.{{0,100}}\b(?:but\s+)?(?:i\s+)?(?:chose|took|drafted|started)\b|\b(?:should've|shouldve)\s+started\s+{aliasPattern}\s+over\b|\b(?:needed|shoulda)\s+started\s+{aliasPattern}\s+over\b|\b(?:started|played)\s+the\s+wrong\s+\w+\b.{{0,80}}{aliasPattern}",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.60,
+                "comparisonBenefit");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\bshould\s+have\s+started\b.{{0,100}}\bover\s+{aliasPattern}\b|\bcould\s+have\s+had\b.{{0,100}}\b(?:but\s+)?(?:i\s+)?(?:chose|took|drafted|started)\s+{aliasPattern}\b|\b(?:should've|shouldve)\s+started\b.{{0,100}}\bover\s+{aliasPattern}\b|\b(?:needed|shoulda)\s+started\b.{{0,100}}\bover\s+{aliasPattern}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.60,
+                "comparisonRegret");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\btaking\s+{aliasPattern}\s+over\b.{{0,100}}\b(?:haunt|regret|mistake|brutal|sick)\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.60,
+                "comparisonRegret");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\btaking\b.{{0,100}}\bover\s+{aliasPattern}\b.{{0,100}}\b(?:haunt|regret|mistake|brutal|sick)\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.60,
+                "comparisonBenefit");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,40}}\b(?:cooked|cooking)\s+(?:the|them|that|this|those|these|tf|defense|secondary)|{aliasPattern}\b.{{0,60}}\bgoing\s+off\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.48,
+                "targetPerformancePositive");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,40}}\bsave\s+(?:me|us)\s+from\b|\b(?:need|needing)\s+{aliasPattern}\b.{{0,40}}\bto\s+save\s+(?:me|us)\s+from\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.55,
+                "saveMePositive");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\bsave\s+(?:me|us)\s+from\b.{{0,80}}{aliasPattern}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.65,
+                "saveMeFromNegative");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:benching|bench|sitting|sit)\b.{{0,80}}{aliasPattern}\b.{{0,80}}\bfor\b|\b(?:benching|bench|sitting|sit)\b.{{0,60}}{aliasPattern}\b.{{0,40}}\bnot\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.45,
+                "sitAction");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:benching|bench|sitting|sit)\b.{{0,100}}\bfor\b.{{0,80}}{aliasPattern}\b|\b(?:benching|bench|sitting|sit)\b.{{0,80}}\bnot\b.{{0,40}}{aliasPattern}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.45,
+                "startOverBenchedPlayer");
+        }
+
+        return DiminishingSum(scores, StructuralAdjustmentCap);
+
+        void AddStructuralScore(bool condition, double score, string rule)
+        {
+            if (!condition)
+            {
+                return;
+            }
+
+            scores.Add(score);
+            appliedRules.Add($"{rule}={FormatSigned(score)}");
+        }
     }
 
     private static double CalculateQuestionAdjustment(
@@ -439,9 +638,172 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
                 RegexOptions.IgnoreCase | RegexOptions.CultureInvariant));
     }
 
+    private static bool ShouldSkipEntryMatch(
+        string normalizedEntry,
+        string normalizedText,
+        TextSpan span)
+    {
+        if (normalizedEntry.Equals("garbage", StringComparison.OrdinalIgnoreCase)
+            && Regex.IsMatch(
+                normalizedText,
+                @"\bgarbage\s+time\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            return true;
+        }
+
+        if (!normalizedEntry.Equals("cooked", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        var cookedContextStart = Math.Max(0, span.Start - 24);
+        var cookedContextLength = Math.Min(normalizedText.Length - cookedContextStart, span.Length + 72);
+        var cookedContext = normalizedText.Substring(cookedContextStart, cookedContextLength);
+        return Regex.IsMatch(
+                   cookedContext,
+                   @"\b(?:i\s+am|i'm|im|we\s+are|we're|were)\s+cooked\b",
+                   RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)
+               || Regex.IsMatch(
+                   cookedContext,
+                   @"\bcooked\s+(?:the|them|that|this|those|these|tf|defense|secondary)\b",
+                   RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+    }
+
+    private static bool IsNameOnlyReaction(
+        string normalizedText,
+        IReadOnlyList<string> targetAliases)
+    {
+        if (normalizedText.Length == 0 || targetAliases.Count == 0)
+        {
+            return false;
+        }
+
+        foreach (var alias in targetAliases)
+        {
+            var aliasPattern = AliasPattern(alias);
+            if (aliasPattern.Length == 0)
+            {
+                continue;
+            }
+
+            if (Regex.IsMatch(
+                    normalizedText,
+                    $@"^(?:(?:holy\s+shit|wow|damn|bro|lol|lmao)\s+)?{aliasPattern}(?:\s+(?:holy\s+shit|wow|damn|bro|lol|lmao))?$",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool HasTargetNegativeEvaluation(
+        string normalizedText,
+        IReadOnlyList<string> targetAliases)
+    {
+        var negativeDescriptor =
+            @"(?:awful|terrible|bad|washed|cooked|useless|unstartable|trash|garbage|mid|fraud|bum|irrelevant|droppable|benchable|ass|buns|dogshit|invisible)";
+        foreach (var alias in targetAliases)
+        {
+            var aliasPattern = AliasPattern(alias);
+            if (aliasPattern.Length == 0)
+            {
+                continue;
+            }
+
+            if (Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\s+(?:is|was|looks|looked|has\s+been|plays|playing|went)\s+(?:like\s+)?{negativeDescriptor}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)
+                || Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,80}}\b(?:he|him|they)\s+(?:is|was|looks|looked|has\s+been|plays|playing|went)\s+(?:like\s+)?{negativeDescriptor}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool HasOpponentThreatAgainstTarget(
+        string normalizedText,
+        IReadOnlyList<string> targetAliases)
+    {
+        foreach (var alias in targetAliases)
+        {
+            var aliasPattern = AliasPattern(alias);
+            if (aliasPattern.Length == 0)
+            {
+                continue;
+            }
+
+            if (Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:facing|faced)\s+{aliasPattern}\b|\b(?:i\s+am|i'm|im)\s+facing\s+{aliasPattern}\b|\bopp(?:onent)?\s+(?:has\s+)?{aliasPattern}\b|{aliasPattern}\b.{{0,60}}\b(?:killing|destroying|burying|booming|outscoring|fucking)\s+me\b|{aliasPattern}\b.{{0,60}}\b(?:ended|ruined|buried|boomed)\s+my\s+(?:week|matchup)\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static double CalculateSemanticConfidence(
+        double finalScore,
+        double fantasyAdjustment,
+        double emojiAdjustment,
+        double structuralAdjustment,
+        double perspectiveAdjustment,
+        double questionAdjustment,
+        IReadOnlyList<SemanticTermMatch> matches)
+    {
+        if (matches.Count == 0
+            && Math.Abs(fantasyAdjustment) < 0.001
+            && Math.Abs(emojiAdjustment) < 0.001
+            && Math.Abs(structuralAdjustment) < 0.001
+            && Math.Abs(perspectiveAdjustment) < 0.001
+            && Math.Abs(questionAdjustment) < 0.001
+            && Math.Abs(finalScore) < 0.15)
+        {
+            return 0.20;
+        }
+
+        if (Math.Abs(structuralAdjustment) >= 0.40
+            || matches.Any(match => match.IsPhrase && Math.Abs(match.Score) >= 0.50)
+            || Math.Abs(finalScore) >= 0.55)
+        {
+            return 0.85;
+        }
+
+        if (matches.Count > 0
+            || Math.Abs(emojiAdjustment) >= 0.20
+            || Math.Abs(perspectiveAdjustment) >= 0.20
+            || Math.Abs(questionAdjustment) >= 0.05)
+        {
+            return 0.60;
+        }
+
+        return 0.40;
+    }
+
     private static string BuildPhrasePattern(string normalizedPhrase)
     {
         return $@"(?<![a-z0-9]){Regex.Escape(normalizedPhrase).Replace("\\ ", "\\s+")}(?![a-z0-9])";
+    }
+
+    private static string AliasPattern(string normalizedAlias)
+    {
+        if (string.IsNullOrWhiteSpace(normalizedAlias))
+        {
+            return string.Empty;
+        }
+
+        return BuildPhrasePattern(normalizedAlias);
     }
 
     private static double DiminishingSum(IEnumerable<double> scores, double cap)
@@ -465,8 +827,48 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
     private static string NormalizePhrase(string value)
     {
         var lowered = value.ToLowerInvariant();
+        lowered = lowered
+            .Replace('’', '\'')
+            .Replace('‘', '\'');
+        lowered = lowered.Replace("🤡", " clown ", StringComparison.Ordinal);
+        lowered = Regex.Replace(
+            lowered,
+            @"\b(?:let's|lets)\s+go+\b",
+            "lets go",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        lowered = Regex.Replace(
+            lowered,
+            @"\blfg+\b",
+            "lfg",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
         var normalized = Regex.Replace(lowered, @"[^a-z0-9']+", " ");
         return Regex.Replace(normalized, @"\s+", " ").Trim();
+    }
+
+    private static IReadOnlyList<string> TargetAliases(PlayerMentionMatch? target)
+    {
+        if (target is null)
+        {
+            return [];
+        }
+
+        var aliases = new List<string>
+        {
+            target.MatchedAlias,
+            target.PlayerName
+        };
+
+        var lastName = target.PlayerName.Split(' ', StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+        if (!string.IsNullOrWhiteSpace(lastName))
+        {
+            aliases.Add(lastName);
+        }
+
+        return aliases
+            .Select(NormalizePhrase)
+            .Where(alias => alias.Length > 0)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
     }
 
     private static string CollapseWhitespace(string value)
@@ -540,8 +942,10 @@ public sealed record FantasySemanticPreparation(
 public sealed record FantasySemanticAnalysis(
     double FantasyAdjustment,
     double EmojiAdjustment,
+    double StructuralAdjustment,
     double PerspectiveAdjustment,
     double QuestionAdjustment,
+    double SemanticConfidence,
     double FinalScore,
     IReadOnlyList<string> MatchedPositiveTerms,
     IReadOnlyList<string> MatchedNegativeTerms,

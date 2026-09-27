@@ -313,7 +313,8 @@ public sealed class SnapshotProcessingService(
                         analysisContext,
                         match,
                         resolvedContext.TargetText,
-                        resolvedContext.Perspective),
+                        resolvedContext.Perspective,
+                        target.AttributionMethod),
                     cancellationToken);
 
                 db.PlayerMentions.Add(new PlayerMention
@@ -336,7 +337,7 @@ public sealed class SnapshotProcessingService(
                     TargetAttributionMethod = target.AttributionMethod,
                     TargetConfidence = target.Confidence,
                     TargetPerspective = resolvedContext.Perspective,
-                    Intent = intentClassifier.Classify(comment.Body, match),
+                    Intent = intentClassifier.Classify(comment.Body, resolvedContext.TargetText, match),
                     RedditScore = comment.Score,
                     VoteWeight = voteWeight,
                     WeightedSentimentContribution = Math.Round(sentiment.FinalSentimentScore * voteWeight, 3)

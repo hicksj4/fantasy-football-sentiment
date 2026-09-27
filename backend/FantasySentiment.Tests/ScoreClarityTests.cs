@@ -178,6 +178,59 @@ public sealed class ScoreClarityTests
         Assert.Equal(0.9, player.MostRejectedComment?.TargetConfidence);
     }
 
+    [Fact]
+    public async Task DashboardHighlights_UseSignedNetImpactSoMixedPlayerCannotWinBothCards()
+    {
+        await using var db = CreateDb();
+        var now = DateTimeOffset.UtcNow;
+        var snapshot = new AnalysisSnapshot
+        {
+            Key = "highlight-test",
+            Name = "Highlight Test",
+            Season = 2026,
+            Week = 4,
+            CreatedAt = now,
+            Status = AnalysisSnapshotStatuses.Processed
+        };
+        var mixed = Player("Mixed Signal", "FA", "WR", "Mixed");
+        var riser = Player("Clear Riser", "FA", "RB", "Riser");
+        var post = new RedditPost
+        {
+            Snapshot = snapshot,
+            RedditId = "post-1",
+            Subreddit = "fantasyfootball",
+            Title = "Game thread",
+            CreatedAt = now,
+            CommentCount = 3
+        };
+        db.AddRange(snapshot, mixed, riser, post);
+        await db.SaveChangesAsync();
+
+        AddMention(db, snapshot, post, mixed, "mixed-pos", "Mixed flashed early.", 100, 0.9, 4, TargetAttributionMethods.Explicit, 1);
+        AddMention(db, snapshot, post, mixed, "mixed-neg", "Mixed fell apart.", 100, -0.9, 7, TargetAttributionMethods.Explicit, 1);
+        AddMention(db, snapshot, post, riser, "riser-pos", "Riser looks great.", 50, 0.8, 3, TargetAttributionMethods.Explicit, 1);
+        AddAggregate(db, snapshot, mixed, impactScore: 9.9);
+        AddAggregate(db, snapshot, riser, impactScore: 2.4);
+        await db.SaveChangesAsync();
+
+        var query = new SnapshotQueryService(
+            db,
+            Options.Create(new DashboardHighlightOptions
+            {
+                MinimumMentions = 1,
+                MinimumSampleStrength = 0,
+                ExcludeLowConfidence = false,
+                CommentExcerptLength = 190
+            }));
+
+        var highlights = await query.GetHighlightsAsync("highlight-test", CancellationToken.None);
+
+        Assert.NotNull(highlights);
+        Assert.Equal("Clear Riser", highlights.Positive?.Name);
+        Assert.Equal("Mixed Signal", highlights.Negative?.Name);
+        Assert.NotEqual(highlights.Positive?.PlayerId, highlights.Negative?.PlayerId);
+    }
+
     private static FantasySentimentDbContext CreateDb()
     {
         var options = new DbContextOptionsBuilder<FantasySentimentDbContext>()

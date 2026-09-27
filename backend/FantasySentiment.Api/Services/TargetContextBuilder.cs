@@ -11,7 +11,7 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
         RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
     private static readonly Regex StrongClauseSeparatorRegex = new(
-        @"\s+(?:but|however|though|while|whereas|yet)\s+|;",
+        @"\s+(?:but|however|though|while|whereas|yet)\s+|\s+and\s+(?=is\s+facing\b)|;",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     private static readonly Regex SoftAndSeparatorRegex = new(
@@ -23,11 +23,15 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     private static readonly Regex OpponentRosterRegex = new(
-        @"\bmy opponent(?:'s)?\s+(?:has|had|started|starts|played|plays|is starting|was starting|rolled out)\b|\b(?:play|playing|played|facing|faced)\s+against\b|\bagainst me\b",
+        @"\bmy opponent(?:'s)?\s+(?:has|had|started|starts|played|plays|is starting|was starting|rolled out)\b|\b(?:opp|opponent)\b|\b(?:facing|faced)\b|\b(?:play|playing|played)\s+against\b|\bagainst me\b",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     private static readonly Regex OwnRosterRegex = new(
-        @"\bas\s+(?:a|an)\b.{0,80}\bowner\b|\b(?:i|we)\s+own\b|\bi\s+(?:started|start|played|play|rolled out|have|had)\b",
+        @"\bas\s+(?:a|an)\b.{0,80}\bowner\b|\b(?:i|we)\s+(?:own|owned|started|start|played|play|rolled out|have|had|got|dropped|drafted|draft|chose|took)\b|\b(?:i've|ive|we've|weve)\s+got\b|\bhave\b|\bguess\s+who\s+(?:started|played)\b|\btaking\b.{0,100}\bover\b|\b(?:should\s+have|should've|shouldve|needed\s+to|shoulda)\s+started\b|\bon\s+my\s+bench\b|\bin\s+my\s+lineup\b|\b(?:my|our)\b.{0,80}\b(?:stack|team|room)\b|\bsave\s+me\s+from\b|\bgimme\b.{0,30}\bpoints\b|\b(?:waste\s+of\s+a\s+pick|draft\s+pick)\b",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+
+    private static readonly Regex SharedComparisonRegex = new(
+        @"\b(?:taking|took|drafted|started|starting)\b.{1,100}\bover\b|\bcould\s+have\s+had\b.{1,140}\b(?:chose|took|drafted|started)\b|\b(?:should\s+have|should've|shouldve|needed\s+to|shoulda)\s+started\b.{1,120}\bover\b",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     private static readonly Regex OutcomeContinuationRegex = new(
@@ -98,7 +102,7 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
 
         var parts = new List<string> { targetText.Trim() };
         if (sentenceIndex + 1 < sentences.Count
-            && ShouldIncludeNextSentence(sentences[sentenceIndex + 1], sharedStatement, targetsInSentence))
+            && ShouldIncludeNextSentence(sentence, sentences[sentenceIndex + 1], sharedStatement, targetsInSentence))
         {
             parts.Add(sentences[sentenceIndex + 1].Text);
         }
@@ -234,11 +238,22 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
         string sentence,
         IReadOnlyList<ResolvedCommentTarget> targetsInSentence)
     {
-        return targetsInSentence.Count >= 2
-               && OpponentRosterRegex.IsMatch(sentence);
+        if (targetsInSentence.Count < 2)
+        {
+            return false;
+        }
+
+        if (SharedComparisonRegex.IsMatch(sentence))
+        {
+            return true;
+        }
+
+        return OpponentRosterRegex.IsMatch(sentence)
+               && !OwnRosterRegex.IsMatch(sentence);
     }
 
     private static bool ShouldIncludeNextSentence(
+        TextSpan previousSentence,
         TextSpan nextSentence,
         bool sharedStatement,
         IReadOnlyList<ResolvedCommentTarget> targetsInPreviousSentence)
@@ -250,6 +265,17 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
         }
 
         if (IsLikelyContinuation(next))
+        {
+            return true;
+        }
+
+        if (IsEllipsisContinuation(previousSentence.Text, next)
+            || IsRosterReplacementContinuation(next))
+        {
+            return true;
+        }
+
+        if (targetsInPreviousSentence.Count == 1 && IsSingleTargetActionContinuation(next))
         {
             return true;
         }
@@ -278,14 +304,14 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
     private static string ResolvePerspective(string targetText, ResolvedCommentTarget target)
     {
         var aliases = TargetAliases(target);
-        if (aliases.Any(alias => HasOpponentRosterPerspective(targetText, alias)))
-        {
-            return TargetPerspectives.OpponentRoster;
-        }
-
         if (aliases.Any(alias => HasOwnRosterPerspective(targetText, alias)))
         {
             return TargetPerspectives.OwnRoster;
+        }
+
+        if (aliases.Any(alias => HasOpponentRosterPerspective(targetText, alias)))
+        {
+            return TargetPerspectives.OpponentRoster;
         }
 
         return TargetPerspectives.Unknown;
@@ -293,12 +319,19 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
 
     private static bool HasOpponentRosterPerspective(string text, string alias)
     {
-        if (!OpponentRosterRegex.IsMatch(text) || !ResolveAliasInText(text, alias))
+        if (!ResolveAliasInText(text, alias))
         {
             return false;
         }
 
-        return true;
+        var escapedAlias = Regex.Escape(alias.Trim());
+        escapedAlias = Regex.Replace(escapedAlias, @"\\\s+", @"\s+");
+        var aliasPattern = $@"(?<![A-Za-z0-9]){escapedAlias}(?![A-Za-z0-9])";
+        return OpponentRosterRegex.IsMatch(text)
+               || Regex.IsMatch(
+                   text,
+                   $@"\b(?:facing|faced)\s+{aliasPattern}\b|\b(?:i\s+am|i'm|im)\s+facing\s+{aliasPattern}\b|\bopp(?:onent)?\s+(?:has\s+)?{aliasPattern}\b|{aliasPattern}.{{0,70}}\b(?:killing|destroying|burying|booming|outscoring|fucking)\s+me\b|{aliasPattern}.{{0,70}}\b(?:ended|ruined|buried|boomed)\s+my\s+(?:week|matchup)\b",
+                   RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
     }
 
     private static bool HasOwnRosterPerspective(string text, string alias)
@@ -314,7 +347,7 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
         return OwnRosterRegex.IsMatch(text)
                || Regex.IsMatch(
                    text,
-                   $@"\bas\s+(?:a|an)\b.{0,80}{aliasPattern}.{0,80}\bowner\b|\bi\s+own\b.{0,80}{aliasPattern}|\bmy\s+(?:(?:qb|rb|wr|te|flex|starter|bench)\s+)?{aliasPattern}",
+                   $@"\bas\s+(?:a|an)\b.{{0,80}}{aliasPattern}.{{0,80}}\bowner\b|\b(?:i|we)\s+(?:own|owned|started|start|played|play|rolled\s+out|have|had|got|dropped|drafted|draft|chose|took)\b.{{0,80}}{aliasPattern}|\b(?:i've|ive|we've|weve)\s+got\b.{{0,80}}{aliasPattern}|\bhave\s+{aliasPattern}\b|\bguess\s+who\s+(?:started|played)\b.{{0,80}}{aliasPattern}|\bmy\s+(?:(?:qb|rb|wr|te|flex|starter|bench|lineup|best\s+receiver)\s+)?{aliasPattern}|{aliasPattern}.{{0,50}}\b(?:on\s+my\s+bench|in\s+my\s+lineup|on\s+my\s+team|is\s+my\s+(?:qb|rb|wr|te|flex|receiver))\b|\b(?:should\s+have|should've|shouldve|needed\s+to|shoulda)\s+started\b.{{0,100}}{aliasPattern}|\bi\s+chose\b.{{0,80}}{aliasPattern}|\bmy\b.{{0,80}}{aliasPattern}.{{0,50}}\b(?:stack|room)\b|{aliasPattern}.{{0,80}}\b(?:waste\s+of\s+a\s+pick|draft\s+pick)\b|{aliasPattern}.{{0,30}}\b(?:save\s+me|gimme\b.{{0,30}}\bpoints)\b|{aliasPattern}.{{0,120}}\bi\s+have\b.{{0,80}}\b(?:replace\s+him|replace\s+them|replace\s+that)\b",
                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
     }
 
@@ -375,6 +408,34 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
                || lower.StartsWith("also ")
                || lower.StartsWith("that ")
                || lower.StartsWith("this ");
+    }
+
+    private static bool IsEllipsisContinuation(string previous, string next)
+    {
+        var trimmedPrevious = previous.TrimEnd();
+        if (!Regex.IsMatch(trimmedPrevious, @"(?:\.{2,}|…+)$", RegexOptions.CultureInvariant))
+        {
+            return false;
+        }
+
+        return next.Length <= 120
+               && !char.IsUpper(next[0]);
+    }
+
+    private static bool IsRosterReplacementContinuation(string sentence)
+    {
+        return Regex.IsMatch(
+            sentence,
+            @"\b(?:bright\s+side\b)?.{0,80}\bi\s+have\b.{0,80}\breplace\s+(?:him|them|that)\b",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+    }
+
+    private static bool IsSingleTargetActionContinuation(string sentence)
+    {
+        return Regex.IsMatch(
+            sentence,
+            @"^(?:i(?:'m| am)|we(?:'re| are))\s+(?:selling|dropping|holding|buying|starting|benching|sitting|adding)\b",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
     }
 
     private static bool ContainsEmojiLikeSymbol(string text)

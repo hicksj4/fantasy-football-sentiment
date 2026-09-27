@@ -112,14 +112,14 @@ public sealed class SnapshotQueryService(
             .ToListAsync(cancellationToken);
 
         var positive = candidates
-            .Where(aggregate => aggregate.PositiveImpact > 0)
-            .OrderByDescending(aggregate => aggregate.PositiveImpact)
+            .Where(aggregate => aggregate.NetImpact > 0)
+            .OrderByDescending(aggregate => aggregate.NetImpact)
             .ThenByDescending(aggregate => aggregate.MentionCount)
             .FirstOrDefault();
 
         var negative = candidates
-            .Where(aggregate => aggregate.NegativeImpact < 0)
-            .OrderBy(aggregate => aggregate.NegativeImpact)
+            .Where(aggregate => aggregate.NetImpact < 0)
+            .OrderBy(aggregate => aggregate.NetImpact)
             .ThenByDescending(aggregate => aggregate.MentionCount)
             .FirstOrDefault();
 
@@ -235,7 +235,7 @@ public sealed class SnapshotQueryService(
             direction,
             cancellationToken);
 
-        var impact = direction >= 0 ? aggregate.PositiveImpact : aggregate.NegativeImpact;
+        var impact = aggregate.NetImpact;
         return new DashboardHighlightPlayerDto(
             aggregate.PlayerId,
             aggregate.Player.Name,

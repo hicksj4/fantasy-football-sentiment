@@ -15,6 +15,8 @@ internal sealed class SentimentBenchmarkRunner
     private const double PreviousFantasyOutlookAccuracy = 0.505;
     private const double PreviousPerspectiveAccuracy = 0.125;
     private const double PreviousSingleIntentAccuracy = 0.308;
+    private const string SemanticProfile = "fantasy-semantics-v2";
+    private const string DatasetSplit = "Development";
 
     private readonly BenchmarkCorpus _corpus;
     private readonly CommentTargetResolver _targetResolver;
@@ -121,9 +123,11 @@ internal sealed class SentimentBenchmarkRunner
     public string ToMarkdown(BenchmarkReport report)
     {
         var builder = new StringBuilder();
-        builder.AppendLine("# Semantic Benchmark Baseline");
+        builder.AppendLine("# Development Semantic Benchmark");
         builder.AppendLine();
         builder.AppendLine($"Generated: {report.GeneratedAtUtc:O}");
+        builder.AppendLine($"Dataset split: {DatasetSplit}");
+        builder.AppendLine($"Semantic profile: {SemanticProfile}");
         builder.AppendLine($"Analyzer: {report.Analyzer}");
         builder.AppendLine($"Target resolver: {report.TargetResolver}");
         builder.AppendLine($"Fixtures: {report.FixtureCount}");
@@ -165,7 +169,7 @@ internal sealed class SentimentBenchmarkRunner
         builder.AppendLine("## Old Contract Comparison");
         builder.AppendLine();
         builder.AppendLine($"Previous benchmark interpretation: comments={PreviousCommentCount}, expectedTargets={PreviousExpectedTargetCount}, targetF1={PreviousTargetF1:0.###}, sentimentAccuracy={PreviousFantasyOutlookAccuracy:0.###}, perspectiveAccuracy={PreviousPerspectiveAccuracy:0.###}, singleIntentAccuracy={PreviousSingleIntentAccuracy:0.###}.");
-        builder.AppendLine("Metric changes in this report come from semantic relabeling and reporting changes only; production sentiment, target resolution, perspective, and intent logic were not tuned.");
+        builder.AppendLine("This report evaluates the current fantasy-semantics-v2 production semantics on the Development dataset. Metric changes may reflect both annotation corrections and production semantic tuning.");
         builder.AppendLine();
         builder.AppendLine("## By Thread");
         builder.AppendLine();
@@ -323,7 +327,8 @@ internal sealed class SentimentBenchmarkRunner
                     analysisContext,
                     match,
                     resolvedContext.TargetText,
-                    resolvedContext.Perspective),
+                    resolvedContext.Perspective,
+                    target.AttributionMethod),
                 cancellationToken);
 
             actual.Add(new ActualTargetResult(
@@ -331,7 +336,7 @@ internal sealed class SentimentBenchmarkRunner
                 BenchmarkDirections.FromScore(sentiment.FinalSentimentScore),
                 sentiment.FinalSentimentScore,
                 resolvedContext.Perspective,
-                _intentClassifier.Classify(comment.Body, match),
+                _intentClassifier.Classify(comment.Body, resolvedContext.TargetText, match),
                 target.AttributionMethod,
                 target.Confidence,
                 resolvedContext.TargetText,

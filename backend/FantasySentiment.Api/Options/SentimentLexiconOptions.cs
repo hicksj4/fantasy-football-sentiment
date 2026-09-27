@@ -27,8 +27,7 @@ public sealed class SentimentEmojiLexiconOptions
 
     public Dictionary<string, double> Negative { get; set; } = new()
     {
-        ["📉"] = -0.35,
-        ["💀"] = -0.25
+        ["📉"] = -0.35
     };
 }
 

@@ -175,6 +175,214 @@ public sealed class TargetSentimentSemanticsTests
         Assert.True(ownRoster.Detail.FinalScore < -0.15);
     }
 
+    [Theory]
+    [InlineData("JSN is him", "Jaxon Smith-Njigba")]
+    [InlineData("JSN is the truth", "Jaxon Smith-Njigba")]
+    [InlineData("CMC we're so back", "Christian McCaffrey")]
+    [InlineData("JSN to the moon", "Jaxon Smith-Njigba")]
+    [InlineData("JSN LFGGGG", "Jaxon Smith-Njigba")]
+    public async Task ModernPositiveSlang_IsPositive(string text, string playerName)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.True(result.Detail.FinalScore > 0.15);
+    }
+
+    [Theory]
+    [InlineData("Herbert is straight ass", "Justin Herbert")]
+    [InlineData("Pickens is invisible", "George Pickens")]
+    [InlineData("Loveland is buns", "Colston Loveland")]
+    public async Task ModernNegativeSlang_IsNegative(string text, string playerName)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+    }
+
+    [Fact]
+    public async Task ShortSubstrings_DoNotMatchInsideOtherWords()
+    {
+        var result = await AnalyzeAsync("Herbert is a class act.", "Justin Herbert");
+
+        Assert.DoesNotContain("ass", result.Detail.MatchedNegativeTerms);
+        Assert.True(result.Detail.FinalScore > -0.15);
+    }
+
+    [Fact]
+    public async Task GarbageTime_DoesNotMakeProductionNegative()
+    {
+        var result = await AnalyzeAsync("Herbert got fed in garbage time.", "Justin Herbert");
+
+        Assert.DoesNotContain("garbage", result.Detail.MatchedNegativeTerms);
+        Assert.True(result.Detail.FinalScore > -0.15);
+    }
+
+    [Theory]
+    [InlineData("JSN", "Jaxon Smith-Njigba")]
+    [InlineData("Holy shit Herbert", "Justin Herbert")]
+    public async Task NameOnlyReactions_AreNeutral(string text, string playerName)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.Equal(0, result.Detail.FinalScore);
+        Assert.Contains("nameOnlyReactionNeutral", result.Detail.AppliedRules);
+    }
+
+    [Theory]
+    [InlineData("Why did I start Ladd?", "Ladd McConkey")]
+    [InlineData("I started Ladd 🤡", "Ladd McConkey")]
+    public async Task LineupRegret_IsNegativeForOwnRosterTarget(string text, string playerName)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.Equal(TargetPerspectives.OwnRoster, result.Context.Perspective);
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("lineupRegret", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task OwnRosterHype_IsPositiveForEachMentionedPlayer()
+    {
+        const string text = "Have JSN + McBride let’s goooo";
+
+        foreach (var playerName in new[] { "Jaxon Smith-Njigba", "Trey McBride" })
+        {
+            var result = await AnalyzeAsync(text, playerName);
+
+            Assert.Equal(TargetPerspectives.OwnRoster, result.Context.Perspective);
+            Assert.True(result.Detail.FinalScore > 0.15);
+        }
+    }
+
+    [Theory]
+    [InlineData("So George Pickens is…..fantasy irrelevant", "George Pickens", "fantasy irrelevant")]
+    [InlineData("Tucker Kraft welcome to the waiver wire buddy", "Tucker Kraft", "welcome to the waiver wire")]
+    public async Task ExistingFantasyPhrases_FireThroughProductionPath(
+        string text,
+        string playerName,
+        string expectedPhrase)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        Assert.Contains(expectedPhrase, result.Detail.MatchedPhrases);
+    }
+
+    [Fact]
+    public async Task SaveMeFrom_AssignsOppositeDirections()
+    {
+        var lamb = await AnalyzeAsync("CeeDee save me from colston loveland", "CeeDee Lamb");
+        var loveland = await AnalyzeAsync("CeeDee save me from colston loveland", "Colston Loveland");
+
+        Assert.True(lamb.Detail.FinalScore > 0.15, lamb.Detail.ToDiagnostics());
+        Assert.True(loveland.Detail.FinalScore < -0.15, loveland.Detail.ToDiagnostics());
+        Assert.Contains(lamb.Detail.AppliedRules, rule => rule.StartsWith("saveMePositive", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(loveland.Detail.AppliedRules, rule => rule.StartsWith("saveMeFromNegative", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task FantasyTierAtBest_IsNegative()
+    {
+        var result = await AnalyzeAsync("Barring a big turnaround, Herbert is a QB2 at best", "Justin Herbert");
+
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("fantasyTierAtBest", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task MultiTargetBenchFor_AssignsSitAndStartIntent()
+    {
+        const string text = "I'm benching Odunze and BTJ for Wicks and Vele";
+
+        Assert.Equal(FantasyIntents.Sit, (await AnalyzeAsync(text, "Rome Odunze")).Intent);
+        Assert.Equal(FantasyIntents.Sit, (await AnalyzeAsync(text, "Brian Thomas Jr.")).Intent);
+        Assert.Equal(FantasyIntents.Start, (await AnalyzeAsync(text, "Dontayvion Wicks")).Intent);
+        Assert.Equal(FantasyIntents.Start, (await AnalyzeAsync(text, "Devaughn Vele")).Intent);
+    }
+
+    [Fact]
+    public async Task BenchNot_AssignsOppositeStartSitIntent()
+    {
+        const string text = "Bench BTJ not Odunze.";
+
+        Assert.Equal(FantasyIntents.Sit, (await AnalyzeAsync(text, "Brian Thomas Jr.")).Intent);
+        Assert.Equal(FantasyIntents.Start, (await AnalyzeAsync(text, "Rome Odunze")).Intent);
+    }
+
+    [Theory]
+    [InlineData("I'm facing JSN and I'm cooked", "Jaxon Smith-Njigba")]
+    [InlineData("JSN is killing me", "Jaxon Smith-Njigba")]
+    public async Task OpponentRosterThreat_IsPositiveForTheOpponentPlayer(string text, string playerName)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.Equal(TargetPerspectives.OpponentRoster, result.Context.Perspective);
+        Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("opponentThreat", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task BoundedComparison_GivesDifferentDirectionToEachPlayer()
+    {
+        var puka = await AnalyzeAsync("Taking Puka over JSN is going to haunt me.", "Puka Nacua");
+        var jsn = await AnalyzeAsync("Taking Puka over JSN is going to haunt me.", "Jaxon Smith-Njigba");
+
+        Assert.True(puka.Detail.FinalScore < -0.15, puka.Detail.ToDiagnostics());
+        Assert.True(jsn.Detail.FinalScore > 0.15, jsn.Detail.ToDiagnostics());
+    }
+
+    [Fact]
+    public async Task MissedChoiceComparison_GivesBenefitAndRegretDirections()
+    {
+        var lamb = await AnalyzeAsync("I could have had Lamb, but I chose Barkley instead.", "CeeDee Lamb");
+        var barkley = await AnalyzeAsync("I could have had Lamb, but I chose Barkley instead.", "Saquon Barkley");
+
+        Assert.True(lamb.Detail.FinalScore > 0.15, lamb.Detail.ToDiagnostics());
+        Assert.True(barkley.Detail.FinalScore < -0.15, barkley.Detail.ToDiagnostics());
+    }
+
+    [Fact]
+    public async Task ShouldHaveStartedComparison_GivesBenefitAndRegretDirections()
+    {
+        var washington = await AnalyzeAsync("Def should have started Washington over Ladd 🥲", "Parker Washington");
+        var ladd = await AnalyzeAsync("Def should have started Washington over Ladd 🥲", "Ladd McConkey");
+
+        Assert.Equal(TargetPerspectives.OwnRoster, washington.Context.Perspective);
+        Assert.Equal(TargetPerspectives.OwnRoster, ladd.Context.Perspective);
+        Assert.True(washington.Detail.FinalScore > 0.15, washington.Detail.ToDiagnostics());
+        Assert.True(ladd.Detail.FinalScore < -0.15, ladd.Detail.ToDiagnostics());
+    }
+
+    [Fact]
+    public async Task ReplyAgreement_InheritsParentSentiment()
+    {
+        var result = await AnalyzeReplyAsync("Pitts is washed.", "yeah absolutely", "Kyle Pitts");
+
+        Assert.True(result.Detail.FinalScore < -0.15);
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("replyAgreement", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReplyAgreement_InheritsFantasyIrrelevantParent()
+    {
+        var result = await AnalyzeReplyAsync(
+            "So George Pickens is…..fantasy irrelevant",
+            "seems like it yeah",
+            "George Pickens");
+
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("replyAgreement", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ReplyDisagreement_CanFlipNegativeParent()
+    {
+        var result = await AnalyzeReplyAsync("Pitts is washed.", "nah he'll be fine", "Kyle Pitts");
+
+        Assert.True(result.Detail.FinalScore > 0.15);
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("replyDisagreement", StringComparison.OrdinalIgnoreCase));
+    }
+
     [Fact]
     public async Task DiagnosticResult_ExposesLayeredAdjustments()
     {
@@ -210,10 +418,48 @@ public sealed class TargetSentimentSemanticsTests
             analysisContext,
             match,
             context.TargetText,
-            context.Perspective);
+            context.Perspective,
+            context.Target.AttributionMethod);
         var result = await _sentimentAnalyzer.AnalyzeAsync(request, CancellationToken.None);
         var detail = _sentimentAnalyzer.AnalyzeDetailed(request);
-        var intent = _intentClassifier.Classify(text, match);
+        var intent = _intentClassifier.Classify(text, context.TargetText, match);
+
+        Assert.Equal(detail.FinalScore, result.FinalSentimentScore);
+        return new AnalyzedTarget(context, detail, intent);
+    }
+
+    private async Task<AnalyzedTarget> AnalyzeReplyAsync(
+        string parent,
+        string reply,
+        string playerName)
+    {
+        var parentTargets = _detector.DetectMentions(parent, Players())
+            .Select(match => ResolvedCommentTarget.FromMatch(
+                match,
+                TargetAttributionMethods.Explicit,
+                1.0))
+            .ToList();
+        var inherited = parentTargets
+            .Single(target => target.PlayerName == playerName)
+            .InheritForCurrentComment(TargetAttributionMethods.ParentInherited, 0.90);
+        var context = _targetContextBuilder.Build(
+            "Game thread",
+            parent,
+            reply,
+            inherited,
+            [inherited]);
+        var match = context.Target.ToMatch();
+        var analysisContext = _threadContextBuilder.Build(context);
+        var request = new TargetedSentimentRequest(
+            reply,
+            analysisContext,
+            match,
+            context.TargetText,
+            context.Perspective,
+            context.Target.AttributionMethod);
+        var result = await _sentimentAnalyzer.AnalyzeAsync(request, CancellationToken.None);
+        var detail = _sentimentAnalyzer.AnalyzeDetailed(request);
+        var intent = _intentClassifier.Classify(reply, context.TargetText, match);
 
         Assert.Equal(detail.FinalScore, result.FinalSentimentScore);
         return new AnalyzedTarget(context, detail, intent);
@@ -223,8 +469,8 @@ public sealed class TargetSentimentSemanticsTests
     {
         return new SentimentLexiconOptions
         {
-            PositiveTerms = [ "great", "incredible", "monster", "elite", "beast", "love" ],
-            NegativeTerms = [ "awful", "terrible", "bad", "bust", "useless" ],
+            PositiveTerms = [ "great", "incredible", "monster", "elite", "beast", "love", "truth", "fine" ],
+            NegativeTerms = [ "awful", "terrible", "bad", "bust", "useless", "garbage" ],
             PositivePhrases =
             [
                 "league winner",
@@ -233,7 +479,12 @@ public sealed class TargetSentimentSemanticsTests
                 "automatic start",
                 "locked in",
                 "breakout game",
-                "set and forget"
+                "set and forget",
+                "is him",
+                "is the truth",
+                "we're so back",
+                "to the moon",
+                "lets go"
             ],
             NegativePhrases =
             [
@@ -243,10 +494,16 @@ public sealed class TargetSentimentSemanticsTests
                 "dead roster spot",
                 "absolute bust",
                 "looks awful",
-                "looks terrible"
+                "looks terrible",
+                "straight ass",
+                "is ass",
+                "is invisible",
+                "is buns",
+                "fantasy irrelevant",
+                "welcome to the waiver wire"
             ],
-            PositiveSlang = [ "disgusting", "filthy", "cooking" ],
-            NegativeSlang = [ "washed", "unstartable", "cooked" ],
+            PositiveSlang = [ "disgusting", "filthy", "cooking", "lfg" ],
+            NegativeSlang = [ "washed", "unstartable", "cooked", "ass", "buns", "mid", "fraud", "bum" ],
             Intensifiers = [ "very", "absolutely", "completely" ],
             Negators = [ "not", "never", "no", "don't", "dont" ]
         };
@@ -257,14 +514,14 @@ public sealed class TargetSentimentSemanticsTests
         return new IntentLexiconOptions
         {
             Add = [ "add", "waiver" ],
-            Drop = [ "drop" ],
-            Start = [ "start" ],
+            Drop = [ "drop", "welcome to the waiver wire" ],
+            Start = [ "start", "started" ],
             Sit = [ "sit", "bench", "unstartable" ],
             Buy = [ "buy" ],
             Sell = [ "sell", "selling", "sell high" ],
             Hold = [ "hold" ],
             Injury = [ "hurt" ],
-            Hype = [ "league winner", "monster", "cooking" ],
+            Hype = [ "league winner", "monster", "cooking", "lets go", "lfg", "from the top rope" ],
             Panic = [ "panic" ]
         };
     }
@@ -279,7 +536,22 @@ public sealed class TargetSentimentSemanticsTests
             Player(4, "Kyle Pitts", "ATL", "TE", "Pitts"),
             Player(5, "James Cook", "BUF", "RB", "James Cook", "Cook"),
             Player(6, "Davante Adams", "LAR", "WR", "Adams"),
-            Player(7, "Christian McCaffrey", "SF", "RB", "CMC", "McCaffrey")
+            Player(7, "Christian McCaffrey", "SF", "RB", "CMC", "McCaffrey"),
+            Player(8, "Jaxon Smith-Njigba", "SEA", "WR", "JSN", "Smith-Njigba"),
+            Player(9, "Justin Herbert", "LAC", "QB", "Herbert"),
+            Player(10, "George Pickens", "DAL", "WR", "Pickens"),
+            Player(11, "Colston Loveland", "CHI", "TE", "Loveland"),
+            Player(12, "Ladd McConkey", "LAC", "WR", "Ladd", "Ladd McConkey"),
+            Player(13, "Puka Nacua", "LAR", "WR", "Puka"),
+            Player(14, "CeeDee Lamb", "DAL", "WR", "CeeDee", "Lamb"),
+            Player(15, "Saquon Barkley", "PHI", "RB", "Barkley"),
+            Player(16, "Parker Washington", "JAX", "WR", "Washington", "Parker Washington"),
+            Player(17, "Trey McBride", "ARI", "TE", "McBride"),
+            Player(18, "Tucker Kraft", "GB", "TE", "Kraft", "Tucker Kraft"),
+            Player(19, "Rome Odunze", "CHI", "WR", "Odunze", "Rome Odunze"),
+            Player(20, "Brian Thomas Jr.", "JAX", "WR", "BTJ", "Brian Thomas", "Brian Thomas Jr."),
+            Player(21, "Dontayvion Wicks", "GB", "WR", "Wicks", "Dontayvion Wicks"),
+            Player(22, "Devaughn Vele", "NO", "WR", "Vele", "Devaughn Vele")
         ];
     }
 

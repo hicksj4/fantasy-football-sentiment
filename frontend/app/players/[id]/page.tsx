@@ -112,12 +112,6 @@ export default async function PlayerPage({ params, searchParams }: PageProps) {
           comment={player.mostEndorsedComment}
           emptyText="No endorsed take available for this player."
         />
-        <CommentCard
-          title="Most Rejected Take"
-          comment={player.mostRejectedComment}
-          emptyText="No strongly rejected take in this snapshot."
-          rejected
-        />
       </section>
 
       <section className="signal-grid">
@@ -164,13 +158,11 @@ function ScoreStat({ label, value, help }: { label: string; value: number; help:
 function CommentCard({
   title,
   comment,
-  emptyText,
-  rejected = false
+  emptyText
 }: {
   title: string;
   comment: PlayerScoreComment | null;
   emptyText: string;
-  rejected?: boolean;
 }) {
   return (
     <article className="comment-card">
@@ -188,7 +180,6 @@ function CommentCard({
             <span>{comment.targetAttributionMethod} • {(comment.targetConfidence * 100).toFixed(0)}%</span>
           </div>
           <div className="thread-title">r/{comment.subreddit} • {comment.postTitle}</div>
-          {rejected ? <p className="rejected-note">Community rejected this take. The sentiment stays the same direction, but its vote weight is reduced.</p> : null}
         </>
       ) : (
         <p className="influence-empty">{emptyText}</p>

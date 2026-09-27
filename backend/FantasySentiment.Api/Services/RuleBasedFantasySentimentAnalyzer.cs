@@ -15,15 +15,22 @@ public sealed class RuleBasedFantasySentimentAnalyzer(
             targetText,
             request.TargetPerspective,
             rawVaderScore: 0,
-            preparation);
+            preparation,
+            request.Mention);
         var diagnostics =
-            $"fantasy={result.FantasyAdjustment:0.###}; emoji={result.EmojiAdjustment:0.###}; perspective={result.PerspectiveAdjustment:0.###}; question={result.QuestionAdjustment:0.###}; rules={string.Join('|', result.AppliedRules)}";
+            $"fantasy={result.FantasyAdjustment:0.###}; emoji={result.EmojiAdjustment:0.###}; structural={result.StructuralAdjustment:0.###}; perspective={result.PerspectiveAdjustment:0.###}; question={result.QuestionAdjustment:0.###}; semanticConfidence={result.SemanticConfidence:0.###}; rules={string.Join('|', result.AppliedRules)}";
 
         return ValueTask.FromResult(new TargetedSentimentResult(
             0,
             result.FinalScore,
             TargetedSentimentResult.CategoryFromScore(result.FinalScore),
-            result.FantasyAdjustment,
+            Math.Round(
+                result.FantasyAdjustment
+                + result.EmojiAdjustment
+                + result.StructuralAdjustment
+                + result.PerspectiveAdjustment
+                + result.QuestionAdjustment,
+                3),
             null,
             result.FinalScore,
             nameof(RuleBasedFantasySentimentAnalyzer),

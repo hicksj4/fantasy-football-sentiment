@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+using FantasySentiment.Api.Domain;
 using VaderSharp2;
 
 namespace FantasySentiment.Api.Services;
@@ -16,6 +18,7 @@ public sealed class VaderSentimentAnalyzer(
         var semanticRuleScore = Math.Round(
             analysis.FantasyAdjustment
             + analysis.EmojiAdjustment
+            + analysis.StructuralAdjustment
             + analysis.PerspectiveAdjustment
             + analysis.QuestionAdjustment,
             3);
@@ -29,7 +32,7 @@ public sealed class VaderSentimentAnalyzer(
             analysis.TotalAdjustment,
             nameof(VaderSentimentAnalyzer),
             request.Context,
-            analysis.ToDiagnostics()));
+            analysis.ToDiagnosticTrace(request)));
     }
 
     public SentimentAnalysisResult AnalyzeDetailed(TargetedSentimentRequest request)
@@ -41,7 +44,9 @@ public sealed class VaderSentimentAnalyzer(
             targetText,
             request.TargetPerspective,
             vader.Compound,
-            preparation);
+            preparation,
+            request.Mention);
+        semantic = ApplyReplyStance(request, semantic);
 
         return new SentimentAnalysisResult(
             targetText,
@@ -50,14 +55,75 @@ public sealed class VaderSentimentAnalyzer(
             Math.Round(vader.Compound, 3),
             semantic.FantasyAdjustment,
             semantic.EmojiAdjustment,
+            semantic.StructuralAdjustment,
             semantic.PerspectiveAdjustment,
             semantic.QuestionAdjustment,
+            semantic.SemanticConfidence,
             semantic.FinalScore,
             semantic.MatchedPositiveTerms,
             semantic.MatchedNegativeTerms,
             semantic.MatchedPhrases,
             semantic.MatchedEmoji,
             semantic.AppliedRules);
+    }
+
+    private FantasySemanticAnalysis ApplyReplyStance(
+        TargetedSentimentRequest request,
+        FantasySemanticAnalysis semantic)
+    {
+        if (request.TargetAttributionMethod is not TargetAttributionMethods.ParentInherited
+            and not TargetAttributionMethods.AncestorInherited)
+        {
+            return semantic;
+        }
+
+        var parent = ExtractContextValue(request.Context, "Parent");
+        var comment = ExtractContextValue(request.Context, "Comment");
+        if (string.IsNullOrWhiteSpace(parent) || string.IsNullOrWhiteSpace(comment))
+        {
+            return semantic;
+        }
+
+        var stance = ClassifyReplyStance(comment);
+        if (stance == ReplyStance.Neutral)
+        {
+            return semantic;
+        }
+
+        var parentPreparation = fantasySentimentAnalyzer.PrepareForVader(parent);
+        var parentVader = ScoreVader(parentPreparation.VaderText);
+        var parentSemantic = fantasySentimentAnalyzer.AnalyzeTarget(
+            parent,
+            request.TargetPerspective,
+            parentVader.Compound,
+            parentPreparation,
+            request.Mention);
+        if (Math.Abs(parentSemantic.FinalScore) < 0.15)
+        {
+            return semantic;
+        }
+
+        var inheritedScore = stance == ReplyStance.Agree
+            ? parentSemantic.FinalScore * 0.85
+            : parentSemantic.FinalScore <= -0.15
+                ? 0.45
+                : -0.45;
+        inheritedScore = Math.Round(Math.Clamp(inheritedScore, -1, 1), 3);
+        var rules = semantic.AppliedRules
+            .Concat([
+                stance == ReplyStance.Agree
+                    ? $"replyAgreement={FormatSigned(inheritedScore)}"
+                    : $"replyDisagreement={FormatSigned(inheritedScore)}"
+            ])
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        return semantic with
+        {
+            FinalScore = inheritedScore,
+            SemanticConfidence = Math.Max(semantic.SemanticConfidence, 0.65),
+            AppliedRules = rules
+        };
     }
 
     private VaderScore ScoreVader(string context)
@@ -89,6 +155,62 @@ public sealed class VaderSentimentAnalyzer(
         }
 
         return request.Context;
+    }
+
+    private static string? ExtractContextValue(string context, string label)
+    {
+        var prefix = $"{label}:";
+        return context
+            .Split(Environment.NewLine, StringSplitOptions.TrimEntries)
+            .FirstOrDefault(line => line.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+            ?[prefix.Length..]
+            .Trim();
+    }
+
+    private static ReplyStance ClassifyReplyStance(string comment)
+    {
+        var normalized = NormalizeForReplyStance(comment);
+        if (normalized.Length > 120)
+        {
+            return ReplyStance.Neutral;
+        }
+
+        if (Regex.IsMatch(
+                normalized,
+                @"^(?:nah|no|nope|disagree|not really|i disagree)\b|\b(?:he|him|they|that dude|this dude)\s+(?:will|ll|'ll|should|gonna|going to)\s+be\s+fine\b|\b(?:he'll|hell|they'll|theyll)\s+be\s+fine\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            return ReplyStance.Disagree;
+        }
+
+        if (Regex.IsMatch(
+                normalized,
+                @"^(?:yeah|yes|yep|yup|agreed|agree|facts|exactly|true|same|this|for real|fr|absolutely|100)\b|\b(?:yeah|yes|yep|yup|agreed|agree|facts|exactly|true|same|this|for real|fr|absolutely|100)$",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            return ReplyStance.Agree;
+        }
+
+        return ReplyStance.Neutral;
+    }
+
+    private static string NormalizeForReplyStance(string value)
+    {
+        var lowered = value.ToLowerInvariant();
+        var normalized = Regex.Replace(lowered, @"[^a-z0-9']+", " ");
+        return Regex.Replace(normalized, @"\s+", " ").Trim();
+    }
+
+    private static string FormatSigned(double value)
+    {
+        return value >= 0 ? $"+{value:0.###}" : $"{value:0.###}";
+    }
+
+    private enum ReplyStance
+    {
+        Neutral,
+        Agree,
+        Disagree
     }
 
     private sealed record VaderScore(
