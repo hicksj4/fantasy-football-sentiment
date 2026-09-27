@@ -9,32 +9,29 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
 {
     public string Classify(string text, PlayerMentionMatch mention)
     {
+        return Classify(text, text, mention);
+    }
+
+    public string Classify(string text, string targetText, PlayerMentionMatch mention)
+    {
         if (string.IsNullOrWhiteSpace(text))
         {
             return FantasyIntents.General;
         }
 
         var lexicon = options.CurrentValue;
-        var normalized = Normalize(text);
+        var normalizedFullText = Normalize(text);
+        var normalizedTargetText = string.IsNullOrWhiteSpace(targetText)
+            ? normalizedFullText
+            : Normalize(targetText);
         var alias = Normalize(mention.MatchedAlias);
         var playerName = Normalize(mention.PlayerName);
-        var context = BuildContext(normalized, alias, playerName);
-
-        var dropFor = Regex.Match(normalized, @"\bdrop\s+(?<left>.+?)\s+for\s+(?<right>.+?)(?:[?.!,]|$)");
-        if (dropFor.Success)
+        if (TryClassifyScopedAction(normalizedFullText, alias, playerName, out var scopedIntent))
         {
-            var left = dropFor.Groups["left"].Value;
-            var right = dropFor.Groups["right"].Value;
-            if (ContainsMention(left, alias, playerName))
-            {
-                return FantasyIntents.Drop;
-            }
-
-            if (ContainsMention(right, alias, playerName))
-            {
-                return FantasyIntents.Add;
-            }
+            return scopedIntent;
         }
+
+        var context = BuildContext(normalizedTargetText, alias, playerName);
 
         if (Regex.IsMatch(
                 context,
@@ -97,6 +94,100 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
         return FantasyIntents.General;
     }
 
+    private static bool TryClassifyScopedAction(
+        string normalized,
+        string alias,
+        string playerName,
+        out string intent)
+    {
+        var dropFor = Regex.Match(
+            normalized,
+            @"\bdrop\s+(?<left>.+?)\s+for\s+(?<right>.+)$",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        if (dropFor.Success)
+        {
+            var left = dropFor.Groups["left"].Value;
+            var right = dropFor.Groups["right"].Value;
+            if (ContainsMention(left, alias, playerName))
+            {
+                intent = FantasyIntents.Drop;
+                return true;
+            }
+
+            if (ContainsMention(right, alias, playerName))
+            {
+                intent = FantasyIntents.Add;
+                return true;
+            }
+        }
+
+        var sitFor = Regex.Match(
+            normalized,
+            @"\b(?:benching|bench|sitting|sit)\s+(?<left>.+?)\s+for\s+(?<right>.+)$",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        if (sitFor.Success)
+        {
+            var left = sitFor.Groups["left"].Value;
+            var right = sitFor.Groups["right"].Value;
+            if (ContainsMention(left, alias, playerName))
+            {
+                intent = FantasyIntents.Sit;
+                return true;
+            }
+
+            if (ContainsMention(right, alias, playerName))
+            {
+                intent = FantasyIntents.Start;
+                return true;
+            }
+        }
+
+        var sitNot = Regex.Match(
+            normalized,
+            @"\b(?:benching|bench|sitting|sit)\s+(?<left>.+?)\s+not\s+(?<right>.+)$",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        if (sitNot.Success)
+        {
+            var left = sitNot.Groups["left"].Value;
+            var right = sitNot.Groups["right"].Value;
+            if (ContainsMention(left, alias, playerName))
+            {
+                intent = FantasyIntents.Sit;
+                return true;
+            }
+
+            if (ContainsMention(right, alias, playerName))
+            {
+                intent = FantasyIntents.Start;
+                return true;
+            }
+        }
+
+        var startNot = Regex.Match(
+            normalized,
+            @"\b(?:starting|start)\s+(?<left>.+?)\s+not\s+(?<right>.+)$",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        if (startNot.Success)
+        {
+            var left = startNot.Groups["left"].Value;
+            var right = startNot.Groups["right"].Value;
+            if (ContainsMention(left, alias, playerName))
+            {
+                intent = FantasyIntents.Start;
+                return true;
+            }
+
+            if (ContainsMention(right, alias, playerName))
+            {
+                intent = FantasyIntents.Sit;
+                return true;
+            }
+        }
+
+        intent = FantasyIntents.General;
+        return false;
+    }
+
     private static string BuildContext(string normalized, string alias, string playerName)
     {
         var index = normalized.IndexOf(alias, StringComparison.OrdinalIgnoreCase);
@@ -117,8 +208,8 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
 
     private static bool ContainsMention(string value, string alias, string playerName)
     {
-        return value.Contains(alias, StringComparison.OrdinalIgnoreCase)
-               || value.Contains(playerName, StringComparison.OrdinalIgnoreCase);
+        return IsTermMatch(value, alias)
+               || IsTermMatch(value, playerName);
     }
 
     private static bool ContainsAny(string value, IEnumerable<string> terms)
@@ -136,9 +227,23 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
         });
     }
 
+    private static bool IsTermMatch(string value, string term)
+    {
+        if (string.IsNullOrWhiteSpace(term))
+        {
+            return false;
+        }
+
+        var pattern = $@"(?<![a-z0-9]){Regex.Escape(term).Replace("\\ ", "\\s+")}(?![a-z0-9])";
+        return Regex.IsMatch(value, pattern, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+    }
+
     private static string Normalize(string value)
     {
         var lowered = value.ToLowerInvariant();
+        lowered = lowered
+            .Replace('’', '\'')
+            .Replace('‘', '\'');
         lowered = lowered.Replace("🤡", " clown ", StringComparison.Ordinal);
         lowered = Regex.Replace(
             lowered,

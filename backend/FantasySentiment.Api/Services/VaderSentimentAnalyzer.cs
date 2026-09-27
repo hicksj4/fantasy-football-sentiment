@@ -32,7 +32,7 @@ public sealed class VaderSentimentAnalyzer(
             analysis.TotalAdjustment,
             nameof(VaderSentimentAnalyzer),
             request.Context,
-            analysis.ToDiagnostics()));
+            analysis.ToDiagnosticTrace(request)));
     }
 
     public SentimentAnalysisResult AnalyzeDetailed(TargetedSentimentRequest request)
@@ -185,7 +185,7 @@ public sealed class VaderSentimentAnalyzer(
 
         if (Regex.IsMatch(
                 normalized,
-                @"^(?:yeah|yes|yep|yup|agreed|agree|facts|exactly|true|same|this|for real|fr|absolutely|100)\b",
+                @"^(?:yeah|yes|yep|yup|agreed|agree|facts|exactly|true|same|this|for real|fr|absolutely|100)\b|\b(?:yeah|yes|yep|yup|agreed|agree|facts|exactly|true|same|this|for real|fr|absolutely|100)$",
                 RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
             return ReplyStance.Agree;

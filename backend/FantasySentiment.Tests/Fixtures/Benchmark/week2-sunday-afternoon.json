@@ -953,9 +953,7 @@
             "fantasyActions": [
               "Start"
             ],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "LineupRegret",
               "FantasyProduction"
@@ -1127,9 +1125,7 @@
             "fantasyActions": [
               "Start"
             ],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "LineupRegret"
             ]
@@ -1142,9 +1138,7 @@
             "fantasyActions": [
               "Start"
             ],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "LineupRegret"
             ]
@@ -1361,7 +1355,9 @@
             "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [],
+            "discussionSignals": [
+              "Hype"
+            ],
             "reasons": [
               "Performance"
             ]

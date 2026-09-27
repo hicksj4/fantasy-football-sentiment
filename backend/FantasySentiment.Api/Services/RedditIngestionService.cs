@@ -335,7 +335,7 @@ public sealed class RedditIngestionService(
                 TargetAttributionMethod = target.AttributionMethod,
                 TargetConfidence = target.Confidence,
                 TargetPerspective = resolvedContext.Perspective,
-                Intent = intentClassifier.Classify(comment.Body, match),
+                Intent = intentClassifier.Classify(comment.Body, resolvedContext.TargetText, match),
                 RedditScore = comment.Score,
                 VoteWeight = voteWeight,
                 WeightedSentimentContribution = Math.Round(sentiment.FinalSentimentScore * voteWeight, 3)

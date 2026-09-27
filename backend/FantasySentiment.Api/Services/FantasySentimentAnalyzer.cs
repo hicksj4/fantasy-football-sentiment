@@ -328,6 +328,22 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
         }
 
         var scores = new List<double>();
+        AddStructuralScore(
+            Regex.IsMatch(
+                normalizedText,
+                @"\bwelcome\s+to\s+the\s+waiver\s+wire\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+            -0.45,
+            "waiverWireDrop");
+
+        AddStructuralScore(
+            Regex.IsMatch(
+                normalizedText,
+                @"\b(?:qb|rb|wr|te)[2-9]\s+at\s+best\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+            -0.85,
+            "fantasyTierAtBest");
+
         foreach (var alias in targetAliases)
         {
             var aliasPattern = AliasPattern(alias);
@@ -339,7 +355,7 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
             AddStructuralScore(
                 Regex.IsMatch(
                     normalizedText,
-                    $@"\bwhy\s+(?:tf\s+)?did\s+i\s+(?:start|play|played|started)\s+{aliasPattern}\b|\b(?:cant|can't|cannot)\s+believe\s+i\s+(?:started|played)\s+{aliasPattern}\b|\bi\s+(?:started|played)\s+{aliasPattern}\b.{{0,60}}\bclown\b|\bguess\s+who\s+(?:started|played)\s+{aliasPattern}\b",
+                    $@"\bwhy\s+(?:tf\s+)?did\s+i\s+(?:start|play|played|started)\s+{aliasPattern}\b|\b(?:cant|can't|cannot)\s+believe\s+i\s+(?:started|played)\s+{aliasPattern}\b|\bi\s+(?:started|played)\s+{aliasPattern}\b.{{0,60}}\bclown\b|\bguess\s+who\s+(?:started|played)\b.{{0,80}}{aliasPattern}\b",
                     RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
                 -0.65,
                 "lineupRegret");
@@ -391,6 +407,38 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
                     RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
                 0.48,
                 "targetPerformancePositive");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,40}}\bsave\s+(?:me|us)\s+from\b|\b(?:need|needing)\s+{aliasPattern}\b.{{0,40}}\bto\s+save\s+(?:me|us)\s+from\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.55,
+                "saveMePositive");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\bsave\s+(?:me|us)\s+from\b.{{0,80}}{aliasPattern}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.65,
+                "saveMeFromNegative");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:benching|bench|sitting|sit)\b.{{0,80}}{aliasPattern}\b.{{0,80}}\bfor\b|\b(?:benching|bench|sitting|sit)\b.{{0,60}}{aliasPattern}\b.{{0,40}}\bnot\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.45,
+                "sitAction");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:benching|bench|sitting|sit)\b.{{0,100}}\bfor\b.{{0,80}}{aliasPattern}\b|\b(?:benching|bench|sitting|sit)\b.{{0,80}}\bnot\b.{{0,40}}{aliasPattern}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.45,
+                "startOverBenchedPlayer");
         }
 
         return DiminishingSum(scores, StructuralAdjustmentCap);
@@ -779,6 +827,9 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
     private static string NormalizePhrase(string value)
     {
         var lowered = value.ToLowerInvariant();
+        lowered = lowered
+            .Replace('’', '\'')
+            .Replace('‘', '\'');
         lowered = lowered.Replace("🤡", " clown ", StringComparison.Ordinal);
         lowered = Regex.Replace(
             lowered,

@@ -60,9 +60,38 @@ public sealed record SentimentAnalysisResult(
             });
     }
 
+    public string ToDiagnosticTrace(TargetedSentimentRequest request)
+    {
+        return string.Join(
+            "; ",
+            new[]
+            {
+                $"target={Compact(request.Mention.PlayerName, 80)}",
+                $"alias={Compact(request.Mention.MatchedAlias, 80)}",
+                $"targetText={Compact(TargetText, 180)}",
+                $"vaderText={Compact(VaderText, 180)}",
+                $"perspectiveLabel={Perspective}",
+                $"targetAttribution={request.TargetAttributionMethod}",
+                ToDiagnostics()
+            });
+    }
+
     private static string Join(IReadOnlyList<string> values)
     {
         return values.Count == 0 ? "none" : string.Join('|', values);
+    }
+
+    private static string Compact(string value, int maxLength)
+    {
+        var compact = string.Join(
+            ' ',
+            value.Split([' ', '\t', '\r', '\n'], StringSplitOptions.RemoveEmptyEntries));
+        if (compact.Length <= maxLength)
+        {
+            return compact;
+        }
+
+        return $"{compact[..Math.Max(0, maxLength - 3)]}...";
     }
 }
 

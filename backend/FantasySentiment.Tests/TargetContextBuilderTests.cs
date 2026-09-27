@@ -100,13 +100,49 @@ public sealed class TargetContextBuilderTests
     [Fact]
     public void OwnRosterHavePattern_AppliesToEachTarget()
     {
-        const string text = "Have JSN + McBride lets goooo";
+        const string text = "Have JSN + McBride let’s goooo";
         var targets = DetectTargets(text);
 
         var contexts = targets.Select(target => Build(text, target, targets)).ToList();
 
         Assert.Equal(2, contexts.Count);
         Assert.All(contexts, context => Assert.Equal(TargetPerspectives.OwnRoster, context.Perspective));
+    }
+
+    [Fact]
+    public void MixedStartedAndFacingStatement_SplitsOwnAndOpponentTargets()
+    {
+        const string text = "Guess who started Caleb and Loveland and is facing JSN and Lamb 😀";
+        var targets = DetectTargets(text);
+
+        var caleb = Build(text, targets.Single(target => target.PlayerName == "Caleb Williams"), targets);
+        var loveland = Build(text, targets.Single(target => target.PlayerName == "Colston Loveland"), targets);
+        var jsn = Build(text, targets.Single(target => target.PlayerName == "Jaxon Smith-Njigba"), targets);
+        var lamb = Build(text, targets.Single(target => target.PlayerName == "CeeDee Lamb"), targets);
+
+        Assert.Equal(TargetPerspectives.OwnRoster, caleb.Perspective);
+        Assert.Equal(TargetPerspectives.OwnRoster, loveland.Perspective);
+        Assert.Equal(TargetPerspectives.OpponentRoster, jsn.Perspective);
+        Assert.Equal(TargetPerspectives.OpponentRoster, lamb.Perspective);
+        Assert.Contains("started Caleb and Loveland", caleb.TargetText);
+        Assert.Contains("started Caleb and Loveland", loveland.TargetText);
+        Assert.DoesNotContain("facing JSN and Lamb", caleb.TargetText);
+        Assert.DoesNotContain("facing JSN and Lamb", loveland.TargetText);
+        Assert.Contains("is facing JSN and Lamb", jsn.TargetText);
+        Assert.Contains("is facing JSN and Lamb", lamb.TargetText);
+        Assert.DoesNotContain("started Caleb", jsn.TargetText);
+        Assert.DoesNotContain("started Caleb", lamb.TargetText);
+    }
+
+    [Fact]
+    public void EllipsisContinuation_StaysWithTargetContext()
+    {
+        const string text = "So George Pickens is…..fantasy irrelevant";
+        var target = Assert.Single(DetectTargets(text));
+
+        var context = Build(text, target, [target]);
+
+        Assert.Contains("fantasy irrelevant", context.TargetText);
     }
 
     private ResolvedTargetContext Build(
@@ -142,7 +178,11 @@ public sealed class TargetContextBuilderTests
             Player(4, "Jaxon Smith-Njigba", "SEA", "WR", "JSN", "Smith-Njigba"),
             Player(5, "Parker Washington", "JAX", "WR", "Washington", "Parker Washington"),
             Player(6, "Ladd McConkey", "LAC", "WR", "Ladd", "Ladd McConkey"),
-            Player(7, "Trey McBride", "ARI", "TE", "McBride")
+            Player(7, "Trey McBride", "ARI", "TE", "McBride"),
+            Player(8, "Caleb Williams", "CHI", "QB", "Caleb", "Caleb Williams"),
+            Player(9, "Colston Loveland", "CHI", "TE", "Loveland", "Colston Loveland"),
+            Player(10, "CeeDee Lamb", "DAL", "WR", "CeeDee", "Lamb"),
+            Player(11, "George Pickens", "DAL", "WR", "Pickens", "George Pickens")
         ];
     }
 

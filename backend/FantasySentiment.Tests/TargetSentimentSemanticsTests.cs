@@ -243,7 +243,7 @@ public sealed class TargetSentimentSemanticsTests
     [Fact]
     public async Task OwnRosterHype_IsPositiveForEachMentionedPlayer()
     {
-        const string text = "Have JSN + McBride lets goooo";
+        const string text = "Have JSN + McBride let’s goooo";
 
         foreach (var playerName in new[] { "Jaxon Smith-Njigba", "Trey McBride" })
         {
@@ -252,6 +252,61 @@ public sealed class TargetSentimentSemanticsTests
             Assert.Equal(TargetPerspectives.OwnRoster, result.Context.Perspective);
             Assert.True(result.Detail.FinalScore > 0.15);
         }
+    }
+
+    [Theory]
+    [InlineData("So George Pickens is…..fantasy irrelevant", "George Pickens", "fantasy irrelevant")]
+    [InlineData("Tucker Kraft welcome to the waiver wire buddy", "Tucker Kraft", "welcome to the waiver wire")]
+    public async Task ExistingFantasyPhrases_FireThroughProductionPath(
+        string text,
+        string playerName,
+        string expectedPhrase)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        Assert.Contains(expectedPhrase, result.Detail.MatchedPhrases);
+    }
+
+    [Fact]
+    public async Task SaveMeFrom_AssignsOppositeDirections()
+    {
+        var lamb = await AnalyzeAsync("CeeDee save me from colston loveland", "CeeDee Lamb");
+        var loveland = await AnalyzeAsync("CeeDee save me from colston loveland", "Colston Loveland");
+
+        Assert.True(lamb.Detail.FinalScore > 0.15, lamb.Detail.ToDiagnostics());
+        Assert.True(loveland.Detail.FinalScore < -0.15, loveland.Detail.ToDiagnostics());
+        Assert.Contains(lamb.Detail.AppliedRules, rule => rule.StartsWith("saveMePositive", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(loveland.Detail.AppliedRules, rule => rule.StartsWith("saveMeFromNegative", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task FantasyTierAtBest_IsNegative()
+    {
+        var result = await AnalyzeAsync("Barring a big turnaround, Herbert is a QB2 at best", "Justin Herbert");
+
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("fantasyTierAtBest", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task MultiTargetBenchFor_AssignsSitAndStartIntent()
+    {
+        const string text = "I'm benching Odunze and BTJ for Wicks and Vele";
+
+        Assert.Equal(FantasyIntents.Sit, (await AnalyzeAsync(text, "Rome Odunze")).Intent);
+        Assert.Equal(FantasyIntents.Sit, (await AnalyzeAsync(text, "Brian Thomas Jr.")).Intent);
+        Assert.Equal(FantasyIntents.Start, (await AnalyzeAsync(text, "Dontayvion Wicks")).Intent);
+        Assert.Equal(FantasyIntents.Start, (await AnalyzeAsync(text, "Devaughn Vele")).Intent);
+    }
+
+    [Fact]
+    public async Task BenchNot_AssignsOppositeStartSitIntent()
+    {
+        const string text = "Bench BTJ not Odunze.";
+
+        Assert.Equal(FantasyIntents.Sit, (await AnalyzeAsync(text, "Brian Thomas Jr.")).Intent);
+        Assert.Equal(FantasyIntents.Start, (await AnalyzeAsync(text, "Rome Odunze")).Intent);
     }
 
     [Theory]
@@ -308,6 +363,18 @@ public sealed class TargetSentimentSemanticsTests
     }
 
     [Fact]
+    public async Task ReplyAgreement_InheritsFantasyIrrelevantParent()
+    {
+        var result = await AnalyzeReplyAsync(
+            "So George Pickens is…..fantasy irrelevant",
+            "seems like it yeah",
+            "George Pickens");
+
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("replyAgreement", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
     public async Task ReplyDisagreement_CanFlipNegativeParent()
     {
         var result = await AnalyzeReplyAsync("Pitts is washed.", "nah he'll be fine", "Kyle Pitts");
@@ -355,7 +422,7 @@ public sealed class TargetSentimentSemanticsTests
             context.Target.AttributionMethod);
         var result = await _sentimentAnalyzer.AnalyzeAsync(request, CancellationToken.None);
         var detail = _sentimentAnalyzer.AnalyzeDetailed(request);
-        var intent = _intentClassifier.Classify(text, match);
+        var intent = _intentClassifier.Classify(text, context.TargetText, match);
 
         Assert.Equal(detail.FinalScore, result.FinalSentimentScore);
         return new AnalyzedTarget(context, detail, intent);
@@ -392,7 +459,7 @@ public sealed class TargetSentimentSemanticsTests
             context.Target.AttributionMethod);
         var result = await _sentimentAnalyzer.AnalyzeAsync(request, CancellationToken.None);
         var detail = _sentimentAnalyzer.AnalyzeDetailed(request);
-        var intent = _intentClassifier.Classify(reply, match);
+        var intent = _intentClassifier.Classify(reply, context.TargetText, match);
 
         Assert.Equal(detail.FinalScore, result.FinalSentimentScore);
         return new AnalyzedTarget(context, detail, intent);
@@ -432,6 +499,7 @@ public sealed class TargetSentimentSemanticsTests
                 "is ass",
                 "is invisible",
                 "is buns",
+                "fantasy irrelevant",
                 "welcome to the waiver wire"
             ],
             PositiveSlang = [ "disgusting", "filthy", "cooking", "lfg" ],
@@ -478,7 +546,12 @@ public sealed class TargetSentimentSemanticsTests
             Player(14, "CeeDee Lamb", "DAL", "WR", "CeeDee", "Lamb"),
             Player(15, "Saquon Barkley", "PHI", "RB", "Barkley"),
             Player(16, "Parker Washington", "JAX", "WR", "Washington", "Parker Washington"),
-            Player(17, "Trey McBride", "ARI", "TE", "McBride")
+            Player(17, "Trey McBride", "ARI", "TE", "McBride"),
+            Player(18, "Tucker Kraft", "GB", "TE", "Kraft", "Tucker Kraft"),
+            Player(19, "Rome Odunze", "CHI", "WR", "Odunze", "Rome Odunze"),
+            Player(20, "Brian Thomas Jr.", "JAX", "WR", "BTJ", "Brian Thomas", "Brian Thomas Jr."),
+            Player(21, "Dontayvion Wicks", "GB", "WR", "Wicks", "Dontayvion Wicks"),
+            Player(22, "Devaughn Vele", "NO", "WR", "Vele", "Devaughn Vele")
         ];
     }
 
