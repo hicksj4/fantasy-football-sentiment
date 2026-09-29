@@ -22,6 +22,8 @@ TestResults/
 coverage/
 *.coverage
 *.coveragexml
+.tmp-*/
+.tmp-*
 
 # Next.js / Node
 node_modules/
@@ -34,6 +36,24 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Python / abandoned local ML experiments
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/huggingface/
+.cache/torch/
+tools/sentiment-model/
+backend/FantasySentiment.Api/Models/
+*.onnx
+*.bin
+*.safetensors
+*.pt
+*.pth
 
 # PostgreSQL / Docker local data
 *.db
