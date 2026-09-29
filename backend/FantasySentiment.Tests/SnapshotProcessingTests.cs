@@ -319,6 +319,47 @@ public sealed class SnapshotProcessingTests
     }
 
     [Fact]
+    public async Task LowSemanticConfidenceMention_PreservesActionsButDoesNotScoreAggregateSentiment()
+    {
+        await using var db = CreateDb();
+        SeedPlayers(db);
+        var analyzer = new CapturingSentimentAnalyzer(
+            finalSentimentScore: -0.8,
+            semanticConfidence: 0.20);
+        var processor = CreateProcessor(
+            db,
+            new SnapshotSourceData(
+                "low-confidence-test",
+                "Low Confidence Test",
+                2026,
+                4,
+                [
+                    Post(
+                        "post-low-confidence",
+                        "OFFICIAL TEST THREAD",
+                        "2026-09-20T17:00:00Z",
+                        Comment("low-confidence-comment", null, 25, "Drop Pitts immediately."))
+                ]),
+            analyzer);
+
+        await processor.ProcessAsync("low-confidence-test", skipIfProcessed: false, CancellationToken.None);
+
+        var mention = await db.PlayerMentions.SingleAsync();
+        var aggregate = await db.SnapshotPlayerAggregates.SingleAsync();
+
+        Assert.Equal(0.20, mention.SemanticConfidence);
+        Assert.Equal(AnalysisDispositions.MentionOnly, mention.AnalysisDisposition);
+        Assert.Equal(AnalysisDispositionReasons.LowSemanticConfidence, mention.AnalysisDispositionReason);
+        Assert.Equal(1, aggregate.MentionCount);
+        Assert.Equal(0, aggregate.ScoredMentionCount);
+        Assert.Equal(1, aggregate.MentionOnlyCount);
+        Assert.False(aggregate.HasScoredSentiment);
+        Assert.Equal(0, aggregate.CommunitySentimentScore);
+        Assert.Equal(0, aggregate.NegativeCount);
+        Assert.Equal(1, aggregate.DropCount);
+    }
+
+    [Fact]
     public async Task SnapshotFixture_ProducesExpectedTargetAttributionBreakdown()
     {
         await using var db = CreateDb();
@@ -404,6 +445,7 @@ public sealed class SnapshotProcessingTests
             new ThreadContextBuilder(),
             new FantasyIntentClassifier(new TestOptionsMonitor<IntentLexiconOptions>(Intents())),
             new VoteWeightCalculator(),
+            new SentimentScoringPolicy(),
             NullLogger<SnapshotProcessingService>.Instance);
     }
 
@@ -580,7 +622,9 @@ public sealed class SnapshotProcessingTests
         }
     }
 
-    private sealed class CapturingSentimentAnalyzer : ISentimentAnalyzer
+    private sealed class CapturingSentimentAnalyzer(
+        double finalSentimentScore = -0.5,
+        double semanticConfidence = 1) : ISentimentAnalyzer
     {
         public List<TargetedSentimentRequest> Requests { get; } = [];
 
@@ -590,14 +634,16 @@ public sealed class SnapshotProcessingTests
         {
             Requests.Add(request);
             return ValueTask.FromResult(new TargetedSentimentResult(
-                -0.5,
-                -0.5,
-                SentimentCategories.Negative,
-                -0.5,
+                finalSentimentScore,
+                finalSentimentScore,
+                TargetedSentimentResult.CategoryFromScore(finalSentimentScore),
+                finalSentimentScore,
                 null,
                 0,
                 nameof(CapturingSentimentAnalyzer),
-                request.Context));
+                request.Context,
+                $"semanticConfidence={semanticConfidence:0.###}",
+                semanticConfidence));
         }
     }
 

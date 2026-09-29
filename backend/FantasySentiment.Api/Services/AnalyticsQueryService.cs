@@ -9,7 +9,8 @@ namespace FantasySentiment.Api.Services;
 
 public sealed class AnalyticsQueryService(
     FantasySentimentDbContext db,
-    IOptions<DashboardHighlightOptions> highlightOptions)
+    IOptions<DashboardHighlightOptions> highlightOptions,
+    SentimentScoringPolicy sentimentScoringPolicy)
 {
     private readonly DashboardHighlightOptions _highlightOptions = highlightOptions.Value;
 
@@ -82,7 +83,12 @@ public sealed class AnalyticsQueryService(
                 snapshot.CommunitySentimentScore,
                 snapshot.SampleStrengthScore,
                 snapshot.Confidence,
-                snapshot.BuzzScore))
+                snapshot.BuzzScore,
+                snapshot.MentionCount,
+                snapshot.ScoredMentionCount,
+                snapshot.MentionOnlyCount,
+                snapshot.SentimentCoverage,
+                snapshot.HasScoredSentiment))
             .ToListAsync(cancellationToken);
     }
 
@@ -103,26 +109,7 @@ public sealed class AnalyticsQueryService(
 
         var mentionStats = recentMentions
             .GroupBy(mention => mention.PlayerId)
-            .ToDictionary(group => group.Key, group => new
-            {
-                Mentions = group.Count(),
-                Sentiment = group.Average(mention => mention.FinalSentimentScore),
-                RawSentiment = group.Average(mention => mention.RawSentimentScore),
-                CommunitySentiment = group.Sum(mention => mention.VoteWeight) == 0
-                    ? 0
-                    : group.Sum(mention => mention.WeightedSentimentContribution) / group.Sum(mention => mention.VoteWeight),
-                TotalRedditScore = group.Sum(mention => mention.RedditScore),
-                TotalVoteWeight = group.Sum(mention => mention.VoteWeight),
-                AverageVoteWeight = group.Average(mention => mention.VoteWeight),
-                AddCount = group.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Add)),
-                DropCount = group.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Drop)),
-                StartCount = group.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Start)),
-                SitCount = group.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Sit)),
-                BuyCount = group.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Buy)),
-                SellCount = group.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Sell)),
-                HypeCount = 0,
-                PanicCount = 0
-            });
+            .ToDictionary(group => group.Key, group => BuildMentionStats(group.ToList()));
 
         var snapshots = await db.PlayerSnapshots
             .AsNoTracking()
@@ -149,7 +136,7 @@ public sealed class AnalyticsQueryService(
             var mentionCount = mentions?.Mentions ?? latestSnapshot?.MentionCount ?? 0;
             var sampleConfidence = mentions is null
                 ? null
-                : SampleConfidenceCalculator.Calculate(mentions.Mentions, mentions.TotalVoteWeight);
+                : SampleConfidenceCalculator.Calculate(mentions.ScoredMentionCount, mentions.TotalVoteWeight);
 
             rows.Add(new DashboardPlayerDto(
                 player.Id,
@@ -173,7 +160,12 @@ public sealed class AnalyticsQueryService(
                 mentions?.BuyCount ?? latestSnapshot?.BuyCount ?? 0,
                 mentions?.SellCount ?? latestSnapshot?.SellCount ?? 0,
                 mentions?.HypeCount ?? latestSnapshot?.HypeCount ?? 0,
-                mentions?.PanicCount ?? latestSnapshot?.PanicCount ?? 0));
+                mentions?.PanicCount ?? latestSnapshot?.PanicCount ?? 0,
+                TotalMentionCount: mentions?.Mentions ?? latestSnapshot?.MentionCount ?? 0,
+                ScoredMentionCount: mentions?.ScoredMentionCount ?? latestSnapshot?.ScoredMentionCount ?? 0,
+                MentionOnlyCount: mentions?.MentionOnlyCount ?? latestSnapshot?.MentionOnlyCount ?? 0,
+                SentimentCoverage: mentions?.SentimentCoverage ?? latestSnapshot?.SentimentCoverage ?? 0,
+                HasScoredSentiment: mentions?.HasScoredSentiment ?? latestSnapshot?.HasScoredSentiment ?? false));
         }
 
         return rows;
@@ -193,11 +185,14 @@ public sealed class AnalyticsQueryService(
             {
                 PlayerId = group.Key,
                 Mentions = group.Count(),
-                TotalVoteWeight = group.Sum(mention => mention.VoteWeight)
+                ScoredMentions = group.Count(mention => mention.AnalysisDisposition == AnalysisDispositions.Scored),
+                TotalVoteWeight = group
+                    .Where(mention => mention.AnalysisDisposition == AnalysisDispositions.Scored)
+                    .Sum(mention => mention.VoteWeight)
             })
             .ToDictionaryAsync(
                 item => item.PlayerId,
-                item => new HighlightMentionStats(item.Mentions, item.TotalVoteWeight),
+                item => new HighlightMentionStats(item.Mentions, item.ScoredMentions, item.TotalVoteWeight),
                 cancellationToken);
 
         var candidates = rows
@@ -240,14 +235,23 @@ public sealed class AnalyticsQueryService(
             {
                 var players = group.ToList();
                 var mentions = players.Sum(player => player.Mentions);
+                var scoredMentions = players.Sum(player => player.ScoredMentionCount);
+                var mentionOnly = players.Sum(player => player.MentionOnlyCount);
                 return new TeamSummaryDto(
                     group.Key,
                     mentions,
-                    mentions == 0 ? 0 : Math.Round(players.Sum(player => player.Sentiment * player.Mentions) / mentions, 3),
+                    scoredMentions == 0
+                        ? 0
+                        : Math.Round(players.Sum(player => player.Sentiment * player.ScoredMentionCount) / scoredMentions, 3),
                     players.Count == 0 ? 1 : Math.Round(players.Max(player => player.Buzz), 2),
                     players.OrderByDescending(player => player.Mentions).FirstOrDefault()?.Name,
                     players.OrderByDescending(player => player.SentimentChange).FirstOrDefault()?.Name,
-                    players.OrderByDescending(player => player.Buzz).FirstOrDefault()?.Name);
+                    players.OrderByDescending(player => player.Buzz).FirstOrDefault()?.Name,
+                    TotalMentionCount: mentions,
+                    ScoredMentionCount: scoredMentions,
+                    MentionOnlyCount: mentionOnly,
+                    SentimentCoverage: mentions == 0 ? 0 : Math.Round(scoredMentions / (double)mentions, 3),
+                    HasScoredSentiment: scoredMentions > 0);
             })
             .OrderByDescending(team => team.Mentions)
             .ToList();
@@ -270,12 +274,21 @@ public sealed class AnalyticsQueryService(
         }
 
         var mentions = players.Sum(player => player.Mentions);
+        var scoredMentions = players.Sum(player => player.ScoredMentionCount);
+        var mentionOnly = players.Sum(player => player.MentionOnlyCount);
         return new TeamDetailDto(
             players[0].Team,
             mentions,
-            mentions == 0 ? 0 : Math.Round(players.Sum(player => player.Sentiment * player.Mentions) / mentions, 3),
+            scoredMentions == 0
+                ? 0
+                : Math.Round(players.Sum(player => player.Sentiment * player.ScoredMentionCount) / scoredMentions, 3),
             Math.Round(players.Max(player => player.Buzz), 2),
-            players);
+            players,
+            TotalMentionCount: mentions,
+            ScoredMentionCount: scoredMentions,
+            MentionOnlyCount: mentionOnly,
+            SentimentCoverage: mentions == 0 ? 0 : Math.Round(scoredMentions / (double)mentions, 3),
+            HasScoredSentiment: scoredMentions > 0);
     }
 
     private static PlayerListItemDto ToListItem(Player player)
@@ -291,13 +304,54 @@ public sealed class AnalyticsQueryService(
                 .ToArray());
     }
 
+    private DashboardMentionStats BuildMentionStats(List<PlayerMention> mentions)
+    {
+        var scoredMentions = mentions
+            .Where(sentimentScoringPolicy.CanScore)
+            .ToList();
+        var totalVoteWeight = scoredMentions.Sum(mention => mention.VoteWeight);
+        var hasScoredSentiment = scoredMentions.Count > 0;
+
+        return new DashboardMentionStats(
+            Mentions: mentions.Count,
+            ScoredMentionCount: scoredMentions.Count,
+            MentionOnlyCount: mentions.Count - scoredMentions.Count,
+            SentimentCoverage: mentions.Count == 0
+                ? 0
+                : Math.Round(scoredMentions.Count / (double)mentions.Count, 3),
+            HasScoredSentiment: hasScoredSentiment,
+            Sentiment: hasScoredSentiment
+                ? scoredMentions.Average(mention => mention.FinalSentimentScore)
+                : 0,
+            RawSentiment: hasScoredSentiment
+                ? scoredMentions.Average(mention => mention.RawSentimentScore)
+                : 0,
+            CommunitySentiment: totalVoteWeight == 0
+                ? 0
+                : scoredMentions.Sum(mention => mention.WeightedSentimentContribution) / totalVoteWeight,
+            TotalRedditScore: mentions.Sum(mention => mention.RedditScore),
+            TotalVoteWeight: totalVoteWeight,
+            AverageVoteWeight: hasScoredSentiment
+                ? scoredMentions.Average(mention => mention.VoteWeight)
+                : 0,
+            AddCount: mentions.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Add)),
+            DropCount: mentions.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Drop)),
+            StartCount: mentions.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Start)),
+            SitCount: mentions.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Sit)),
+            BuyCount: mentions.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Buy)),
+            SellCount: mentions.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Sell)),
+            HypeCount: 0,
+            PanicCount: 0);
+    }
+
     private static PlayerMetricsDto ToMetrics(Player player, PlayerSnapshot? snapshot)
     {
         var mentions = snapshot?.MentionCount ?? 0;
+        var scoredMentions = snapshot?.ScoredMentionCount ?? 0;
         var positive = snapshot?.PositiveCount ?? 0;
         var neutral = snapshot?.NeutralCount ?? 0;
         var negative = snapshot?.NegativeCount ?? 0;
-        var denominator = Math.Max(1, mentions);
+        var denominator = Math.Max(1, scoredMentions);
 
         return new PlayerMetricsDto(
             player.Id,
@@ -326,7 +380,12 @@ public sealed class AnalyticsQueryService(
             snapshot?.HoldCount ?? 0,
             snapshot?.InjuryCount ?? 0,
             snapshot?.HypeCount ?? 0,
-            snapshot?.PanicCount ?? 0);
+            snapshot?.PanicCount ?? 0,
+            TotalMentionCount: mentions,
+            ScoredMentionCount: scoredMentions,
+            MentionOnlyCount: snapshot?.MentionOnlyCount ?? 0,
+            SentimentCoverage: snapshot?.SentimentCoverage ?? 0,
+            HasScoredSentiment: snapshot?.HasScoredSentiment ?? false);
     }
 
     private async Task<DashboardHighlightPlayerDto?> SelectHighlightAsync(
@@ -351,6 +410,11 @@ public sealed class AnalyticsQueryService(
     private bool IsHighlightEligible(DashboardPlayerDto row, HighlightMentionStats stats)
     {
         if (stats.Mentions < _highlightOptions.MinimumMentions)
+        {
+            return false;
+        }
+
+        if (stats.ScoredMentions <= 0 || !row.HasScoredSentiment)
         {
             return false;
         }
@@ -389,7 +453,12 @@ public sealed class AnalyticsQueryService(
             row.AverageVoteWeight,
             row.SampleStrengthScore,
             row.Confidence,
-            topInfluence);
+            topInfluence,
+            TotalMentionCount: row.TotalMentionCount,
+            ScoredMentionCount: row.ScoredMentionCount,
+            MentionOnlyCount: row.MentionOnlyCount,
+            SentimentCoverage: row.SentimentCoverage,
+            HasScoredSentiment: row.HasScoredSentiment);
     }
 
     private async Task<DashboardHighlightInfluenceDto?> GetTopInfluenceAsync(
@@ -400,11 +469,15 @@ public sealed class AnalyticsQueryService(
     {
         var mentions = await db.PlayerMentions
             .AsNoTracking()
-            .Where(mention => mention.PlayerId == playerId && mention.CreatedAt >= start)
+            .Where(mention =>
+                mention.PlayerId == playerId
+                && mention.CreatedAt >= start
+                && mention.AnalysisDisposition == AnalysisDispositions.Scored)
             .Select(mention => new
             {
                 mention.FinalSentimentScore,
                 mention.VoteWeight,
+                mention.SemanticConfidence,
                 mention.RedditScore,
                 mention.CreatedAt,
                 CommentBody = mention.Comment.Body,
@@ -427,6 +500,7 @@ public sealed class AnalyticsQueryService(
                     mention.RedditScore,
                     mention.FinalSentimentScore,
                     mention.VoteWeight,
+                    mention.SemanticConfidence,
                     contribution,
                     mention.PostTitle,
                     mention.CreatedAt);
@@ -453,7 +527,8 @@ public sealed class AnalyticsQueryService(
             Math.Round(selected.VoteWeight, 3),
             Math.Round(selected.SentimentContribution, 3),
             selected.PostTitle,
-            selected.CreatedAt);
+            selected.CreatedAt,
+            SemanticConfidence: Math.Round(selected.SemanticConfidence, 3));
     }
 
     private static string CreateExcerpt(string value, int maxLength)
@@ -487,9 +562,31 @@ public sealed class AnalyticsQueryService(
         int RedditScore,
         double Sentiment,
         double VoteWeight,
+        double SemanticConfidence,
         double SentimentContribution,
         string PostTitle,
         DateTimeOffset CreatedAt);
 
-    private sealed record HighlightMentionStats(int Mentions, double TotalVoteWeight);
+    private sealed record HighlightMentionStats(int Mentions, int ScoredMentions, double TotalVoteWeight);
+
+    private sealed record DashboardMentionStats(
+        int Mentions,
+        int ScoredMentionCount,
+        int MentionOnlyCount,
+        double SentimentCoverage,
+        bool HasScoredSentiment,
+        double Sentiment,
+        double RawSentiment,
+        double CommunitySentiment,
+        int TotalRedditScore,
+        double TotalVoteWeight,
+        double AverageVoteWeight,
+        int AddCount,
+        int DropCount,
+        int StartCount,
+        int SitCount,
+        int BuyCount,
+        int SellCount,
+        int HypeCount,
+        int PanicCount);
 }

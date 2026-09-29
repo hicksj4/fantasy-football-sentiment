@@ -14,6 +14,7 @@ public sealed class SnapshotProcessingService(
     ThreadContextBuilder threadContextBuilder,
     FantasyIntentClassifier intentClassifier,
     VoteWeightCalculator voteWeightCalculator,
+    SentimentScoringPolicy sentimentScoringPolicy,
     ILogger<SnapshotProcessingService> logger)
 {
     public async Task<AnalysisSnapshot> ProcessAsync(
@@ -320,6 +321,9 @@ public sealed class SnapshotProcessingService(
                     comment.Body,
                     resolvedContext.TargetText,
                     match);
+                var scoringDecision = sentimentScoringPolicy.Evaluate(
+                    sentiment.SemanticConfidence,
+                    target.Confidence);
 
                 db.PlayerMentions.Add(new PlayerMention
                 {
@@ -333,10 +337,13 @@ public sealed class SnapshotProcessingService(
                     ModelSentimentScore = sentiment.ModelScore,
                     RuleBasedSentimentScore = sentiment.RuleBasedScore,
                     FantasyAdjustment = sentiment.FantasyAdjustment,
+                    SemanticConfidence = sentiment.SemanticConfidence,
                     SentimentCategory = sentiment.SentimentCategory,
                     SentimentAnalyzer = sentiment.AnalyzerName,
                     SentimentContext = Truncate(sentiment.Context, 1200) ?? string.Empty,
                     SentimentDiagnostics = Truncate(sentiment.Diagnostics, 1000),
+                    AnalysisDisposition = scoringDecision.Disposition,
+                    AnalysisDispositionReason = scoringDecision.Reason,
                     MatchedAlias = Truncate(match.MatchedAlias, 160) ?? string.Empty,
                     TargetAttributionMethod = target.AttributionMethod,
                     TargetConfidence = target.Confidence,
@@ -464,12 +471,16 @@ public sealed class SnapshotProcessingService(
         foreach (var group in grouped)
         {
             var playerMentions = group.ToList();
-            var totalVoteWeight = playerMentions.Sum(mention => mention.VoteWeight);
-            var sampleConfidence = SampleConfidenceCalculator.Calculate(playerMentions.Count, totalVoteWeight);
-            var positiveImpact = playerMentions
+            var scoredMentions = playerMentions
+                .Where(sentimentScoringPolicy.CanScore)
+                .ToList();
+            var hasScoredSentiment = scoredMentions.Count > 0;
+            var totalVoteWeight = scoredMentions.Sum(mention => mention.VoteWeight);
+            var sampleConfidence = SampleConfidenceCalculator.Calculate(scoredMentions.Count, totalVoteWeight);
+            var positiveImpact = scoredMentions
                 .Where(mention => mention.FinalSentimentScore > 0)
                 .Sum(mention => mention.FinalSentimentScore * mention.VoteWeight);
-            var negativeImpact = playerMentions
+            var negativeImpact = scoredMentions
                 .Where(mention => mention.FinalSentimentScore < 0)
                 .Sum(mention => mention.FinalSentimentScore * mention.VoteWeight);
 
@@ -478,17 +489,27 @@ public sealed class SnapshotProcessingService(
                 SnapshotId = snapshotId,
                 PlayerId = group.Key,
                 MentionCount = playerMentions.Count,
-                PositiveCount = playerMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Positive),
-                NegativeCount = playerMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Negative),
-                NeutralCount = playerMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Neutral),
-                RawSentimentScore = Math.Round(playerMentions.Average(mention => mention.RawSentimentScore), 3),
-                SentimentScore = Math.Round(playerMentions.Average(mention => mention.FinalSentimentScore), 3),
+                ScoredMentionCount = scoredMentions.Count,
+                MentionOnlyCount = playerMentions.Count - scoredMentions.Count,
+                SentimentCoverage = Math.Round(scoredMentions.Count / (double)playerMentions.Count, 3),
+                HasScoredSentiment = hasScoredSentiment,
+                PositiveCount = scoredMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Positive),
+                NegativeCount = scoredMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Negative),
+                NeutralCount = scoredMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Neutral),
+                RawSentimentScore = hasScoredSentiment
+                    ? Math.Round(scoredMentions.Average(mention => mention.RawSentimentScore), 3)
+                    : 0,
+                SentimentScore = hasScoredSentiment
+                    ? Math.Round(scoredMentions.Average(mention => mention.FinalSentimentScore), 3)
+                    : 0,
                 CommunitySentimentScore = totalVoteWeight == 0
                     ? 0
-                    : Math.Round(playerMentions.Sum(mention => mention.WeightedSentimentContribution) / totalVoteWeight, 3),
+                    : Math.Round(scoredMentions.Sum(mention => mention.WeightedSentimentContribution) / totalVoteWeight, 3),
                 TotalRedditScore = playerMentions.Sum(mention => mention.RedditScore),
                 TotalVoteWeight = Math.Round(totalVoteWeight, 3),
-                AverageVoteWeight = Math.Round(playerMentions.Average(mention => mention.VoteWeight), 3),
+                AverageVoteWeight = hasScoredSentiment
+                    ? Math.Round(scoredMentions.Average(mention => mention.VoteWeight), 3)
+                    : 0,
                 SampleStrengthScore = sampleConfidence.SampleStrengthScore,
                 Confidence = sampleConfidence.Confidence,
                 AddCount = CountAction(playerMentions, FantasyActions.Add),
@@ -511,11 +532,6 @@ public sealed class SnapshotProcessingService(
 
         await db.SaveChangesAsync(cancellationToken);
         return grouped.Count;
-    }
-
-    private static int CountIntent(IEnumerable<PlayerMention> mentions, string intent)
-    {
-        return mentions.Count(mention => mention.Intent == intent);
     }
 
     private static int CountAction(IEnumerable<PlayerMention> mentions, string action)

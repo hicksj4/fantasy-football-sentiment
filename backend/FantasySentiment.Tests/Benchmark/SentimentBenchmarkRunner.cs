@@ -24,6 +24,7 @@ internal sealed class SentimentBenchmarkRunner
     private readonly ThreadContextBuilder _threadContextBuilder;
     private readonly VaderSentimentAnalyzer _sentimentAnalyzer;
     private readonly FantasyIntentClassifier _intentClassifier;
+    private readonly SentimentScoringPolicy _scoringPolicy = new();
 
     public SentimentBenchmarkRunner(BenchmarkCorpus corpus)
     {
@@ -120,20 +121,60 @@ internal sealed class SentimentBenchmarkRunner
         report.RepresentativeFailures = failures.Take(40).ToList();
         report.AllFailures = failures;
         report.TargetEvaluations = targetEvaluations;
+        report.SplitPrecisionSummaries = BuildSplitPrecisionSummaries(report.ByThread, targetEvaluations);
+        report.GateExclusionSummaries = BuildGateExclusionSummaries(targetEvaluations);
+        report.SentimentGateSummaries = BuildSentimentGateSummaries(targetEvaluations);
+        report.ConfidenceCalibration = BuildConfidenceCalibration(targetEvaluations);
+        report.ConfidenceValues = BuildConfidenceValues(targetEvaluations);
+        report.HighConfidenceErrors = BuildHighConfidenceErrors(targetEvaluations).Take(20).ToList();
+        report.FalseAbstentions = BuildAbstentionExamples(targetEvaluations, falseAbstention: true).Take(20).ToList();
+        report.GoodAbstentions = BuildAbstentionExamples(targetEvaluations, falseAbstention: false).Take(20).ToList();
 
         return report;
     }
 
     public string ToMarkdown(BenchmarkReport report)
     {
+        return ToMarkdown(
+            report,
+            "Sentiment Benchmark",
+            [
+                "Scope: canonical full labeled model-health report.",
+                "Loaded splits: Development, Validation, EvaluationB when present."
+            ]);
+    }
+
+    public string ToEvaluationBMarkdown(BenchmarkReport report)
+    {
+        return ToMarkdown(
+            report,
+            "Evaluation B Sentiment Benchmark",
+            [
+                "DatasetSplit: EvaluationB",
+                "Source: audited Week 1 Sunday Afternoon Game Thread",
+                $"Semantic profile: {SemanticProfile}",
+                "Note: formerly audited Holdout B."
+            ]);
+    }
+
+    private string ToMarkdown(
+        BenchmarkReport report,
+        string title,
+        IReadOnlyList<string> extraHeaderLines)
+    {
         var builder = new StringBuilder();
-        builder.AppendLine("# Semantic Benchmark by Dataset Split");
+        builder.AppendLine($"# {title}");
         builder.AppendLine();
         builder.AppendLine($"Generated: {report.GeneratedAtUtc:O}");
         builder.AppendLine($"Dataset splits: {string.Join(", ", report.ByThread.Select(thread => thread.DatasetSplit).Distinct(StringComparer.OrdinalIgnoreCase))}");
         builder.AppendLine($"Semantic profile: {SemanticProfile}");
         builder.AppendLine($"Analyzer: {report.Analyzer} (frozen)");
         builder.AppendLine($"Target resolver: {report.TargetResolver}");
+        foreach (var line in extraHeaderLines)
+        {
+            builder.AppendLine(line);
+        }
+
         builder.AppendLine($"Fixtures: {report.FixtureCount}");
         builder.AppendLine($"Comments: {report.TotalComments}");
         builder.AppendLine($"Expected targets: {report.TotalExpectedTargets}");
@@ -142,6 +183,7 @@ internal sealed class SentimentBenchmarkRunner
         builder.AppendLine($"Fantasy-outlook targets excluded by context: {report.FantasyOutlookExcludedByContext}");
         builder.AppendLine();
         AppendDatasetSplitSection(builder, report);
+        AppendSentimentGateSection(builder, report);
         builder.AppendLine();
         builder.AppendLine("## Semantic Coverage");
         builder.AppendLine();
@@ -175,7 +217,7 @@ internal sealed class SentimentBenchmarkRunner
         builder.AppendLine("## Old Contract Comparison");
         builder.AppendLine();
         builder.AppendLine($"Previous benchmark interpretation: comments={PreviousCommentCount}, expectedTargets={PreviousExpectedTargetCount}, targetF1={PreviousTargetF1:0.###}, sentimentAccuracy={PreviousFantasyOutlookAccuracy:0.###}, perspectiveAccuracy={PreviousPerspectiveAccuracy:0.###}, singleIntentAccuracy={PreviousSingleIntentAccuracy:0.###}.");
-        builder.AppendLine($"This report evaluates the current {SemanticProfile} production semantics on the Development dataset. Metric changes may reflect both annotation corrections and production semantic tuning.");
+        builder.AppendLine($"This report evaluates the current {SemanticProfile} production semantics on the loaded dataset splits. Metric changes may reflect both annotation corrections and production semantic tuning.");
         builder.AppendLine();
         builder.AppendLine("## By Thread");
         builder.AppendLine();
@@ -202,9 +244,13 @@ internal sealed class SentimentBenchmarkRunner
         AppendAuditSection(builder, "Perspective Failure Audit", report.PerspectiveFailureCategories, report.PerspectiveFailureExamples);
         AppendAuditSection(builder, "Fantasy Action Failure Audit", report.FantasyActionFailureCategories, report.FantasyActionFailureExamples);
         AppendAuditSection(builder, "Discussion Signal Failure Audit", report.DiscussionSignalFailureCategories, report.DiscussionSignalFailureExamples);
+        AppendGateExampleSection(builder, "High-Confidence Sentiment Errors", report.HighConfidenceErrors);
+        AppendGateExampleSection(builder, "False Abstentions", report.FalseAbstentions);
+        AppendGateExampleSection(builder, "Good Abstentions", report.GoodAbstentions);
         AppendDebatableSection(builder, report.DebatableLabels);
         AppendRepresentativeFailures(builder, report.RepresentativeFailures);
         AppendValidationDiagnostics(builder, report);
+        AppendDatasetDiagnostics(builder, report, "EvaluationB", "Evaluation B");
 
         return builder.ToString();
     }
@@ -362,6 +408,7 @@ internal sealed class SentimentBenchmarkRunner
                 semanticClassification.DiscussionSignals.ToHashSet(StringComparer.OrdinalIgnoreCase),
                 target.AttributionMethod,
                 target.Confidence,
+                sentiment.SemanticConfidence,
                 resolvedContext.TargetText,
                 sentiment.Diagnostics));
         }
@@ -582,8 +629,8 @@ internal sealed class SentimentBenchmarkRunner
             ActualSignals = actual is null ? "Missing" : JoinOrNone(actual.DiscussionSignals),
             AttributionMethod = actual?.AttributionMethod,
             TargetConfidence = actual?.TargetConfidence,
-            SemanticConfidence = ExtractSemanticConfidence(actual?.Diagnostics),
-            SemanticConfidenceBand = SemanticConfidenceBand(ExtractSemanticConfidence(actual?.Diagnostics)),
+            SemanticConfidence = actual?.SemanticConfidence ?? ExtractSemanticConfidence(actual?.Diagnostics),
+            SemanticConfidenceBand = SemanticConfidenceBand(actual?.SemanticConfidence ?? ExtractSemanticConfidence(actual?.Diagnostics)),
             TargetText = actual?.TargetText,
             Diagnostics = actual?.Diagnostics,
             Reasons = string.Join("/", expectedTarget.Reasons),
@@ -1052,18 +1099,386 @@ internal sealed class SentimentBenchmarkRunner
         return aggregate;
     }
 
+    private List<SplitPrecisionSummary> BuildSplitPrecisionSummaries(
+        IReadOnlyList<ThreadBenchmarkSummary> threads,
+        IReadOnlyList<BenchmarkTargetEvaluation> targetEvaluations)
+    {
+        return threads
+            .GroupBy(thread => thread.DatasetSplit, StringComparer.OrdinalIgnoreCase)
+            .OrderBy(group => group.Key, StringComparer.OrdinalIgnoreCase)
+            .Select(group =>
+            {
+                var split = AggregateThreads(group.Key, group);
+                var scorable = targetEvaluations
+                    .Where(evaluation => string.Equals(evaluation.DatasetSplit, group.Key, StringComparison.OrdinalIgnoreCase))
+                    .Where(IsScorableEvaluation)
+                    .ToList();
+                var actual = scorable.Where(HasActualDirection).ToList();
+                var gated = actual.Where(PassesProductionGate).ToList();
+                var highConfidence = actual
+                    .Where(evaluation =>
+                        evaluation.SemanticConfidence >= SentimentScoringPolicy.StrictDiagnosticSemanticConfidence
+                        && evaluation.TargetConfidence >= SentimentScoringPolicy.MinimumTargetConfidence)
+                    .ToList();
+
+                return new SplitPrecisionSummary
+                {
+                    DatasetSplit = group.Key,
+                    CommentCount = split.CommentCount,
+                    ExpectedTargetCount = split.ExpectedTargetCount,
+                    TargetF1 = split.TargetMetrics.F1,
+                    RawFantasyOutlookAccuracy = split.FantasyOutlookMetrics.Accuracy,
+                    RawFantasyOutlookCorrect = split.FantasyOutlookMetrics.Correct,
+                    RawFantasyOutlookTotal = split.FantasyOutlookMetrics.Total,
+                    GatedFantasyOutlookAccuracy = Accuracy(gated),
+                    GatedFantasyOutlookCorrect = gated.Count(IsDirectionCorrect),
+                    GatedFantasyOutlookTotal = gated.Count,
+                    ProductionCoverage = Coverage(gated.Count, scorable.Count),
+                    PlayerEvaluationAccuracy = split.PlayerEvaluationMetrics.Accuracy,
+                    PerspectiveAccuracy = split.PerspectiveMetrics.Accuracy,
+                    FantasyActionF1 = split.FantasyActionMetrics.F1,
+                    DiscussionSignalF1 = split.DiscussionSignalMetrics.F1,
+                    HighConfidenceAccuracy = Accuracy(highConfidence),
+                    HighConfidenceCorrect = highConfidence.Count(IsDirectionCorrect),
+                    HighConfidenceTotal = highConfidence.Count,
+                    HighConfidenceCoverage = Coverage(highConfidence.Count, scorable.Count)
+                };
+            })
+            .ToList();
+    }
+
+    private List<GateExclusionSummary> BuildGateExclusionSummaries(
+        IReadOnlyList<BenchmarkTargetEvaluation> targetEvaluations)
+    {
+        return targetEvaluations
+            .Where(IsScorableEvaluation)
+            .Where(HasActualDirection)
+            .GroupBy(evaluation => evaluation.DatasetSplit, StringComparer.OrdinalIgnoreCase)
+            .OrderBy(group => group.Key, StringComparer.OrdinalIgnoreCase)
+            .Select(group =>
+            {
+                var summary = new GateExclusionSummary
+                {
+                    DatasetSplit = group.Key,
+                    ActualScorableMentions = group.Count()
+                };
+
+                foreach (var evaluation in group)
+                {
+                    if (!evaluation.SemanticConfidence.HasValue || !evaluation.TargetConfidence.HasValue)
+                    {
+                        summary.MissingConfidence++;
+                        continue;
+                    }
+
+                    var semanticFailed = evaluation.SemanticConfidence.Value < SentimentScoringPolicy.MinimumSemanticConfidence;
+                    var targetFailed = evaluation.TargetConfidence.Value < SentimentScoringPolicy.MinimumTargetConfidence;
+                    if (!semanticFailed && !targetFailed)
+                    {
+                        summary.Scored++;
+                    }
+                    else if (semanticFailed && targetFailed)
+                    {
+                        summary.FailedBoth++;
+                    }
+                    else if (semanticFailed)
+                    {
+                        summary.SemanticConfidenceOnly++;
+                    }
+                    else
+                    {
+                        summary.TargetConfidenceOnly++;
+                    }
+                }
+
+                return summary;
+            })
+            .ToList();
+    }
+
+    private List<SentimentGateSummary> BuildSentimentGateSummaries(
+        IReadOnlyList<BenchmarkTargetEvaluation> targetEvaluations)
+    {
+        var summaries = new List<SentimentGateSummary>();
+        foreach (var group in targetEvaluations
+                     .Where(IsScorableEvaluation)
+                     .GroupBy(evaluation => evaluation.DatasetSplit, StringComparer.OrdinalIgnoreCase)
+                     .OrderBy(group => group.Key, StringComparer.OrdinalIgnoreCase))
+        {
+            var evaluations = group.ToList();
+            var actualEvaluations = evaluations
+                .Where(HasActualDirection)
+                .ToList();
+            var gated = actualEvaluations
+                .Where(PassesProductionGate)
+                .ToList();
+            var abstained = actualEvaluations
+                .Where(evaluation => !PassesProductionGate(evaluation))
+                .ToList();
+
+            summaries.Add(new SentimentGateSummary
+            {
+                DatasetSplit = group.Key,
+                Gate = "Raw",
+                TotalScorable = evaluations.Count,
+                Evaluated = actualEvaluations.Count,
+                Correct = actualEvaluations.Count(IsDirectionCorrect),
+                Abstained = 0
+            });
+
+            summaries.Add(new SentimentGateSummary
+            {
+                DatasetSplit = group.Key,
+                Gate = $"Production >= {SentimentScoringPolicy.MinimumSemanticConfidence:0.##}",
+                TotalScorable = evaluations.Count,
+                Evaluated = gated.Count,
+                Correct = gated.Count(IsDirectionCorrect),
+                Abstained = abstained.Count,
+                GoodAbstentions = abstained.Count(evaluation => !IsDirectionCorrect(evaluation)),
+                FalseAbstentions = abstained.Count(IsDirectionCorrect)
+            });
+        }
+
+        return summaries;
+    }
+
+    private static List<ConfidenceCalibrationSummary> BuildConfidenceCalibration(
+        IReadOnlyList<BenchmarkTargetEvaluation> targetEvaluations)
+    {
+        return targetEvaluations
+            .Where(IsScorableEvaluation)
+            .Where(HasActualDirection)
+            .GroupBy(
+                evaluation => new
+                {
+                    evaluation.DatasetSplit,
+                    Band = ConfidenceBin(evaluation.SemanticConfidence)
+                })
+            .OrderBy(group => group.Key.DatasetSplit, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(group => ConfidenceBinOrder(group.Key.Band))
+            .Select(group => new ConfidenceCalibrationSummary
+            {
+                DatasetSplit = group.Key.DatasetSplit,
+                Band = group.Key.Band,
+                Count = group.Count(),
+                Correct = group.Count(IsDirectionCorrect)
+            })
+            .ToList();
+    }
+
+    private static List<ConfidenceValueSummary> BuildConfidenceValues(
+        IReadOnlyList<BenchmarkTargetEvaluation> targetEvaluations)
+    {
+        return targetEvaluations
+            .Where(IsScorableEvaluation)
+            .Where(HasActualDirection)
+            .Where(evaluation => evaluation.SemanticConfidence.HasValue)
+            .GroupBy(
+                evaluation => new
+                {
+                    evaluation.DatasetSplit,
+                    Confidence = Math.Round(evaluation.SemanticConfidence!.Value, 3)
+                })
+            .OrderBy(group => group.Key.DatasetSplit, StringComparer.OrdinalIgnoreCase)
+            .ThenByDescending(group => group.Count())
+            .ThenBy(group => group.Key.Confidence)
+            .Select(group => new ConfidenceValueSummary
+            {
+                DatasetSplit = group.Key.DatasetSplit,
+                SemanticConfidence = group.Key.Confidence,
+                Count = group.Count(),
+                Correct = group.Count(IsDirectionCorrect)
+            })
+            .ToList();
+    }
+
+    private List<BenchmarkFailure> BuildHighConfidenceErrors(
+        IReadOnlyList<BenchmarkTargetEvaluation> targetEvaluations)
+    {
+        return targetEvaluations
+            .Where(IsScorableEvaluation)
+            .Where(HasActualDirection)
+            .Where(evaluation => evaluation.SemanticConfidence >= SentimentScoringPolicy.StrictDiagnosticSemanticConfidence)
+            .Where(evaluation => !IsDirectionCorrect(evaluation))
+            .Select(evaluation => ToGateFailure(evaluation, "HighConfidenceError"))
+            .ToList();
+    }
+
+    private List<BenchmarkFailure> BuildAbstentionExamples(
+        IReadOnlyList<BenchmarkTargetEvaluation> targetEvaluations,
+        bool falseAbstention)
+    {
+        return targetEvaluations
+            .Where(IsScorableEvaluation)
+            .Where(HasActualDirection)
+            .Where(evaluation => !PassesProductionGate(evaluation))
+            .Where(evaluation => IsDirectionCorrect(evaluation) == falseAbstention)
+            .Select(evaluation => ToGateFailure(
+                evaluation,
+                falseAbstention ? "FalseAbstention" : "GoodAbstention"))
+            .ToList();
+    }
+
+    private bool PassesProductionGate(BenchmarkTargetEvaluation evaluation)
+    {
+        return evaluation.SemanticConfidence.HasValue
+               && evaluation.TargetConfidence.HasValue
+               && _scoringPolicy.Evaluate(
+                   evaluation.SemanticConfidence.Value,
+                   evaluation.TargetConfidence.Value).IsScored;
+    }
+
+    private static bool HasActualDirection(BenchmarkTargetEvaluation evaluation)
+    {
+        return evaluation.ActualScore.HasValue
+               && (evaluation.ActualDirection.Equals(BenchmarkDirections.Negative, StringComparison.OrdinalIgnoreCase)
+                   || evaluation.ActualDirection.Equals(BenchmarkDirections.Neutral, StringComparison.OrdinalIgnoreCase)
+                   || evaluation.ActualDirection.Equals(BenchmarkDirections.Positive, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static bool IsDirectionCorrect(BenchmarkTargetEvaluation evaluation)
+    {
+        return string.Equals(
+            evaluation.ExpectedDirection,
+            evaluation.ActualDirection,
+            StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static double Accuracy(IReadOnlyList<BenchmarkTargetEvaluation> evaluations)
+    {
+        return evaluations.Count == 0
+            ? 0
+            : Math.Round(evaluations.Count(IsDirectionCorrect) / (double)evaluations.Count, 3);
+    }
+
+    private static double Coverage(int evaluated, int total)
+    {
+        return total == 0 ? 0 : Math.Round(evaluated / (double)total, 3);
+    }
+
+    private static BenchmarkFailure ToGateFailure(BenchmarkTargetEvaluation evaluation, string category)
+    {
+        return new BenchmarkFailure
+        {
+            DatasetSplit = evaluation.DatasetSplit,
+            Category = category,
+            ThreadName = evaluation.ThreadName,
+            CommentId = evaluation.CommentId,
+            Body = evaluation.Body,
+            Expected = $"{evaluation.Player} {evaluation.ExpectedDirection}",
+            Actual = $"{evaluation.Player} {evaluation.ActualDirection} ({evaluation.ActualScore:0.###})",
+            ContextRequirement = evaluation.ContextRequirement,
+            Notes = evaluation.Notes,
+            Diagnostics = evaluation.Diagnostics
+        };
+    }
+
+    private static string ConfidenceBin(double? confidence)
+    {
+        return confidence switch
+        {
+            null => "Missing",
+            < 0.25 => "<0.25",
+            < 0.45 => "0.25-<0.45",
+            < 0.75 => "0.45-<0.75",
+            _ => ">=0.75"
+        };
+    }
+
+    private static int ConfidenceBinOrder(string bin)
+    {
+        return bin switch
+        {
+            "<0.25" => 0,
+            "0.25-<0.45" => 1,
+            "0.45-<0.75" => 2,
+            ">=0.75" => 3,
+            _ => 4
+        };
+    }
+
     private static void AppendDatasetSplitSection(StringBuilder builder, BenchmarkReport report)
     {
         builder.AppendLine("## Dataset Split Summary");
         builder.AppendLine();
-        builder.AppendLine("| Split | Comments | Expected targets | Target F1 | FantasyOutlook | Perspective | Actions F1 | Signals F1 |");
-        builder.AppendLine("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |");
+        builder.AppendLine("| Split | Comments | Expected targets | Target F1 | Raw FantasyOutlook | Gated FantasyOutlook | Coverage | PlayerEvaluation | Perspective | Actions F1 | Signals F1 | >=0.75 Acc | >=0.75 Coverage |");
+        builder.AppendLine("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |");
 
-        foreach (var group in report.ByThread.GroupBy(thread => thread.DatasetSplit, StringComparer.OrdinalIgnoreCase))
+        foreach (var split in report.SplitPrecisionSummaries)
         {
-            var split = AggregateThreads(group.Key, group);
             builder.AppendLine(
-                $"| {group.Key} | {split.CommentCount} | {split.ExpectedTargetCount} | {split.TargetMetrics.F1:0.###} | {split.FantasyOutlookMetrics.Accuracy:0.###} | {split.PerspectiveMetrics.Accuracy:0.###} | {split.FantasyActionMetrics.F1:0.###} | {split.DiscussionSignalMetrics.F1:0.###} |");
+                $"| {split.DatasetSplit} | {split.CommentCount} | {split.ExpectedTargetCount} | {split.TargetF1:0.###} | {split.RawFantasyOutlookAccuracy:0.###} ({split.RawFantasyOutlookCorrect}/{split.RawFantasyOutlookTotal}) | {split.GatedFantasyOutlookAccuracy:0.###} ({split.GatedFantasyOutlookCorrect}/{split.GatedFantasyOutlookTotal}) | {split.ProductionCoverage:0.###} | {split.PlayerEvaluationAccuracy:0.###} | {split.PerspectiveAccuracy:0.###} | {split.FantasyActionF1:0.###} | {split.DiscussionSignalF1:0.###} | {split.HighConfidenceAccuracy:0.###} ({split.HighConfidenceCorrect}/{split.HighConfidenceTotal}) | {split.HighConfidenceCoverage:0.###} |");
+        }
+    }
+
+    private static void AppendSentimentGateSection(StringBuilder builder, BenchmarkReport report)
+    {
+        builder.AppendLine();
+        builder.AppendLine("## Precision Gate Summary");
+        builder.AppendLine();
+        builder.AppendLine("| Split | Gate | Coverage | Accuracy | Correct/Scored | Abstained | Good abstentions | False abstentions |");
+        builder.AppendLine("| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |");
+        foreach (var summary in report.SentimentGateSummaries)
+        {
+            builder.AppendLine(
+                $"| {summary.DatasetSplit} | {summary.Gate} | {summary.Coverage:0.###} | {summary.Accuracy:0.###} | {summary.Correct}/{summary.Evaluated} | {summary.Abstained} | {summary.GoodAbstentions} | {summary.FalseAbstentions} |");
+        }
+
+        builder.AppendLine();
+        builder.AppendLine("## Production Gate Exclusions");
+        builder.AppendLine();
+        builder.AppendLine("| Split | Actual scorable mentions | Scored | Semantic confidence only | Target confidence only | Failed both | Missing confidence |");
+        builder.AppendLine("| --- | ---: | ---: | ---: | ---: | ---: | ---: |");
+        foreach (var summary in report.GateExclusionSummaries)
+        {
+            builder.AppendLine(
+                $"| {summary.DatasetSplit} | {summary.ActualScorableMentions} | {summary.Scored} | {summary.SemanticConfidenceOnly} | {summary.TargetConfidenceOnly} | {summary.FailedBoth} | {summary.MissingConfidence} |");
+        }
+
+        builder.AppendLine();
+        builder.AppendLine("## Confidence Calibration");
+        builder.AppendLine();
+        builder.AppendLine("| Split | Semantic confidence bin | Count | Accuracy | Correct |");
+        builder.AppendLine("| --- | --- | ---: | ---: | ---: |");
+        foreach (var bin in report.ConfidenceCalibration)
+        {
+            builder.AppendLine(
+                $"| {bin.DatasetSplit} | {bin.Band} | {bin.Count} | {bin.Accuracy:0.###} | {bin.Correct} |");
+        }
+
+        builder.AppendLine();
+        builder.AppendLine("## Common Semantic Confidence Values");
+        builder.AppendLine();
+        builder.AppendLine("| Split | Confidence | Count | Accuracy | Correct |");
+        builder.AppendLine("| --- | ---: | ---: | ---: | ---: |");
+        foreach (var value in report.ConfidenceValues
+                     .GroupBy(item => item.DatasetSplit, StringComparer.OrdinalIgnoreCase)
+                     .SelectMany(group => group.Take(8)))
+        {
+            builder.AppendLine(
+                $"| {value.DatasetSplit} | {value.SemanticConfidence:0.###} | {value.Count} | {value.Accuracy:0.###} | {value.Correct} |");
+        }
+    }
+
+    private static void AppendGateExampleSection(
+        StringBuilder builder,
+        string title,
+        IReadOnlyList<BenchmarkFailure> examples)
+    {
+        builder.AppendLine();
+        builder.AppendLine($"## {title}");
+        builder.AppendLine();
+        if (examples.Count == 0)
+        {
+            builder.AppendLine("- none");
+            return;
+        }
+
+        foreach (var example in examples.Take(12))
+        {
+            builder.AppendLine($"- [{example.DatasetSplit}] {example.CommentId}: {Trim(example.Body, 170)}");
+            builder.AppendLine($"  - Expected: {example.Expected}");
+            builder.AppendLine($"  - Actual: {example.Actual}");
         }
     }
 
@@ -1096,6 +1511,84 @@ internal sealed class SentimentBenchmarkRunner
             report.DebatableLabels
                 .Where(label => string.Equals(label.DatasetSplit, "Validation", StringComparison.OrdinalIgnoreCase))
                 .ToList());
+    }
+
+    private static void AppendDatasetDiagnostics(
+        StringBuilder builder,
+        BenchmarkReport report,
+        string datasetSplit,
+        string title)
+    {
+        var threads = report.ByThread
+            .Where(thread => string.Equals(thread.DatasetSplit, datasetSplit, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+        if (threads.Count == 0)
+        {
+            return;
+        }
+
+        var split = AggregateThreads(datasetSplit, threads);
+        var failures = report.AllFailures
+            .Where(failure => string.Equals(failure.DatasetSplit, datasetSplit, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+        var evaluations = report.TargetEvaluations
+            .Where(evaluation => string.Equals(evaluation.DatasetSplit, datasetSplit, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        AppendConfusionMatrix(builder, $"{title} Fantasy Outlook Confusion Matrix", split.FantasyOutlookConfusionMatrix);
+        AppendDatasetPlayerSummary(builder, $"{title} Player Summary", evaluations, failures);
+        AppendDatasetFailureCategories(builder, $"{title} Failure Categories", failures);
+    }
+
+    private static void AppendDatasetPlayerSummary(
+        StringBuilder builder,
+        string title,
+        IReadOnlyList<BenchmarkTargetEvaluation> evaluations,
+        IReadOnlyList<BenchmarkFailure> failures)
+    {
+        builder.AppendLine();
+        builder.AppendLine($"## {title}");
+        builder.AppendLine();
+        builder.AppendLine("| Player | Scored mentions | Expected -/0/+ | Actual -/0/+ | Most common failure |");
+        builder.AppendLine("| --- | ---: | --- | --- | --- |");
+
+        foreach (var group in evaluations
+                     .Where(IsScorableEvaluation)
+                     .GroupBy(evaluation => evaluation.Player, StringComparer.OrdinalIgnoreCase)
+                     .OrderByDescending(group => group.Count())
+                     .ThenBy(group => group.Key, StringComparer.OrdinalIgnoreCase)
+                     .Take(12))
+        {
+            var expected = DirectionCounts(group.Select(evaluation => evaluation.ExpectedDirection));
+            var actual = DirectionCounts(group.Select(evaluation => evaluation.ActualDirection));
+            var commonFailure = failures
+                .Where(failure => FailureMentionsPlayer(failure, group.Key))
+                .GroupBy(failure => failure.Category, StringComparer.OrdinalIgnoreCase)
+                .OrderByDescending(failureGroup => failureGroup.Count())
+                .ThenBy(failureGroup => failureGroup.Key, StringComparer.OrdinalIgnoreCase)
+                .Select(failureGroup => $"{failureGroup.Key} ({failureGroup.Count()})")
+                .FirstOrDefault() ?? "none";
+
+            builder.AppendLine(
+                $"| {group.Key} | {group.Count()} | {expected.Negative}/{expected.Neutral}/{expected.Positive} | {actual.Negative}/{actual.Neutral}/{actual.Positive} | {commonFailure} |");
+        }
+    }
+
+    private static void AppendDatasetFailureCategories(
+        StringBuilder builder,
+        string title,
+        IReadOnlyList<BenchmarkFailure> failures)
+    {
+        builder.AppendLine();
+        builder.AppendLine($"## {title}");
+        builder.AppendLine();
+        foreach (var group in failures
+                     .GroupBy(failure => failure.Category, StringComparer.OrdinalIgnoreCase)
+                     .OrderByDescending(group => group.Count())
+                     .ThenBy(group => group.Key, StringComparer.OrdinalIgnoreCase))
+        {
+            builder.AppendLine($"- {group.Key}: {group.Count()}");
+        }
     }
 
     private static void AppendValidationPlayerSummary(

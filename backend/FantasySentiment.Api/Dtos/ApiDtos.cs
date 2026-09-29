@@ -47,7 +47,12 @@ public sealed record PlayerMetricsDto(
     int NegativeMentions = 0,
     PlayerScoreCommentDto? MostInfluentialComment = null,
     PlayerScoreCommentDto? MostEndorsedComment = null,
-    PlayerScoreCommentDto? MostRejectedComment = null);
+    PlayerScoreCommentDto? MostRejectedComment = null,
+    int TotalMentionCount = 0,
+    int ScoredMentionCount = 0,
+    int MentionOnlyCount = 0,
+    double SentimentCoverage = 0,
+    bool HasScoredSentiment = false);
 
 public sealed record AnalysisSnapshotDto(
     int Id,
@@ -96,7 +101,12 @@ public sealed record DashboardPlayerDto(
     double VotingEffect = 0,
     double DiscussionImpact = 0,
     int DiscussionImpactRank = 0,
-    double DiscussionImpactPercentile = 0);
+    double DiscussionImpactPercentile = 0,
+    int TotalMentionCount = 0,
+    int ScoredMentionCount = 0,
+    int MentionOnlyCount = 0,
+    double SentimentCoverage = 0,
+    bool HasScoredSentiment = false);
 
 public sealed record DashboardHighlightsDto(
     DashboardHighlightPlayerDto? Positive,
@@ -124,7 +134,12 @@ public sealed record DashboardHighlightPlayerDto(
     double AverageVoteWeight,
     double SampleStrengthScore,
     string Confidence,
-    DashboardHighlightInfluenceDto? TopInfluence);
+    DashboardHighlightInfluenceDto? TopInfluence,
+    int TotalMentionCount = 0,
+    int ScoredMentionCount = 0,
+    int MentionOnlyCount = 0,
+    double SentimentCoverage = 0,
+    bool HasScoredSentiment = false);
 
 public sealed record DashboardHighlightInfluenceDto(
     string CommentExcerpt,
@@ -136,7 +151,8 @@ public sealed record DashboardHighlightInfluenceDto(
     DateTimeOffset CreatedAt,
     string? Subreddit = null,
     string? TargetAttributionMethod = null,
-    double? TargetConfidence = null);
+    double? TargetConfidence = null,
+    double? SemanticConfidence = null);
 
 public sealed record PlayerScoreCommentDto(
     string CommentExcerpt,
@@ -148,6 +164,43 @@ public sealed record PlayerScoreCommentDto(
     double CommunityContribution,
     string TargetAttributionMethod,
     double TargetConfidence,
+    DateTimeOffset CreatedAt,
+    double SemanticConfidence = 1,
+    string AnalysisDisposition = "Scored");
+
+public sealed record PlayerMentionAnalysisPageDto(
+    int PlayerId,
+    string SnapshotKey,
+    int Page,
+    int PageSize,
+    int Total,
+    int TotalMentionCount,
+    int ScoredMentionCount,
+    int MentionOnlyCount,
+    double SentimentCoverage,
+    bool HasMore,
+    IReadOnlyList<PlayerMentionAnalysisDto> Items);
+
+public sealed record PlayerMentionAnalysisDto(
+    long Id,
+    int CommentId,
+    string Body,
+    string PostTitle,
+    string Subreddit,
+    int RedditScore,
+    string AnalysisDisposition,
+    string AnalysisDispositionReason,
+    double SemanticConfidence,
+    double TargetConfidence,
+    string TargetAttributionMethod,
+    double RawSentimentScore,
+    double FinalSentimentScore,
+    string FantasyOutlook,
+    string[] FantasyActions,
+    string[] DiscussionSignals,
+    string[] Reasons,
+    double VoteWeight,
+    double? WeightedContribution,
     DateTimeOffset CreatedAt);
 
 public sealed record PlayerHistoryPointDto(
@@ -158,7 +211,12 @@ public sealed record PlayerHistoryPointDto(
     double CommunitySentiment,
     double SampleStrengthScore,
     string Confidence,
-    double Buzz);
+    double Buzz,
+    int TotalMentionCount = 0,
+    int ScoredMentionCount = 0,
+    int MentionOnlyCount = 0,
+    double SentimentCoverage = 0,
+    bool HasScoredSentiment = false);
 
 public sealed record TeamSummaryDto(
     string Team,
@@ -167,11 +225,21 @@ public sealed record TeamSummaryDto(
     double Buzz,
     string? MostDiscussedPlayer,
     string? BiggestSentimentMover,
-    string? BiggestBuzzMover);
+    string? BiggestBuzzMover,
+    int TotalMentionCount = 0,
+    int ScoredMentionCount = 0,
+    int MentionOnlyCount = 0,
+    double SentimentCoverage = 0,
+    bool HasScoredSentiment = false);
 
 public sealed record TeamDetailDto(
     string Team,
     int Mentions,
     double Sentiment,
     double Buzz,
-    IReadOnlyList<DashboardPlayerDto> Players);
+    IReadOnlyList<DashboardPlayerDto> Players,
+    int TotalMentionCount = 0,
+    int ScoredMentionCount = 0,
+    int MentionOnlyCount = 0,
+    double SentimentCoverage = 0,
+    bool HasScoredSentiment = false);

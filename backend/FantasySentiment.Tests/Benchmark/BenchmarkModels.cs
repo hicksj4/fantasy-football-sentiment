@@ -181,6 +181,14 @@ internal sealed class BenchmarkReport
     public List<BenchmarkFailure> RepresentativeFailures { get; set; } = [];
     public List<BenchmarkFailure> AllFailures { get; set; } = [];
     public List<BenchmarkTargetEvaluation> TargetEvaluations { get; set; } = [];
+    public List<SplitPrecisionSummary> SplitPrecisionSummaries { get; set; } = [];
+    public List<GateExclusionSummary> GateExclusionSummaries { get; set; } = [];
+    public List<SentimentGateSummary> SentimentGateSummaries { get; set; } = [];
+    public List<ConfidenceCalibrationSummary> ConfidenceCalibration { get; set; } = [];
+    public List<ConfidenceValueSummary> ConfidenceValues { get; set; } = [];
+    public List<BenchmarkFailure> HighConfidenceErrors { get; set; } = [];
+    public List<BenchmarkFailure> FalseAbstentions { get; set; } = [];
+    public List<BenchmarkFailure> GoodAbstentions { get; set; } = [];
 }
 
 internal sealed class ThreadBenchmarkSummary
@@ -356,6 +364,72 @@ internal sealed class BenchmarkTargetEvaluation
     public string? Notes { get; set; }
 }
 
+internal sealed class SentimentGateSummary
+{
+    public string DatasetSplit { get; set; } = "Development";
+    public string Gate { get; set; } = string.Empty;
+    public int TotalScorable { get; set; }
+    public int Evaluated { get; set; }
+    public int Correct { get; set; }
+    public int Abstained { get; set; }
+    public int GoodAbstentions { get; set; }
+    public int FalseAbstentions { get; set; }
+    public double Coverage => TotalScorable == 0 ? 0 : Math.Round(Evaluated / (double)TotalScorable, 3);
+    public double Accuracy => Evaluated == 0 ? 0 : Math.Round(Correct / (double)Evaluated, 3);
+}
+
+internal sealed class SplitPrecisionSummary
+{
+    public string DatasetSplit { get; set; } = "Development";
+    public int CommentCount { get; set; }
+    public int ExpectedTargetCount { get; set; }
+    public double TargetF1 { get; set; }
+    public double RawFantasyOutlookAccuracy { get; set; }
+    public int RawFantasyOutlookCorrect { get; set; }
+    public int RawFantasyOutlookTotal { get; set; }
+    public double GatedFantasyOutlookAccuracy { get; set; }
+    public int GatedFantasyOutlookCorrect { get; set; }
+    public int GatedFantasyOutlookTotal { get; set; }
+    public double ProductionCoverage { get; set; }
+    public double PlayerEvaluationAccuracy { get; set; }
+    public double PerspectiveAccuracy { get; set; }
+    public double FantasyActionF1 { get; set; }
+    public double DiscussionSignalF1 { get; set; }
+    public double HighConfidenceAccuracy { get; set; }
+    public int HighConfidenceCorrect { get; set; }
+    public int HighConfidenceTotal { get; set; }
+    public double HighConfidenceCoverage { get; set; }
+}
+
+internal sealed class GateExclusionSummary
+{
+    public string DatasetSplit { get; set; } = "Development";
+    public int ActualScorableMentions { get; set; }
+    public int Scored { get; set; }
+    public int SemanticConfidenceOnly { get; set; }
+    public int TargetConfidenceOnly { get; set; }
+    public int FailedBoth { get; set; }
+    public int MissingConfidence { get; set; }
+}
+
+internal sealed class ConfidenceCalibrationSummary
+{
+    public string DatasetSplit { get; set; } = "Development";
+    public string Band { get; set; } = string.Empty;
+    public int Count { get; set; }
+    public int Correct { get; set; }
+    public double Accuracy => Count == 0 ? 0 : Math.Round(Correct / (double)Count, 3);
+}
+
+internal sealed class ConfidenceValueSummary
+{
+    public string DatasetSplit { get; set; } = "Development";
+    public double SemanticConfidence { get; set; }
+    public int Count { get; set; }
+    public int Correct { get; set; }
+    public double Accuracy => Count == 0 ? 0 : Math.Round(Correct / (double)Count, 3);
+}
+
 internal sealed class SemanticDivergenceExample
 {
     public string ThreadName { get; set; } = string.Empty;
@@ -389,6 +463,7 @@ internal sealed record ActualTargetResult(
     IReadOnlySet<string> DiscussionSignals,
     string AttributionMethod,
     double TargetConfidence,
+    double SemanticConfidence,
     string TargetText,
     string? Diagnostics);
 

@@ -35,6 +35,7 @@ public sealed class RuleBasedFantasySentimentAnalyzer(
             result.FinalScore,
             nameof(RuleBasedFantasySentimentAnalyzer),
             request.Context,
-            diagnostics));
+            diagnostics,
+            result.SemanticConfidence));
     }
 }

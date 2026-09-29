@@ -30,6 +30,11 @@ export type DashboardPlayer = {
   discussionImpact: number;
   discussionImpactRank: number;
   discussionImpactPercentile: number;
+  totalMentionCount: number;
+  scoredMentionCount: number;
+  mentionOnlyCount: number;
+  sentimentCoverage: number;
+  hasScoredSentiment: boolean;
 };
 
 export type DashboardHighlightInfluence = {
@@ -40,6 +45,10 @@ export type DashboardHighlightInfluence = {
   sentimentContribution: number;
   postTitle: string;
   createdAt: string;
+  subreddit?: string | null;
+  targetAttributionMethod?: string | null;
+  targetConfidence?: number | null;
+  semanticConfidence?: number | null;
 };
 
 export type DashboardHighlightPlayer = {
@@ -58,6 +67,11 @@ export type DashboardHighlightPlayer = {
   sampleStrengthScore: number;
   confidence: string;
   topInfluence: DashboardHighlightInfluence | null;
+  totalMentionCount: number;
+  scoredMentionCount: number;
+  mentionOnlyCount: number;
+  sentimentCoverage: number;
+  hasScoredSentiment: boolean;
 };
 
 export type DashboardHighlightEligibility = {
@@ -139,6 +153,11 @@ export type PlayerMetrics = {
   mostInfluentialComment: PlayerScoreComment | null;
   mostEndorsedComment: PlayerScoreComment | null;
   mostRejectedComment: PlayerScoreComment | null;
+  totalMentionCount: number;
+  scoredMentionCount: number;
+  mentionOnlyCount: number;
+  sentimentCoverage: number;
+  hasScoredSentiment: boolean;
 };
 
 export type PlayerScoreComment = {
@@ -151,7 +170,46 @@ export type PlayerScoreComment = {
   communityContribution: number;
   targetAttributionMethod: string;
   targetConfidence: number;
+  semanticConfidence: number;
+  analysisDisposition: string;
   createdAt: string;
+};
+
+export type PlayerMentionAnalysis = {
+  id: number;
+  commentId: number;
+  body: string;
+  postTitle: string;
+  subreddit: string;
+  redditScore: number;
+  analysisDisposition: string;
+  analysisDispositionReason: string;
+  semanticConfidence: number;
+  targetConfidence: number;
+  targetAttributionMethod: string;
+  rawSentimentScore: number;
+  finalSentimentScore: number;
+  fantasyOutlook: string;
+  fantasyActions: string[];
+  discussionSignals: string[];
+  reasons: string[];
+  voteWeight: number;
+  weightedContribution: number | null;
+  createdAt: string;
+};
+
+export type PlayerMentionAnalysisPage = {
+  playerId: number;
+  snapshotKey: string;
+  page: number;
+  pageSize: number;
+  total: number;
+  totalMentionCount: number;
+  scoredMentionCount: number;
+  mentionOnlyCount: number;
+  sentimentCoverage: number;
+  hasMore: boolean;
+  items: PlayerMentionAnalysis[];
 };
 
 export type HistoryPoint = {
@@ -163,6 +221,11 @@ export type HistoryPoint = {
   sampleStrengthScore: number;
   confidence: string;
   buzz: number;
+  totalMentionCount: number;
+  scoredMentionCount: number;
+  mentionOnlyCount: number;
+  sentimentCoverage: number;
+  hasScoredSentiment: boolean;
 };
 
 export type TeamSummary = {
@@ -173,6 +236,11 @@ export type TeamSummary = {
   mostDiscussedPlayer: string | null;
   biggestSentimentMover: string | null;
   biggestBuzzMover: string | null;
+  totalMentionCount: number;
+  scoredMentionCount: number;
+  mentionOnlyCount: number;
+  sentimentCoverage: number;
+  hasScoredSentiment: boolean;
 };
 
 export type TeamDetail = {
@@ -181,6 +249,11 @@ export type TeamDetail = {
   sentiment: number;
   buzz: number;
   players: DashboardPlayer[];
+  totalMentionCount: number;
+  scoredMentionCount: number;
+  mentionOnlyCount: number;
+  sentimentCoverage: number;
+  hasScoredSentiment: boolean;
 };
 
 const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:5044";

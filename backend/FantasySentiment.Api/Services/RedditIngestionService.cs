@@ -17,6 +17,7 @@ public sealed class RedditIngestionService(
     ThreadContextBuilder threadContextBuilder,
     FantasyIntentClassifier intentClassifier,
     VoteWeightCalculator voteWeightCalculator,
+    SentimentScoringPolicy sentimentScoringPolicy,
     SnapshotAggregationService snapshotAggregationService,
     IOptions<RedditOptions> redditOptions,
     IOptions<RedditAnalysisOptions> analysisOptions,
@@ -313,12 +314,16 @@ public sealed class RedditIngestionService(
                     analysisContext,
                     match,
                     resolvedContext.TargetText,
-                    resolvedContext.Perspective),
+                    resolvedContext.Perspective,
+                    target.AttributionMethod),
                 cancellationToken);
             var semanticClassification = intentClassifier.ClassifyAll(
                 comment.Body,
                 resolvedContext.TargetText,
                 match);
+            var scoringDecision = sentimentScoringPolicy.Evaluate(
+                sentiment.SemanticConfidence,
+                target.Confidence);
 
             db.PlayerMentions.Add(new PlayerMention
             {
@@ -331,10 +336,13 @@ public sealed class RedditIngestionService(
                 ModelSentimentScore = sentiment.ModelScore,
                 RuleBasedSentimentScore = sentiment.RuleBasedScore,
                 FantasyAdjustment = sentiment.FantasyAdjustment,
+                SemanticConfidence = sentiment.SemanticConfidence,
                 SentimentCategory = sentiment.SentimentCategory,
                 SentimentAnalyzer = sentiment.AnalyzerName,
                 SentimentContext = Truncate(sentiment.Context, 1200) ?? string.Empty,
                 SentimentDiagnostics = Truncate(sentiment.Diagnostics, 1000),
+                AnalysisDisposition = scoringDecision.Disposition,
+                AnalysisDispositionReason = scoringDecision.Reason,
                 MatchedAlias = Truncate(match.MatchedAlias, 160) ?? string.Empty,
                 TargetAttributionMethod = target.AttributionMethod,
                 TargetConfidence = target.Confidence,
