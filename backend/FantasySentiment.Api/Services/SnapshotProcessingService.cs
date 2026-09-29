@@ -316,6 +316,10 @@ public sealed class SnapshotProcessingService(
                         resolvedContext.Perspective,
                         target.AttributionMethod),
                     cancellationToken);
+                var semanticClassification = intentClassifier.ClassifyAll(
+                    comment.Body,
+                    resolvedContext.TargetText,
+                    match);
 
                 db.PlayerMentions.Add(new PlayerMention
                 {
@@ -337,7 +341,9 @@ public sealed class SnapshotProcessingService(
                     TargetAttributionMethod = target.AttributionMethod,
                     TargetConfidence = target.Confidence,
                     TargetPerspective = resolvedContext.Perspective,
-                    Intent = intentClassifier.Classify(comment.Body, resolvedContext.TargetText, match),
+                    Intent = semanticClassification.LegacyIntent,
+                    FantasyActions = SerializeLabels(semanticClassification.FantasyActions),
+                    DiscussionSignals = SerializeLabels(semanticClassification.DiscussionSignals),
                     RedditScore = comment.Score,
                     VoteWeight = voteWeight,
                     WeightedSentimentContribution = Math.Round(sentiment.FinalSentimentScore * voteWeight, 3)
@@ -485,16 +491,16 @@ public sealed class SnapshotProcessingService(
                 AverageVoteWeight = Math.Round(playerMentions.Average(mention => mention.VoteWeight), 3),
                 SampleStrengthScore = sampleConfidence.SampleStrengthScore,
                 Confidence = sampleConfidence.Confidence,
-                AddCount = CountIntent(playerMentions, FantasyIntents.Add),
-                DropCount = CountIntent(playerMentions, FantasyIntents.Drop),
-                StartCount = CountIntent(playerMentions, FantasyIntents.Start),
-                SitCount = CountIntent(playerMentions, FantasyIntents.Sit),
-                BuyCount = CountIntent(playerMentions, FantasyIntents.Buy),
-                SellCount = CountIntent(playerMentions, FantasyIntents.Sell),
-                HoldCount = CountIntent(playerMentions, FantasyIntents.Hold),
-                InjuryCount = CountIntent(playerMentions, FantasyIntents.Injury),
-                HypeCount = CountIntent(playerMentions, FantasyIntents.Hype),
-                PanicCount = CountIntent(playerMentions, FantasyIntents.Panic),
+                AddCount = CountAction(playerMentions, FantasyActions.Add),
+                DropCount = CountAction(playerMentions, FantasyActions.Drop),
+                StartCount = CountAction(playerMentions, FantasyActions.Start),
+                SitCount = CountAction(playerMentions, FantasyActions.Sit),
+                BuyCount = CountAction(playerMentions, FantasyActions.Buy),
+                SellCount = CountAction(playerMentions, FantasyActions.Sell),
+                HoldCount = CountAction(playerMentions, FantasyActions.Hold),
+                InjuryCount = CountSignal(playerMentions, FantasyDiscussionSignals.Injury),
+                HypeCount = 0,
+                PanicCount = 0,
                 DiscussionShare = Math.Round(playerMentions.Count / (double)totalMentions, 4),
                 PositiveImpact = Math.Round(positiveImpact, 3),
                 NegativeImpact = Math.Round(negativeImpact, 3),
@@ -510,6 +516,28 @@ public sealed class SnapshotProcessingService(
     private static int CountIntent(IEnumerable<PlayerMention> mentions, string intent)
     {
         return mentions.Count(mention => mention.Intent == intent);
+    }
+
+    private static int CountAction(IEnumerable<PlayerMention> mentions, string action)
+    {
+        return mentions.Count(mention => HasLabel(mention.FantasyActions, action));
+    }
+
+    private static int CountSignal(IEnumerable<PlayerMention> mentions, string signal)
+    {
+        return mentions.Count(mention => HasLabel(mention.DiscussionSignals, signal));
+    }
+
+    private static bool HasLabel(string labels, string expected)
+    {
+        return labels
+            .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Contains(expected, StringComparer.OrdinalIgnoreCase);
+    }
+
+    private static string SerializeLabels(IEnumerable<string> labels)
+    {
+        return string.Join('|', labels);
     }
 
     private static string? Truncate(string? value, int maxLength)

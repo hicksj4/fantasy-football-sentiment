@@ -80,6 +80,8 @@ public sealed class FantasySentimentDbContext(DbContextOptions<FantasySentimentD
             entity.Property(mention => mention.TargetAttributionMethod).HasMaxLength(32);
             entity.Property(mention => mention.TargetPerspective).HasMaxLength(32);
             entity.Property(mention => mention.Intent).HasMaxLength(16);
+            entity.Property(mention => mention.FantasyActions).HasMaxLength(120);
+            entity.Property(mention => mention.DiscussionSignals).HasMaxLength(120);
             entity.HasIndex(mention => new { mention.PlayerId, mention.CommentId }).IsUnique();
             entity.HasIndex(mention => mention.CreatedAt);
             entity.HasIndex(mention => mention.SnapshotId);

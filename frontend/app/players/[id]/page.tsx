@@ -123,9 +123,7 @@ export default async function PlayerPage({ params, searchParams }: PageProps) {
           [ "Buy", player.buyCount ],
           [ "Sell", player.sellCount ],
           [ "Hold", player.holdCount ],
-          [ "Injury", player.injuryCount ],
-          [ "Hype", player.hypeCount ],
-          [ "Panic", player.panicCount ]
+          [ "Injury", player.injuryCount ]
         ].map(([label, value]) => (
           <div className="signal" key={label}>
             <span>{label}</span>

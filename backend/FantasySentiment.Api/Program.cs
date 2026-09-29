@@ -197,10 +197,10 @@ api.MapGet("/snapshots/{key}/players", async (
     var ordered = (sort?.Trim().ToLowerInvariant()) switch
     {
         "waivers" or "waiver" => rows
-            .OrderByDescending(row => row.AddCount + row.HypeCount)
+            .OrderByDescending(row => row.AddCount + row.BuyCount)
             .ThenByDescending(row => row.ImpactScore),
         "panic" => rows
-            .OrderByDescending(row => row.DropCount + row.SitCount + row.SellCount + row.PanicCount)
+            .OrderByDescending(row => row.DropCount + row.SitCount + row.SellCount)
             .ThenByDescending(row => row.ImpactScore),
         "most-discussed" or "mentions" => rows
             .OrderByDescending(row => row.Mentions)
@@ -372,7 +372,7 @@ api.MapGet("/waivers", async (
     var rows = await analytics.GetDashboardRowsAsync(ParseWindow(window), cancellationToken);
     return Results.Ok(rows
         .Where(row => row.Mentions > 0)
-        .OrderByDescending(row => row.AddCount + row.HypeCount)
+        .OrderByDescending(row => row.AddCount + row.BuyCount)
         .ThenByDescending(row => row.Buzz)
         .Take(limit ?? 12));
 });
@@ -386,7 +386,7 @@ api.MapGet("/panic", async (
     var rows = await analytics.GetDashboardRowsAsync(ParseWindow(window), cancellationToken);
     return Results.Ok(rows
         .Where(row => row.Mentions > 0)
-        .OrderByDescending(row => row.DropCount + row.SitCount + row.SellCount + row.PanicCount)
+        .OrderByDescending(row => row.DropCount + row.SitCount + row.SellCount)
         .ThenByDescending(row => row.Buzz)
         .Take(limit ?? 12));
 });

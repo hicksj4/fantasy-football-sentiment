@@ -165,8 +165,18 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("DiscussionSignals")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
                     b.Property<double>("FantasyAdjustment")
                         .HasColumnType("double precision");
+
+                    b.Property<string>("FantasyActions")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
 
                     b.Property<double>("FinalSentimentScore")
                         .HasColumnType("double precision");

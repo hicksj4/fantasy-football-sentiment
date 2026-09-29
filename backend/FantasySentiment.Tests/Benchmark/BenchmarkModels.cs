@@ -107,12 +107,10 @@ internal static class BenchmarkFantasyActions
 
 internal static class BenchmarkDiscussionSignals
 {
-    public const string Hype = FantasyIntents.Hype;
-    public const string Panic = FantasyIntents.Panic;
-    public const string Injury = FantasyIntents.Injury;
+    public const string Injury = FantasyDiscussionSignals.Injury;
 
     public static readonly IReadOnlySet<string> All = new HashSet<string>(
-        [Hype, Panic, Injury],
+        [Injury],
         StringComparer.OrdinalIgnoreCase);
 }
 
@@ -345,6 +343,8 @@ internal sealed class BenchmarkTargetEvaluation
     public double? ActualScore { get; set; }
     public string? ActualPerspective { get; set; }
     public string? ActualIntent { get; set; }
+    public string ActualActions { get; set; } = string.Empty;
+    public string ActualSignals { get; set; } = string.Empty;
     public string? AttributionMethod { get; set; }
     public double? TargetConfidence { get; set; }
     public double? SemanticConfidence { get; set; }
@@ -385,6 +385,8 @@ internal sealed record ActualTargetResult(
     double SentimentScore,
     string Perspective,
     string Intent,
+    IReadOnlySet<string> FantasyActions,
+    IReadOnlySet<string> DiscussionSignals,
     string AttributionMethod,
     double TargetConfidence,
     string TargetText,

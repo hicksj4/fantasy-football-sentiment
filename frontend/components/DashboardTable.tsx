@@ -28,8 +28,8 @@ export function DashboardTable({ title, rows, mode = "default", snapshotKey }: D
               <th>Sentiment</th>
               <th>Community</th>
               <th>Discussion Impact</th>
-              {mode === "waiver" ? <th>Add/Hype</th> : null}
-              {mode === "panic" ? <th>Drop/Panic</th> : null}
+              {mode === "waiver" ? <th>Add/Buy</th> : null}
+              {mode === "panic" ? <th>Drop/Sit/Sell</th> : null}
             </tr>
           </thead>
           <tbody>
@@ -60,8 +60,8 @@ export function DashboardTable({ title, rows, mode = "default", snapshotKey }: D
                     <span>{row.discussionImpactPercentile.toFixed(0)}th pct</span>
                   </Link>
                 </td>
-                {mode === "waiver" ? <td>{row.addCount + row.hypeCount}</td> : null}
-                {mode === "panic" ? <td>{row.dropCount + row.sitCount + row.sellCount + row.panicCount}</td> : null}
+                {mode === "waiver" ? <td>{row.addCount + row.buyCount}</td> : null}
+                {mode === "panic" ? <td>{row.dropCount + row.sitCount + row.sellCount}</td> : null}
               </tr>
             ))}
           </tbody>

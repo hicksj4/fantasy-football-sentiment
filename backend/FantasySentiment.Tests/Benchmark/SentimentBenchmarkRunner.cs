@@ -170,7 +170,7 @@ internal sealed class SentimentBenchmarkRunner
         builder.AppendLine($"Fantasy Action precision/recall/F1: {report.FantasyActionMetrics.Precision:0.###}/{report.FantasyActionMetrics.Recall:0.###}/{report.FantasyActionMetrics.F1:0.###} ({report.FantasyActionMetrics.TruePositive} TP, {report.FantasyActionMetrics.FalsePositive} FP, {report.FantasyActionMetrics.FalseNegative} FN)");
         builder.AppendLine($"Discussion Signal precision/recall/F1: {report.DiscussionSignalMetrics.Precision:0.###}/{report.DiscussionSignalMetrics.Recall:0.###}/{report.DiscussionSignalMetrics.F1:0.###} ({report.DiscussionSignalMetrics.TruePositive} TP, {report.DiscussionSignalMetrics.FalsePositive} FP, {report.DiscussionSignalMetrics.FalseNegative} FN)");
         builder.AppendLine();
-        builder.AppendLine("The production classifier still emits one legacy intent label. The benchmark projects that label into either one fantasy action, one discussion signal, or neither, so multi-label recall loss is expected and visible.");
+        builder.AppendLine("Fantasy actions and discussion signals are evaluated as separate target-scoped semantic sets. Hype and Panic are no longer benchmark discussion-signal labels; bullish and bearish language is represented through FantasyOutlook.");
         builder.AppendLine();
         builder.AppendLine("## Old Contract Comparison");
         builder.AppendLine();
@@ -347,13 +347,19 @@ internal sealed class SentimentBenchmarkRunner
                     resolvedContext.Perspective,
                     target.AttributionMethod),
                 cancellationToken);
+            var semanticClassification = _intentClassifier.ClassifyAll(
+                comment.Body,
+                resolvedContext.TargetText,
+                match);
 
             actual.Add(new ActualTargetResult(
                 target.PlayerName,
                 BenchmarkDirections.FromScore(sentiment.FinalSentimentScore),
                 sentiment.FinalSentimentScore,
                 resolvedContext.Perspective,
-                _intentClassifier.Classify(comment.Body, resolvedContext.TargetText, match),
+                semanticClassification.LegacyIntent,
+                semanticClassification.FantasyActions.ToHashSet(StringComparer.OrdinalIgnoreCase),
+                semanticClassification.DiscussionSignals.ToHashSet(StringComparer.OrdinalIgnoreCase),
                 target.AttributionMethod,
                 target.Confidence,
                 resolvedContext.TargetText,
@@ -485,7 +491,7 @@ internal sealed class SentimentBenchmarkRunner
                 "FantasyAction",
                 expectedTarget,
                 NormalizeFantasyActions(expectedTarget),
-                ProjectAction(actual.Intent),
+                actual.FantasyActions,
                 fixture,
                 comment,
                 actual,
@@ -495,7 +501,7 @@ internal sealed class SentimentBenchmarkRunner
                 "DiscussionSignal",
                 expectedTarget,
                 NormalizeDiscussionSignals(expectedTarget),
-                ProjectSignal(actual.Intent),
+                actual.DiscussionSignals,
                 fixture,
                 comment,
                 actual,
@@ -572,6 +578,8 @@ internal sealed class SentimentBenchmarkRunner
             ActualScore = actual?.SentimentScore,
             ActualPerspective = actual?.Perspective,
             ActualIntent = actual?.Intent,
+            ActualActions = actual is null ? "Missing" : JoinOrNone(actual.FantasyActions),
+            ActualSignals = actual is null ? "Missing" : JoinOrNone(actual.DiscussionSignals),
             AttributionMethod = actual?.AttributionMethod,
             TargetConfidence = actual?.TargetConfidence,
             SemanticConfidence = ExtractSemanticConfidence(actual?.Diagnostics),
@@ -820,7 +828,7 @@ internal sealed class SentimentBenchmarkRunner
             CommentId = comment.Id,
             Body = comment.Body,
             Expected = $"{expectedTarget.Player} {JoinOrNone(expected)}",
-            Actual = $"{actualTarget.Player} {JoinOrNone(actual)} (legacy intent: {actualTarget.Intent})",
+            Actual = $"{actualTarget.Player} {JoinOrNone(actual)}",
             ContextRequirement = comment.Expected.ContextRequirement,
             Notes = expectedTarget.Notes ?? comment.Notes,
             Diagnostics = actualTarget.Diagnostics
@@ -847,20 +855,6 @@ internal sealed class SentimentBenchmarkRunner
             .Concat(target.Intents.Where(BenchmarkDiscussionSignals.All.Contains))
             .Where(BenchmarkDiscussionSignals.All.Contains)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
-    }
-
-    private static IReadOnlySet<string> ProjectAction(string intent)
-    {
-        return BenchmarkFantasyActions.All.Contains(intent)
-            ? new HashSet<string>([intent], StringComparer.OrdinalIgnoreCase)
-            : new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-    }
-
-    private static IReadOnlySet<string> ProjectSignal(string intent)
-    {
-        return BenchmarkDiscussionSignals.All.Contains(intent)
-            ? new HashSet<string>([intent], StringComparer.OrdinalIgnoreCase)
-            : new HashSet<string>(StringComparer.OrdinalIgnoreCase);
     }
 
     private static string FailureCategory(string prefix, BenchmarkExpectedTarget target)

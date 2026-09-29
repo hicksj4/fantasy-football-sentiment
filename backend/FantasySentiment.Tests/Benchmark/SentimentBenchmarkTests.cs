@@ -66,7 +66,7 @@ public sealed class SentimentBenchmarkTests(ITestOutputHelper output)
 
     [Fact]
     [Trait("Category", "Benchmark")]
-    public async Task AuditedHoldoutBFixture_GeneratesFrozenV4GeneralizationReport()
+    public async Task AuditedEvaluationBFixture_GeneratesFrozenV4DiagnosticReport()
     {
         var corpus = BenchmarkFixtureLoader.LoadCorpus();
         var runner = new SentimentBenchmarkRunner(corpus);
@@ -84,9 +84,9 @@ public sealed class SentimentBenchmarkTests(ITestOutputHelper output)
         var markdown = string.Join(
             Environment.NewLine,
             [
-                "# Holdout B -- Audited Ground Truth",
+                "# Evaluation B -- Audited Ground Truth",
                 string.Empty,
-                "DatasetSplit: Holdout  ",
+                "DatasetSplit: Evaluation B (formerly Holdout B)  ",
                 "Semantic profile: fantasy-semantics-v4  ",
                 "Analyzer: frozen  ",
                 "Ground truth: Audited  ",
@@ -99,8 +99,9 @@ public sealed class SentimentBenchmarkTests(ITestOutputHelper output)
         output.WriteLine(markdown);
 
         Assert.Contains(report.ByThread, thread =>
-            thread.DatasetSplit == "Holdout"
+            thread.DatasetSplit == "EvaluationB"
             && thread.ThreadName == "OFFICIAL WEEK 1 SUNDAY AFTERNOON GAME THREAD");
+        Assert.Contains("Evaluation B", markdown);
         Assert.Contains("Ground truth: Audited", markdown);
         Assert.Contains("fantasy-semantics-v4", markdown);
         Assert.True(File.Exists(jsonPath));

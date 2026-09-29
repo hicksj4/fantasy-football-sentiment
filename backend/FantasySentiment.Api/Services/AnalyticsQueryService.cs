@@ -96,13 +96,15 @@ public sealed class AnalyticsQueryService(
             .Where(player => player.IsActive)
             .ToListAsync(cancellationToken);
 
-        var mentionStats = await db.PlayerMentions
+        var recentMentions = await db.PlayerMentions
             .AsNoTracking()
             .Where(mention => mention.CreatedAt >= start)
+            .ToListAsync(cancellationToken);
+
+        var mentionStats = recentMentions
             .GroupBy(mention => mention.PlayerId)
-            .Select(group => new
+            .ToDictionary(group => group.Key, group => new
             {
-                PlayerId = group.Key,
                 Mentions = group.Count(),
                 Sentiment = group.Average(mention => mention.FinalSentimentScore),
                 RawSentiment = group.Average(mention => mention.RawSentimentScore),
@@ -112,16 +114,15 @@ public sealed class AnalyticsQueryService(
                 TotalRedditScore = group.Sum(mention => mention.RedditScore),
                 TotalVoteWeight = group.Sum(mention => mention.VoteWeight),
                 AverageVoteWeight = group.Average(mention => mention.VoteWeight),
-                AddCount = group.Count(mention => mention.Intent == FantasyIntents.Add),
-                DropCount = group.Count(mention => mention.Intent == FantasyIntents.Drop),
-                StartCount = group.Count(mention => mention.Intent == FantasyIntents.Start),
-                SitCount = group.Count(mention => mention.Intent == FantasyIntents.Sit),
-                BuyCount = group.Count(mention => mention.Intent == FantasyIntents.Buy),
-                SellCount = group.Count(mention => mention.Intent == FantasyIntents.Sell),
-                HypeCount = group.Count(mention => mention.Intent == FantasyIntents.Hype),
-                PanicCount = group.Count(mention => mention.Intent == FantasyIntents.Panic)
-            })
-            .ToDictionaryAsync(item => item.PlayerId, cancellationToken);
+                AddCount = group.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Add)),
+                DropCount = group.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Drop)),
+                StartCount = group.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Start)),
+                SitCount = group.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Sit)),
+                BuyCount = group.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Buy)),
+                SellCount = group.Count(mention => HasLabel(mention.FantasyActions, FantasyActions.Sell)),
+                HypeCount = 0,
+                PanicCount = 0
+            });
 
         var snapshots = await db.PlayerSnapshots
             .AsNoTracking()
@@ -472,6 +473,13 @@ public sealed class AnalyticsQueryService(
         }
 
         return $"{trimmed.TrimEnd()}...";
+    }
+
+    private static bool HasLabel(string labels, string expected)
+    {
+        return labels
+            .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Contains(expected, StringComparer.OrdinalIgnoreCase);
     }
 
     private sealed record CommentInfluence(
