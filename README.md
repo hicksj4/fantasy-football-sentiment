@@ -273,6 +273,30 @@ pnpm typecheck
 pnpm build
 ```
 
+## Development Cleanup
+
+Generated folders can grow during normal development: `.vs/`, backend `bin/` and `obj/`, frontend `.next/`, `node_modules/`, repo-local `.tmp-*` verification caches, and ignored files under `artifacts/`.
+
+Run the conservative cleanup from the repo root:
+
+```powershell
+.\scripts\clean.ps1
+```
+
+That removes build/cache output and stale ignored artifacts, while preserving source code, fixtures, migrations, `.env`, Docker/PostgreSQL data, and the current canonical benchmark reports. To also remove `frontend/node_modules/`, run:
+
+```powershell
+.\scripts\clean.ps1 -Full
+```
+
+`-Full` saves more disk space but requires reinstalling frontend dependencies before the next frontend build.
+
+This repo no longer uses the old local RoBERTa/HuggingFace/PyTorch experiment assets. If those ignored folders reappear, this opt-in cleanup removes only `tools/sentiment-model/` and `backend/FantasySentiment.Api/Models/`:
+
+```powershell
+.\scripts\clean.ps1 -RemoveObsoleteMlAssets
+```
+
 ## Verification Checklist
 
 Before committing this branch, run:
