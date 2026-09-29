@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.RegularExpressions;
 using FantasySentiment.Api.Domain;
 using FantasySentiment.Api.Options;
 using FantasySentiment.Api.Services;
@@ -15,7 +16,7 @@ internal sealed class SentimentBenchmarkRunner
     private const double PreviousFantasyOutlookAccuracy = 0.505;
     private const double PreviousPerspectiveAccuracy = 0.125;
     private const double PreviousSingleIntentAccuracy = 0.308;
-    private const string SemanticProfile = "fantasy-semantics-v3";
+    private const string SemanticProfile = "fantasy-semantics-v4";
 
     private readonly BenchmarkCorpus _corpus;
     private readonly CommentTargetResolver _targetResolver;
@@ -174,7 +175,7 @@ internal sealed class SentimentBenchmarkRunner
         builder.AppendLine("## Old Contract Comparison");
         builder.AppendLine();
         builder.AppendLine($"Previous benchmark interpretation: comments={PreviousCommentCount}, expectedTargets={PreviousExpectedTargetCount}, targetF1={PreviousTargetF1:0.###}, sentimentAccuracy={PreviousFantasyOutlookAccuracy:0.###}, perspectiveAccuracy={PreviousPerspectiveAccuracy:0.###}, singleIntentAccuracy={PreviousSingleIntentAccuracy:0.###}.");
-        builder.AppendLine("This report evaluates the current fantasy-semantics-v3 production semantics on the Development dataset. Metric changes may reflect both annotation corrections and production semantic tuning.");
+        builder.AppendLine($"This report evaluates the current {SemanticProfile} production semantics on the Development dataset. Metric changes may reflect both annotation corrections and production semantic tuning.");
         builder.AppendLine();
         builder.AppendLine("## By Thread");
         builder.AppendLine();
@@ -560,15 +561,54 @@ internal sealed class SentimentBenchmarkRunner
             Player = expectedTarget.Player,
             ContextRequirement = comment.Expected.ContextRequirement,
             ExpectedFantasyOutlook = expectedTarget.FantasyOutlook,
+            ExpectedPlayerEvaluation = expectedTarget.PlayerEvaluation,
             ExpectedDirection = BenchmarkDirections.FromExpectedLabel(expectedTarget.FantasyOutlook)
                                 ?? BenchmarkDirections.FromExpectedLabel(expectedTarget.Sentiment)
                                 ?? BenchmarkFantasyLabels.Unknown,
+            ExpectedPerspective = expectedTarget.Perspective,
+            ExpectedActions = JoinOrNone(NormalizeFantasyActions(expectedTarget)),
+            ExpectedSignals = JoinOrNone(NormalizeDiscussionSignals(expectedTarget)),
             ActualDirection = actual?.SentimentDirection ?? "Missing",
             ActualScore = actual?.SentimentScore,
+            ActualPerspective = actual?.Perspective,
+            ActualIntent = actual?.Intent,
+            AttributionMethod = actual?.AttributionMethod,
+            TargetConfidence = actual?.TargetConfidence,
+            SemanticConfidence = ExtractSemanticConfidence(actual?.Diagnostics),
+            SemanticConfidenceBand = SemanticConfidenceBand(ExtractSemanticConfidence(actual?.Diagnostics)),
+            TargetText = actual?.TargetText,
+            Diagnostics = actual?.Diagnostics,
             Reasons = string.Join("/", expectedTarget.Reasons),
             IsDebatable = expectedTarget.IsDebatable || expectedTarget.AlternativeLabels.Count > 0,
             Notes = expectedTarget.Notes ?? comment.Notes
         });
+    }
+
+    private static double? ExtractSemanticConfidence(string? diagnostics)
+    {
+        if (string.IsNullOrWhiteSpace(diagnostics))
+        {
+            return null;
+        }
+
+        var match = Regex.Match(
+            diagnostics,
+            @"semanticConfidence=(?<value>-?\d+(?:\.\d+)?)",
+            RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+        return match.Success && double.TryParse(match.Groups["value"].Value, out var value)
+            ? value
+            : null;
+    }
+
+    private static string SemanticConfidenceBand(double? confidence)
+    {
+        return confidence switch
+        {
+            >= 0.75 => "High",
+            >= 0.45 => "Medium",
+            null => "Missing",
+            _ => "Low"
+        };
     }
 
     private static void ScorePlayerEvaluation(

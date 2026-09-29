@@ -63,4 +63,47 @@ public sealed class SentimentBenchmarkTests(ITestOutputHelper output)
         Assert.True(File.Exists(jsonPath));
         Assert.True(File.Exists(markdownPath));
     }
+
+    [Fact]
+    [Trait("Category", "Benchmark")]
+    public async Task AuditedHoldoutBFixture_GeneratesFrozenV4GeneralizationReport()
+    {
+        var corpus = BenchmarkFixtureLoader.LoadCorpus();
+        var runner = new SentimentBenchmarkRunner(corpus);
+
+        var report = await runner.RunAsync();
+        var benchmarkDirectory = Path.Combine(corpus.RepositoryRoot, "artifacts", "benchmark");
+        Directory.CreateDirectory(benchmarkDirectory);
+
+        var jsonPath = Path.Combine(benchmarkDirectory, "sentiment-holdout-b-audited.json");
+        var markdownPath = Path.Combine(benchmarkDirectory, "sentiment-holdout-b-audited.md");
+        await File.WriteAllTextAsync(
+            jsonPath,
+            JsonSerializer.Serialize(report, BenchmarkFixtureLoader.SerializerOptions));
+
+        var markdown = string.Join(
+            Environment.NewLine,
+            [
+                "# Holdout B -- Audited Ground Truth",
+                string.Empty,
+                "DatasetSplit: Holdout  ",
+                "Semantic profile: fantasy-semantics-v4  ",
+                "Analyzer: frozen  ",
+                "Ground truth: Audited  ",
+                "Source: Week 1 Sunday Afternoon Game Thread",
+                string.Empty,
+                runner.ToMarkdown(report)
+            ]);
+        await File.WriteAllTextAsync(markdownPath, markdown);
+
+        output.WriteLine(markdown);
+
+        Assert.Contains(report.ByThread, thread =>
+            thread.DatasetSplit == "Holdout"
+            && thread.ThreadName == "OFFICIAL WEEK 1 SUNDAY AFTERNOON GAME THREAD");
+        Assert.Contains("Ground truth: Audited", markdown);
+        Assert.Contains("fantasy-semantics-v4", markdown);
+        Assert.True(File.Exists(jsonPath));
+        Assert.True(File.Exists(markdownPath));
+    }
 }
