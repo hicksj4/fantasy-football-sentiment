@@ -68,6 +68,7 @@ function HighlightCard({ title, player, tone }: HighlightCardProps) {
         <div>
           <span>Confidence</span>
           <strong>{player.confidence}</strong>
+          <small>{player.scoredMentionCount}/{player.totalMentionCount || player.mentions} scored</small>
         </div>
       </div>
 

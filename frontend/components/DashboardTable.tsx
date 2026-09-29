@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { DashboardPlayer } from "@/lib/api";
-import { ScorePill } from "@/components/ScorePill";
+import { SentimentEvidence } from "@/components/SentimentEvidence";
 
 type DashboardTableProps = {
   title: string;
@@ -45,10 +45,20 @@ export function DashboardTable({ title, rows, mode = "default", snapshotKey }: D
                 <td>{row.mentions}</td>
                 <td>{(row.discussionShare * 100).toFixed(1)}%</td>
                 <td>
-                  <ScorePill value={row.sentiment} />
+                  <SentimentEvidence
+                    value={row.sentiment}
+                    hasScoredSentiment={row.hasScoredSentiment}
+                    scoredMentionCount={row.scoredMentionCount}
+                    totalMentionCount={row.totalMentionCount || row.mentions}
+                  />
                 </td>
                 <td>
-                  <ScorePill value={row.communitySentiment} />
+                  <SentimentEvidence
+                    value={row.communitySentiment}
+                    hasScoredSentiment={row.hasScoredSentiment}
+                    scoredMentionCount={row.scoredMentionCount}
+                    totalMentionCount={row.totalMentionCount || row.mentions}
+                  />
                 </td>
                 <td>
                   <Link

@@ -1,6 +1,6 @@
 import { DashboardTable } from "@/components/DashboardTable";
 import { MetricCard } from "@/components/MetricCard";
-import { ScorePill } from "@/components/ScorePill";
+import { SentimentEvidence } from "@/components/SentimentEvidence";
 import { getJson, type AnalysisSnapshot, type TeamDetail } from "@/lib/api";
 import Link from "next/link";
 
@@ -29,7 +29,12 @@ export default async function TeamPage({ params, searchParams }: PageProps) {
         </div>
         <div className="hero-score">
           <span>Team sentiment</span>
-          <ScorePill value={detail.sentiment} />
+          <SentimentEvidence
+            value={detail.sentiment}
+            hasScoredSentiment={detail.hasScoredSentiment}
+            scoredMentionCount={detail.scoredMentionCount}
+            totalMentionCount={detail.totalMentionCount || detail.mentions}
+          />
         </div>
       </header>
 

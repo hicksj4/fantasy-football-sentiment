@@ -159,6 +159,16 @@ namespace FantasySentiment.Api.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
+                    b.Property<string>("AnalysisDisposition")
+                        .IsRequired()
+                        .HasMaxLength(24)
+                        .HasColumnType("character varying(24)");
+
+                    b.Property<string>("AnalysisDispositionReason")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
                     b.Property<int>("CommentId")
                         .HasColumnType("integer");
 
@@ -228,6 +238,9 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.Property<double>("SentimentScore")
                         .HasColumnType("double precision");
 
+                    b.Property<double>("SemanticConfidence")
+                        .HasColumnType("double precision");
+
                     b.Property<int?>("SnapshotId")
                         .HasColumnType("integer");
 
@@ -251,6 +264,8 @@ namespace FantasySentiment.Api.Data.Migrations
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnalysisDisposition");
 
                     b.HasIndex("CommentId");
 
@@ -295,6 +310,9 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.Property<int>("DropCount")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("HasScoredSentiment")
+                        .HasColumnType("boolean");
+
                     b.Property<int>("HoldCount")
                         .HasColumnType("integer");
 
@@ -305,6 +323,9 @@ namespace FantasySentiment.Api.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("MentionCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MentionOnlyCount")
                         .HasColumnType("integer");
 
                     b.Property<int>("NegativeCount")
@@ -325,10 +346,16 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.Property<double>("SampleStrengthScore")
                         .HasColumnType("double precision");
 
+                    b.Property<int>("ScoredMentionCount")
+                        .HasColumnType("integer");
+
                     b.Property<int>("SellCount")
                         .HasColumnType("integer");
 
                     b.Property<double>("SentimentScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("SentimentCoverage")
                         .HasColumnType("double precision");
 
                     b.Property<int>("SitCount")
@@ -506,6 +533,9 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.Property<int>("DropCount")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("HasScoredSentiment")
+                        .HasColumnType("boolean");
+
                     b.Property<int>("HoldCount")
                         .HasColumnType("integer");
 
@@ -519,6 +549,9 @@ namespace FantasySentiment.Api.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("MentionCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MentionOnlyCount")
                         .HasColumnType("integer");
 
                     b.Property<int>("NegativeCount")
@@ -548,10 +581,16 @@ namespace FantasySentiment.Api.Data.Migrations
                     b.Property<double>("SampleStrengthScore")
                         .HasColumnType("double precision");
 
+                    b.Property<int>("ScoredMentionCount")
+                        .HasColumnType("integer");
+
                     b.Property<int>("SellCount")
                         .HasColumnType("integer");
 
                     b.Property<double>("SentimentScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("SentimentCoverage")
                         .HasColumnType("double precision");
 
                     b.Property<int>("SitCount")

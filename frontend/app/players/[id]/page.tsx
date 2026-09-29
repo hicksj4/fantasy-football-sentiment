@@ -1,21 +1,39 @@
-import { DashboardTable } from "@/components/DashboardTable";
 import { MetricCard } from "@/components/MetricCard";
-import { ScorePill } from "@/components/ScorePill";
-import { getJson, type AnalysisSnapshot, type DashboardPlayer, type PlayerMetrics, type PlayerScoreComment } from "@/lib/api";
+import { SentimentEvidence } from "@/components/SentimentEvidence";
+import {
+  getJson,
+  type AnalysisSnapshot,
+  type PlayerMentionAnalysis,
+  type PlayerMentionAnalysisPage,
+  type PlayerMetrics,
+  type PlayerScoreComment
+} from "@/lib/api";
 import Link from "next/link";
 
 type PageProps = {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ snapshot?: string }>;
+  searchParams: Promise<{ snapshot?: string; mentionFilter?: string; mentionSort?: string; mentionPage?: string }>;
 };
 
 export default async function PlayerPage({ params, searchParams }: PageProps) {
   const [{ id }, query] = await Promise.all([params, searchParams]);
   const snapshotKey = query.snapshot ?? "latest";
-  const [snapshot, player, related] = await Promise.all([
+  const mentionFilter = normalizeMentionFilter(query.mentionFilter);
+  const mentionSort = normalizeMentionSort(query.mentionSort);
+  const mentionPage = positiveInteger(query.mentionPage, 1);
+  const mentionQuery = new URLSearchParams({
+    page: mentionPage.toString(),
+    pageSize: "20",
+    sort: mentionSort
+  });
+  if (mentionFilter !== "all") {
+    mentionQuery.set("disposition", mentionFilter);
+  }
+
+  const [snapshot, player, mentionAnalysis] = await Promise.all([
     getJson<AnalysisSnapshot>(`/api/snapshots/${snapshotKey}`),
     getJson<PlayerMetrics>(`/api/snapshots/${snapshotKey}/players/${id}`),
-    getJson<DashboardPlayer[]>(`/api/snapshots/${snapshotKey}/players?sort=most-discussed&limit=8`)
+    getJson<PlayerMentionAnalysisPage>(`/api/snapshots/${snapshotKey}/players/${id}/mentions?${mentionQuery.toString()}`)
   ]);
 
   return (
@@ -29,15 +47,28 @@ export default async function PlayerPage({ params, searchParams }: PageProps) {
         </div>
         <div className="hero-score">
           <span>Snapshot sentiment</span>
-          <ScorePill value={player.communitySentiment} />
+          <SentimentEvidence
+            value={player.communitySentiment}
+            hasScoredSentiment={player.hasScoredSentiment}
+            scoredMentionCount={player.scoredMentionCount}
+            totalMentionCount={player.totalMentionCount || player.mentions}
+          />
         </div>
       </header>
 
       <section className="metrics-grid">
         <MetricCard label="Mentions" value={player.mentions} detail="Within selected snapshot" />
         <MetricCard label="Discussion share" value={`${(player.buzz * 100).toFixed(1)}%`} detail={`${snapshot.totalPlayerMentions} total mentions`} />
-        <MetricCard label="Community sentiment" value={player.communitySentiment.toFixed(2)} detail={`Voting effect ${formatSigned(player.votingEffect)}`} />
-        <MetricCard label="Confidence" value={player.confidence} detail={`${player.totalRedditScore} Reddit score`} />
+        <MetricCard
+          label="Community sentiment"
+          value={player.hasScoredSentiment ? player.communitySentiment.toFixed(2) : "Insufficient"}
+          detail={player.hasScoredSentiment ? `Voting effect ${formatSigned(player.votingEffect)}` : "No scored sentiment evidence"}
+        />
+        <MetricCard
+          label="Confidence"
+          value={player.confidence}
+          detail={`${player.scoredMentionCount}/${player.totalMentionCount || player.mentions} mentions scored • ${(player.sentimentCoverage * 100).toFixed(0)}% coverage`}
+        />
       </section>
 
       <section className="panel score-explanation">
@@ -50,16 +81,25 @@ export default async function PlayerPage({ params, searchParams }: PageProps) {
             <ScoreStat
               label="Sentiment"
               value={player.sentiment}
-              help="Average sentiment across all analyzed mentions."
+              hasScoredSentiment={player.hasScoredSentiment}
+              scoredMentionCount={player.scoredMentionCount}
+              totalMentionCount={player.totalMentionCount || player.mentions}
+              help="Average sentiment across scored mentions."
             />
             <ScoreStat
               label="Community Sentiment"
               value={player.communitySentiment}
+              hasScoredSentiment={player.hasScoredSentiment}
+              scoredMentionCount={player.scoredMentionCount}
+              totalMentionCount={player.totalMentionCount || player.mentions}
               help="Sentiment weighted by Reddit voting, with diminishing returns."
             />
             <ScoreStat
               label="Voting Effect"
               value={player.votingEffect}
+              hasScoredSentiment={player.hasScoredSentiment}
+              scoredMentionCount={player.scoredMentionCount}
+              totalMentionCount={player.totalMentionCount || player.mentions}
               help="How much Reddit voting moved community sentiment away from the unweighted average."
             />
           </div>
@@ -74,7 +114,7 @@ export default async function PlayerPage({ params, searchParams }: PageProps) {
           <div className="distribution-card">
             <div className="distribution-heading">
               <span>Sentiment Distribution</span>
-              <strong>{player.mentions} mentions</strong>
+              <strong>{player.scoredMentionCount} scored</strong>
             </div>
             <div className="distribution-bar" aria-label="Sentiment distribution">
               <span className="positive" style={{ width: `${player.positivePercent}%` }} />
@@ -85,6 +125,7 @@ export default async function PlayerPage({ params, searchParams }: PageProps) {
               <span><b>{player.positiveMentions}</b> positive</span>
               <span><b>{player.neutralMentions}</b> neutral</span>
               <span><b>{player.negativeMentions}</b> negative</span>
+              <span><b>{player.mentionOnlyCount}</b> mention-only</span>
             </div>
           </div>
 
@@ -132,23 +173,44 @@ export default async function PlayerPage({ params, searchParams }: PageProps) {
         ))}
       </section>
 
-      <DashboardTable
-        title="Most Discussed In Snapshot"
-        rows={related.filter((row) => row.playerId !== player.playerId).slice(0, 6)}
+      <CommentAnalysisSection
         snapshotKey={snapshot.key}
+        page={mentionAnalysis}
+        filter={mentionFilter}
+        sort={mentionSort}
       />
     </main>
   );
 }
 
-function ScoreStat({ label, value, help }: { label: string; value: number; help: string }) {
+function ScoreStat({
+  label,
+  value,
+  help,
+  hasScoredSentiment,
+  scoredMentionCount,
+  totalMentionCount
+}: {
+  label: string;
+  value: number;
+  help: string;
+  hasScoredSentiment: boolean;
+  scoredMentionCount: number;
+  totalMentionCount: number;
+}) {
   return (
     <div className="score-stat">
       <div>
         <span>{label}</span>
         <small>{help}</small>
       </div>
-      <ScorePill value={value} kind={label === "Voting Effect" ? "change" : "sentiment"} />
+      <SentimentEvidence
+        value={value}
+        kind={label === "Voting Effect" ? "change" : "sentiment"}
+        hasScoredSentiment={hasScoredSentiment}
+        scoredMentionCount={scoredMentionCount}
+        totalMentionCount={totalMentionCount}
+      />
     </div>
   );
 }
@@ -188,4 +250,158 @@ function CommentCard({
 
 function formatSigned(value: number) {
   return `${value > 0 ? "+" : ""}${value.toFixed(2)}`;
+}
+
+function CommentAnalysisSection({
+  snapshotKey,
+  page,
+  filter,
+  sort
+}: {
+  snapshotKey: string;
+  page: PlayerMentionAnalysisPage;
+  filter: string;
+  sort: string;
+}) {
+  const firstShown = page.total === 0 ? 0 : (page.page - 1) * page.pageSize + 1;
+  const lastShown = Math.min(page.total, page.page * page.pageSize);
+
+  return (
+    <section className="panel comment-analysis">
+      <div className="panel-heading">
+        <h2>Comment Analysis</h2>
+        <span>{page.scoredMentionCount}/{page.totalMentionCount} scored • {(page.sentimentCoverage * 100).toFixed(0)}% coverage</span>
+      </div>
+
+      <div className="analysis-toolbar">
+        <p>Mention-only comments were linked to this player but were not included in sentiment aggregates because the scorer did not have enough confidence.</p>
+        <div className="analysis-controls">
+          <ControlGroup
+            label="Disposition"
+            links={[
+              ["All", buildMentionHref(snapshotKey, "all", sort, 1), filter === "all"],
+              ["Scored", buildMentionHref(snapshotKey, "scored", sort, 1), filter === "scored"],
+              ["Mention only", buildMentionHref(snapshotKey, "mention-only", sort, 1), filter === "mention-only"]
+            ]}
+          />
+          <ControlGroup
+            label="Sort"
+            links={[
+              ["Influence", buildMentionHref(snapshotKey, filter, "influence", 1), sort === "influence"],
+              ["Reddit score", buildMentionHref(snapshotKey, filter, "reddit-score", 1), sort === "reddit-score"],
+              ["Confidence", buildMentionHref(snapshotKey, filter, "confidence", 1), sort === "confidence"]
+            ]}
+          />
+        </div>
+      </div>
+
+      <div className="analysis-list">
+        {page.items.length === 0 ? (
+          <p className="analysis-empty">No comments match this filter.</p>
+        ) : (
+          page.items.map((item) => <MentionAnalysisCard key={item.id} item={item} />)
+        )}
+      </div>
+
+      <div className="analysis-pagination">
+        <span>Showing {firstShown}-{lastShown} of {page.total}</span>
+        <div>
+          {page.page > 1 ? (
+            <Link href={buildMentionHref(snapshotKey, filter, sort, page.page - 1)}>Previous</Link>
+          ) : null}
+          {page.hasMore ? (
+            <Link href={buildMentionHref(snapshotKey, filter, sort, page.page + 1)}>Next</Link>
+          ) : null}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ControlGroup({
+  label,
+  links
+}: {
+  label: string;
+  links: [string, string, boolean][];
+}) {
+  return (
+    <div className="analysis-control-group">
+      <span>{label}</span>
+      <div>
+        {links.map(([text, href, active]) => (
+          <Link className={active ? "active" : ""} href={href} key={text}>{text}</Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MentionAnalysisCard({ item }: { item: PlayerMentionAnalysis }) {
+  const isScored = item.analysisDisposition.toLowerCase() === "scored";
+
+  return (
+    <article className={`mention-analysis-card ${isScored ? "scored" : "mention-only"}`}>
+      <div className="mention-analysis-heading">
+        <span className={`disposition-badge ${isScored ? "scored" : "mention-only"}`}>
+          {isScored ? "Scored" : "Mention only"}
+        </span>
+        <strong>Score {item.redditScore}</strong>
+      </div>
+
+      <p className="comment-body">{item.body}</p>
+
+      <div className="mention-metrics">
+        <span>Sentiment {formatSigned(item.finalSentimentScore)}</span>
+        <span>Raw {formatSigned(item.rawSentimentScore)}</span>
+        <span>Semantic {(item.semanticConfidence * 100).toFixed(0)}%</span>
+        <span>Target {(item.targetConfidence * 100).toFixed(0)}%</span>
+        <span>{item.targetAttributionMethod}</span>
+        <span>Vote weight {item.voteWeight.toFixed(2)}</span>
+        <span>{isScored && item.weightedContribution !== null ? `Weighted contribution ${formatSigned(item.weightedContribution)}` : "Weighted contribution Not scored"}</span>
+        <span>{item.fantasyOutlook}</span>
+      </div>
+
+      <div className="mention-labels">
+        <LabelList title="Actions" values={item.fantasyActions} />
+        <LabelList title="Signals" values={item.discussionSignals} />
+        <LabelList title="Reasons" values={item.reasons.length > 0 ? item.reasons : [item.analysisDispositionReason]} />
+      </div>
+
+      <div className="thread-title">r/{item.subreddit} • {item.postTitle}</div>
+    </article>
+  );
+}
+
+function LabelList({ title, values }: { title: string; values: string[] }) {
+  return (
+    <div>
+      <span>{title}</span>
+      <div>
+        {values.length === 0 ? <em>none</em> : values.map((value) => <b key={value}>{value}</b>)}
+      </div>
+    </div>
+  );
+}
+
+function buildMentionHref(snapshotKey: string, filter: string, sort: string, page: number) {
+  const params = new URLSearchParams({ snapshot: snapshotKey, mentionSort: sort, mentionPage: page.toString() });
+  if (filter !== "all") {
+    params.set("mentionFilter", filter);
+  }
+
+  return `?${params.toString()}`;
+}
+
+function normalizeMentionFilter(value?: string) {
+  return value === "scored" || value === "mention-only" ? value : "all";
+}
+
+function normalizeMentionSort(value?: string) {
+  return value === "reddit-score" || value === "confidence" ? value : "influence";
+}
+
+function positiveInteger(value: string | undefined, fallback: number) {
+  const parsed = Number.parseInt(value ?? "", 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
 }

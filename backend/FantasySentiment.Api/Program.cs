@@ -49,6 +49,7 @@ builder.Services.AddSingleton<VoteWeightCalculator>();
 builder.Services.AddSingleton<FantasySentimentAnalyzer>();
 builder.Services.AddSingleton<VaderSentimentAnalyzer>();
 builder.Services.AddSingleton<RuleBasedFantasySentimentAnalyzer>();
+builder.Services.AddSingleton<SentimentScoringPolicy>();
 builder.Services.AddSingleton<ISentimentAnalyzer>(provider =>
 {
     var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptions<SentimentOptions>>().Value;
@@ -227,6 +228,27 @@ api.MapGet("/snapshots/{key}/players/{id:int}", async (
 {
     var player = await snapshots.GetPlayerAsync(key, id, cancellationToken);
     return player is null ? Results.NotFound() : Results.Ok(player);
+});
+
+api.MapGet("/snapshots/{key}/players/{id:int}/mentions", async (
+    string key,
+    int id,
+    string? disposition,
+    string? sort,
+    int? page,
+    int? pageSize,
+    SnapshotQueryService snapshots,
+    CancellationToken cancellationToken) =>
+{
+    var mentions = await snapshots.GetPlayerMentionsAsync(
+        key,
+        id,
+        disposition,
+        sort,
+        page ?? 1,
+        pageSize ?? 20,
+        cancellationToken);
+    return mentions is null ? Results.NotFound() : Results.Ok(mentions);
 });
 
 api.MapGet("/snapshots/{key}/highlights", async (

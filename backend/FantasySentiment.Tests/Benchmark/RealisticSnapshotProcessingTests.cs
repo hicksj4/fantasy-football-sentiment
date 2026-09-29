@@ -35,11 +35,16 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
             new ThreadContextBuilder(),
             new FantasyIntentClassifier(new BenchmarkOptionsMonitor<IntentLexiconOptions>(corpus.IntentLexicon)),
             new VoteWeightCalculator(),
+            new SentimentScoringPolicy(),
             NullLogger<SnapshotProcessingService>.Instance);
 
         await processor.ProcessAsync("2026-week2-reddit-sample", skipIfProcessed: false, CancellationToken.None);
+        var processedSnapshot = await db.AnalysisSnapshots.SingleAsync(item => item.Key == "2026-week2-reddit-sample");
+        var mentionCountAfterProcess = await db.PlayerMentions.CountAsync(mention => mention.SnapshotId == processedSnapshot.Id);
+        await processor.ProcessAsync("2026-week2-reddit-sample", skipIfProcessed: true, CancellationToken.None);
+        var mentionCountAfterIdempotentSkip = await db.PlayerMentions.CountAsync(mention => mention.SnapshotId == processedSnapshot.Id);
 
-        var report = await BuildReportAsync(db);
+        var report = await BuildReportAsync(db, mentionCountAfterProcess, mentionCountAfterIdempotentSkip);
         var benchmarkDirectory = Path.Combine(corpus.RepositoryRoot, "artifacts", "benchmark");
         Directory.CreateDirectory(benchmarkDirectory);
         var jsonPath = Path.Combine(benchmarkDirectory, "realistic-snapshot-summary.json");
@@ -55,11 +60,15 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
         Assert.Equal(333, report.Comments);
         Assert.True(report.PlayerMentions > 0);
         Assert.True(report.UniquePlayers > 0);
+        Assert.True(report.IdempotenceMentionCountStable);
         Assert.True(File.Exists(jsonPath));
         Assert.True(File.Exists(markdownPath));
     }
 
-    private static async Task<RealisticSnapshotReport> BuildReportAsync(FantasySentimentDbContext db)
+    private static async Task<RealisticSnapshotReport> BuildReportAsync(
+        FantasySentimentDbContext db,
+        int mentionCountAfterProcess,
+        int mentionCountAfterIdempotentSkip)
     {
         var snapshot = await db.AnalysisSnapshots.SingleAsync(item => item.Key == "2026-week2-reddit-sample");
         var aggregates = await db.SnapshotPlayerAggregates
@@ -83,6 +92,10 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
             Comments = snapshot.TotalComments,
             PlayerMentions = snapshot.TotalPlayerMentions,
             UniquePlayers = snapshot.UniquePlayersMentioned,
+            IdempotenceMentionCountAfterProcess = mentionCountAfterProcess,
+            IdempotenceMentionCountAfterSkip = mentionCountAfterIdempotentSkip,
+            IdempotenceMentionCountStable = mentionCountAfterProcess == mentionCountAfterIdempotentSkip,
+            GateExclusions = BuildGateExclusions(mentions),
             TopCommunitySentiment = aggregates
                 .OrderByDescending(aggregate => aggregate.CommunitySentimentScore)
                 .ThenByDescending(aggregate => aggregate.MentionCount)
@@ -114,6 +127,7 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
                 .Select(ToAggregateSummary)
                 .ToList(),
             MostInfluentialComments = mentions
+                .Where(mention => mention.AnalysisDisposition == AnalysisDispositions.Scored)
                 .GroupBy(mention => mention.PlayerId)
                 .SelectMany(group =>
                 {
@@ -135,6 +149,38 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
         };
     }
 
+    private static GateExclusionSummary BuildGateExclusions(IReadOnlyList<PlayerMention> mentions)
+    {
+        var summary = new GateExclusionSummary
+        {
+            ActualScorableMentions = mentions.Count
+        };
+
+        foreach (var mention in mentions)
+        {
+            var semanticFailed = mention.SemanticConfidence < SentimentScoringPolicy.MinimumSemanticConfidence;
+            var targetFailed = mention.TargetConfidence < SentimentScoringPolicy.MinimumTargetConfidence;
+            if (!semanticFailed && !targetFailed)
+            {
+                summary.Scored++;
+            }
+            else if (semanticFailed && targetFailed)
+            {
+                summary.FailedBoth++;
+            }
+            else if (semanticFailed)
+            {
+                summary.SemanticConfidenceOnly++;
+            }
+            else
+            {
+                summary.TargetConfidenceOnly++;
+            }
+        }
+
+        return summary;
+    }
+
     private static AggregateSummary ToAggregateSummary(SnapshotPlayerAggregate aggregate)
     {
         return new AggregateSummary
@@ -143,6 +189,10 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
             Team = aggregate.Player.Team,
             Position = aggregate.Player.Position,
             Mentions = aggregate.MentionCount,
+            ScoredMentions = aggregate.ScoredMentionCount,
+            MentionOnlyMentions = aggregate.MentionOnlyCount,
+            SentimentCoverage = aggregate.SentimentCoverage,
+            HasScoredSentiment = aggregate.HasScoredSentiment,
             CommunitySentiment = aggregate.CommunitySentimentScore,
             Sentiment = aggregate.SentimentScore,
             Impact = aggregate.ImpactScore,
@@ -162,6 +212,15 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
         builder.AppendLine($"Comments: {report.Comments}");
         builder.AppendLine($"Player mentions: {report.PlayerMentions}");
         builder.AppendLine($"Unique players: {report.UniquePlayers}");
+        builder.AppendLine($"Idempotence check: mentions after process={report.IdempotenceMentionCountAfterProcess}, after skip={report.IdempotenceMentionCountAfterSkip}, stable={report.IdempotenceMentionCountStable}");
+        builder.AppendLine();
+        builder.AppendLine("## Production Gate Exclusions");
+        builder.AppendLine();
+        builder.AppendLine($"- Actual scorable mentions: {report.GateExclusions.ActualScorableMentions}");
+        builder.AppendLine($"- Scored: {report.GateExclusions.Scored}");
+        builder.AppendLine($"- Semantic confidence only: {report.GateExclusions.SemanticConfidenceOnly}");
+        builder.AppendLine($"- Target confidence only: {report.GateExclusions.TargetConfidenceOnly}");
+        builder.AppendLine($"- Failed both: {report.GateExclusions.FailedBoth}");
         AppendAggregateSection(builder, "Top Community Sentiment", report.TopCommunitySentiment);
         AppendAggregateSection(builder, "Bottom Community Sentiment", report.BottomCommunitySentiment);
         AppendAggregateSection(builder, "Top Discussion Impact", report.TopDiscussionImpact);
@@ -190,7 +249,7 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
         builder.AppendLine();
         foreach (var row in rows)
         {
-            builder.AppendLine($"- {row.Player} ({row.Team} {row.Position}): mentions={row.Mentions}, community={row.CommunitySentiment:+0.###;-0.###;0}, impact={row.Impact:0.###}, positive={row.PositiveImpact:0.###}, negative={row.NegativeImpact:0.###}, confidence={row.Confidence}");
+            builder.AppendLine($"- {row.Player} ({row.Team} {row.Position}): mentions={row.Mentions}, scored={row.ScoredMentions}, coverage={row.SentimentCoverage:0.###}, community={row.CommunitySentiment:+0.###;-0.###;0}, impact={row.Impact:0.###}, positive={row.PositiveImpact:0.###}, negative={row.NegativeImpact:0.###}, confidence={row.Confidence}");
         }
     }
 
@@ -250,6 +309,10 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
         public int Comments { get; set; }
         public int PlayerMentions { get; set; }
         public int UniquePlayers { get; set; }
+        public int IdempotenceMentionCountAfterProcess { get; set; }
+        public int IdempotenceMentionCountAfterSkip { get; set; }
+        public bool IdempotenceMentionCountStable { get; set; }
+        public GateExclusionSummary GateExclusions { get; set; } = new();
         public List<AggregateSummary> TopCommunitySentiment { get; set; } = [];
         public List<AggregateSummary> BottomCommunitySentiment { get; set; } = [];
         public List<AggregateSummary> TopDiscussionImpact { get; set; } = [];
@@ -264,6 +327,10 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
         public string Team { get; set; } = string.Empty;
         public string Position { get; set; } = string.Empty;
         public int Mentions { get; set; }
+        public int ScoredMentions { get; set; }
+        public int MentionOnlyMentions { get; set; }
+        public double SentimentCoverage { get; set; }
+        public bool HasScoredSentiment { get; set; }
         public double CommunitySentiment { get; set; }
         public double Sentiment { get; set; }
         public double Impact { get; set; }
@@ -281,5 +348,14 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
         public double VoteWeight { get; set; }
         public double Contribution { get; set; }
         public string Thread { get; set; } = string.Empty;
+    }
+
+    private sealed class GateExclusionSummary
+    {
+        public int ActualScorableMentions { get; set; }
+        public int Scored { get; set; }
+        public int SemanticConfidenceOnly { get; set; }
+        public int TargetConfidenceOnly { get; set; }
+        public int FailedBoth { get; set; }
     }
 }

@@ -5,6 +5,10 @@ public sealed class SnapshotPlayerAggregate
     public int SnapshotId { get; set; }
     public int PlayerId { get; set; }
     public int MentionCount { get; set; }
+    public int ScoredMentionCount { get; set; }
+    public int MentionOnlyCount { get; set; }
+    public double SentimentCoverage { get; set; }
+    public bool HasScoredSentiment { get; set; } = true;
     public int PositiveCount { get; set; }
     public int NegativeCount { get; set; }
     public int NeutralCount { get; set; }

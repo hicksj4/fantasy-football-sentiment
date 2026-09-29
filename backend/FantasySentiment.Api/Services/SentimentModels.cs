@@ -104,7 +104,8 @@ public sealed record TargetedSentimentResult(
     double FantasyAdjustment,
     string AnalyzerName,
     string Context,
-    string? Diagnostics = null)
+    string? Diagnostics = null,
+    double SemanticConfidence = 1)
 {
     public static string CategoryFromScore(double score)
     {

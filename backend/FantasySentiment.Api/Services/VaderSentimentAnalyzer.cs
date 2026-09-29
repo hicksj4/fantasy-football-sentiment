@@ -32,7 +32,8 @@ public sealed class VaderSentimentAnalyzer(
             analysis.TotalAdjustment,
             nameof(VaderSentimentAnalyzer),
             request.Context,
-            analysis.ToDiagnosticTrace(request)));
+            analysis.ToDiagnosticTrace(request),
+            analysis.SemanticConfidence));
     }
 
     public SentimentAnalysisResult AnalyzeDetailed(TargetedSentimentRequest request)

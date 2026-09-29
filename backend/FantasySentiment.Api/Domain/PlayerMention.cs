@@ -12,10 +12,13 @@ public sealed class PlayerMention
     public double? ModelSentimentScore { get; set; }
     public double RuleBasedSentimentScore { get; set; }
     public double FantasyAdjustment { get; set; }
+    public double SemanticConfidence { get; set; } = 1;
     public required string SentimentCategory { get; set; }
     public string SentimentAnalyzer { get; set; } = "Unknown";
     public string SentimentContext { get; set; } = string.Empty;
     public string? SentimentDiagnostics { get; set; }
+    public string AnalysisDisposition { get; set; } = AnalysisDispositions.Scored;
+    public string AnalysisDispositionReason { get; set; } = AnalysisDispositionReasons.Scored;
     public string MatchedAlias { get; set; } = string.Empty;
     public string TargetAttributionMethod { get; set; } = TargetAttributionMethods.Explicit;
     public double TargetConfidence { get; set; } = 1;

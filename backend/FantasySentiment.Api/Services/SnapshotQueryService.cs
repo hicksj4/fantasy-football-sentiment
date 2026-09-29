@@ -94,6 +94,76 @@ public sealed class SnapshotQueryService(
         return await ToPlayerMetricsAsync(aggregate, rank, cancellationToken);
     }
 
+    public async Task<PlayerMentionAnalysisPageDto?> GetPlayerMentionsAsync(
+        string key,
+        int playerId,
+        string? disposition,
+        string? sort,
+        int page,
+        int pageSize,
+        CancellationToken cancellationToken)
+    {
+        var snapshot = await ResolveSnapshotAsync(key, cancellationToken);
+        if (snapshot is null)
+        {
+            return null;
+        }
+
+        page = Math.Max(1, page);
+        pageSize = Math.Clamp(pageSize, 1, 100);
+
+        var mentions = await db.PlayerMentions
+            .AsNoTracking()
+            .Where(mention =>
+                mention.SnapshotId == snapshot.Id
+                && mention.PlayerId == playerId)
+            .Select(mention => new MentionAnalysisSource(
+                mention.Id,
+                mention.CommentId,
+                mention.Comment.Body,
+                mention.Comment.Post.Title,
+                mention.Comment.Post.Subreddit,
+                mention.RedditScore,
+                mention.AnalysisDisposition,
+                mention.AnalysisDispositionReason,
+                mention.SemanticConfidence,
+                mention.TargetConfidence,
+                mention.TargetAttributionMethod,
+                mention.RawSentimentScore,
+                mention.FinalSentimentScore,
+                mention.SentimentCategory,
+                mention.FantasyActions,
+                mention.DiscussionSignals,
+                mention.SentimentDiagnostics,
+                mention.VoteWeight,
+                mention.CreatedAt))
+            .ToListAsync(cancellationToken);
+
+        var totalMentionCount = mentions.Count;
+        var scoredMentionCount = mentions.Count(mention => SentimentScoringPolicy.IsScoredDisposition(mention.AnalysisDisposition));
+        var mentionOnlyCount = totalMentionCount - scoredMentionCount;
+        var filtered = FilterMentions(mentions, disposition).ToList();
+        var ordered = SortMentions(filtered, sort).ToList();
+        var items = ordered
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(ToMentionAnalysisDto)
+            .ToList();
+
+        return new PlayerMentionAnalysisPageDto(
+            playerId,
+            snapshot.Key,
+            page,
+            pageSize,
+            filtered.Count,
+            totalMentionCount,
+            scoredMentionCount,
+            mentionOnlyCount,
+            totalMentionCount == 0 ? 0 : Math.Round(scoredMentionCount / (double)totalMentionCount, 3),
+            page * pageSize < filtered.Count,
+            items);
+    }
+
     public async Task<DashboardHighlightsDto?> GetHighlightsAsync(
         string key,
         CancellationToken cancellationToken)
@@ -144,14 +214,23 @@ public sealed class SnapshotQueryService(
             {
                 var players = group.ToList();
                 var mentions = players.Sum(player => player.Mentions);
+                var scoredMentions = players.Sum(player => player.ScoredMentionCount);
+                var mentionOnly = players.Sum(player => player.MentionOnlyCount);
                 return new TeamSummaryDto(
                     group.Key,
                     mentions,
-                    mentions == 0 ? 0 : Math.Round(players.Sum(player => player.CommunitySentiment * player.Mentions) / mentions, 3),
+                    scoredMentions == 0
+                        ? 0
+                        : Math.Round(players.Sum(player => player.CommunitySentiment * player.ScoredMentionCount) / scoredMentions, 3),
                     players.Sum(player => player.DiscussionShare),
                     players.OrderByDescending(player => player.Mentions).FirstOrDefault()?.Name,
                     players.OrderByDescending(player => player.PositiveImpact).FirstOrDefault()?.Name,
-                    players.OrderByDescending(player => player.ImpactScore).FirstOrDefault()?.Name);
+                    players.OrderByDescending(player => player.ImpactScore).FirstOrDefault()?.Name,
+                    TotalMentionCount: mentions,
+                    ScoredMentionCount: scoredMentions,
+                    MentionOnlyCount: mentionOnly,
+                    SentimentCoverage: mentions == 0 ? 0 : Math.Round(scoredMentions / (double)mentions, 3),
+                    HasScoredSentiment: scoredMentions > 0);
             })
             .OrderByDescending(team => team.Mentions)
             .ToList();
@@ -173,12 +252,21 @@ public sealed class SnapshotQueryService(
         }
 
         var mentions = players.Sum(player => player.Mentions);
+        var scoredMentions = players.Sum(player => player.ScoredMentionCount);
+        var mentionOnly = players.Sum(player => player.MentionOnlyCount);
         return new TeamDetailDto(
             players[0].Team,
             mentions,
-            mentions == 0 ? 0 : Math.Round(players.Sum(player => player.CommunitySentiment * player.Mentions) / mentions, 3),
+            scoredMentions == 0
+                ? 0
+                : Math.Round(players.Sum(player => player.CommunitySentiment * player.ScoredMentionCount) / scoredMentions, 3),
             Math.Round(players.Sum(player => player.DiscussionShare), 4),
-            players);
+            players,
+            TotalMentionCount: mentions,
+            ScoredMentionCount: scoredMentions,
+            MentionOnlyCount: mentionOnly,
+            SentimentCoverage: mentions == 0 ? 0 : Math.Round(scoredMentions / (double)mentions, 3),
+            HasScoredSentiment: scoredMentions > 0);
     }
 
     private async Task<AnalysisSnapshot?> ResolveSnapshotAsync(
@@ -220,6 +308,8 @@ public sealed class SnapshotQueryService(
     {
         return aggregate =>
             aggregate.MentionCount >= _highlightOptions.MinimumMentions
+            && aggregate.HasScoredSentiment
+            && aggregate.ScoredMentionCount > 0
             && aggregate.SampleStrengthScore >= _highlightOptions.MinimumSampleStrength
             && (!_highlightOptions.ExcludeLowConfidence || aggregate.Confidence != "Low");
     }
@@ -251,7 +341,12 @@ public sealed class SnapshotQueryService(
             aggregate.AverageVoteWeight,
             aggregate.SampleStrengthScore,
             aggregate.Confidence,
-            influence);
+            influence,
+            TotalMentionCount: aggregate.MentionCount,
+            ScoredMentionCount: aggregate.ScoredMentionCount,
+            MentionOnlyCount: aggregate.MentionOnlyCount,
+            SentimentCoverage: aggregate.SentimentCoverage,
+            HasScoredSentiment: aggregate.HasScoredSentiment);
     }
 
     private async Task<DashboardHighlightInfluenceDto?> GetTopInfluenceAsync(
@@ -262,12 +357,16 @@ public sealed class SnapshotQueryService(
     {
         var mentions = await db.PlayerMentions
             .AsNoTracking()
-            .Where(mention => mention.SnapshotId == snapshotId && mention.PlayerId == playerId)
+            .Where(mention =>
+                mention.SnapshotId == snapshotId
+                && mention.PlayerId == playerId
+                && mention.AnalysisDisposition == AnalysisDispositions.Scored)
             .Select(mention => new
             {
                 mention.FinalSentimentScore,
                 mention.VoteWeight,
                 mention.RedditScore,
+                mention.SemanticConfidence,
                 mention.CreatedAt,
                 CommentBody = mention.Comment.Body,
                 PostTitle = mention.Comment.Post.Title
@@ -287,6 +386,7 @@ public sealed class SnapshotQueryService(
                 mention.RedditScore,
                 Sentiment = mention.FinalSentimentScore,
                 mention.VoteWeight,
+                mention.SemanticConfidence,
                 SentimentContribution = mention.FinalSentimentScore * mention.VoteWeight / totalVoteWeight,
                 mention.PostTitle,
                 mention.CreatedAt
@@ -312,7 +412,8 @@ public sealed class SnapshotQueryService(
                 Math.Round(selected.VoteWeight, 3),
                 Math.Round(selected.SentimentContribution, 3),
                 selected.PostTitle,
-                selected.CreatedAt);
+                selected.CreatedAt,
+                SemanticConfidence: Math.Round(selected.SemanticConfidence, 3));
     }
 
     private static AnalysisSnapshotDto ToSnapshotDto(AnalysisSnapshot snapshot)
@@ -404,7 +505,12 @@ public sealed class SnapshotQueryService(
             Math.Round(aggregate.CommunitySentimentScore - aggregate.SentimentScore, 3),
             aggregate.ImpactScore,
             impactRank?.Rank ?? 0,
-            impactRank?.Percentile ?? 0);
+            impactRank?.Percentile ?? 0,
+            TotalMentionCount: aggregate.MentionCount,
+            ScoredMentionCount: aggregate.ScoredMentionCount,
+            MentionOnlyCount: aggregate.MentionOnlyCount,
+            SentimentCoverage: aggregate.SentimentCoverage,
+            HasScoredSentiment: aggregate.HasScoredSentiment);
     }
 
     private async Task<PlayerMetricsDto> ToPlayerMetricsAsync(
@@ -412,7 +518,7 @@ public sealed class SnapshotQueryService(
         DiscussionImpactRank impactRank,
         CancellationToken cancellationToken)
     {
-        var denominator = Math.Max(1, aggregate.MentionCount);
+        var denominator = Math.Max(1, aggregate.ScoredMentionCount);
         var comments = await GetScoreCommentsAsync(
             aggregate.SnapshotId,
             aggregate.PlayerId,
@@ -458,7 +564,12 @@ public sealed class SnapshotQueryService(
             aggregate.NegativeCount,
             comments.MostInfluential,
             comments.MostEndorsed,
-            comments.MostRejected);
+            comments.MostRejected,
+            TotalMentionCount: aggregate.MentionCount,
+            ScoredMentionCount: aggregate.ScoredMentionCount,
+            MentionOnlyCount: aggregate.MentionOnlyCount,
+            SentimentCoverage: aggregate.SentimentCoverage,
+            HasScoredSentiment: aggregate.HasScoredSentiment);
     }
 
     private async Task<PlayerScoreCommentSet> GetScoreCommentsAsync(
@@ -468,7 +579,10 @@ public sealed class SnapshotQueryService(
     {
         var mentions = await db.PlayerMentions
             .AsNoTracking()
-            .Where(mention => mention.SnapshotId == snapshotId && mention.PlayerId == playerId)
+            .Where(mention =>
+                mention.SnapshotId == snapshotId
+                && mention.PlayerId == playerId
+                && mention.AnalysisDisposition == AnalysisDispositions.Scored)
             .Select(mention => new ScoreCommentSource(
                 mention.Comment.Body,
                 mention.Comment.Post.Title,
@@ -478,6 +592,8 @@ public sealed class SnapshotQueryService(
                 mention.FinalSentimentScore,
                 mention.TargetAttributionMethod,
                 mention.TargetConfidence,
+                mention.SemanticConfidence,
+                mention.AnalysisDisposition,
                 mention.CreatedAt))
             .ToListAsync(cancellationToken);
         var totalVoteWeight = mentions.Sum(mention => mention.VoteWeight);
@@ -518,7 +634,9 @@ public sealed class SnapshotQueryService(
             Math.Round(contribution, 3),
             mention.TargetAttributionMethod,
             Math.Round(mention.TargetConfidence, 3),
-            mention.CreatedAt);
+            mention.CreatedAt,
+            Math.Round(mention.SemanticConfidence, 3),
+            mention.AnalysisDisposition);
     }
 
     private static string CreateExcerpt(string value, int maxLength)
@@ -540,6 +658,133 @@ public sealed class SnapshotQueryService(
         return $"{trimmed.TrimEnd()}...";
     }
 
+    private static IEnumerable<MentionAnalysisSource> FilterMentions(
+        IEnumerable<MentionAnalysisSource> mentions,
+        string? disposition)
+    {
+        return NormalizeDispositionFilter(disposition) switch
+        {
+            "scored" => mentions.Where(mention => SentimentScoringPolicy.IsScoredDisposition(mention.AnalysisDisposition)),
+            "mention-only" => mentions.Where(mention => !SentimentScoringPolicy.IsScoredDisposition(mention.AnalysisDisposition)),
+            _ => mentions
+        };
+    }
+
+    private static IEnumerable<MentionAnalysisSource> SortMentions(
+        IEnumerable<MentionAnalysisSource> mentions,
+        string? sort)
+    {
+        return NormalizeSort(sort) switch
+        {
+            "reddit-score" => mentions
+                .OrderByDescending(mention => mention.RedditScore)
+                .ThenByDescending(mention => Math.Abs(WeightedContributionValue(mention))),
+            "confidence" => mentions
+                .OrderByDescending(mention => mention.SemanticConfidence)
+                .ThenByDescending(mention => mention.TargetConfidence)
+                .ThenByDescending(mention => Math.Abs(WeightedContributionValue(mention))),
+            _ => mentions
+                .OrderByDescending(mention => SentimentScoringPolicy.IsScoredDisposition(mention.AnalysisDisposition))
+                .ThenByDescending(mention => Math.Abs(WeightedContributionValue(mention)))
+                .ThenByDescending(mention => mention.RedditScore)
+                .ThenByDescending(mention => mention.SemanticConfidence)
+        };
+    }
+
+    private static PlayerMentionAnalysisDto ToMentionAnalysisDto(MentionAnalysisSource mention)
+    {
+        var isScored = SentimentScoringPolicy.IsScoredDisposition(mention.AnalysisDisposition);
+        return new PlayerMentionAnalysisDto(
+            mention.Id,
+            mention.CommentId,
+            mention.Body,
+            mention.PostTitle,
+            mention.Subreddit,
+            mention.RedditScore,
+            mention.AnalysisDisposition,
+            mention.AnalysisDispositionReason,
+            Math.Round(mention.SemanticConfidence, 3),
+            Math.Round(mention.TargetConfidence, 3),
+            mention.TargetAttributionMethod,
+            Math.Round(mention.RawSentimentScore, 3),
+            Math.Round(mention.FinalSentimentScore, 3),
+            mention.FantasyOutlook,
+            SplitLabels(mention.FantasyActions),
+            SplitLabels(mention.DiscussionSignals),
+            ExtractReasons(mention.AnalysisDispositionReason, mention.SentimentDiagnostics),
+            Math.Round(mention.VoteWeight, 3),
+            isScored ? Math.Round(mention.FinalSentimentScore * mention.VoteWeight, 3) : null,
+            mention.CreatedAt);
+    }
+
+    private static double WeightedContributionValue(MentionAnalysisSource mention)
+    {
+        return SentimentScoringPolicy.IsScoredDisposition(mention.AnalysisDisposition)
+            ? mention.FinalSentimentScore * mention.VoteWeight
+            : 0;
+    }
+
+    private static string? NormalizeDispositionFilter(string? value)
+    {
+        return value?.Trim().ToLowerInvariant() switch
+        {
+            "scored" => "scored",
+            "mentiononly" or "mention-only" or "mention_only" => "mention-only",
+            _ => null
+        };
+    }
+
+    private static string NormalizeSort(string? value)
+    {
+        return value?.Trim().ToLowerInvariant() switch
+        {
+            "reddit" or "reddit-score" or "score" => "reddit-score",
+            "confidence" => "confidence",
+            _ => "influence"
+        };
+    }
+
+    private static string[] SplitLabels(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return [];
+        }
+
+        return value
+            .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+    }
+
+    private static string[] ExtractReasons(string dispositionReason, string? diagnostics)
+    {
+        var reasons = new List<string>();
+        if (!string.IsNullOrWhiteSpace(dispositionReason)
+            && !dispositionReason.Equals(AnalysisDispositionReasons.Scored, StringComparison.OrdinalIgnoreCase))
+        {
+            reasons.Add(dispositionReason);
+        }
+
+        if (!string.IsNullOrWhiteSpace(diagnostics))
+        {
+            var rules = diagnostics
+                .Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+                .FirstOrDefault(part => part.StartsWith("rules=", StringComparison.OrdinalIgnoreCase));
+            if (rules is not null)
+            {
+                reasons.AddRange(rules["rules=".Length..]
+                    .Split('|', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+                    .Where(rule => !rule.Equals("none", StringComparison.OrdinalIgnoreCase))
+                    .Take(6));
+            }
+        }
+
+        return reasons
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+    }
+
     private sealed record DiscussionImpactRank(int Rank, double Percentile);
 
     private sealed record PlayerScoreCommentSet(
@@ -556,5 +801,28 @@ public sealed class SnapshotQueryService(
         double FinalSentimentScore,
         string TargetAttributionMethod,
         double TargetConfidence,
+        double SemanticConfidence,
+        string AnalysisDisposition,
+        DateTimeOffset CreatedAt);
+
+    private sealed record MentionAnalysisSource(
+        long Id,
+        int CommentId,
+        string Body,
+        string PostTitle,
+        string Subreddit,
+        int RedditScore,
+        string AnalysisDisposition,
+        string AnalysisDispositionReason,
+        double SemanticConfidence,
+        double TargetConfidence,
+        string TargetAttributionMethod,
+        double RawSentimentScore,
+        double FinalSentimentScore,
+        string FantasyOutlook,
+        string FantasyActions,
+        string DiscussionSignals,
+        string? SentimentDiagnostics,
+        double VoteWeight,
         DateTimeOffset CreatedAt);
 }

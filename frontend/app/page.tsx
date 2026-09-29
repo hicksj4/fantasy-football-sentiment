@@ -2,7 +2,7 @@ import { DashboardTable } from "@/components/DashboardTable";
 import { HighlightCards } from "@/components/HighlightCards";
 import { MetricCard } from "@/components/MetricCard";
 import { PlayerSearch } from "@/components/PlayerSearch";
-import { ScorePill } from "@/components/ScorePill";
+import { SentimentEvidence } from "@/components/SentimentEvidence";
 import { getJson, type AnalysisSnapshot, type DashboardHighlights, type DashboardPlayer, type TeamSummary } from "@/lib/api";
 import Link from "next/link";
 
@@ -81,7 +81,12 @@ export default async function Home({ searchParams }: PageProps) {
             <Link className="team-row" href={`/teams/${team.team}?snapshot=${snapshot.key}`} key={team.team}>
               <strong>{team.team}</strong>
               <span>{team.mentions} mentions</span>
-              <ScorePill value={team.sentiment} />
+              <SentimentEvidence
+                value={team.sentiment}
+                hasScoredSentiment={team.hasScoredSentiment}
+                scoredMentionCount={team.scoredMentionCount}
+                totalMentionCount={team.totalMentionCount || team.mentions}
+              />
               <span>{(team.buzz * 100).toFixed(1)}% share</span>
             </Link>
           ))}

@@ -462,6 +462,7 @@ public sealed class AnalyticsLogicTests
         var service = new SnapshotAggregationService(
             db,
             new BuzzScoreCalculator(),
+            new SentimentScoringPolicy(),
             Options.Create(new SnapshotOptions { IntervalMinutes = 5, RecentWindowMinutes = 60, BaselineWindowHours = 24 }),
             NullLogger<SnapshotAggregationService>.Instance);
 
@@ -525,6 +526,7 @@ public sealed class AnalyticsLogicTests
         var service = new SnapshotAggregationService(
             db,
             new BuzzScoreCalculator(),
+            new SentimentScoringPolicy(),
             Options.Create(new SnapshotOptions { IntervalMinutes = 5, RecentWindowMinutes = 60, BaselineWindowHours = 24 }),
             NullLogger<SnapshotAggregationService>.Instance);
 
@@ -690,9 +692,11 @@ public sealed class AnalyticsLogicTests
             new ThreadContextBuilder(),
             new FantasyIntentClassifier(new TestOptionsMonitor<IntentLexiconOptions>(Intents())),
             new VoteWeightCalculator(),
+            new SentimentScoringPolicy(),
             new SnapshotAggregationService(
                 db,
                 new BuzzScoreCalculator(),
+                new SentimentScoringPolicy(),
                 Options.Create(new SnapshotOptions { IntervalMinutes = 5, RecentWindowMinutes = 60, BaselineWindowHours = 24 }),
                 NullLogger<SnapshotAggregationService>.Instance),
             Options.Create(new RedditOptions

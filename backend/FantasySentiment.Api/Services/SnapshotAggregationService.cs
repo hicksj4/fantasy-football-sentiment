@@ -9,6 +9,7 @@ namespace FantasySentiment.Api.Services;
 public sealed class SnapshotAggregationService(
     FantasySentimentDbContext db,
     BuzzScoreCalculator buzzScoreCalculator,
+    SentimentScoringPolicy sentimentScoringPolicy,
     IOptions<SnapshotOptions> options,
     ILogger<SnapshotAggregationService> logger)
 {
@@ -49,30 +50,40 @@ public sealed class SnapshotAggregationService(
                 mention.PlayerId == playerId
                 && mention.CreatedAt >= baselineStart
                 && mention.CreatedAt < recentStart);
+            var scoredMentions = recentMentions
+                .Where(sentimentScoringPolicy.CanScore)
+                .ToList();
+            var hasScoredSentiment = scoredMentions.Count > 0;
 
             var snapshot = existingSnapshots.TryGetValue(playerId, out var existing)
                 ? existing
                 : new PlayerSnapshot { PlayerId = playerId, Timestamp = timestamp };
 
             snapshot.MentionCount = recentMentions.Count;
-            snapshot.PositiveCount = recentMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Positive);
-            snapshot.NegativeCount = recentMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Negative);
-            snapshot.NeutralCount = recentMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Neutral);
-            snapshot.RawSentimentScore = recentMentions.Count == 0
+            snapshot.ScoredMentionCount = scoredMentions.Count;
+            snapshot.MentionOnlyCount = recentMentions.Count - scoredMentions.Count;
+            snapshot.SentimentCoverage = recentMentions.Count == 0
                 ? 0
-                : Math.Round(recentMentions.Average(mention => mention.RawSentimentScore), 3);
-            snapshot.SentimentScore = recentMentions.Count == 0
-                ? 0
-                : Math.Round(recentMentions.Average(mention => mention.FinalSentimentScore), 3);
+                : Math.Round(scoredMentions.Count / (double)recentMentions.Count, 3);
+            snapshot.HasScoredSentiment = hasScoredSentiment;
+            snapshot.PositiveCount = scoredMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Positive);
+            snapshot.NegativeCount = scoredMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Negative);
+            snapshot.NeutralCount = scoredMentions.Count(mention => mention.SentimentCategory == SentimentCategories.Neutral);
+            snapshot.RawSentimentScore = hasScoredSentiment
+                ? Math.Round(scoredMentions.Average(mention => mention.RawSentimentScore), 3)
+                : 0;
+            snapshot.SentimentScore = hasScoredSentiment
+                ? Math.Round(scoredMentions.Average(mention => mention.FinalSentimentScore), 3)
+                : 0;
             snapshot.TotalRedditScore = recentMentions.Sum(mention => mention.RedditScore);
-            snapshot.TotalVoteWeight = Math.Round(recentMentions.Sum(mention => mention.VoteWeight), 3);
-            snapshot.AverageVoteWeight = recentMentions.Count == 0
-                ? 0
-                : Math.Round(recentMentions.Average(mention => mention.VoteWeight), 3);
+            snapshot.TotalVoteWeight = Math.Round(scoredMentions.Sum(mention => mention.VoteWeight), 3);
+            snapshot.AverageVoteWeight = hasScoredSentiment
+                ? Math.Round(scoredMentions.Average(mention => mention.VoteWeight), 3)
+                : 0;
             snapshot.CommunitySentimentScore = snapshot.TotalVoteWeight == 0
                 ? 0
-                : Math.Round(recentMentions.Sum(mention => mention.WeightedSentimentContribution) / snapshot.TotalVoteWeight, 3);
-            var sampleConfidence = SampleConfidenceCalculator.Calculate(recentMentions.Count, snapshot.TotalVoteWeight);
+                : Math.Round(scoredMentions.Sum(mention => mention.WeightedSentimentContribution) / snapshot.TotalVoteWeight, 3);
+            var sampleConfidence = SampleConfidenceCalculator.Calculate(scoredMentions.Count, snapshot.TotalVoteWeight);
             snapshot.SampleStrengthScore = sampleConfidence.SampleStrengthScore;
             snapshot.Confidence = sampleConfidence.Confidence;
             snapshot.AddCount = CountAction(recentMentions, FantasyActions.Add);
