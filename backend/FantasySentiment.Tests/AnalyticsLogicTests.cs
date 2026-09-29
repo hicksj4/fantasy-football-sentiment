@@ -451,7 +451,8 @@ public sealed class AnalyticsLogicTests
             SentimentAnalyzer = nameof(RuleBasedFantasySentimentAnalyzer),
             SentimentContext = "Puka is elite",
             MatchedAlias = "Puka",
-            Intent = FantasyIntents.Hype,
+            Intent = FantasyIntents.Add,
+            FantasyActions = FantasyActions.Add,
             RedditScore = 8,
             VoteWeight = 1.879,
             WeightedSentimentContribution = 1.315
@@ -469,7 +470,9 @@ public sealed class AnalyticsLogicTests
         var snapshot = await db.PlayerSnapshots.SingleAsync();
         Assert.Equal(1, snapshot.MentionCount);
         Assert.Equal(1, snapshot.PositiveCount);
-        Assert.Equal(1, snapshot.HypeCount);
+        Assert.Equal(1, snapshot.AddCount);
+        Assert.Equal(0, snapshot.HypeCount);
+        Assert.Equal(0, snapshot.PanicCount);
         Assert.Equal(0.7, snapshot.SentimentScore);
         Assert.Equal(0.7, snapshot.CommunitySentimentScore);
     }

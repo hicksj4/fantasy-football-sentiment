@@ -315,6 +315,10 @@ public sealed class RedditIngestionService(
                     resolvedContext.TargetText,
                     resolvedContext.Perspective),
                 cancellationToken);
+            var semanticClassification = intentClassifier.ClassifyAll(
+                comment.Body,
+                resolvedContext.TargetText,
+                match);
 
             db.PlayerMentions.Add(new PlayerMention
             {
@@ -335,7 +339,9 @@ public sealed class RedditIngestionService(
                 TargetAttributionMethod = target.AttributionMethod,
                 TargetConfidence = target.Confidence,
                 TargetPerspective = resolvedContext.Perspective,
-                Intent = intentClassifier.Classify(comment.Body, resolvedContext.TargetText, match),
+                Intent = semanticClassification.LegacyIntent,
+                FantasyActions = SerializeLabels(semanticClassification.FantasyActions),
+                DiscussionSignals = SerializeLabels(semanticClassification.DiscussionSignals),
                 RedditScore = comment.Score,
                 VoteWeight = voteWeight,
                 WeightedSentimentContribution = Math.Round(sentiment.FinalSentimentScore * voteWeight, 3)
@@ -415,6 +421,11 @@ public sealed class RedditIngestionService(
         return string.IsNullOrEmpty(value) || value.Length <= maxLength
             ? value
             : value[..maxLength];
+    }
+
+    private static string SerializeLabels(IEnumerable<string> labels)
+    {
+        return string.Join('|', labels);
     }
 }
 

@@ -359,13 +359,21 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
             return false;
         }
 
+        if (Regex.IsMatch(
+                text,
+                @"\b(?:whoever|anyone|anybody)\b.{0,40}\b(?:play|playing|played)\s+against\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            return false;
+        }
+
         var escapedAlias = Regex.Escape(alias.Trim());
         escapedAlias = Regex.Replace(escapedAlias, @"\\\s+", @"\s+");
         var aliasPattern = $@"(?<![A-Za-z0-9]){escapedAlias}(?![A-Za-z0-9])";
         return OpponentRosterRegex.IsMatch(text)
                || Regex.IsMatch(
                    text,
-                   $@"\b(?:facing|faced)\s+{aliasPattern}\b|\b(?:i\s+am|i'm|im)\s+facing\s+{aliasPattern}\b|\bopp(?:onent)?\s+(?:has\s+)?{aliasPattern}\b|\b(?:her|his|their)\s+{aliasPattern}\b|{aliasPattern}.{{0,70}}\b(?:killing|destroying|burying|booming|outscoring|fucking)\s+me\b|{aliasPattern}.{{0,70}}\b(?:ended|ruined|buried|boomed)\s+my\s+(?:week|matchup)\b",
+                   $@"\b(?:facing|faced)\s+{aliasPattern}\b|\b(?:i\s+am|i'm|im)\s+facing\s+{aliasPattern}\b|\b(?:my|our)\s+team\b.{{0,80}}\b(?:lose|losing|lost)\s+to\b.{{0,80}}{aliasPattern}\b|\bopp(?:onent)?\s+(?:has\s+)?{aliasPattern}\b|\b(?:her|his|their)\s+{aliasPattern}\b|{aliasPattern}.{{0,70}}\b(?:killing|destroying|burying|booming|outscoring|fucking)\s+me\b|{aliasPattern}.{{0,70}}\b(?:ended|ruined|buried|boomed)\s+my\s+(?:week|matchup)\b",
                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
     }
 
@@ -379,10 +387,22 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
         var escapedAlias = Regex.Escape(alias.Trim());
         escapedAlias = Regex.Replace(escapedAlias, @"\\\s+", @"\s+");
         var aliasPattern = $@"(?<![A-Za-z0-9]){escapedAlias}(?![A-Za-z0-9])";
+        if (Regex.IsMatch(
+                text,
+                @"\bstarting\s+to\s+(?:think|believe|wonder|worry)\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)
+            || Regex.IsMatch(
+                text,
+                @"\b(?:my|our)\s+team\b.{0,80}\b(?:lose|losing|lost)\s+to\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            return false;
+        }
+
         return OwnRosterRegex.IsMatch(text)
                || Regex.IsMatch(
                    text,
-                   $@"\bas\s+(?:a|an)\b.{{0,80}}{aliasPattern}.{{0,80}}\bowner\b|\bto\s+be\s+(?:a|an)\b.{{0,80}}{aliasPattern}.{{0,80}}\bowner\b|\b(?:i|we)\s+(?:own|owned|started|starting|start|played|play|rolled\s+out|have|had|got|put|benched|benching|dropped|dropping|drafted|draft|chose|took)\b.{{0,80}}{aliasPattern}|\b(?:started|starting|benched|benching|dropped|dropping|drafted|put)\b.{{0,80}}{aliasPattern}|\b(?:gonna|going\s+to|about\s+to|already)\s+drop\b.{{0,80}}{aliasPattern}|\bowning\b.{{0,80}}{aliasPattern}|\b(?:i've|ive|we've|weve)\s+got\b.{{0,80}}{aliasPattern}|\bhave\b.{{0,80}}{aliasPattern}\b|\bguess\s+who\s+(?:started|played)\b.{{0,80}}{aliasPattern}|\bmy\s+(?:(?:qb|rb|wr|te|flex|starter|bench|lineup|best\s+receiver)\s+)?{aliasPattern}|{aliasPattern}.{{0,70}}\b(?:on\s+my\s+bench|in\s+my\s+lineup|on\s+my\s+team|is\s+my\s+(?:qb|rb|wr|te|flex|best\s+receiver|receiver|player|boi|boy))\b|{aliasPattern}\s+is\s+my\s+best\s+receiver\b|\b(?:should\s+have|should've|shouldve|needed\s+to|shoulda)\s+started\b.{{0,100}}{aliasPattern}|\bi\s+chose\b.{{0,80}}{aliasPattern}|\bmy\b.{{0,80}}{aliasPattern}.{{0,50}}\b(?:stack|room|stonks)\b|\b(?:that'?s|thats)\s+my\s+(?:boi|boy|guy|dude)\s+{aliasPattern}\b|{aliasPattern}.{{0,80}}\b(?:waste\s+of\s+a\s+pick|draft\s+pick)\b|{aliasPattern}.{{0,30}}\b(?:save\s+me|gimme\b.{{0,30}}\bpoints)\b|{aliasPattern}.{{0,120}}\bi\s+have\b.{{0,80}}\b(?:replace\s+him|replace\s+them|replace\s+that)\b",
+                   $@"\bas\s+(?:a|an)\b.{{0,80}}{aliasPattern}.{{0,80}}\bowner\b|\bto\s+be\s+(?:a|an)\b.{{0,80}}{aliasPattern}.{{0,80}}\bowner\b|\b(?:i|we)\s+(?:own|owned|started|starting|start|played|play|rolled\s+out|have|had|got|put|benched|benching|dropped|dropping|drafted|draft|chose|took)\b.{{0,80}}{aliasPattern}|\b(?:started|benched|benching|dropped|dropping|drafted|put)\b.{{0,80}}{aliasPattern}|\bstarting\s+(?:both|all)\b.{{0,80}}{aliasPattern}|\bstarting\s+{aliasPattern}\b|\b(?:gonna|going\s+to|about\s+to|already)\s+drop\b.{{0,80}}{aliasPattern}|\bowning\b.{{0,80}}{aliasPattern}|\b(?:i've|ive|we've|weve)\s+got\b.{{0,80}}{aliasPattern}|\bhave\b.{{0,80}}{aliasPattern}\b|\bguess\s+who\s+(?:started|played)\b.{{0,80}}{aliasPattern}|\bmy\s+(?:(?:qb|rb|wr|te|flex|starter|bench|lineup|best\s+receiver)\s+)?{aliasPattern}|{aliasPattern}.{{0,70}}\b(?:on\s+my\s+bench|in\s+my\s+lineup|on\s+my\s+team|is\s+my\s+(?:qb|rb|wr|te|flex|best\s+receiver|receiver|player|boi|boy))\b|{aliasPattern}\s+is\s+my\s+best\s+receiver\b|\b(?:should\s+have|should've|shouldve|needed\s+to|shoulda)\s+started\b.{{0,100}}{aliasPattern}|\bi\s+chose\b.{{0,80}}{aliasPattern}|\bmy\b.{{0,80}}{aliasPattern}.{{0,50}}\b(?:stack|room|stonks)\b|\b(?:that'?s|thats)\s+my\s+(?:boi|boy|guy|dude)\s+{aliasPattern}\b|{aliasPattern}.{{0,80}}\b(?:waste\s+of\s+a\s+pick|draft\s+pick)\b|{aliasPattern}.{{0,30}}\b(?:save\s+me|gimme\b.{{0,30}}\bpoints)\b|{aliasPattern}.{{0,120}}\bi\s+have\b.{{0,80}}\b(?:replace\s+him|replace\s+them|replace\s+that)\b",
                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
     }
 

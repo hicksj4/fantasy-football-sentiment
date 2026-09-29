@@ -75,16 +75,16 @@ public sealed class SnapshotAggregationService(
             var sampleConfidence = SampleConfidenceCalculator.Calculate(recentMentions.Count, snapshot.TotalVoteWeight);
             snapshot.SampleStrengthScore = sampleConfidence.SampleStrengthScore;
             snapshot.Confidence = sampleConfidence.Confidence;
-            snapshot.AddCount = CountIntent(recentMentions, FantasyIntents.Add);
-            snapshot.DropCount = CountIntent(recentMentions, FantasyIntents.Drop);
-            snapshot.StartCount = CountIntent(recentMentions, FantasyIntents.Start);
-            snapshot.SitCount = CountIntent(recentMentions, FantasyIntents.Sit);
-            snapshot.BuyCount = CountIntent(recentMentions, FantasyIntents.Buy);
-            snapshot.SellCount = CountIntent(recentMentions, FantasyIntents.Sell);
-            snapshot.HoldCount = CountIntent(recentMentions, FantasyIntents.Hold);
-            snapshot.InjuryCount = CountIntent(recentMentions, FantasyIntents.Injury);
-            snapshot.HypeCount = CountIntent(recentMentions, FantasyIntents.Hype);
-            snapshot.PanicCount = CountIntent(recentMentions, FantasyIntents.Panic);
+            snapshot.AddCount = CountAction(recentMentions, FantasyActions.Add);
+            snapshot.DropCount = CountAction(recentMentions, FantasyActions.Drop);
+            snapshot.StartCount = CountAction(recentMentions, FantasyActions.Start);
+            snapshot.SitCount = CountAction(recentMentions, FantasyActions.Sit);
+            snapshot.BuyCount = CountAction(recentMentions, FantasyActions.Buy);
+            snapshot.SellCount = CountAction(recentMentions, FantasyActions.Sell);
+            snapshot.HoldCount = CountAction(recentMentions, FantasyActions.Hold);
+            snapshot.InjuryCount = CountSignal(recentMentions, FantasyDiscussionSignals.Injury);
+            snapshot.HypeCount = 0;
+            snapshot.PanicCount = 0;
             snapshot.BuzzScore = buzzScoreCalculator.Calculate(
                 recentMentions.Count,
                 recentWindow,
@@ -102,9 +102,21 @@ public sealed class SnapshotAggregationService(
         return players.Count;
     }
 
-    private static int CountIntent(IEnumerable<PlayerMention> mentions, string intent)
+    private static int CountAction(IEnumerable<PlayerMention> mentions, string action)
     {
-        return mentions.Count(mention => mention.Intent == intent);
+        return mentions.Count(mention => HasLabel(mention.FantasyActions, action));
+    }
+
+    private static int CountSignal(IEnumerable<PlayerMention> mentions, string signal)
+    {
+        return mentions.Count(mention => HasLabel(mention.DiscussionSignals, signal));
+    }
+
+    private static bool HasLabel(string labels, string expected)
+    {
+        return labels
+            .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Contains(expected, StringComparer.OrdinalIgnoreCase);
     }
 
     public static DateTimeOffset AlignTimestamp(DateTimeOffset timestamp, int intervalMinutes)

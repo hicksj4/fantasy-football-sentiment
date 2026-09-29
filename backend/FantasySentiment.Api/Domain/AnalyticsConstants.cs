@@ -36,3 +36,35 @@ public static class FantasyIntents
         General
     ];
 }
+
+public static class FantasyActions
+{
+    public const string Add = FantasyIntents.Add;
+    public const string Drop = FantasyIntents.Drop;
+    public const string Start = FantasyIntents.Start;
+    public const string Sit = FantasyIntents.Sit;
+    public const string Buy = FantasyIntents.Buy;
+    public const string Sell = FantasyIntents.Sell;
+    public const string Hold = FantasyIntents.Hold;
+
+    public static readonly string[] All =
+    [
+        Add,
+        Drop,
+        Start,
+        Sit,
+        Buy,
+        Sell,
+        Hold
+    ];
+}
+
+public static class FantasyDiscussionSignals
+{
+    public const string Injury = FantasyIntents.Injury;
+
+    public static readonly string[] All =
+    [
+        Injury
+    ];
+}

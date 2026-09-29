@@ -533,6 +533,117 @@ public sealed class TargetSentimentSemanticsTests
         Assert.Equal(FantasyIntents.Start, (await AnalyzeAsync(text, "Rome Odunze")).Intent);
     }
 
+    [Fact]
+    public async Task HypeAndPanicLanguage_DoesNotCreateDiscussionSignals()
+    {
+        var result = await AnalyzeAsync("Bijan is a monster. Panic was silly.", "Bijan Robinson");
+
+        Assert.Empty(result.Semantics.DiscussionSignals);
+        Assert.DoesNotContain(FantasyIntents.Hype, result.Semantics.DiscussionSignals);
+        Assert.DoesNotContain(FantasyIntents.Panic, result.Semantics.DiscussionSignals);
+        Assert.Equal(FantasyIntents.General, result.Intent);
+        Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+    }
+
+    [Fact]
+    public async Task TransactionActions_AreSeparateFromDiscussionSignals()
+    {
+        const string text = "I dropped Schultz for Loveland";
+
+        var schultz = await AnalyzeAsync(text, "Dalton Schultz");
+        var loveland = await AnalyzeAsync(text, "Colston Loveland");
+
+        Assert.Contains(FantasyActions.Drop, schultz.Semantics.FantasyActions);
+        Assert.Contains(FantasyActions.Add, loveland.Semantics.FantasyActions);
+        Assert.Empty(schultz.Semantics.DiscussionSignals);
+        Assert.Empty(loveland.Semantics.DiscussionSignals);
+    }
+
+    [Fact]
+    public async Task Injury_IsDiscussionSignalNotFantasyAction()
+    {
+        var result = await AnalyzeAsync("Pitts is hurt again.", "Kyle Pitts");
+
+        Assert.Contains(FantasyDiscussionSignals.Injury, result.Semantics.DiscussionSignals);
+        Assert.Empty(result.Semantics.FantasyActions);
+        Assert.Equal(FantasyIntents.Injury, result.Intent);
+    }
+
+    [Fact]
+    public async Task OpponentLossLanguage_IsOpponentPerspectiveAndPositiveForTarget()
+    {
+        const string text = "My team might lose to Watson and Gibbs.";
+
+        foreach (var playerName in new[] { "Christian Watson", "Jahmyr Gibbs" })
+        {
+            var result = await AnalyzeAsync(text, playerName);
+
+            Assert.Equal(TargetPerspectives.OpponentRoster, result.Context.Perspective);
+            Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+        }
+    }
+
+    [Fact]
+    public async Task GenericPlayingAgainstLanguage_DoesNotForceOpponentPerspective()
+    {
+        var result = await AnalyzeAsync("Prayer circle for whoever is playing against Gibbs.", "Jahmyr Gibbs");
+
+        Assert.Equal(TargetPerspectives.Unknown, result.Context.Perspective);
+    }
+
+    [Fact]
+    public async Task StartingToThink_DoesNotCreateOwnRosterOrStartAction()
+    {
+        var result = await AnalyzeAsync("Starting to think Watson is not good.", "Christian Watson");
+
+        Assert.Equal(TargetPerspectives.Unknown, result.Context.Perspective);
+        Assert.DoesNotContain(FantasyActions.Start, result.Semantics.FantasyActions);
+        Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+    }
+
+    [Fact]
+    public async Task RegrettedDrop_IsPositiveButStillDropAction()
+    {
+        var result = await AnalyzeAsync("Just dropped Wicks 🤦", "Dontayvion Wicks");
+
+        Assert.Contains(FantasyActions.Drop, result.Semantics.FantasyActions);
+        Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+    }
+
+    [Theory]
+    [InlineData("Pitts was a steal in the mid rounds.", 1)]
+    [InlineData("Pitts was bait as a draft pick.", -1)]
+    public async Task DraftValueLanguage_IsStructuralSentiment(string text, int expectedDirection)
+    {
+        var result = await AnalyzeAsync(text, "Kyle Pitts");
+
+        if (expectedDirection > 0)
+        {
+            Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+        }
+        else
+        {
+            Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        }
+    }
+
+    [Theory]
+    [InlineData("Where is Kraft?", -1)]
+    [InlineData("Kraft is getting fed.", 1)]
+    public async Task UsageOpportunityLanguage_IsTargetSpecific(string text, int expectedDirection)
+    {
+        var result = await AnalyzeAsync(text, "Tucker Kraft");
+
+        if (expectedDirection > 0)
+        {
+            Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+        }
+        else
+        {
+            Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        }
+    }
+
     [Theory]
     [InlineData("I'm facing JSN and I'm cooked", "Jaxon Smith-Njigba")]
     [InlineData("JSN is killing me", "Jaxon Smith-Njigba")]
@@ -646,10 +757,10 @@ public sealed class TargetSentimentSemanticsTests
             context.Target.AttributionMethod);
         var result = await _sentimentAnalyzer.AnalyzeAsync(request, CancellationToken.None);
         var detail = _sentimentAnalyzer.AnalyzeDetailed(request);
-        var intent = _intentClassifier.Classify(text, context.TargetText, match);
+        var semanticClassification = _intentClassifier.ClassifyAll(text, context.TargetText, match);
 
         Assert.Equal(detail.FinalScore, result.FinalSentimentScore);
-        return new AnalyzedTarget(context, detail, intent);
+        return new AnalyzedTarget(context, detail, semanticClassification);
     }
 
     private async Task<AnalyzedTarget> AnalyzeReplyAsync(
@@ -683,10 +794,10 @@ public sealed class TargetSentimentSemanticsTests
             context.Target.AttributionMethod);
         var result = await _sentimentAnalyzer.AnalyzeAsync(request, CancellationToken.None);
         var detail = _sentimentAnalyzer.AnalyzeDetailed(request);
-        var intent = _intentClassifier.Classify(reply, context.TargetText, match);
+        var semanticClassification = _intentClassifier.ClassifyAll(reply, context.TargetText, match);
 
         Assert.Equal(detail.FinalScore, result.FinalSentimentScore);
-        return new AnalyzedTarget(context, detail, intent);
+        return new AnalyzedTarget(context, detail, semanticClassification);
     }
 
     private static SentimentLexiconOptions Lexicon()
@@ -785,7 +896,8 @@ public sealed class TargetSentimentSemanticsTests
             Player(28, "Michael Penix Jr.", "ATL", "QB", "Penix", "Michael Penix"),
             Player(29, "Derrick Henry", "BAL", "RB", "Henry", "Derrick Henry"),
             Player(30, "Dalton Schultz", "HOU", "TE", "Schultz", "Dalton Schultz"),
-            Player(31, "Jayden Reed", "GB", "WR", "Reed", "Jayden Reed")
+            Player(31, "Jayden Reed", "GB", "WR", "Reed", "Jayden Reed"),
+            Player(32, "Kyle Allen", "DET", "QB", "Allen", "Kyle Allen")
         ];
     }
 
@@ -810,5 +922,8 @@ public sealed class TargetSentimentSemanticsTests
     private sealed record AnalyzedTarget(
         ResolvedTargetContext Context,
         SentimentAnalysisResult Detail,
-        string Intent);
+        FantasySemanticClassification Semantics)
+    {
+        public string Intent => Semantics.LegacyIntent;
+    }
 }

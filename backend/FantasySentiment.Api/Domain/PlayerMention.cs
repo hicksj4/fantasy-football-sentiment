@@ -21,6 +21,8 @@ public sealed class PlayerMention
     public double TargetConfidence { get; set; } = 1;
     public string TargetPerspective { get; set; } = TargetPerspectives.Unknown;
     public required string Intent { get; set; }
+    public string FantasyActions { get; set; } = string.Empty;
+    public string DiscussionSignals { get; set; } = string.Empty;
     public int RedditScore { get; set; }
     public double VoteWeight { get; set; } = 1;
     public double WeightedSentimentContribution { get; set; }

@@ -14,9 +14,19 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
 
     public string Classify(string text, string targetText, PlayerMentionMatch mention)
     {
+        return ClassifyAll(text, targetText, mention).LegacyIntent;
+    }
+
+    public FantasySemanticClassification ClassifyAll(string text, PlayerMentionMatch mention)
+    {
+        return ClassifyAll(text, text, mention);
+    }
+
+    public FantasySemanticClassification ClassifyAll(string text, string targetText, PlayerMentionMatch mention)
+    {
         if (string.IsNullOrWhiteSpace(text))
         {
-            return FantasyIntents.General;
+            return FantasySemanticClassification.Empty;
         }
 
         var lexicon = options.CurrentValue;
@@ -26,76 +36,69 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
             : Normalize(targetText);
         var alias = Normalize(mention.MatchedAlias);
         var playerName = Normalize(mention.PlayerName);
+        var actions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var signals = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
         if (IsStartChoice(normalizedTargetText, alias, playerName))
         {
-            return FantasyIntents.Start;
+            actions.Add(FantasyActions.Start);
         }
 
-        if (TryClassifyScopedAction(normalizedFullText, alias, playerName, out var scopedIntent))
-        {
-            return scopedIntent;
-        }
+        ClassifyScopedActions(normalizedFullText, alias, playerName, actions);
 
         var context = BuildContext(normalizedTargetText, alias, playerName);
 
         if (ContainsAny(context, lexicon.Injury))
         {
-            return FantasyIntents.Injury;
+            signals.Add(FantasyDiscussionSignals.Injury);
         }
 
         if (ContainsAny(context, lexicon.Drop))
         {
-            return FantasyIntents.Drop;
+            actions.Add(FantasyActions.Drop);
         }
 
-        if (ContainsAny(context, lexicon.Add))
+        if (!actions.Contains(FantasyActions.Drop)
+            && ContainsAny(context, lexicon.Add))
         {
-            return FantasyIntents.Add;
+            actions.Add(FantasyActions.Add);
         }
 
         if (ContainsAny(context, lexicon.Start))
         {
-            return FantasyIntents.Start;
+            actions.Add(FantasyActions.Start);
         }
 
         if (ContainsAny(context, lexicon.Sit))
         {
-            return FantasyIntents.Sit;
+            actions.Add(FantasyActions.Sit);
         }
 
         if (ContainsAny(context, lexicon.Buy))
         {
-            return FantasyIntents.Buy;
+            actions.Add(FantasyActions.Buy);
         }
 
         if (ContainsAny(context, lexicon.Sell))
         {
-            return FantasyIntents.Sell;
+            actions.Add(FantasyActions.Sell);
         }
 
         if (ContainsAny(context, lexicon.Hold))
         {
-            return FantasyIntents.Hold;
+            actions.Add(FantasyActions.Hold);
         }
 
-        if (ContainsAny(context, lexicon.Panic))
-        {
-            return FantasyIntents.Panic;
-        }
-
-        if (ContainsAny(context, lexicon.Hype))
-        {
-            return FantasyIntents.Hype;
-        }
-
-        return FantasyIntents.General;
+        return new FantasySemanticClassification(
+            OrderLabels(actions, FantasyActions.All),
+            OrderLabels(signals, FantasyDiscussionSignals.All));
     }
 
-    private static bool TryClassifyScopedAction(
+    private static void ClassifyScopedActions(
         string normalized,
         string alias,
         string playerName,
-        out string intent)
+        HashSet<string> actions)
     {
         var mentionPattern = MentionPattern(alias, playerName);
         var dropFor = Regex.Match(
@@ -108,14 +111,12 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
             var right = dropFor.Groups["right"].Value;
             if (ContainsMention(left, alias, playerName))
             {
-                intent = FantasyIntents.Drop;
-                return true;
+                actions.Add(FantasyActions.Drop);
             }
 
             if (ContainsMention(right, alias, playerName))
             {
-                intent = FantasyIntents.Add;
-                return true;
+                actions.Add(FantasyActions.Add);
             }
         }
 
@@ -124,8 +125,7 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
                 $@"\b(?:(?:i|we)\s+(?:am\s+|are\s+)?|i'm\s+|we're\s+)?(?:already\s+)?(?:drop|dropping|dropped)\s+{mentionPattern}\b|\b(?:gonna|going\s+to|about\s+to|can't\s+wait\s+to|cant\s+wait\s+to)\s+drop\s+{mentionPattern}\b",
                 RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
-            intent = FantasyIntents.Drop;
-            return true;
+            actions.Add(FantasyActions.Drop);
         }
 
         if (Regex.IsMatch(
@@ -133,8 +133,7 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
                 $@"(?:{mentionPattern}\s+(?:to|straight\s+to)\s+(?:the\s+)?(?:waiver\s+wire|waivers)\b|\bsend\s+{mentionPattern}\s+to\s+(?:the\s+)?(?:waiver\s+wire|waivers)\b|{mentionPattern}\b.{{0,80}}\bwelcome\s+to\s+(?:the\s+)?(?:waiver\s+wire|waivers)\b|{mentionPattern}\b.{{0,40}}\b(?:is|looks?|seems?)\s+(?:a\s+)?(?:waiver\s+player|waiver\s+wire\s+player)\b)",
                 RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
-            intent = FantasyIntents.Drop;
-            return true;
+            actions.Add(FantasyActions.Drop);
         }
 
         if (Regex.IsMatch(
@@ -142,8 +141,7 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
                 $@"\b(?:pick\s+up|pickup|grab|claim|scoop)\s+{mentionPattern}\b.{{0,40}}\b(?:off|on|from)\s+waivers?\b|\b(?:best|top)\s+waiver\s+(?:add|pickup)\b.{{0,80}}{mentionPattern}\b|{mentionPattern}\b.{{0,80}}\b(?:best|top)\s+waiver\s+(?:add|pickup)\b",
                 RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
-            intent = FantasyIntents.Add;
-            return true;
+            actions.Add(FantasyActions.Add);
         }
 
         if (Regex.IsMatch(
@@ -151,8 +149,7 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
                 $@"\b(?:started|starting)\s+{mentionPattern}\b.{{0,40}}\bama\b",
                 RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
-            intent = FantasyIntents.Start;
-            return true;
+            actions.Add(FantasyActions.Start);
         }
 
         if (Regex.IsMatch(
@@ -160,8 +157,7 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
                 $@"\b(?:benched|benching)\s+{mentionPattern}\b.{{0,40}}\bama\b",
                 RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
-            intent = FantasyIntents.Sit;
-            return true;
+            actions.Add(FantasyActions.Sit);
         }
 
         var sitFor = Regex.Match(
@@ -174,14 +170,12 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
             var right = sitFor.Groups["right"].Value;
             if (ContainsMention(left, alias, playerName))
             {
-                intent = FantasyIntents.Sit;
-                return true;
+                actions.Add(FantasyActions.Sit);
             }
 
             if (ContainsMention(right, alias, playerName))
             {
-                intent = FantasyIntents.Start;
-                return true;
+                actions.Add(FantasyActions.Start);
             }
         }
 
@@ -195,14 +189,12 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
             var right = sitNot.Groups["right"].Value;
             if (ContainsMention(left, alias, playerName))
             {
-                intent = FantasyIntents.Sit;
-                return true;
+                actions.Add(FantasyActions.Sit);
             }
 
             if (ContainsMention(right, alias, playerName))
             {
-                intent = FantasyIntents.Start;
-                return true;
+                actions.Add(FantasyActions.Start);
             }
         }
 
@@ -210,25 +202,24 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
             normalized,
             @"\b(?:starting|start)\s+(?<left>.+?)\s+not\s+(?<right>.+)$",
             RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
-        if (startNot.Success)
+        if (startNot.Success
+            && !Regex.IsMatch(
+                normalized,
+                @"\bstarting\s+to\s+(?:think|believe|wonder|worry)\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
             var left = startNot.Groups["left"].Value;
             var right = startNot.Groups["right"].Value;
             if (ContainsMention(left, alias, playerName))
             {
-                intent = FantasyIntents.Start;
-                return true;
+                actions.Add(FantasyActions.Start);
             }
 
             if (ContainsMention(right, alias, playerName))
             {
-                intent = FantasyIntents.Sit;
-                return true;
+                actions.Add(FantasyActions.Sit);
             }
         }
-
-        intent = FantasyIntents.General;
-        return false;
     }
 
     private static bool IsStartChoice(string normalized, string alias, string playerName)
@@ -329,4 +320,25 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
         var normalized = Regex.Replace(lowered, @"[^a-z0-9']+", " ");
         return Regex.Replace(normalized, @"\s+", " ").Trim();
     }
+
+    private static IReadOnlyList<string> OrderLabels(
+        IReadOnlySet<string> labels,
+        IEnumerable<string> preferredOrder)
+    {
+        return preferredOrder
+            .Where(labels.Contains)
+            .ToList();
+    }
+}
+
+public sealed record FantasySemanticClassification(
+    IReadOnlyList<string> FantasyActions,
+    IReadOnlyList<string> DiscussionSignals)
+{
+    public static FantasySemanticClassification Empty { get; } = new([], []);
+
+    public string LegacyIntent =>
+        FantasyActions.FirstOrDefault()
+        ?? DiscussionSignals.FirstOrDefault()
+        ?? FantasyIntents.General;
 }

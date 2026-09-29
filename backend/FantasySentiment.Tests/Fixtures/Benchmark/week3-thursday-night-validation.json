@@ -375,9 +375,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ],
@@ -675,9 +673,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1550,9 +1546,7 @@
             "playerEvaluation": "Positive",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance",
               "FantasyProduction"
@@ -1978,9 +1972,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ],
@@ -2380,9 +2372,7 @@
             "playerEvaluation": "Positive",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance",
               "UnseenSlang"
@@ -2453,9 +2443,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ],
@@ -2582,9 +2570,7 @@
             "playerEvaluation": "StrongPositive",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2641,9 +2627,7 @@
             "playerEvaluation": "Positive",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Comparison"
             ]
@@ -2782,9 +2766,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "OwnRoster",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "ReplyContext",
               "UsageOpportunity"
@@ -2904,9 +2886,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -3011,9 +2991,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance",
               "UnseenSlang"
@@ -3369,9 +3347,7 @@
             "playerEvaluation": "Negative",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -3394,9 +3370,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -3571,9 +3545,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ],
@@ -3585,9 +3557,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ],
@@ -3634,9 +3604,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance",
               "UnseenSlang"
@@ -4138,9 +4106,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "OwnRoster",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance",
               "UsageOpportunity"
@@ -4164,9 +4130,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance",
               "FantasyProduction"
@@ -4213,9 +4177,7 @@
             "playerEvaluation": "Unknown",
             "perspective": "OwnRoster",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance",
               "LineupRegret"
@@ -4298,9 +4260,7 @@
             "fantasyActions": [
               "Drop"
             ],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance",
               "UsageOpportunity"
@@ -4371,9 +4331,7 @@
             "playerEvaluation": "Positive",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -4384,9 +4342,7 @@
             "playerEvaluation": "Positive",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance",
               "QuarterbackPlay"

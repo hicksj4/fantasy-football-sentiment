@@ -827,9 +827,7 @@
             "playerEvaluation": "Positive",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1512,9 +1510,7 @@
             "fantasyActions": [
               "Sit"
             ],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "DraftRegret",
               "FantasyProduction",
@@ -1790,9 +1786,7 @@
             "playerEvaluation": "Neutral",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "QuarterbackPlay"
             ]
@@ -1815,9 +1809,7 @@
             "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "QuarterbackPlay"
             ]
@@ -1828,9 +1820,7 @@
             "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "QuarterbackPlay"
             ]
@@ -1900,9 +1890,7 @@
             "playerEvaluation": "Neutral",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Injury",
               "LineupRegret"

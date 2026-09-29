@@ -1188,9 +1188,7 @@
             "playerEvaluation": "Negative",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1213,9 +1211,7 @@
             "playerEvaluation": "StrongNegative",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1263,9 +1259,7 @@
             "playerEvaluation": "Positive",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1593,9 +1587,7 @@
             "playerEvaluation": "Negative",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -1944,9 +1936,7 @@
             "playerEvaluation": "Negative",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2064,9 +2054,7 @@
             "playerEvaluation": "Neutral",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2134,9 +2122,7 @@
             "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "LineupRegret"
             ]
@@ -2147,9 +2133,7 @@
             "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "LineupRegret"
             ]
@@ -2206,9 +2190,7 @@
             "playerEvaluation": "Neutral",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Comparison"
             ]
@@ -2231,9 +2213,7 @@
             "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2256,9 +2236,7 @@
             "playerEvaluation": "Neutral",
             "perspective": "OwnRoster",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "UsageOpportunity"
             ]
@@ -2292,9 +2270,7 @@
             "playerEvaluation": "Neutral",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Panic"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Comparison"
             ]
@@ -2340,9 +2316,7 @@
             "playerEvaluation": "Positive",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2365,9 +2339,7 @@
             "playerEvaluation": "Positive",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]
@@ -2450,9 +2422,7 @@
             "playerEvaluation": "Positive",
             "perspective": "Unknown",
             "fantasyActions": [],
-            "discussionSignals": [
-              "Hype"
-            ],
+            "discussionSignals": [],
             "reasons": [
               "Performance"
             ]

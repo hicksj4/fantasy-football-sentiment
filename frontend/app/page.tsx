@@ -66,8 +66,8 @@ export default async function Home({ searchParams }: PageProps) {
 
       <section className="dashboard-grid">
         <DashboardTable title="Discussion Impact" rows={impactPlayers} snapshotKey={snapshot.key} />
-        <DashboardTable title="Waiver / Hype Buzz" rows={waivers} mode="waiver" snapshotKey={snapshot.key} />
-        <DashboardTable title="Panic / Drop Buzz" rows={panic} mode="panic" snapshotKey={snapshot.key} />
+        <DashboardTable title="Waiver / Add Buzz" rows={waivers} mode="waiver" snapshotKey={snapshot.key} />
+        <DashboardTable title="Drop / Sit / Sell Buzz" rows={panic} mode="panic" snapshotKey={snapshot.key} />
         <DashboardTable title="Most Discussed" rows={mostDiscussed} snapshotKey={snapshot.key} />
       </section>
 
