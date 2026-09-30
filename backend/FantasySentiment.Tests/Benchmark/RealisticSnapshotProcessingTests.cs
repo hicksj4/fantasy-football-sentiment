@@ -14,9 +14,15 @@ namespace FantasySentiment.Tests.Benchmark;
 
 public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
 {
-    [Fact]
+    [Theory]
+    [InlineData("2026-week2-reddit-sample", 3, 333, "realistic-snapshot-summary")]
+    [InlineData("2026-combined-real-handpicked", 5, 639, "combined-real-snapshot-summary")]
     [Trait("Category", "Benchmark")]
-    public async Task WeekTwoRedditSample_ProcessesThroughSnapshotPipeline()
+    public async Task RealisticSnapshot_ProcessesThroughSnapshotPipeline(
+        string snapshotKey,
+        int expectedPosts,
+        int expectedComments,
+        string artifactName)
     {
         var corpus = BenchmarkFixtureLoader.LoadCorpus();
         var apiRoot = Path.Combine(corpus.RepositoryRoot, "backend", "FantasySentiment.Api");
@@ -38,17 +44,17 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
             new SentimentScoringPolicy(),
             NullLogger<SnapshotProcessingService>.Instance);
 
-        await processor.ProcessAsync("2026-week2-reddit-sample", skipIfProcessed: false, CancellationToken.None);
-        var processedSnapshot = await db.AnalysisSnapshots.SingleAsync(item => item.Key == "2026-week2-reddit-sample");
+        await processor.ProcessAsync(snapshotKey, skipIfProcessed: false, CancellationToken.None);
+        var processedSnapshot = await db.AnalysisSnapshots.SingleAsync(item => item.Key == snapshotKey);
         var mentionCountAfterProcess = await db.PlayerMentions.CountAsync(mention => mention.SnapshotId == processedSnapshot.Id);
-        await processor.ProcessAsync("2026-week2-reddit-sample", skipIfProcessed: true, CancellationToken.None);
+        await processor.ProcessAsync(snapshotKey, skipIfProcessed: true, CancellationToken.None);
         var mentionCountAfterIdempotentSkip = await db.PlayerMentions.CountAsync(mention => mention.SnapshotId == processedSnapshot.Id);
 
-        var report = await BuildReportAsync(db, mentionCountAfterProcess, mentionCountAfterIdempotentSkip);
+        var report = await BuildReportAsync(db, snapshotKey, mentionCountAfterProcess, mentionCountAfterIdempotentSkip);
         var benchmarkDirectory = Path.Combine(corpus.RepositoryRoot, "artifacts", "benchmark");
         Directory.CreateDirectory(benchmarkDirectory);
-        var jsonPath = Path.Combine(benchmarkDirectory, "realistic-snapshot-summary.json");
-        var markdownPath = Path.Combine(benchmarkDirectory, "realistic-snapshot-summary.md");
+        var jsonPath = Path.Combine(benchmarkDirectory, $"{artifactName}.json");
+        var markdownPath = Path.Combine(benchmarkDirectory, $"{artifactName}.md");
         await File.WriteAllTextAsync(
             jsonPath,
             JsonSerializer.Serialize(report, BenchmarkFixtureLoader.SerializerOptions));
@@ -56,8 +62,8 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
 
         output.WriteLine(ToMarkdown(report));
 
-        Assert.Equal(3, report.Posts);
-        Assert.Equal(333, report.Comments);
+        Assert.Equal(expectedPosts, report.Posts);
+        Assert.Equal(expectedComments, report.Comments);
         Assert.True(report.PlayerMentions > 0);
         Assert.True(report.UniquePlayers > 0);
         Assert.True(report.IdempotenceMentionCountStable);
@@ -67,10 +73,11 @@ public sealed class RealisticSnapshotProcessingTests(ITestOutputHelper output)
 
     private static async Task<RealisticSnapshotReport> BuildReportAsync(
         FantasySentimentDbContext db,
+        string snapshotKey,
         int mentionCountAfterProcess,
         int mentionCountAfterIdempotentSkip)
     {
-        var snapshot = await db.AnalysisSnapshots.SingleAsync(item => item.Key == "2026-week2-reddit-sample");
+        var snapshot = await db.AnalysisSnapshots.SingleAsync(item => item.Key == snapshotKey);
         var aggregates = await db.SnapshotPlayerAggregates
             .AsNoTracking()
             .Include(aggregate => aggregate.Player)
