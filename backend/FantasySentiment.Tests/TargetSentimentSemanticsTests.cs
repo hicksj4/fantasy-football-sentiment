@@ -206,6 +206,67 @@ public sealed class TargetSentimentSemanticsTests
         Assert.True(result.Detail.FinalScore > 0.15);
     }
 
+    [Fact]
+    public async Task StrongLfg_DomainEvidenceOverridesNegativeVaderProfanity()
+    {
+        var result = await AnalyzeAsync("CALLED THAT SHIT LFG JUWAN", "Juwan Johnson");
+
+        Assert.True(result.Detail.RawVaderScore < -0.15, result.Detail.ToDiagnostics());
+        Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("domainOverrideVader", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Theory]
+    [InlineData("Come on Herbert get it together", "Justin Herbert", -1)]
+    [InlineData("Bruh LLOYD is asscheeks.", "Marshawn Lloyd", -1)]
+    [InlineData("Marvin Harrison Jr is asscheeks", "Marvin Harrison Jr.", -1)]
+    [InlineData("Tucker Kraft is invisible", "Tucker Kraft", -1)]
+    [InlineData("Travis Etienne looks amazing", "Travis Etienne Jr.", 1)]
+    [InlineData("Jeanty good", "Ashton Jeanty", 1)]
+    [InlineData("Ashton Jeanty looks amazing", "Ashton Jeanty", 1)]
+    [InlineData("Hampton is a sell", "Omarion Hampton", -1)]
+    [InlineData("Selling Hampton before this gets uglier", "Omarion Hampton", -1)]
+    [InlineData("MHJ is a drop", "Marvin Harrison Jr.", -1)]
+    [InlineData("Dropping the shit outta MHJ", "Marvin Harrison Jr.", -1)]
+    [InlineData("Saquon is hurt again.", "Saquon Barkley", -1)]
+    [InlineData("DeVonta is COOKING with one catch 🔥", "DeVonta Smith", -1)]
+    [InlineData("Loveland 3 yds in 2 games 🔥", "Colston Loveland", -1)]
+    [InlineData("Juwan Johnson LFGGGG", "Juwan Johnson", 1)]
+    [InlineData("Travis Etienne is legit good", "Travis Etienne Jr.", 1)]
+    public async Task FantasySemanticsV5_ExplicitRegressionCases(
+        string text,
+        string playerName,
+        int expectedDirection)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        if (expectedDirection > 0)
+        {
+            Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+        }
+        else
+        {
+            Assert.True(result.Detail.FinalScore < -0.15, result.Detail.ToDiagnostics());
+        }
+
+        Assert.True(result.Detail.SemanticConfidence >= 0.45, result.Detail.ToDiagnostics());
+    }
+
+    [Theory]
+    [InlineData("Hampton is a sell", "Omarion Hampton", FantasyActions.Sell)]
+    [InlineData("Selling Hampton before this gets uglier", "Omarion Hampton", FantasyActions.Sell)]
+    [InlineData("MHJ is a drop", "Marvin Harrison Jr.", FantasyActions.Drop)]
+    [InlineData("Dropping the shit outta MHJ", "Marvin Harrison Jr.", FantasyActions.Drop)]
+    public async Task FantasySemanticsV5_DirectActionsRemainScoped(
+        string text,
+        string playerName,
+        string expectedAction)
+    {
+        var result = await AnalyzeAsync(text, playerName);
+
+        Assert.Contains(expectedAction, result.Semantics.FantasyActions);
+    }
+
     [Theory]
     [InlineData("Herbert is straight ass", "Justin Herbert")]
     [InlineData("Pickens is invisible", "George Pickens")]
@@ -698,6 +759,43 @@ public sealed class TargetSentimentSemanticsTests
     }
 
     [Fact]
+    public async Task ParentInheritedNeutralReply_DoesNotInheritParentSemantics()
+    {
+        var result = await AnalyzeReplyAsync("Pitts is washed.", "It's only been a quarter.", "Kyle Pitts");
+
+        Assert.Equal("It's only been a quarter.", result.Context.TargetText);
+        Assert.InRange(result.Detail.FinalScore, -0.14, 0.14);
+        Assert.True(result.Detail.SemanticConfidence < 0.45, result.Detail.ToDiagnostics());
+        Assert.DoesNotContain(result.Detail.AppliedRules, rule => rule.StartsWith("replyAgreement", StringComparison.OrdinalIgnoreCase));
+        Assert.DoesNotContain("washed", result.Detail.MatchedNegativeTerms);
+    }
+
+    [Fact]
+    public async Task ParentInheritedCalledBackOpportunity_DoesNotKeepParentNegativeSemantics()
+    {
+        var result = await AnalyzeReplyAsync(
+            "Saquon is cooked.",
+            "he had a TD called back and still salvaged the day.",
+            "Saquon Barkley");
+
+        Assert.True(result.Detail.FinalScore > -0.15, result.Detail.ToDiagnostics());
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("calledBackOpportunityPositive", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ParentInheritedDraftValueReply_ScopesSelfInsultAwayFromPlayer()
+    {
+        var result = await AnalyzeReplyAsync(
+            "Ashton Jeanty is elite.",
+            "same my bozo ass work league let him fall to 19",
+            "Ashton Jeanty");
+
+        Assert.True(result.Detail.FinalScore > 0.15, result.Detail.ToDiagnostics());
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.StartsWith("draftValuePositive", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(result.Detail.AppliedRules, rule => rule.Equals("contextSkipped:ass", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
     public async Task ReplyAgreement_InheritsFantasyIrrelevantParent()
     {
         var result = await AnalyzeReplyAsync(
@@ -833,13 +931,15 @@ public sealed class TargetSentimentSemanticsTests
                 "looks terrible",
                 "straight ass",
                 "is ass",
+                "asscheeks",
                 "is invisible",
                 "is buns",
                 "fantasy irrelevant",
+                "get it together",
                 "welcome to the waiver wire"
             ],
             PositiveSlang = [ "disgusting", "filthy", "cooking", "lfg" ],
-            NegativeSlang = [ "washed", "unstartable", "cooked", "ass", "buns", "mid", "fraud", "bum" ],
+            NegativeSlang = [ "washed", "unstartable", "cooked", "ass", "asscheeks", "buns", "mid", "fraud", "bum" ],
             Intensifiers = [ "very", "absolutely", "completely" ],
             Negators = [ "not", "never", "no", "don't", "dont" ]
         };
@@ -880,7 +980,7 @@ public sealed class TargetSentimentSemanticsTests
             Player(12, "Ladd McConkey", "LAC", "WR", "Ladd", "Ladd McConkey"),
             Player(13, "Puka Nacua", "LAR", "WR", "Puka"),
             Player(14, "CeeDee Lamb", "DAL", "WR", "CeeDee", "Lamb"),
-            Player(15, "Saquon Barkley", "PHI", "RB", "Barkley"),
+            Player(15, "Saquon Barkley", "PHI", "RB", "Saquon", "Barkley"),
             Player(16, "Parker Washington", "JAX", "WR", "Washington", "Parker Washington"),
             Player(17, "Trey McBride", "ARI", "TE", "McBride"),
             Player(18, "Tucker Kraft", "GB", "TE", "Kraft", "Tucker Kraft"),
@@ -897,7 +997,14 @@ public sealed class TargetSentimentSemanticsTests
             Player(29, "Derrick Henry", "BAL", "RB", "Henry", "Derrick Henry"),
             Player(30, "Dalton Schultz", "HOU", "TE", "Schultz", "Dalton Schultz"),
             Player(31, "Jayden Reed", "GB", "WR", "Reed", "Jayden Reed"),
-            Player(32, "Kyle Allen", "DET", "QB", "Allen", "Kyle Allen")
+            Player(32, "Kyle Allen", "DET", "QB", "Allen", "Kyle Allen"),
+            Player(33, "Juwan Johnson", "NO", "TE", "Juwan", "Juwan Johnson"),
+            Player(34, "Travis Etienne Jr.", "JAX", "RB", "Etienne", "Travis Etienne", "Travis Etienne Jr.", "ETN"),
+            Player(35, "Omarion Hampton", "LAC", "RB", "Hampton", "Omarion Hampton"),
+            Player(36, "Marvin Harrison Jr.", "ARI", "WR", "MHJ", "Marvin Harrison", "Marvin Harrison Jr."),
+            Player(37, "Ashton Jeanty", "LV", "RB", "Jeanty", "Ashton Jeanty"),
+            Player(38, "DeVonta Smith", "PHI", "WR", "DeVonta", "Devonta", "DeVonta Smith"),
+            Player(39, "Josh Allen", "BUF", "QB", "Josh Allen")
         ];
     }
 

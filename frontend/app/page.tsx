@@ -14,13 +14,14 @@ export default async function Home({ searchParams }: PageProps) {
   const params = await searchParams;
   const snapshotKey = params.snapshot ?? "latest";
 
-  const [snapshot, highlights, impactPlayers, waivers, panic, mostDiscussed, teams] = await Promise.all([
+  const [snapshot, highlights, impactPlayers, waivers, panic, mostDiscussed, allPlayers, teams] = await Promise.all([
     getJson<AnalysisSnapshot>(`/api/snapshots/${snapshotKey}`),
     getJson<DashboardHighlights>(`/api/snapshots/${snapshotKey}/highlights`),
     getJson<DashboardPlayer[]>(`/api/snapshots/${snapshotKey}/players?sort=impact&limit=10`),
     getJson<DashboardPlayer[]>(`/api/snapshots/${snapshotKey}/players?sort=waivers&limit=8`),
     getJson<DashboardPlayer[]>(`/api/snapshots/${snapshotKey}/players?sort=panic&limit=8`),
     getJson<DashboardPlayer[]>(`/api/snapshots/${snapshotKey}/players?sort=most-discussed&limit=8`),
+    getJson<DashboardPlayer[]>(`/api/snapshots/${snapshotKey}/players?sort=most-discussed&limit=100`),
     getJson<TeamSummary[]>(`/api/snapshots/${snapshotKey}/teams`)
   ]);
 
@@ -70,6 +71,10 @@ export default async function Home({ searchParams }: PageProps) {
         <DashboardTable title="Drop / Sit / Sell Buzz" rows={panic} mode="panic" snapshotKey={snapshot.key} />
         <DashboardTable title="Most Discussed" rows={mostDiscussed} snapshotKey={snapshot.key} />
       </section>
+
+      <div className="all-players-table">
+        <DashboardTable title="All Snapshot Players" rows={allPlayers} snapshotKey={snapshot.key} />
+      </div>
 
       <section className="panel">
         <div className="panel-heading">

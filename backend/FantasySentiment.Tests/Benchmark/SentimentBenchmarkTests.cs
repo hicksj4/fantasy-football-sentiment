@@ -69,7 +69,7 @@ public sealed class SentimentBenchmarkTests(ITestOutputHelper output)
         Assert.Contains("formerly audited Holdout B", markdown);
         Assert.DoesNotContain("DatasetSplit: Development", markdown);
         Assert.DoesNotContain("DatasetSplit: Validation", markdown);
-        Assert.Contains("fantasy-semantics-v4", markdown);
+        Assert.Contains("fantasy-semantics-v5", markdown);
         Assert.True(File.Exists(jsonPath));
         Assert.True(File.Exists(markdownPath));
     }

@@ -185,6 +185,7 @@ public sealed record PlayerMentionAnalysisDto(
     long Id,
     int CommentId,
     string Body,
+    string? ParentBody,
     string PostTitle,
     string Subreddit,
     int RedditScore,

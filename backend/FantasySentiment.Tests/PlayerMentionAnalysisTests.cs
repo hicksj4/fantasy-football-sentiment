@@ -86,6 +86,41 @@ public sealed class PlayerMentionAnalysisTests
     }
 
     [Fact]
+    public async Task PlayerMentions_ReturnsParentBodyForInheritedTargets()
+    {
+        await using var db = CreateDb();
+        var (snapshot, player, post) = AddSnapshotPlayerAndPost(db, "parent-context");
+        AddMention(
+            db,
+            snapshot,
+            post,
+            player,
+            "reply",
+            "It's only been a quarter.",
+            7,
+            0,
+            1.9,
+            targetAttributionMethod: TargetAttributionMethods.ParentInherited,
+            parentRedditId: "parent",
+            parentBody: "Player looked bad on the first drive.");
+        await db.SaveChangesAsync();
+
+        var page = await CreateQuery(db).GetPlayerMentionsAsync(
+            snapshot.Key,
+            player.Id,
+            null,
+            null,
+            1,
+            20,
+            CancellationToken.None);
+
+        Assert.NotNull(page);
+        var item = Assert.Single(page.Items);
+        Assert.Equal("Player looked bad on the first drive.", item.ParentBody);
+        Assert.Equal(TargetAttributionMethods.ParentInherited, item.TargetAttributionMethod);
+    }
+
+    [Fact]
     public async Task PlayerMentions_PaginatesResults()
     {
         await using var db = CreateDb();
@@ -225,12 +260,28 @@ public sealed class PlayerMentionAnalysisTests
         double voteWeight,
         double semanticConfidence = 0.85,
         string disposition = AnalysisDispositions.Scored,
-        string reason = AnalysisDispositionReasons.Scored)
+        string reason = AnalysisDispositionReasons.Scored,
+        string targetAttributionMethod = TargetAttributionMethods.Explicit,
+        string? parentRedditId = null,
+        string? parentBody = null)
     {
+        if (!string.IsNullOrWhiteSpace(parentRedditId) && !string.IsNullOrWhiteSpace(parentBody))
+        {
+            db.RedditComments.Add(new RedditComment
+            {
+                RedditId = parentRedditId,
+                Post = post,
+                Body = parentBody,
+                CreatedAt = snapshot.CreatedAt,
+                Score = 1
+            });
+        }
+
         var comment = new RedditComment
         {
             RedditId = $"{snapshot.Key}-{redditId}",
             Post = post,
+            ParentRedditId = parentRedditId,
             Body = body,
             CreatedAt = snapshot.CreatedAt.AddMinutes(db.RedditComments.Local.Count + 1),
             Score = redditScore
@@ -254,7 +305,7 @@ public sealed class PlayerMentionAnalysisTests
             AnalysisDisposition = disposition,
             AnalysisDispositionReason = reason,
             MatchedAlias = player.Name,
-            TargetAttributionMethod = TargetAttributionMethods.Explicit,
+            TargetAttributionMethod = targetAttributionMethod,
             TargetConfidence = 1,
             TargetPerspective = TargetPerspectives.Unknown,
             Intent = FantasyIntents.General,

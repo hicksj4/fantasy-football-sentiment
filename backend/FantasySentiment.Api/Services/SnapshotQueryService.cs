@@ -121,6 +121,14 @@ public sealed class SnapshotQueryService(
                 mention.Id,
                 mention.CommentId,
                 mention.Comment.Body,
+                mention.Comment.ParentRedditId == null
+                    ? null
+                    : db.RedditComments
+                        .Where(parent =>
+                            parent.PostId == mention.Comment.PostId
+                            && parent.RedditId == mention.Comment.ParentRedditId)
+                        .Select(parent => parent.Body)
+                        .FirstOrDefault(),
                 mention.Comment.Post.Title,
                 mention.Comment.Post.Subreddit,
                 mention.RedditScore,
@@ -698,6 +706,7 @@ public sealed class SnapshotQueryService(
             mention.Id,
             mention.CommentId,
             mention.Body,
+            mention.ParentBody,
             mention.PostTitle,
             mention.Subreddit,
             mention.RedditScore,
@@ -809,6 +818,7 @@ public sealed class SnapshotQueryService(
         long Id,
         int CommentId,
         string Body,
+        string? ParentBody,
         string PostTitle,
         string Subreddit,
         int RedditScore,

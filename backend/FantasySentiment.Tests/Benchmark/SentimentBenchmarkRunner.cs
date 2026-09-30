@@ -16,7 +16,7 @@ internal sealed class SentimentBenchmarkRunner
     private const double PreviousFantasyOutlookAccuracy = 0.505;
     private const double PreviousPerspectiveAccuracy = 0.125;
     private const double PreviousSingleIntentAccuracy = 0.308;
-    private const string SemanticProfile = "fantasy-semantics-v4";
+    private const string SemanticProfile = "fantasy-semantics-v5";
 
     private readonly BenchmarkCorpus _corpus;
     private readonly CommentTargetResolver _targetResolver;

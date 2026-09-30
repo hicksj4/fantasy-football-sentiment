@@ -16,6 +16,13 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
     private const double StructuralAdjustmentCap = 0.85;
     private const double PerspectiveAdjustmentCap = 0.95;
 
+    private enum DomainEvidenceStrength
+    {
+        None,
+        Weak,
+        Strong
+    }
+
     public SentimentResult Analyze(string text)
     {
         if (string.IsNullOrWhiteSpace(text))
@@ -200,10 +207,31 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
         }
 
         var fantasyAdjustment = DiminishingSum(matches.Select(match => match.Score), FantasyAdjustmentCap);
+        var emojiAdjustment = preparation.EmojiAdjustment;
         var structuralAdjustment = CalculateStructuralAdjustment(
             normalizedText,
             targetAliases,
             appliedRules);
+        if (IsLowProductionHypeContradiction(normalizedText, fantasyAdjustment, emojiAdjustment, matches))
+        {
+            if (fantasyAdjustment > 0)
+            {
+                appliedRules.Add($"lowProductionHypeNeutralizedFantasy={FormatSigned(-fantasyAdjustment)}");
+                fantasyAdjustment = 0;
+            }
+
+            if (emojiAdjustment > 0)
+            {
+                appliedRules.Add($"lowProductionHypeNeutralizedEmoji={FormatSigned(-emojiAdjustment)}");
+                emojiAdjustment = 0;
+            }
+
+            structuralAdjustment = DiminishingSum(
+                [structuralAdjustment, -0.85],
+                StructuralAdjustmentCap);
+            appliedRules.Add("lowProductionHypeContradictionNegative=-0.85");
+        }
+
         var perspectiveAdjustment = CalculatePerspectiveAdjustment(
             normalizedText,
             perspective,
@@ -214,10 +242,22 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
             targetAliases,
             lexicon,
             appliedRules);
-        var baseBeforeQuestion = Math.Clamp(
-            rawVaderScore + fantasyAdjustment + preparation.EmojiAdjustment + structuralAdjustment + perspectiveAdjustment,
+        var domainAdjustment = Math.Round(Math.Clamp(
+            fantasyAdjustment + emojiAdjustment + structuralAdjustment + perspectiveAdjustment,
             -1,
-            1);
+            1), 3);
+        var evidenceStrength = DetermineDomainEvidenceStrength(
+            fantasyAdjustment,
+            emojiAdjustment,
+            structuralAdjustment,
+            perspectiveAdjustment,
+            matches);
+        appliedRules.Add($"semanticEvidence={evidenceStrength}");
+        var baseBeforeQuestion = CalculateBaseBeforeQuestion(
+            rawVaderScore,
+            domainAdjustment,
+            evidenceStrength,
+            appliedRules);
         var questionAdjustment = CalculateQuestionAdjustment(
             normalizedText,
             targetText,
@@ -226,11 +266,14 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
         var finalScore = Math.Round(Math.Clamp(baseBeforeQuestion + questionAdjustment, -1, 1), 3);
         var semanticConfidence = CalculateSemanticConfidence(
             finalScore,
+            rawVaderScore,
             fantasyAdjustment,
-            preparation.EmojiAdjustment,
+            emojiAdjustment,
             structuralAdjustment,
             perspectiveAdjustment,
             questionAdjustment,
+            domainAdjustment,
+            evidenceStrength,
             matches);
 
         var positiveTerms = matches
@@ -261,7 +304,7 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
 
         return new FantasySemanticAnalysis(
             fantasyAdjustment,
-            preparation.EmojiAdjustment,
+            emojiAdjustment,
             structuralAdjustment,
             perspectiveAdjustment,
             questionAdjustment,
@@ -272,6 +315,79 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
             phrases,
             preparation.MatchedEmoji,
             appliedRules.Distinct(StringComparer.OrdinalIgnoreCase).ToList());
+    }
+
+    private static double CalculateBaseBeforeQuestion(
+        double rawVaderScore,
+        double domainAdjustment,
+        DomainEvidenceStrength evidenceStrength,
+        List<string> appliedRules)
+    {
+        if (evidenceStrength == DomainEvidenceStrength.Strong
+            && Math.Abs(domainAdjustment) >= 0.15)
+        {
+            if (HasMaterialSignConflict(rawVaderScore, domainAdjustment))
+            {
+                appliedRules.Add($"domainOverrideVader={FormatSigned(domainAdjustment)}");
+                return domainAdjustment;
+            }
+
+            if (Math.Abs(rawVaderScore) >= 0.15
+                && Math.Sign(rawVaderScore) == Math.Sign(domainAdjustment))
+            {
+                return Math.Round(Math.Clamp(domainAdjustment + rawVaderScore * 0.25, -1, 1), 3);
+            }
+
+            return domainAdjustment;
+        }
+
+        return Math.Round(Math.Clamp(rawVaderScore + domainAdjustment, -1, 1), 3);
+    }
+
+    private static DomainEvidenceStrength DetermineDomainEvidenceStrength(
+        double fantasyAdjustment,
+        double emojiAdjustment,
+        double structuralAdjustment,
+        double perspectiveAdjustment,
+        IReadOnlyList<SemanticTermMatch> matches)
+    {
+        if (Math.Abs(structuralAdjustment) >= 0.40
+            || Math.Abs(perspectiveAdjustment) >= 0.40
+            || Math.Abs(fantasyAdjustment) >= 0.50
+            || matches.Any(match => Math.Abs(match.Score) >= 0.50))
+        {
+            return DomainEvidenceStrength.Strong;
+        }
+
+        if (matches.Count > 0
+            || Math.Abs(emojiAdjustment) >= 0.20
+            || Math.Abs(structuralAdjustment) >= 0.15
+            || Math.Abs(perspectiveAdjustment) >= 0.20)
+        {
+            return DomainEvidenceStrength.Weak;
+        }
+
+        return DomainEvidenceStrength.None;
+    }
+
+    private static bool IsLowProductionHypeContradiction(
+        string normalizedText,
+        double fantasyAdjustment,
+        double emojiAdjustment,
+        IReadOnlyList<SemanticTermMatch> matches)
+    {
+        var hasLowProductionStat = Regex.IsMatch(
+            normalizedText,
+            @"\b(?:0|zero|1|one)\s+(?:catch|catches|target|targets|reception|receptions)\b|\b(?:[0-9]|one|two|three|four|five)\s+(?:yds?|yards?)\s+in\s+\d+\s+games?\b",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        if (!hasLowProductionStat)
+        {
+            return false;
+        }
+
+        return emojiAdjustment > 0.20
+               || fantasyAdjustment > 0.25
+               || matches.Any(match => match.Score > 0.25);
     }
 
     private static double CalculatePerspectiveAdjustment(
@@ -363,6 +479,22 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
             0.30,
             "freakOfNaturePositive");
 
+        AddStructuralScore(
+            Regex.IsMatch(
+                normalizedText,
+                @"\b(?:let|letting|lets)\s+him\s+(?:fall|drop)\s+to\s+\d+\b|\bhim\s+(?:fell|dropped)\s+to\s+\d+\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+            0.75,
+            "draftValuePositive");
+
+        AddStructuralScore(
+            Regex.IsMatch(
+                normalizedText,
+                @"\b(?:he|they)\s+had\s+a?\s*(?:td|touchdown)\s+called\s+back\b.{0,100}\b(?:still\s+)?(?:salvaged|fine|solid|good|okay|ok)\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+            0.45,
+            "calledBackOpportunityPositive");
+
         foreach (var alias in targetAliases)
         {
             var aliasPattern = AliasPattern(alias);
@@ -414,7 +546,7 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
             AddStructuralScore(
                 Regex.IsMatch(
                     normalizedText,
-                    $@"\b(?:(?:i|we)\s+(?:am\s+|are\s+)?|i'm\s+|we're\s+)?(?:already\s+)?(?:drop|dropping|dropped)\s+{aliasPattern}\b|\b(?:gonna|going\s+to|about\s+to|can't\s+wait\s+to|cant\s+wait\s+to)\s+drop\s+{aliasPattern}\b",
+                    $@"\b(?:(?:i|we)\s+(?:am\s+|are\s+)?|i'm\s+|we're\s+)?(?:already\s+)?(?:drop|dropping|dropped)\s+{aliasPattern}\b|\b(?:drop|dropping|dropped)\s+(?:the\s+)?(?:shit|fuck)\s+(?:outta|out\s+of)\s+{aliasPattern}\b|\b(?:gonna|going\s+to|about\s+to|can't\s+wait\s+to|cant\s+wait\s+to)\s+drop\s+{aliasPattern}\b|{aliasPattern}\b.{{0,35}}\b(?:is|was|looks?|seems?)\s+(?:a\s+)?(?:drop|droppable)\b",
                     RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)
                 && !Regex.IsMatch(
                     normalizedText,
@@ -422,6 +554,18 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
                     RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
                 -0.70,
                 "dropTargetNegative");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:(?:i|we)\s+(?:am\s+|are\s+)?|i'm\s+|we're\s+)?(?:sell|selling|sold)\s+{aliasPattern}\b|{aliasPattern}\b.{{0,45}}\b(?:is|was|looks?|seems?)\s+(?:a\s+)?sell\b|{aliasPattern}\b.{{0,80}}\b(?:i'm|im|i\s+am|we're|were|we\s+are)\s+selling\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)
+                && !Regex.IsMatch(
+                    normalizedText,
+                    $@"\b(?:should|can|do)\s+(?:i|we)\s+sell\s+{aliasPattern}\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.62,
+                "sellTargetNegative");
 
             AddStructuralScore(
                 Regex.IsMatch(
@@ -602,10 +746,26 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
             AddStructuralScore(
                 Regex.IsMatch(
                     normalizedText,
-                    $@"{aliasPattern}\b.{{0,70}}\b(?:(?:is|was|looks?|looked|seems?|seemed|plays?|playing)\s+(?:so\s+|very\s+|really\s+|straight\s+|like\s+)?(?:awful|terrible|bad|slow|dead|washed|cooked|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|buns|dogshit|mid(?!\s+rounds?\b)|fraud|bum|stinks)|(?:so\s+|very\s+|really\s+|straight\s+)?(?:slow|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|buns|dogshit|mid(?!\s+rounds?\b)|fraud|bum|stinks))\b|\b(?:is|was|looks?|looked|seems?|seemed)\s+{aliasPattern}\s+(?:awful|terrible|bad|slow|dead|washed|cooked|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|buns|dogshit|mid(?!\s+rounds?\b)|fraud|bum|stinks)\b",
+                    $@"{aliasPattern}\b.{{0,70}}\b(?:(?:is|was|looks?|looked|seems?|seemed|plays?|playing)\s+(?:so\s+|very\s+|really\s+|straight\s+|like\s+)?(?:good|great|solid|amazing|excellent|awesome|incredible|legit|fine)|(?:so\s+|very\s+|really\s+)?(?:good|great|solid|amazing|excellent|awesome|incredible|legit))\b|\b(?:is|was|looks?|looked|seems?|seemed)\s+{aliasPattern}\s+(?:good|great|solid|amazing|excellent|awesome|incredible|legit|fine)\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                0.55,
+                "targetEvaluationPositive");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,70}}\b(?:(?:is|was|looks?|looked|seems?|seemed|plays?|playing)\s+(?:so\s+|very\s+|really\s+|straight\s+|like\s+)?(?:awful|terrible|bad|slow|dead|washed|cooked|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|asscheeks|ass\s+cheeks|buns|dogshit|mid(?!\s+rounds?\b)|fraud|bum|stinks)|(?:so\s+|very\s+|really\s+|straight\s+)?(?:slow|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|asscheeks|ass\s+cheeks|buns|dogshit|mid(?!\s+rounds?\b)|fraud|bum|stinks))\b|\b(?:is|was|looks?|looked|seems?|seemed)\s+{aliasPattern}\s+(?:awful|terrible|bad|slow|dead|washed|cooked|trash|garbage|non\s+existent|nonexistent|invisible|horrible|ass|asscheeks|ass\s+cheeks|buns|dogshit|mid(?!\s+rounds?\b)|fraud|bum|stinks)\b",
                     RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
                 -0.58,
                 "targetEvaluationNegative");
+
+            AddStructuralScore(
+                Regex.IsMatch(
+                    normalizedText,
+                    $@"{aliasPattern}\b.{{0,60}}\b(?:is|was|got|looks?|looked|seems?|seemed)\s+(?:hurt|injured|banged\s+up)\b|{aliasPattern}\b.{{0,70}}\b(?:left|leaves)\b.{{0,30}}\b(?:hurt|injured|injury)\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
+                -0.62,
+                "injuryAssertionNegative");
 
             AddStructuralScore(
                 Regex.IsMatch(
@@ -618,7 +778,7 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
             AddStructuralScore(
                 Regex.IsMatch(
                     normalizedText,
-                    $@"{aliasPattern}\b.{{0,80}}\bfell\s+to\s+me\b(?:.{{0,80}}\b(?:value|steal)\b)?|{aliasPattern}\b.{{0,80}}\b(?:was|is|looks?|looked)\s+(?:a\s+)?(?:steal|value)\b|{aliasPattern}\b.{{0,80}}\bnice\s+(?:mid|late|middle)\s+round\s+pick\b",
+                    $@"{aliasPattern}\b.{{0,80}}\bfell\s+to\s+(?:me|\d+)\b(?:.{{0,80}}\b(?:value|steal)\b)?|\b(?:let|letting|lets)\s+(?:him|{aliasPattern})\s+(?:fall|drop)\s+to\s+\d+\b|{aliasPattern}\b.{{0,80}}\b(?:was|is|looks?|looked)\s+(?:a\s+)?(?:steal|value)\b|{aliasPattern}\b.{{0,80}}\bnice\s+(?:mid|late|middle)\s+round\s+pick\b",
                     RegexOptions.IgnoreCase | RegexOptions.CultureInvariant),
                 0.75,
                 "draftValuePositive");
@@ -870,6 +1030,20 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
             return true;
         }
 
+        if (normalizedEntry.Equals("ass", StringComparison.OrdinalIgnoreCase))
+        {
+            var assContextStart = Math.Max(0, span.Start - 36);
+            var assContextLength = Math.Min(normalizedText.Length - assContextStart, span.Length + 72);
+            var assContext = normalizedText.Substring(assContextStart, assContextLength);
+            if (Regex.IsMatch(
+                    assContext,
+                    @"\bbozo\s+ass\b|\b(?:my|our)\b.{0,24}\bass\b|\bass\s+(?:work\s+)?league\b",
+                    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+            {
+                return true;
+            }
+        }
+
         if (!normalizedEntry.Equals("cooked", StringComparison.OrdinalIgnoreCase))
         {
             return false;
@@ -951,7 +1125,7 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
         IReadOnlyList<string> targetAliases)
     {
         var negativeDescriptor =
-            @"(?:awful|terrible|bad|washed|cooked|useless|unstartable|trash|garbage|mid|fraud|bum|irrelevant|droppable|benchable|ass|buns|dogshit|invisible)";
+            @"(?:awful|terrible|bad|washed|cooked|useless|unstartable|trash|garbage|mid|fraud|bum|irrelevant|droppable|benchable|ass|asscheeks|ass\s+cheeks|buns|dogshit|invisible)";
         foreach (var alias in targetAliases)
         {
             var aliasPattern = AliasPattern(alias);
@@ -1002,11 +1176,14 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
 
     private static double CalculateSemanticConfidence(
         double finalScore,
+        double rawVaderScore,
         double fantasyAdjustment,
         double emojiAdjustment,
         double structuralAdjustment,
         double perspectiveAdjustment,
         double questionAdjustment,
+        double domainAdjustment,
+        DomainEvidenceStrength evidenceStrength,
         IReadOnlyList<SemanticTermMatch> matches)
     {
         if (matches.Count == 0
@@ -1020,22 +1197,37 @@ public sealed class FantasySentimentAnalyzer(IOptionsMonitor<SentimentLexiconOpt
             return 0.20;
         }
 
-        if (Math.Abs(structuralAdjustment) >= 0.40
-            || matches.Any(match => match.IsPhrase && Math.Abs(match.Score) >= 0.50)
-            || Math.Abs(finalScore) >= 0.55)
+        if (evidenceStrength == DomainEvidenceStrength.Strong)
         {
             return 0.85;
         }
 
-        if (matches.Count > 0
-            || Math.Abs(emojiAdjustment) >= 0.20
-            || Math.Abs(perspectiveAdjustment) >= 0.20
+        if (evidenceStrength == DomainEvidenceStrength.Weak)
+        {
+            return HasMaterialSignConflict(rawVaderScore, domainAdjustment)
+                ? 0.40
+                : 0.60;
+        }
+
+        if (Math.Abs(finalScore) >= 0.55)
+        {
+            return 0.85;
+        }
+
+        if (Math.Abs(finalScore) >= 0.30
             || Math.Abs(questionAdjustment) >= 0.05)
         {
             return 0.60;
         }
 
         return 0.40;
+    }
+
+    private static bool HasMaterialSignConflict(double left, double right)
+    {
+        return Math.Abs(left) >= 0.15
+               && Math.Abs(right) >= 0.15
+               && Math.Sign(left) != Math.Sign(right);
     }
 
     private static string BuildPhrasePattern(string normalizedPhrase)
