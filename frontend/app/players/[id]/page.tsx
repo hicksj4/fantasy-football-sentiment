@@ -339,6 +339,9 @@ function ControlGroup({
 
 function MentionAnalysisCard({ item }: { item: PlayerMentionAnalysis }) {
   const isScored = item.analysisDisposition.toLowerCase() === "scored";
+  const hasInheritedParent =
+    item.parentBody &&
+    item.targetAttributionMethod.toLowerCase().includes("inherited");
 
   return (
     <article className={`mention-analysis-card ${isScored ? "scored" : "mention-only"}`}>
@@ -349,7 +352,17 @@ function MentionAnalysisCard({ item }: { item: PlayerMentionAnalysis }) {
         <strong>Score {item.redditScore}</strong>
       </div>
 
-      <p className="comment-body">{item.body}</p>
+      {hasInheritedParent ? (
+        <div className="parent-context">
+          <span>Parent context</span>
+          <p>{item.parentBody}</p>
+        </div>
+      ) : null}
+
+      <p className="comment-body">
+        {hasInheritedParent ? <span className="comment-context-label">Reply</span> : null}
+        {item.body}
+      </p>
 
       <div className="mention-metrics">
         <span>Sentiment {formatSigned(item.finalSentimentScore)}</span>

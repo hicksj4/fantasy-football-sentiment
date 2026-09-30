@@ -125,12 +125,7 @@ public sealed class TargetContextBuilder(MentionContextExtractor fallbackExtract
 
     private static string BuildInheritedTargetText(string? parentComment, string currentComment)
     {
-        if (string.IsNullOrWhiteSpace(parentComment))
-        {
-            return currentComment.Trim();
-        }
-
-        return $"{parentComment.Trim()} {currentComment.Trim()}".Trim();
+        return currentComment.Trim();
     }
 
     private static string? ExtractTargetClause(

@@ -114,6 +114,21 @@ public sealed class CommentTargetResolverTests
     }
 
     [Fact]
+    public void ExplicitChildTarget_WithDifferentPlayerOverridesParentTopic()
+    {
+        var parent = Resolve("JSN looks awful today.", "Game thread");
+        var child = Resolve(
+            "Laughs in Josh Allen.",
+            "Game thread",
+            parent.Targets);
+
+        Assert.Equal("Jaxon Smith-Njigba", Assert.Single(parent.Targets).PlayerName);
+        var childTarget = Assert.Single(child.Targets);
+        Assert.Equal("Josh Allen", childTarget.PlayerName);
+        Assert.Equal(TargetAttributionMethods.Explicit, childTarget.AttributionMethod);
+    }
+
+    [Fact]
     public void ExplicitRiskyAlias_OverridesInheritedTopicWhenProperNameContextExists()
     {
         var parent = Resolve(
@@ -252,7 +267,9 @@ public sealed class CommentTargetResolverTests
             Player(8, "Matthew Golden", "GB", "WR", "Golden"),
             Player(9, "Jordan Love", "GB", "QB", "Love"),
             Player(10, "Bijan Robinson", "ATL", "RB", "Bijan"),
-            Player(11, "Tucker Kraft", "GB", "TE", "Kraft", "Tucker Kraft")
+            Player(11, "Tucker Kraft", "GB", "TE", "Kraft", "Tucker Kraft"),
+            Player(12, "Jaxon Smith-Njigba", "SEA", "WR", "JSN", "Smith-Njigba"),
+            Player(13, "Josh Allen", "BUF", "QB", "Josh Allen")
         ];
     }
 

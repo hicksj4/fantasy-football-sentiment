@@ -293,7 +293,7 @@ public sealed class SnapshotProcessingTests
     }
 
     [Fact]
-    public async Task ParentInheritedTarget_BuildsSentimentContextFromParentAndChild()
+    public async Task ParentInheritedTarget_PreservesParentButScoresChildContext()
     {
         await using var db = CreateDb();
         SeedPlayers(db);
@@ -305,7 +305,7 @@ public sealed class SnapshotProcessingTests
         var request = Assert.Single(analyzer.Requests, item => item.FullText == "Dropping this dude immediately.");
         Assert.Contains("Parent: Pitts got 2 targets.", request.Context);
         Assert.Contains("Comment: Dropping this dude immediately.", request.Context);
-        Assert.Contains("Target context: Pitts got 2 targets. Dropping this dude immediately.", request.Context);
+        Assert.Contains("Target context: Dropping this dude immediately.", request.Context);
         Assert.Contains("Target: Kyle Pitts", request.Context);
 
         var mention = await db.PlayerMentions

@@ -179,6 +179,7 @@ export type PlayerMentionAnalysis = {
   id: number;
   commentId: number;
   body: string;
+  parentBody: string | null;
   postTitle: string;
   subreddit: string;
   redditScore: number;

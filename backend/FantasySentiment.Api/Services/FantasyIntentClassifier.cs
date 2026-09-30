@@ -122,10 +122,18 @@ public sealed class FantasyIntentClassifier(IOptionsMonitor<IntentLexiconOptions
 
         if (Regex.IsMatch(
                 normalized,
-                $@"\b(?:(?:i|we)\s+(?:am\s+|are\s+)?|i'm\s+|we're\s+)?(?:already\s+)?(?:drop|dropping|dropped)\s+{mentionPattern}\b|\b(?:gonna|going\s+to|about\s+to|can't\s+wait\s+to|cant\s+wait\s+to)\s+drop\s+{mentionPattern}\b",
+                $@"\b(?:(?:i|we)\s+(?:am\s+|are\s+)?|i'm\s+|we're\s+)?(?:already\s+)?(?:drop|dropping|dropped)\s+{mentionPattern}\b|\b(?:drop|dropping|dropped)\s+(?:the\s+)?(?:shit|fuck)\s+(?:outta|out\s+of)\s+{mentionPattern}\b|\b(?:gonna|going\s+to|about\s+to|can't\s+wait\s+to|cant\s+wait\s+to)\s+drop\s+{mentionPattern}\b|{mentionPattern}\b.{{0,35}}\b(?:is|was|looks?|seems?)\s+(?:a\s+)?(?:drop|droppable)\b",
                 RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
             actions.Add(FantasyActions.Drop);
+        }
+
+        if (Regex.IsMatch(
+                normalized,
+                $@"\b(?:(?:i|we)\s+(?:am\s+|are\s+)?|i'm\s+|we're\s+)?(?:sell|selling|sold)\s+{mentionPattern}\b|{mentionPattern}\b.{{0,45}}\b(?:is|was|looks?|seems?)\s+(?:a\s+)?sell\b|{mentionPattern}\b.{{0,80}}\b(?:i'm|im|i\s+am|we're|were|we\s+are)\s+selling\b",
+                RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            actions.Add(FantasyActions.Sell);
         }
 
         if (Regex.IsMatch(
