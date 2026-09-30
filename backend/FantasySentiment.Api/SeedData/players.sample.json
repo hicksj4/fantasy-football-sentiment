@@ -771,5 +771,256 @@
       "Flowers",
       "Zay Flowers"
     ]
+  },
+  {
+    "name": "A.J. Brown",
+    "team": "PHI",
+    "position": "WR",
+    "externalId": null,
+    "aliases": [
+      "A.J. Brown",
+      "AJ Brown",
+      "AJB"
+    ]
+  },
+  {
+    "name": "Aaron Jones",
+    "team": "MIN",
+    "position": "RB",
+    "externalId": null,
+    "aliases": [
+      "Aaron Jones"
+    ]
+  },
+  {
+    "name": "Ashton Jeanty",
+    "team": "LV",
+    "position": "RB",
+    "externalId": null,
+    "aliases": [
+      "Ashton Jeanty",
+      "Jeanty"
+    ]
+  },
+  {
+    "name": "C.J. Stroud",
+    "team": "HOU",
+    "position": "QB",
+    "externalId": null,
+    "aliases": [
+      "C.J. Stroud",
+      "CJ Stroud",
+      "Stroud"
+    ]
+  },
+  {
+    "name": "Chris Olave",
+    "team": "NO",
+    "position": "WR",
+    "externalId": null,
+    "aliases": [
+      "Olave",
+      "Chris Olave"
+    ]
+  },
+  {
+    "name": "Christian Watson",
+    "team": "GB",
+    "position": "WR",
+    "externalId": null,
+    "aliases": [
+      "Christian Watson",
+      "Watson"
+    ]
+  },
+  {
+    "name": "D'Andre Swift",
+    "team": "CHI",
+    "position": "RB",
+    "externalId": null,
+    "aliases": [
+      "D'Andre Swift",
+      "Dandre Swift",
+      "Swift"
+    ]
+  },
+  {
+    "name": "Dalton Kincaid",
+    "team": "BUF",
+    "position": "TE",
+    "externalId": null,
+    "aliases": [
+      "Dalton Kincaid",
+      "Kincaid"
+    ]
+  },
+  {
+    "name": "Dontayvion Wicks",
+    "team": "GB",
+    "position": "WR",
+    "externalId": null,
+    "aliases": [
+      "Dontayvion Wicks",
+      "Dontavion Wicks",
+      "Wicks"
+    ]
+  },
+  {
+    "name": "Jahmyr Gibbs",
+    "team": "DET",
+    "position": "RB",
+    "externalId": null,
+    "aliases": [
+      "Jahmyr Gibbs",
+      "Gibbs"
+    ]
+  },
+  {
+    "name": "Jayden Daniels",
+    "team": "WAS",
+    "position": "QB",
+    "externalId": null,
+    "aliases": [
+      "Jayden Daniels",
+      "Jaden Daniels",
+      "Daniels"
+    ]
+  },
+  {
+    "name": "Jeremiyah Love",
+    "team": "WAS",
+    "position": "RB",
+    "externalId": null,
+    "aliases": [
+      "Jeremiyah Love",
+      "Jeremyiah Love",
+      "Jeremiyah",
+      "Jeremyiah",
+      "Love"
+    ]
+  },
+  {
+    "name": "Jordan Mason",
+    "team": "MIN",
+    "position": "RB",
+    "externalId": null,
+    "aliases": [
+      "Jordan Mason",
+      "Mason"
+    ]
+  },
+  {
+    "name": "Josh Allen",
+    "team": "BUF",
+    "position": "QB",
+    "externalId": null,
+    "aliases": [
+      "Josh Allen"
+    ]
+  },
+  {
+    "name": "Josh Jacobs",
+    "team": "GB",
+    "position": "RB",
+    "externalId": null,
+    "aliases": [
+      "Jacobs",
+      "Josh Jacobs"
+    ]
+  },
+  {
+    "name": "Josh Palmer",
+    "team": "BUF",
+    "position": "WR",
+    "externalId": null,
+    "aliases": [
+      "Josh Palmer",
+      "Palmer"
+    ]
+  },
+  {
+    "name": "Kyler Murray",
+    "team": "ARI",
+    "position": "QB",
+    "externalId": null,
+    "aliases": [
+      "Kyler Murray",
+      "Kyler",
+      "Murray"
+    ]
+  },
+  {
+    "name": "Marshawn Lloyd",
+    "team": "GB",
+    "position": "RB",
+    "externalId": null,
+    "aliases": [
+      "Marshawn Lloyd",
+      "Marshawn",
+      "Lloyd"
+    ]
+  },
+  {
+    "name": "Marvin Harrison Jr.",
+    "team": "ARI",
+    "position": "WR",
+    "externalId": null,
+    "aliases": [
+      "Marvin Harrison Jr.",
+      "Marvin Harrison",
+      "MHJ"
+    ]
+  },
+  {
+    "name": "Matthew Golden",
+    "team": "GB",
+    "position": "WR",
+    "externalId": null,
+    "aliases": [
+      "Matthew Golden",
+      "Golden"
+    ]
+  },
+  {
+    "name": "Michael Mayer",
+    "team": "LV",
+    "position": "TE",
+    "externalId": null,
+    "aliases": [
+      "Michael Mayer",
+      "Mayer"
+    ]
+  },
+  {
+    "name": "Michael Penix Jr.",
+    "team": "ATL",
+    "position": "QB",
+    "externalId": null,
+    "aliases": [
+      "Penix",
+      "Michael Penix",
+      "Michael Penix Jr",
+      "Michael Penis"
+    ]
+  },
+  {
+    "name": "Terry McLaurin",
+    "team": "WAS",
+    "position": "WR",
+    "externalId": null,
+    "aliases": [
+      "Terry McLaurin",
+      "Terry",
+      "McLaurin"
+    ]
+  },
+  {
+    "name": "Tre Tucker",
+    "team": "LV",
+    "position": "WR",
+    "externalId": null,
+    "aliases": [
+      "Tre Tucker"
+    ]
   }
 ]
